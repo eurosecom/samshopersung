@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.eusecom.samshopersung.di.DaggerAppComponent;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,6 +19,7 @@ import io.realm.RealmConfiguration;
 
 public class SamshopperApp extends MultiDexApplication implements HasActivityInjector {
 
+    //dagger 2.11
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
@@ -49,9 +51,17 @@ public class SamshopperApp extends MultiDexApplication implements HasActivityInj
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
+        //dagger 2.11
+        DaggerAppComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this);
+
 
     }
 
+    //dagger 2.11
     @Override
     public DispatchingAndroidInjector<Activity> activityInjector() {
         return activityDispatchingAndroidInjector;
