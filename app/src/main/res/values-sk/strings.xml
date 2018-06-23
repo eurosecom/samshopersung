@@ -1,0 +1,399 @@
+<resources>
+
+    //mainactivity
+    <string name="app_name">Samfantozzi</string>
+    <string name="helloworld">Ahoj Svet!</string>
+    <string name="app_desc">Samfantozzi účtovný systém v.4.33</string>
+    <string name="privacy_policy">Ochrana osobných údajov</string>
+    <string name="privacy_policy_file">privacy_policy_samfantozzi_sk</string>
+    <string name="action_settings">Nastavenia</string>
+    <string name="action_setdomain">Vybrať Server</string>
+    <string name="action_loginout">Login / Logout</string>
+    <string name="action_login">Login</string>
+    <string name="action_loginadmin">Login admin</string>
+    <string name="action_accountreports">Účtovné zostavy</string>
+    <string name="action_taxreports">Daňové zostavy</string>
+    <string name="action_setmonth">Nastaviť mesiac</string>
+    <string name="popisbtnpokl">Hotovosť</string>
+    <string name="popisbtnpoklsd">Pokladnica SD</string>
+    <string name="popisbtnbanka">Banka</string>
+    <string name="popisbtndod1">Dodávatelia</string>
+    <string name="popisbtnodb1">Odberatelia</string>
+    <string name="popisbtndod1k">Dodav.</string>
+    <string name="popisbtnodb1k">Odber.</string>
+    <string name="popisbtngen">Všeob</string>
+    <string name="addacount_title">Pridaj účet</string>
+    <string name="addacount_summary">Pridaj  Firebase účet</string>
+    <string name="resetpass_title">Resetovať heslo</string>
+    <string name="resetpass_summary">Resetovať heslo FB účtu</string>
+    <string name="company">Firma</string>
+    <string name="getcompany">Get company</string>
+    <string name="textok">Ok</string>
+    <string name="donotlogin">Musíte vytvoriť email účet a prihlásiť sa.</string>
+    <string name="didnotlogin">Nie ste prihlásený</string>
+    <string name="donotcompany">Musíte vybrať firmu.</string>
+    <string name="didnotcompany">Nevybrali ste firmu</string>
+    <string name="donotadmin">Príkaz je dovolený len Admin užívateľovi.</string>
+    <string name="didnotadmin">Nie ste Admin užívateľ</string>
+    <string name="descimg">Popis</string>
+    <string name="mixedreports">Rôzne</string>
+    <string name="nologin">Musíte sa odhlásiť pred výberom Servera.</string>
+    <string name="action_nologin">Odhlásiť sa.</string>
+
+
+    //firebase auth
+    <string name="emailpassword_title_text">Email a heslo</string>
+    <string name="hint_user_id">Užívateľ ID</string>
+    <string name="get_custom_token">Get Token</string>
+    <string name="sign_in">Log In</string>
+    <string name="create_account">Vytvoriť účet</string>
+    <string name="sign_out">Log Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Načítavanie…</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_out">Logged Out</string>
+    <string name="token_null">Token:</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Heslo</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="loginfb">Login to Firebase.</string>
+    <string name="outwork">Nie ste v práci.</string>
+    <string name="atwork">Ste v práci.</string>
+    <string name="firebase_status_fmt">Firebase užívateľ: %s</string>
+    <string name="emailpassword_status_fmt">Email užívateľa: %s</string>
+    <string name="username_status_fmt">Užívateľské meno: %s</string>
+
+    //settings
+    <string name="servername_title">Názov servera.</string>
+    <string name="servername_summary">Názov servera, ku ktorému sa chcete pripojiť napríklad www.edcom.sk, bez http:\\</string>
+    <string name="username_title">Mail username.</string>
+    <string name="username_summary">Mail - username pre prihlásenie do Firebase.</string>
+    <string name="userpsw_title">User password.</string>
+    <string name="userpsw_summary">Heslo pre prihlásenie do Firebase.</string>
+    <string name="fir_title">Číslo pripojenej firmy.</string>
+    <string name="fir_summary">Číslo pripojenej firmy.</string>
+    <string name="firnaz_title">Názov pripojenej firmy.</string>
+    <string name="firnaz_summary">Názov pripojenej firmy.</string>
+    <string name="firiban_title">IBAN pripojenej firmy.</string>
+    <string name="firiban_summary">Prvý IBAN pripojenej firmy.</string>
+    <string name="rok_title">Účtovný rok.</string>
+    <string name="rok_summary">Účtovný rok.</string>
+    <string name="ume_title">Účtovný mesiac.</string>
+    <string name="ume_summary">Účtovný mesiac.</string>
+    <string name="ustype_title">Typ užívateľa.</string>
+    <string name="ustype_summary">Nastaví aplikácia pri prihlásení. Admin, bežný user....</string>
+    <string name="usuid_title">UID užívateľar.</string>
+    <string name="usuid_summary">Nastaví aplikácia pri prihlásení. UID užívateľa....</string>
+    <string name="usadmin_title">Užívateľ je admin.</string>
+    <string name="usadmin_summary">0=nie, 1=áno</string>
+    <string name="usico_title">IČO firmy</string>
+    <string name="usico_summary">IČO vybranej firmy.</string>
+    <string name="usosc_title">Číslo užívateľa.</string>
+    <string name="usosc_summary">Osobné číslo vo firme, kde užívateľ pracuje.</string>
+    <string name="usatw_title">Užívateľ v práci.</string>
+    <string name="usatw_summary">1-užívateľ v práci, 0-užívateľ nie je v práci.</string>
+    <string name="usname_title">Meno užívateľa.</string>
+    <string name="usname_summary">Meno prihláseného užívateľa.</string>
+
+    <string name="firduct_title">Druh účtovníctva 0=podvojné, 9=jednoduché</string>
+    <string name="firduct_summary">Nastaví aplikácia pri pripojení do firmy.</string>
+    <string name="firdph_title">Plátca DPH 0=nie, 1=mesačne, 2=štvrťročne.</string>
+    <string name="firdph_summary">Nastaví aplikácia pri pripojení do firmy.</string>
+    <string name="firdph1_title">Nižšia sadzba DPH č.1 ( 10 % ).</string>
+    <string name="firdph1_summary">Nastaví aplikácia pri pripojení do firmy.</string>
+    <string name="firdph2_title">Základná, vyššia sadzba DPH č.2 ( 20 % ).</string>
+    <string name="firdph2_summary">Nastaví aplikácia pri pripojení do firmy.</string>
+    <string name="firrok_title">Účtovný rok.</string>
+    <string name="firrok_summary">Nastaví aplikácia pri pripojení do firmy.</string>
+    <string name="doduce_title">Dodávateľský účet.</string>
+    <string name="doduce_summary">Defaultný účet dodávateľských faktúr 32100,32101 atď.</string>
+    <string name="doddok_title">Dodávateľský doklad.</string>
+    <string name="doddok_summary">Následujúce číslo dodávateľskej faktúry.</string>
+    <string name="odbuce_title">Odberateľský účet.</string>
+    <string name="odbuce_summary">Defaultný účet odberateľských faktúr 31100,31101 atď.</string>
+    <string name="odbdok_title">Odberateľský doklad.</string>
+    <string name="odbdok_summary">Následujúce číslo odberateľskej faktúry.</string>
+    <string name="genuce_title">Účet všeobecných dokladov.</string>
+    <string name="genuce_summary">Defaultný účet všeobecných dokladov.</string>
+    <string name="gendok_title">Všeobecný doklad.</string>
+    <string name="gendok_summary">Nasledujúce číslo všeobecných dokladov.</string>
+    <string name="pokluce_title">Účet pokladnice.</string>
+    <string name="pokluce_summary">Defaultný účet pokladnice 21100,21101 atď.</string>
+    <string name="drupoh_summary">Druh pokladnice.</string>
+    <string name="drupoh_title">Defaultný druh pokladnice 1=príjmový, 2=výdavkový.</string>
+    <string name="pokldok_title">Príjmový pokladničný doklad.</string>
+    <string name="pokldok_summary">Nasledujúce číslo príjmového pokladničného dokladu.</string>
+    <string name="pokldov_title">Výdavkový pokladničný doklad.</string>
+    <string name="pokldov_summary">Nasledujúce číslo výdavkového pokladničného dokladu.</string>
+    <string name="bankuce_title">Bankový účet.</string>
+    <string name="bankuce_summary">Defaultný bankový účet 22100,22101 atď.</string>
+    <string name="bankdok_title">Bankový doklad.</string>
+    <string name="bankdok_summary">Nasledujúce číslo bankového dokladu.</string>
+    <string name="newdok_summary">Nový doklad.</string>
+    <string name="newdok_title">0=nie, 1=áno</string>
+    <string name="edidok_summary">Číslo editovaného dokladu, IČO, 0=žiadna editovaná položka</string>
+    <string name="edidok_title">Editovaný doklad, IČO.</string>
+
+
+    //dgaeaactivity
+    <string name="action_myemployee">Moji zamestnanci</string>
+    <string name="dateod">od dátumu</string>
+    <string name="datedo">do dátumu</string>
+    <string name="hodiny">hodín pre 1.deň, 0,nič = celý deň</string>
+    <string name="from">od</string>
+    <string name="to">do</string>
+    <string name="hodxb">hodiny</string>
+    <string name="datm">poslané</string>
+    <string name="postedby">poslal</string>
+    <string name="osc">osč</string>
+    <string name="firma">ičo</string>
+    <string name="fullosc">osč</string>
+    <string name="fullfirma">ičo</string>
+    <string name="name">Meno</string>
+    <string name="type">typ</string>
+    <string name="email">mail</string>
+
+    //absserver
+    <string name="nothing_found">Źiadne položky</string>
+    <string name="search">hladať</string>
+    <string name="searchstring">Hľadaj reťazec</string>
+    <string name="action_absmysql">Absencie zo servera</string>
+
+    //choosemonthactivity
+    <string name="choosemonth">Vybrať mesiac</string>
+    <string name="january">Január</string>
+    <string name="february">Február</string>
+    <string name="march">Marec</string>
+    <string name="april">Apríl</string>
+    <string name="may">Máj</string>
+    <string name="june">Jún</string>
+    <string name="july">Júl</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">Október</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+
+    //choosecompanyactivity
+    <string name="choosecompany">Vybrať firmu</string>
+    <string name="clickchoosecompany">Kliknite pre výber firmy</string>
+
+    //chooseaccountactivity
+    <string name="chooseaccount">Vybrať účet</string>
+    <string name="action_setaccount">Vybrať účet</string>
+
+    //cashlistactivity
+    <string name="cashdocuments">Pokladničné doklady</string>
+    <string name="empty">Prázdne</string>
+    <string name="close">Zatvoriť</string>
+    <string name="deletedoc">Vymazať dokument</string>
+    <string name="deleteitem">Vymazať položku</string>
+    <string name="deletealldoc">Vymazať všetky doklady</string>
+    <string name="deletewholedoc">Vymazať celý doklad</string>
+    <string name="editdoc">Editovať doklad</string>
+    <string name="createdoc">Nový doklad</string>
+    <string name="expense">Výdavok</string>
+    <string name="receipt">Príjem</string>
+    <string name="cashbalance">Zostatok na účte</string>
+
+    //supplieractivity
+    <string name="suppliers">Dodávatelia</string>
+    <string name="date">Dátum</string>
+    <string name="dateshort">Dát.</string>
+    <string name="suppidshort">IČO</string>
+    <string name="fakshort">Fkt</string>
+    <string name="value">Hodnota</string>
+    <string name="document">Doklad</string>
+    <string name="docshort">Dok.</string>
+    <string name="pdf">PDF</string>
+    <string name="edit">Upraviť</string>
+    <string name="delete">Zmazať</string>
+    <string name="action_search">Hladať</string>
+
+    //invoiceactivity
+    <string name="customers">Odberatelia</string>
+
+    //newcashdocactivity
+    <string name="newdoc">Nový doklad</string>
+    <string name="newreceipt">Nový príjmový doklad</string>
+    <string name="newexpense">Nový výdavkový doklad</string>
+    <string name="editreceipt">Uprav príjmový doklad</string>
+    <string name="editexpense">Uprav výdavkový doklad</string>
+    <string name="save">Uložiť</string>
+    <string name="companyid">IČO</string>
+    <string name="person">Osoba</string>
+    <string name="invoiceshort">Fakt.</string>
+    <string name="invoice">Faktúra</string>
+    <string name="memo">Poznámka</string>
+    <string name="totalvalue">Celkom</string>
+    <string name="popzakl2">Zákl.%s</string>
+    <string name="popdph2">DPH%s</string>
+    <string name="popzakl1">Zákl.%s</string>
+    <string name="popdph1">DPH%s</string>
+    <string name="popzakl0">Zákl.0%</string>
+    <string name="pohyb">Účet</string>
+    <string name="falsex">false</string>
+    <string name="truex">true</string>
+    <string name="datedialogpos">Nastaviť dátum</string>
+    <string name="select_receipt">Vybrať príjem</string>
+    <string name="select_expense">Vybrať výdavok</string>
+    <string name="select_account">Vybrať účet</string>
+    <string-array name="AbsenceSpinnerArray">
+        <item>506 Holliday</item>
+        <item>510 Bank holliday</item>
+        <item>518 Visit Doctor</item>
+        <item>520 Other</item>
+        <item>801 Illness</item>
+    </string-array>
+
+    //newinvoicedocactivity
+    <string name="newcustomer">Nová odberateľská faktúra</string>
+    <string name="newsupplier">Nová dodávateľská faktúra</string>
+    <string name="editcustomer">Uprav odberateľskú faktúru</string>
+    <string name="editsupplier">Uprav dodávateľskú faktúru</string>
+    <string name="select_customerinv">Vybrať typ odberateľskej faktúry</string>
+    <string name="select_supplierinv">Vybrať typ dodávateľskej faktúry</string>
+    <string name="ksyshort">Ksy</string>
+    <string name="ssyshort">Ssy</string>
+    <string name="dasshort">Spl.</string>
+    <string name="cid_nomatch">Nesprávne ičo %s !</string>
+    <string name="inv_date">Nesprávny dátum!</string>
+    <string name="inv_memo">Nesprávna poznámka!</string>
+    <string name="inv_pers">Nesprávna osoba!</string>
+    <string name="inv_fakt">Nesprávne číslo faktúry!</string>
+
+
+    //idclistktfragment
+    <string name="idc">IČO</string>
+    <string name="idcs">Firmy</string>
+    <string name="idcsandother">IČO a iné číselníky</string>
+    <string name="idcshort">IČO</string>
+    <string name="dic">DIČ</string>
+    <string name="idvat">IČDPH</string>
+    <string name="telshort">Tel.</string>
+    <string name="editidc">Edit IČO</string>
+    <string name="chooseidc">Vybrať IČO</string>
+    <string name="createnewidc">Nové IĆO</string>
+    <string name="create">Vytvoriť</string>
+
+    //typesktactivity
+    <string name="autoacc">AutoPoh</string>
+    <string name="numbershort">Num.</string>
+    <string name="akeuct">Účtovanie</string>
+    <string name="akydruh">Typ</string>
+
+    //nosaveddocactivity
+    <string name="action_nosaveddoc">Doklady neuložené na Server</string>
+    <string name="savedocserver">Uložiť doklad na Server</string>
+
+    //lunchemptymenu
+    <string name="lunch_empty_menu">Menu nenačítané</string>
+
+    //rxjava demo
+    <string name="btn_demo_form_validation_combinel">Validácia Formu s CombineLatest</string>
+
+    //showpdfactivity
+    <string name="showpdf">Zobraz PDF</string>
+    <string name="unpackeditem">Neaktívna položka</string>
+    <string name="innextversion">Položka bude pripravená v nasledujúcej verzii App.</string>
+
+    //accountreportsactivity
+    <string name="accrep">Účtovné zostavy</string>
+    <string name="popisbtnpenden">Pokladničná kniha</string>
+    <string name="popisbtnpenden2">Pokladničná kniha druh 2</string>
+    <string name="popisbtnprivyd">Výkaz o príjmoch a výdavkoch</string>
+    <string name="popisbtnmajzav">Výkaz o majetku a záväzkoch</string>
+    <string name="popisbtnkniodb">Kniha odberateľských faktúr</string>
+    <string name="popisbtnknidod">Kniha dodávateľských faktúr</string>
+    <string name="popisbtnfinsta">"Účtovná závierka "</string>
+    <string name="popisbtndph">DPH</string>
+    <string name="popisbtnfob">Daňové priznanie k dani z príjmov FO typ B</string>
+    <string name="popisbtnplatbystatu">"Platby dane z príjmu a odvodov do fondov SP a ZP pre budúci rok  "</string>
+
+    <string name="popisbtnvyppoh">Prehľad účtovných pohybov</string>
+    <string name="popisbtnhladok">Hladať doklady</string>
+
+    <string name="text_accounts">Účtovníctvo</string>
+    <string name="text_tax">Daň</string>
+    <string name="text_mixed">Rôzne</string>
+
+    //double reports
+    <string name="popisbtnobrat">Obratová predvaha</string>
+    <string name="popisbtndenn">Účtovný denník</string>
+    <string name="popisbtnsuv">Súvaha jednoduchá</string>
+    <string name="popisbtnvys">Výsledovka jednoduchá</string>
+    <string name="popisbtndppo">Daňové priznanie k dani z príjmov DPPO</string>
+    <string name="popisbtnhlkn">Hlavná kniha položkovitá</string>
+
+
+    //bankmvpactivity and newbankdocKtactivity and fragment
+    <string name="bank">Banka</string>
+    <string name="newbank">Nový bankový doklad</string>
+    <string name="newuni">Nový všeob doklad</string>
+    <string name="editbank">Uprav bankový doklad</string>
+    <string name="edituni">Uprav všeob doklad</string>
+    <string name="user_name">username</string>
+    <string name="password">password</string>
+    <string name="log_in">Log in</string>
+    <string name="title_activity_main">MVP Example</string>
+    <string name="username_error">Username cannot be empty</string>
+    <string name="password_error">Password cannot be empty</string>
+    <string name="accbalance">Zostatok účtu</string>
+
+    //newidcactivity
+    <string name="popisIco">IČO firmy</string>
+    <string name="popisDic">DIČ</string>
+    <string name="popisIcd">IČDPH</string>
+    <string name="popisNai">Meno</string>
+    <string name="popisUli">Ulica, číslo</string>
+    <string name="popisMes">Mesto</string>
+    <string name="popisTel">Telefón</string>
+    <string name="popisMail">E-mail</string>
+    <string name="popisWww">WWW</string>
+    <string name="popisPsc">PSČ</string>
+    <string name="newico">Nové IČO</string>
+    <string name="editico">Upraviť IČO</string>
+    <string name="popisIb1">IBAN</string>
+    <string name="popisSw1">Swift kód</string>
+
+    //saldoktactivity
+    <string name="saldocus">Odberateľské saldo</string>
+    <string name="saldosup">Dodávateľské saldo</string>
+    <string name="hod">Total</string>
+    <string name="paid">Uhradené</string>
+    <string name="balshort">Zos</string>
+    <string name="action_saldopdf1">PDF IČO</string>
+    <string name="action_saldopdf2">PDF položky</string>
+    <string name="action_toothersaldo">Odber/Dodav</string>
+    <string name="reminder">PDF Upomienka</string>
+    <string name="smsreminder">SMS Upomienka</string>
+    <string name="smssentto">SMS upomienka bola poslaná na číslo </string>
+    <string name="detailidc">Detail IČO položky</string>
+    <string name="pdfdoc">Zobraziť PDf doklad</string>
+    <string name="customer">Odberateľ</string>
+    <string name="supplier">Dodávateľ</string>
+    <string name="pay">PDF Platba</string>
+    <string name="xmlpay">XML Platba</string>
+    <string name="due">Spl.</string>
+    <string name="created">Vystavené</string>
+    <string name="createdshort">Vst.</string>
+    <string name="remindermessage">%s - Neevidujeme uhradu sumy %s Eur. Uhradou na ucet %s a VSY %s predidete upomienke za neuhradenu fakturu. Dakujeme.</string>
+    <string name="action_recountsaldo">Prepočítať saldo</string>
+
+    //taxpaymentsactivity
+    <string name="taxpay">Platby dane</string>
+
+    //docsearchmenuactivity
+    <string name="docsearch">Prehľadávanie dokladov</string>
+    <string name="totalitems">"Celkom položiek: "</string>
+    <string name="listeditems">"Zobrazené: "</string>
+    <string name="searchhint">vložte minimálne 3 znaky</string>
+
+    //generaldocactivity
+    <string name="generaldoc">Všeobecné</string>
+
+    //loggingViewModal and LiveData demo
+    <string name="seconds">%d sekund uplynulo</string>
+
+
+</resources>

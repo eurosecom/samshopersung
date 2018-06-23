@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eusecom.samshopersung">
+    package="com.eusecom.samfantozzi">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
 
     <application
+        android:name="SamfantozziApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainFantozziActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,6 +25,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".EmailPasswordActivity"/>
+        <activity android:name=".ChooseCompanyActivity"/>
+        <activity android:name=".ChooseMonthActivity"/>
+        <activity android:name=".ChooseAccountActivity"/>
+        <activity android:name=".TaxPaymentsActivity"/>
+        <activity android:name=".SupplierListActivity"/>
+        <activity android:name=".InvoiceListKtActivity"/>
+        <activity android:name=".CashListKtActivity"/>
+        <activity android:name=".TypesKtActivity"/>
+        <activity android:name=".NewIdcActivity"/>
+        <activity android:name=".NewCashDocKtActivity"/>
+        <activity android:name=".NewBankDocKtActivity"/>
+        <activity android:name=".NewInvoiceDocKtActivity"/>
+        <activity android:name=".NoSavedDocActivity"/>
+        <activity android:name=".ShowPdfActivity"/>
+        <activity android:name=".AccountReportsActivity"/>
+        <activity android:name=".BankMvpActivity"/>
+        <activity android:name=".SaldoKtActivity"/>
+        <activity android:name=".DocSearchActivity"/>
+        <activity android:name=".GeneralDocActivity"/>
+        <activity android:name=".DomainsViewModelActivity"/>
+
+        <activity android:name=".RfListActivity"/>
+        <activity android:name=".Detail2Activity"/>
+
     </application>
 
 </manifest>

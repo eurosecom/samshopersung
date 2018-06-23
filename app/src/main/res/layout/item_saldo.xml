@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for one item of absence at RcViewer AbsenceListFragmentjava with AbsenceViewHolder.java -->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:background="@drawable/selector_medium_high"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:id="@+id/company_type"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/invoice_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_account_circle_40" />
+
+            <TextView
+                android:id="@+id/idc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:text="@string/idcshort"
+                />
+
+            <TextView
+                android:id="@+id/idcx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/invoice_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                tools:text="someauthor@email.com" />
+
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/invoice_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/company_type"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            >
+
+            <TextView
+                android:id="@+id/invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/fakshort" />
+
+            <TextView
+                android:id="@+id/invoicex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_toRightOf="@+id/invoice"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/dat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_toLeftOf="@+id/datx"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/createdshort" />
+
+            <TextView
+                android:id="@+id/datx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_centerHorizontal="true"
+                android:gravity="center|center_vertical"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/das"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_toLeftOf="@+id/dasx"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/due" />
+
+            <TextView
+                android:id="@+id/dasx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/invoice"
+                android:layout_alignParentRight="true"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/invoice_type"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            >
+
+            <TextView
+                android:id="@+id/hod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/hod" />
+
+            <TextView
+                android:id="@+id/hodx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/hod"
+                android:layout_toRightOf="@+id/hod"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/paid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/hod"
+                android:layout_centerHorizontal="true"
+                android:gravity="center|center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/paid" />
+
+            <TextView
+                android:id="@+id/paidx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/hod"
+                android:layout_toRightOf="@+id/paid"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/bal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/hod"
+                android:layout_toLeftOf="@+id/balx"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/balshort" />
+
+            <TextView
+                android:id="@+id/balx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/hod"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

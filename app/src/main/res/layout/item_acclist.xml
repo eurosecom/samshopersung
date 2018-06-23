@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for one item of absence at RcViewer AbsenceListFragmentjava with AbsenceViewHolder.java -->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:background="@drawable/selector_medium_high"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+     <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:id="@+id/invoice_type"
+            android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/accphoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_account_circle_40" />
+
+         <TextView
+             android:id="@+id/accnumbertext"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="5dp"
+             android:gravity="center_vertical"
+             android:text="@string/numbershort"
+             />
+
+         <TextView
+             android:id="@+id/accnumber"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="5dp"
+             android:gravity="center_vertical"
+             android:textStyle="bold"
+             />
+
+        <TextView
+            android:id="@+id/accname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/invoice_type"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            >
+
+
+            <TextView
+                android:id="@+id/akeucttext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/akeuct" />
+
+            <TextView
+                android:id="@+id/akeuct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/akeucttext"
+                android:layout_toRightOf="@+id/akeucttext"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+
+
+            <TextView
+                android:id="@+id/akypohtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/akeucttext"
+                android:layout_toLeftOf="@+id/akypoh"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/akydruh" />
+
+            <TextView
+                android:id="@+id/akypoh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/akeucttext"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.eusecom.samfantozzi.MainFantozziActivity">
+    <item
+        android:id="@+id/action_setmonth"
+        android:orderInCategory="100"
+        android:title="@string/action_setmonth"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_setaccount"
+        android:orderInCategory="100"
+        android:title="@string/action_setaccount"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_nosaveddoc"
+        android:orderInCategory="100"
+        android:title="@string/action_nosaveddoc"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="@string/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView"
+        />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>
