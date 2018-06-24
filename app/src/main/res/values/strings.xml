@@ -3,6 +3,77 @@
     <string name="action_settings">Settings</string>
 
 
+    //settings
+    <string name="servername_title">Server name.</string>
+    <string name="servername_summary">Server name to which you want to connect, for example www.edcom.sk, without http:\\</string>
+    <string name="username_title">Mail username.</string>
+    <string name="username_summary">Mail - username for login to Firebase.</string>
+    <string name="userpsw_title">User password.</string>
+    <string name="userpsw_summary">Password for login to Firebase.</string>
+    <string name="fir_title">Number of connected company.</string>
+    <string name="fir_summary">Number of connected company.</string>
+    <string name="firnaz_title">Name of connected company.</string>
+    <string name="firnaz_summary">Name of connected company.</string>
+    <string name="firiban_title">IBAN of connected company.</string>
+    <string name="firiban_summary">First IBAN of connected company.</string>
+    <string name="rok_title">Accounting year.</string>
+    <string name="rok_summary">Accounting year for attendance.</string>
+    <string name="ume_title">Accounting month.</string>
+    <string name="ume_summary">Accounting month for attendance. You can change in All Eployees Absences activity</string>
+    <string name="ustype_title">Type of User.</string>
+    <string name="ustype_summary">Set App by login. Admin, common user....</string>
+    <string name="usuid_title">UID of User.</string>
+    <string name="usuid_summary">Set App by login. UID of user....</string>
+    <string name="usadmin_title">User is admin.</string>
+    <string name="usadmin_summary">0=no, 1=yes</string>
+    <string name="usico_title">ID Company</string>
+    <string name="usico_summary">ID of choosen commpany.</string>
+    <string name="usosc_title">ID number of User.</string>
+    <string name="usosc_summary">ID number of User at Company where user work.</string>
+    <string name="usatw_title">User at work.</string>
+    <string name="usatw_summary">1-user at work, 0-user leave work.</string>
+    <string name="usname_title">Name of user.</string>
+    <string name="usname_summary">Name of logged user.</string>
+    <string name="firduct_title">Sort of Accounting 0=double-entry accounting, 9=single-entry accounting.</string>
+    <string name="firduct_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph_title">VAT payment 0=No, 1=monthly, 2=quarterly.</string>
+    <string name="firdph_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph1_title">The reduced rate of VAT No.1 ( 10 % ).</string>
+    <string name="firdph1_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firdph2_title">Basic, higher VAT rate No.2 ( 20 % ).</string>
+    <string name="firdph2_summary">Set the program to connect to Fantozzi.</string>
+    <string name="firrok_title">Year accounting period.</string>
+    <string name="firrok_summary">Set the program to connect to Fantozzi.</string>
+    <string name="doduce_title">Account of supplier.</string>
+    <string name="doduce_summary">Default account of supplier invoice 32100,32101 etc.</string>
+    <string name="doddok_title">Supplier document.</string>
+    <string name="doddok_summary">Following document number of supplier invoice.</string>
+    <string name="odbuce_title">Account of customer.</string>
+    <string name="odbuce_summary">Default account of customer invoice 31100,31101 etc.</string>
+    <string name="odbdok_title">Customer document.</string>
+    <string name="odbdok_summary">Following document number of customer invoice.</string>
+    <string name="genuce_title">Account of general docs.</string>
+    <string name="genuce_summary">Default account of general docs.</string>
+    <string name="gendok_title">General docs document.</string>
+    <string name="gendok_summary">Following document number of general docs.</string>
+    <string name="pokluce_title">Cash register account.</string>
+    <string name="pokluce_summary">Default account for cash register 21100,21101 etc.</string>
+    <string name="drupoh_summary">Cash register type.</string>
+    <string name="drupoh_title">Default type for cash register 1=receipt, 2=expense.</string>
+    <string name="pokldok_title">Receipt cash document.</string>
+    <string name="pokldok_summary">The following number of receipt cash document.</string>
+    <string name="pokldov_title">Expense cash document.</string>
+    <string name="pokldov_summary">The following number of expense cash document.</string>
+    <string name="bankuce_title">Bank account.</string>
+    <string name="bankuce_summary">Default account for the bank 22100,22101 etc.</string>
+    <string name="bankdok_title">Bank document.</string>
+    <string name="bankdok_summary">The following number of bank document.</string>
+    <string name="newdok_summary">New document.</string>
+    <string name="newdok_title">0=no, 1=yes</string>
+    <string name="edidok_summary">Number of edited documet, IDC, 0=no edited item</string>
+    <string name="edidok_title">Edit document, IDC.</string>
+
+
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>
