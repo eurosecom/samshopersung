@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Shopper</string>
     <string name="action_settings">Settings</string>
+
+
+    //room demo
+    <string name="price_format">$%1$s</string>
+    <string name="name_format">Product %1$s</string>
+
 </resources>
