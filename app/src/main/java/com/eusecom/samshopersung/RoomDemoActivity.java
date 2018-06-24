@@ -26,17 +26,6 @@ public class RoomDemoActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                List<Product> list = new ArrayList<>();
-                    Product product = new Product();
-                    product.setName("Name");
-                    product.setImageUrl("https://picsum.photos/500/500?image=1");
-                    product.setPrice(200);
-                list.add(product);
-
-                // insert product list into database
-                //SamshopperApp.get().getDB().productDao().insertAll(list);
-
-
                 List<Product> products = SamshopperApp.get().getDB().productDao().getAll();
                 boolean force = SamshopperApp.get().isForceUpdate();
                 if (force || products.isEmpty()) {

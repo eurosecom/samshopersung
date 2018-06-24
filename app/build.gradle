@@ -132,6 +132,9 @@ dependencies {
 
     //Room library
     implementation 'android.arch.persistence.room:runtime:1.1.0'
+    implementation ('android.arch.persistence.room:rxjava2:1.1.0', {
+        exclude group: 'io.reactivex.internal.operators'
+    })
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.0'
 
 
