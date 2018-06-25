@@ -1,6 +1,7 @@
 package com.eusecom.samshopersung
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -9,8 +10,13 @@ import android.view.MenuItem
 import dagger.android.AndroidInjection
 
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -21,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener { _ ->
 
+            val servx = prefs.getString("servername", "")
+            toast("servername " + servx)
             val `is` = Intent(this, RoomDemoActivity::class.java)
             startActivity(`is`)
         }
