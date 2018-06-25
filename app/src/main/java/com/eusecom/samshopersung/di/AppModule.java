@@ -9,8 +9,10 @@ import android.preference.PreferenceManager;
 
 import com.eusecom.samshopersung.SamshopperApp;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samshopersung.realm.RealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
+import com.eusecom.samshopersung.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -20,6 +22,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -34,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
         MainActivityComponent.class, MainShopperActivityComponent.class})
 public class AppModule {
 
-    String mBaseUrl = "";
+    String mBaseUrl = "http:\\www.eshoptest.sk";
 
     @Provides
     @Singleton
@@ -54,6 +57,29 @@ public class AppModule {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
+    @Provides
+    @Singleton
+    RxBus providesRxBus(Application application) {
+        return ((SamshopperApp) application).getRxBusSingleton();
+    }
+
+    @Provides
+    @Singleton
+    RealmController providesRealmConroller(Application application) {
+        return new RealmController(application);
+    }
+
+    @Provides
+    @Singleton
+    Realm providesRealm(RealmController realmcontroller) {
+        return realmcontroller.getRealm();
+    }
+
+    @Provides
+    @Singleton
+    ExampleInterceptor provideInterceptor() { // This is where the Interceptor object is constructed
+        return ExampleInterceptor.get();
+    }
 
     @Provides
     @Singleton

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
-
 import com.eusecom.samshopersung.database.MyDatabase;
 import com.eusecom.samshopersung.di.DaggerAppComponent;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;

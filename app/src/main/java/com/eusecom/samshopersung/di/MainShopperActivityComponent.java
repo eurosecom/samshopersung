@@ -3,12 +3,15 @@ package com.eusecom.samshopersung.di;
 import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
 
+import javax.inject.Singleton;
+
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 
 /**
  * Created by mertsimsek on 25/05/2017.
  */
+@ShopperScope
 @Subcomponent(modules = MainShopperActivityModule.class)
 public interface MainShopperActivityComponent extends AndroidInjector<MainShopperActivity>{
     @Subcomponent.Builder

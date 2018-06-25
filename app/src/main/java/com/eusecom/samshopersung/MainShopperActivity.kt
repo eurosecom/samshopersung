@@ -16,6 +16,7 @@ import co.zsmb.materialdrawerkt.draweritems.divider
 import co.zsmb.materialdrawerkt.draweritems.profile.profile
 import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
+import com.eusecom.samshopersung.di.ShopperScope
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
@@ -44,6 +45,10 @@ class MainShopperActivity : AppCompatActivity() {
     @Inject
     lateinit var connectivityManager: ConnectivityManager
 
+    @ShopperScope
+    @Inject
+    lateinit var mViewModel: ShopperMvvmViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
@@ -64,6 +69,8 @@ class MainShopperActivity : AppCompatActivity() {
             //view ->
             //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
             _ -> navigateToRoomDemo()
+            Log.d("ShopperMvvmViewModel", "instx " + mViewModel.toString())
+            Log.d("SharedPreferences", "instx " + prefs.toString())
         }
 
         button1.setOnClickListener {
