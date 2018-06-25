@@ -1,6 +1,67 @@
 <resources>
+
+    //mainshopperactivity
     <string name="app_name">Shopper</string>
+    <string name="helloworld">Hello World!</string>
+    <string name="app_desc">Samshopper shopping system v.4.00</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="privacy_policy_file">privacy_policy_samfantozzi</string>
     <string name="action_settings">Settings</string>
+    <string name="action_setdomain">Choose Server</string>
+    <string name="action_loginout">Login / Logout</string>
+    <string name="action_login">Login</string>
+    <string name="action_loginadmin">Login admin</string>
+    <string name="action_accountreports">Accounting reports</string>
+    <string name="action_taxreports">TAX reports</string>
+    <string name="action_setmonth">Set month</string>
+    <string name="popisbtnpokl">Cash</string>
+    <string name="popisbtnpoklsd">Cash SD</string>
+    <string name="popisbtnbanka">Bank</string>
+    <string name="popisbtndod1">Suppliers</string>
+    <string name="popisbtnodb1">Customers</string>
+    <string name="popisbtndod1k">Suppl.</string>
+    <string name="popisbtnodb1k">Custom.</string>
+    <string name="popisbtngen">General</string>
+    <string name="addacount_title">Add account</string>
+    <string name="addacount_summary">Add new Firebase Account</string>
+    <string name="resetpass_summary">Reset password of FB Account</string>
+    <string name="company">Company</string>
+    <string name="getcompany">Get company</string>
+    <string name="textok">Ok</string>
+    <string name="donotlogin">You have to create email account and login.</string>
+    <string name="didnotlogin">You did not login</string>
+    <string name="donotcompany">You have to choose your company.</string>
+    <string name="didnotcompany">You did not choose company</string>
+    <string name="donotadmin">Command is allowed only for Admin user.</string>
+    <string name="didnotadmin">You are not the Admin user</string>
+    <string name="descimg">Desc</string>
+    <string name="mixedreports">Mixed reports</string>
+    <string name="nologin">You have to logout before to choose Server.</string>
+    <string name="action_nologin">You have to logout.</string>
+    <string name="resetpass_title">Reset password</string>
+
+
+    //firebase auth
+    <string name="emailpassword_title_text">Email and Password</string>
+    <string name="hint_user_id">User ID</string>
+    <string name="get_custom_token">Get Token</string>
+    <string name="sign_in">Log In</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_out">Log Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Loading…</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_out">Logged Out</string>
+    <string name="token_null">Token: null</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="loginfb">Login to Firebase.</string>
+    <string name="outwork">You are out of work now.</string>
+    <string name="atwork">You are at work now.</string>
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="emailpassword_status_fmt">Email User: %s</string>
+    <string name="username_status_fmt">User name: %s</string>
 
 
     //settings
@@ -72,6 +133,10 @@
     <string name="newdok_title">0=no, 1=yes</string>
     <string name="edidok_summary">Number of edited documet, IDC, 0=no edited item</string>
     <string name="edidok_title">Edit document, IDC.</string>
+
+    //choosecompanyactivity
+    <string name="choosecompany">Choose company</string>
+    <string name="clickchoosecompany">Click to choose your company</string>
 
 
     //room demo

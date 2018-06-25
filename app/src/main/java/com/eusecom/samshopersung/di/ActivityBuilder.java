@@ -3,6 +3,7 @@ package com.eusecom.samshopersung.di;
 import android.app.Activity;
 
 import com.eusecom.samshopersung.MainActivity;
+import com.eusecom.samshopersung.MainShopperActivity;
 import com.eusecom.samshopersung.di.MainActivityComponent;
 import dagger.Binds;
 import dagger.Module;
@@ -17,6 +18,11 @@ public abstract class ActivityBuilder {
     @IntoMap
     @ActivityKey(MainActivity.class)
     abstract AndroidInjector.Factory<? extends Activity> bindMainActivity(MainActivityComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @ActivityKey(MainShopperActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindMainShopperActivity(MainShopperActivityComponent.Builder builder);
 
 
 }

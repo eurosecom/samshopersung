@@ -14,7 +14,7 @@ import dagger.Provides;
  * SamShopper AppModule
  */
 @Module(subcomponents = {
-        MainActivityComponent.class})
+        MainActivityComponent.class, MainShopperActivityComponent.class})
 public class AppModule {
 
     @Provides

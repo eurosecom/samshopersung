@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+
     //consume oncreateoptionmenu
     inline fun consume(f: () -> Unit): Boolean {
         f()
