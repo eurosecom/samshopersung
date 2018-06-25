@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.eusecom.samshopersung.database.entity.Pet;
 import com.eusecom.samshopersung.database.entity.Product;
 
 import java.util.ArrayList;
@@ -26,6 +27,12 @@ public class RoomDemoActivity extends AppCompatActivity {
             @Override
             public void run() {
 
+                //savePets();
+                //List<Pet> pets = SamshopperApp.get().getDB().petDao().getAll();
+                //Log.d("RoomDemo ", "retrievedPets " + pets.get(0).getName());
+                //Log.d("RoomDemo ", "retrievedPets " + pets.get(1).getName());
+                //Log.d("RoomDemo ", "retrievedPets " + pets.get(2).getName());
+
                 List<Product> products = SamshopperApp.get().getDB().productDao().getAll();
                 boolean force = SamshopperApp.get().isForceUpdate();
                 if (force || products.isEmpty()) {
@@ -39,6 +46,19 @@ public class RoomDemoActivity extends AppCompatActivity {
         }).start();
     }
 
+    public void savePets() {
+        List<Pet> list = new ArrayList<>();
+
+        for (int i = 0; i < 2; i++) {
+            Pet pet = new Pet();
+            pet.setName("namex" + i + "");
+            list.add(pet);
+        }
+
+        // insert product list into database
+        SamshopperApp.get().getDB().petDao().insertAll(list);
+    }
+
     private void retrieveProducts() {
         List<Product> list = new ArrayList<>();
 
@@ -48,6 +68,7 @@ public class RoomDemoActivity extends AppCompatActivity {
             product.setImageUrl("https://picsum.photos/500/500?image=" + i);
             product.setPrice(i == 0 ? 50 : i * 100);
             list.add(product);
+
         }
 
         // insert product list into database
