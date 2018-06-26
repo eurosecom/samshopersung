@@ -1,10 +1,6 @@
 package com.eusecom.samshopersung.di;
 
-import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
-
-import javax.inject.Singleton;
-
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 

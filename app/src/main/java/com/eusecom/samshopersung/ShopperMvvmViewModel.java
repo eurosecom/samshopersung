@@ -54,4 +54,35 @@ public class ShopperMvvmViewModel {
     }
 
 
+    //recyclerview method for ChooseCompanyActivity
+
+    //get companies from MySql server
+    public Observable<List<CompanyKt>> getMyCompaniesFromServer() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        Log.d("userxplus ", encrypted + " " + ds);
+        	/* Decrypt */
+        //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mDataModel.getCompaniesFromMysqlServer(serverx, encrypted, ds);
+    }
+    //end get companies from MySql server
+
+
 }

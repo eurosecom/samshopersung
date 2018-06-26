@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
-
 import com.eusecom.samshopersung.SamshopperApp;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.RealmController;
@@ -17,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -34,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * SamShopper AppModule
  */
 @Module(subcomponents = {
-        MainActivityComponent.class, MainShopperActivityComponent.class})
+        MainActivityComponent.class, MainShopperActivityComponent.class, ChooseCompanyActivityComponent.class})
 public class AppModule {
 
     String mBaseUrl = "http:\\www.eshoptest.sk";

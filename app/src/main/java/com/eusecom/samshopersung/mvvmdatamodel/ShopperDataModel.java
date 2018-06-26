@@ -9,6 +9,8 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
+
+import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +36,15 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
 
 
+    //recyclerview method for ChooseCompanyuActivity
+
+    @Override
+    public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String servername, String userhash, String userid) {
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.getCompaniesFromServer(userhash, userid);
+
+    }
 
     //set retrofit by runtime
     public void setRetrofit(String servername) {

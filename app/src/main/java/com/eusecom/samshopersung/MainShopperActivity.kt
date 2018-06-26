@@ -94,7 +94,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         buttonFir.setOnClickListener {
-            _ -> //navigateToGetCompany()
+            _ -> navigateToGetCompany()
         }
 
         imageView.setOnClickListener {
@@ -263,6 +263,30 @@ class MainShopperActivity : AppCompatActivity() {
     fun navigateToLogin(){
         val intent = Intent(this, EmailPasswordActivity::class.java)
         startActivity(intent)
+    }
+
+    fun navigateToGetCompany(){
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+            startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        //choosecompany
+        if (resultCode == 101) {
+
+            //toast("Returned 101 ChooseCompany " + resultCode)
+        }
+        //idc company
+        if (resultCode == 201) {
+
+            //toast("Returned 201 IdCompany " + akeico)
+        }
     }
 
 
