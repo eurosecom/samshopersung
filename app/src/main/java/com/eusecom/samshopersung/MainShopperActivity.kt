@@ -154,7 +154,7 @@ class MainShopperActivity : AppCompatActivity() {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    //navigateToLogin()
+                    navigateToLogin()
                     false
                 }
 
@@ -260,6 +260,10 @@ class MainShopperActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun navigateToLogin(){
+        val intent = Intent(this, EmailPasswordActivity::class.java)
+        startActivity(intent)
+    }
 
 
     fun showLoginAlert() {

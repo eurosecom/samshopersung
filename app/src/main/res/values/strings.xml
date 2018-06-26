@@ -135,8 +135,8 @@
     <string name="edidok_title">Edit document, IDC.</string>
 
     //choosecompanyactivity
-    <string name="choosecompany">Choose company</string>
-    <string name="clickchoosecompany">Click to choose your company</string>
+    <string name="choosecompany">Choose eShop</string>
+    <string name="clickchoosecompany">Click to choose your e-shop</string>
 
 
     //room demo

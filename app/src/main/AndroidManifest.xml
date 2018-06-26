@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".RoomDemoActivity"/>
         <activity android:name=".SettingsActivity"/>
+        <activity android:name=".EmailPasswordActivity"/>
+
     </application>
 
 </manifest>
