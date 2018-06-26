@@ -237,6 +237,7 @@ class MainShopperActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> consume { navigateToSettings() }
+        R.id.action_setdomain -> consume { navigateToSetDomain() }
 
         else -> super.onOptionsItemSelected(item)
     }
@@ -271,6 +272,17 @@ class MainShopperActivity : AppCompatActivity() {
             showDonotloginAlert()
         }else {
             startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
+        }
+
+    }
+
+    fun navigateToSetDomain(){
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            val `is` = Intent(this, DomainsViewModelActivity::class.java)
+            startActivity(`is`)
+        }else {
+            showLoginAlert()
         }
 
     }

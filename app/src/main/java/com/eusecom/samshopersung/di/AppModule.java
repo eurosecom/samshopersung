@@ -32,7 +32,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * SamShopper AppModule
  */
 @Module(subcomponents = {
-        MainActivityComponent.class, MainShopperActivityComponent.class, ChooseCompanyActivityComponent.class})
+        MainActivityComponent.class, MainShopperActivityComponent.class
+        , ChooseCompanyActivityComponent.class, DomainsActivityComponent.class})
 public class AppModule {
 
     String mBaseUrl = "http:\\www.eshoptest.sk";

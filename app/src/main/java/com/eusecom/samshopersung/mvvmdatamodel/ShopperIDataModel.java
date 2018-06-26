@@ -16,5 +16,9 @@ public interface ShopperIDataModel {
     @NonNull
     public Observable<RealmDomain> saveDomainToRealm(RealmDomain domx);
 
+    //method for DomainsActivity
+    @NonNull
+    public Observable<List<RealmDomain>> getDomainsFromRealm();
+
 
 }
