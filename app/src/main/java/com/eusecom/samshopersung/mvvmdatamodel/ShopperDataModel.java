@@ -11,6 +11,7 @@ import io.realm.RealmResults;
 import rx.Observable;
 
 import com.eusecom.samshopersung.CompanyKt;
+import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.google.firebase.database.DatabaseReference;
@@ -36,13 +37,63 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
 
 
-    //recyclerview method for ChooseCompanyuActivity
+    //method for ChooseCompanyuActivity
 
     @Override
     public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String servername, String userhash, String userid) {
 
         setRetrofit(servername);
         return mShopperRetrofitService.getCompaniesFromServer(userhash, userid);
+
+    }
+
+    //save domains to realm
+    @NonNull
+    @Override
+    public Observable<RealmDomain> saveDomainToRealm(@NonNull final RealmDomain domx) {
+
+        //System.out.println("existRealmDomain " + domx.getDomain());
+        //does exist invoice in Realm?
+        RealmDomain domainexists = existRealmDomain( domx );
+
+        if(domainexists != null){
+            //System.out.println("existRealmDomain " + true);
+            deleteRealmDomainData( domx );
+        }else{
+            //System.out.println("existRealmDomain " + false);
+        }
+        //save to realm and get String OK or ERROR
+        setRealmDomainData( domx );
+
+        return Observable.just(domx);
+
+    }
+
+    public RealmDomain existRealmDomain(@NonNull final RealmDomain domx) {
+
+        String dokx = domx.getDomain();
+        return mRealm.where(RealmDomain.class).equalTo("domain", dokx).findFirst();
+    }
+
+    private void setRealmDomainData(@NonNull final RealmDomain domx) {
+
+        mRealm.beginTransaction();
+        mRealm.copyToRealm(domx);
+        mRealm.commitTransaction();
+
+    }
+
+    private void deleteRealmDomainData(@NonNull final RealmDomain domx) {
+
+        String dokx = domx.getDomain();
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmDomain> result = realm.where(RealmDomain.class).equalTo("domain", dokx).findAll();
+                result.clear();
+            }
+        });
 
     }
 

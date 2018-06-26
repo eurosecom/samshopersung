@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samshopersung.realm.RealmDomain;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -83,6 +84,30 @@ public class ShopperMvvmViewModel {
         return mDataModel.getCompaniesFromMysqlServer(serverx, encrypted, ds);
     }
     //end get companies from MySql server
+
+    //emit SaveDomain ToRealm
+    public void emitSaveDomainToRealm(RealmDomain domx) {
+        mObservableSaveDomainToRealm.onNext(domx);
+    }
+
+    @NonNull
+    private BehaviorSubject<RealmDomain> mObservableSaveDomainToRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<RealmDomain> getMyObservableSaveDomainToRealm() {
+
+        return mObservableSaveDomainToRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(domx -> mDataModel.saveDomainToRealm(domx ));
+
+    }
+
+    public void clearObservableSaveDomainToRealm() {
+
+        mObservableSaveDomainToRealm = BehaviorSubject.create();
+
+    }
+    //end emit Save DomainToRealm
 
 
 }

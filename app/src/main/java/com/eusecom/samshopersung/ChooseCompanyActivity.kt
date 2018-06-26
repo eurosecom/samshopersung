@@ -78,6 +78,17 @@ class ChooseCompanyActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setCompanies(it) }))
 
+        mSubscription.add(mViewModel.myObservableSaveDomainToRealm
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("ChooseCompanyActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> savedDomain(it) }))
+
     }
 
     private fun savedDomain(domain: RealmDomain) {
@@ -91,7 +102,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
             var domainx: RealmDomain = RealmDomain()
             domainx.setDomain(prefs.getString("servername", ""))
-            //mViewModel.emitSaveDomainToRealm(domainx)
+            mViewModel.emitSaveDomainToRealm(domainx)
 
             val editor = prefs.edit()
             editor.putString("fir", it.xcf).apply();
@@ -140,7 +151,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         hideProgressBar()
-        //mViewModel.clearObservableSaveDomainToRealm()
+        mViewModel.clearObservableSaveDomainToRealm()
     }
 
 
