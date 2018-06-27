@@ -39,6 +39,11 @@
     <string name="nologin">You have to logout before to choose Server.</string>
     <string name="action_nologin">You have to logout.</string>
     <string name="resetpass_title">Reset password</string>
+    <string name="orders">Orders</string>
+    <string name="invoices">Invoices</string>
+    <string name="basket">Basket</string>
+    <string name="reports">Reports</string>
+    <string name="offer">Offer</string>
 
 
     //firebase auth
