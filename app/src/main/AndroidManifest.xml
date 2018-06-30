@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".MainShopperActivity"
             android:label="@string/app_name"
@@ -30,6 +30,7 @@
         <activity android:name=".ChooseCompanyActivity"/>
         <activity android:name=".DomainsViewModelActivity"/>
 
+        <activity android:name=".AlbumsActivity"/>
     </application>
 
 </manifest>

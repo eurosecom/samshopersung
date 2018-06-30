@@ -185,6 +185,20 @@ class MainShopperActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
+                secondaryItem("Albums DEMO item") {
+
+                    onClick { _ ->
+                        navigateToAlbumsDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
+
+            if (BuildConfig.DEBUG) {
+
+                divider {}
                 secondaryItem("DEMO item") {
 
                     onClick { _ ->
@@ -251,6 +265,12 @@ class MainShopperActivity : AppCompatActivity() {
         val servx = prefs.getString("servername", "")
         toast("servername " + servx)
         val `is` = Intent(this, RoomDemoActivity::class.java)
+        startActivity(`is`)
+    }
+
+    fun navigateToAlbumsDemo() {
+
+        val `is` = Intent(this, AlbumsActivity::class.java)
         startActivity(`is`)
     }
 
