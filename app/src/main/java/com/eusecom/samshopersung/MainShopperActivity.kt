@@ -68,9 +68,9 @@ class MainShopperActivity : AppCompatActivity() {
 
             //view ->
             //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-            _ -> navigateToRoomDemo()
-            Log.d("ShopperMvvmViewModel", "instx " + mViewModel.toString())
-            Log.d("SharedPreferences", "instx " + prefs.toString())
+            //_ -> navigateToRoomDemo()
+            //Log.d("ShopperMvvmViewModel", "instx " + mViewModel.toString())
+            //Log.d("SharedPreferences", "instx " + prefs.toString())
         }
 
         button1.setOnClickListener {
@@ -78,7 +78,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         button2.setOnClickListener {
-            _ -> //navigateToBankMvpList()
+            _ -> navigateToOffer()
         }
 
         button3.setOnClickListener {
@@ -199,11 +199,10 @@ class MainShopperActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
-                secondaryItem("DEMO item") {
+                secondaryItem("Room DEMO ") {
 
                     onClick { _ ->
-                        //Log.d("DRAWER", "Click.")
-                        //navigateToRfGitHub()
+                        navigateToRoomDemo()
                         false
                     }
                 }
@@ -275,6 +274,11 @@ class MainShopperActivity : AppCompatActivity() {
     }
 
 
+    fun navigateToOffer() {
+
+        val `is` = Intent(this, OfferActivity::class.java)
+        startActivity(`is`)
+    }
 
     fun navigateToSettings(){
         val intent = Intent(this, SettingsActivity::class.java)

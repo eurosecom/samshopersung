@@ -143,11 +143,11 @@
     <string name="choosecompany">Choose eShop</string>
     <string name="clickchoosecompany">Click to choose your e-shop</string>
 
+    //offer activity
 
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>
-
 
     //album demo
     <string name="action_add_favourite">Add to Favourites</string>

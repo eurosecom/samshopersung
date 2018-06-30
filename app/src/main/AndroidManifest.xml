@@ -29,6 +29,7 @@
         <activity android:name=".EmailPasswordActivity"/>
         <activity android:name=".ChooseCompanyActivity"/>
         <activity android:name=".DomainsViewModelActivity"/>
+        <activity android:name=".OfferActivity"/>
 
         <activity android:name=".AlbumsActivity"/>
     </application>
