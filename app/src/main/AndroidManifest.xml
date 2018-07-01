@@ -30,6 +30,7 @@
         <activity android:name=".ChooseCompanyActivity"/>
         <activity android:name=".DomainsViewModelActivity"/>
         <activity android:name=".OfferActivity"/>
+        <activity android:name=".OfferKtActivity"/>
 
         <activity android:name=".AlbumsActivity"/>
     </application>

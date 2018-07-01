@@ -74,7 +74,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         button1.setOnClickListener {
-            _ -> //navigateToCashListKt()
+            _ -> navigateToOfferKt()
         }
 
         button2.setOnClickListener {
@@ -277,6 +277,12 @@ class MainShopperActivity : AppCompatActivity() {
     fun navigateToOffer() {
 
         val `is` = Intent(this, OfferActivity::class.java)
+        startActivity(`is`)
+    }
+
+    fun navigateToOfferKt() {
+
+        val `is` = Intent(this, OfferKtActivity::class.java)
         startActivity(`is`)
     }
 
