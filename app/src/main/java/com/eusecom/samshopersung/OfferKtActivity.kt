@@ -17,10 +17,22 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import co.zsmb.materialdrawerkt.builders.accountHeader
+import co.zsmb.materialdrawerkt.builders.drawer
+import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
+import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
+import co.zsmb.materialdrawerkt.draweritems.divider
+import co.zsmb.materialdrawerkt.draweritems.profile.profile
+import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
+import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.bumptech.glide.Glide
 import com.eusecom.samshopersung.models.Album
 import com.eusecom.samshopersung.realm.RealmDomain
+import com.mikepenz.materialdrawer.AccountHeader
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.mainshopper_activity.*
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import rx.Observable
@@ -37,6 +49,10 @@ import javax.inject.Inject
 
 class OfferKtActivity : AppCompatActivity() {
 
+    private lateinit var result: Drawer
+    private lateinit var headerResult: AccountHeader
+    private lateinit var headerProfil: ProfileDrawerItem
+
     private var recyclerView: RecyclerView? = null
     private var adapter: OfferAdapter? = null
     private var albumList: MutableList<Album>? = null
@@ -50,7 +66,7 @@ class OfferKtActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.offer_activity)
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
         initCollapsingToolbar()
@@ -74,6 +90,74 @@ class OfferKtActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+        //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
+        result = drawer {
+
+            toolbar = this@OfferKtActivity.toolbar
+            hasStableIds = true
+            savedInstance = savedInstanceState
+            showOnFirstLaunch = false
+
+            headerResult = accountHeader {
+                background = R.drawable.pozadie
+                savedInstance = savedInstanceState
+                translucentStatusBar = true
+
+            }
+
+            sectionHeader(getString(R.string.app_desc)) {
+                divider = false
+            }
+
+            divider {}
+            primaryItem(getString(R.string.action_loginout)) {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    //navigateToLogin()
+                    false
+                }
+
+            }
+            divider {}
+            primaryItem("Primary item") {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    //navigateToAccountReportsKt()
+                    false
+                }
+
+            }
+
+
+            divider {}
+            secondaryItem("Secondary item") {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    //navigateToSaldoCustomerKt()
+                    false
+                }
+            }
+
+
+            if (BuildConfig.DEBUG) {
+
+                divider {}
+                secondaryItem("Albums DEMO item") {
+
+                    onClick { _ ->
+                        //navigateToAlbumsDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
+
+
+        }
 
     }
 
