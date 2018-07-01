@@ -144,15 +144,22 @@
     <string name="clickchoosecompany">Click to choose your e-shop</string>
 
     //offer activity
+    <string name="action_basket">Basket</string>
+    <string name="action_add_tobasket">Add to Basket</string>
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_getdetail">Get Detail info</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="offeritems">Offer items</string>
+    <string name="searchhint">enter at least 3 characters</string>
+    <string name="action_search">Search</string>
 
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>
 
     //album demo
-    <string name="action_add_favourite">Add to Favourites</string>
-    <string name="action_play_next">Play Next</string>
     <string name="backdrop_title">LOVE MUSIC</string>
     <string name="backdrop_subtitle">This season top 20 albums</string>
+
 
 </resources>

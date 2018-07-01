@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_add_basket"
+        android:orderInCategory="100"
+        android:title="@string/action_add_tobasket" />
+
+    <item
+        android:id="@+id/action_add_favourite"
+        android:orderInCategory="100"
+        android:title="@string/action_add_favourite" />
+
+    <item
+        android:id="@+id/action_detdetail"
+        android:orderInCategory="100"
+        android:title="@string/action_getdetail" />
+
+</menu>

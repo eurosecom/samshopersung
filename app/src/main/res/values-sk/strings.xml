@@ -142,6 +142,16 @@
     <string name="choosecompany">Vybrať eShop</string>
     <string name="clickchoosecompany">Kliknite pre výber e-shopu</string>
 
+    //offer activity
+    <string name="action_basket">Košík</string>
+    <string name="action_add_tobasket">Pridať do košíka</string>
+    <string name="action_add_favourite">Pridať do obľúbených</string>
+    <string name="action_getdetail">Detail info</string>
+    <string name="action_play_next">Prehrať</string>
+    <string name="offeritems">Ponuka tovaru</string>
+    <string name="searchhint">vložte minimálne 3 znaky</string>
+    <string name="action_search">Hladať</string>
+
 
     //room demo
     <string name="price_format">$%1$s</string>

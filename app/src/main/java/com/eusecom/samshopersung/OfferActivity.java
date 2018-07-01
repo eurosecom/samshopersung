@@ -1,16 +1,22 @@
 package com.eusecom.samshopersung;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
  
@@ -23,8 +29,13 @@ import java.util.List;
 public class OfferActivity extends AppCompatActivity {
  
     private RecyclerView recyclerView;
-    private AlbumsAdapter adapter;
+    private OfferAdapter adapter;
     private List<Album> albumList;
+
+    //searchview from DocSearchActivity
+    private SearchView searchView;
+    private MenuItem menuItem;
+    SearchManager searchManager;
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +49,7 @@ public class OfferActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
  
         albumList = new ArrayList<>();
-        adapter = new AlbumsAdapter(this, albumList);
+        adapter = new OfferAdapter(this, albumList);
  
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -49,7 +60,7 @@ public class OfferActivity extends AppCompatActivity {
         prepareAlbums();
  
         try {
-            Glide.with(this).load(R.drawable.cover).into((ImageView) findViewById(R.id.backdrop));
+            Glide.with(this).load(R.drawable.pozadie).into((ImageView) findViewById(R.id.backdrop));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,7 +88,7 @@ public class OfferActivity extends AppCompatActivity {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.app_name));
+                    collapsingToolbar.setTitle(getString(R.string.offeritems));
                     isShow = true;
                 } else if (isShow) {
                     collapsingToolbar.setTitle(" ");
@@ -182,4 +193,36 @@ public class OfferActivity extends AppCompatActivity {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
+    //option menu
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.offeractivity_menu, menu);
+        menuItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
+        searchView.setQueryHint(getString(R.string.searchhint));
+        //getObservableSearchViewText(); from docsearchactivity
+
+        return true;
+    }
+
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+
+            Intent is = new Intent(this, SettingsActivity.class);
+            startActivity(is);
+            return true;
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 }
