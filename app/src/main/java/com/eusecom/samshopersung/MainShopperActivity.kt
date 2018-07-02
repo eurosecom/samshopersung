@@ -131,7 +131,7 @@ class MainShopperActivity : AppCompatActivity() {
                     identifier = 100_000
 
                     onClick { _ ->
-                        //navigateToLogin()
+                        navigateToLogin()
                         false
                     }
 
@@ -335,7 +335,7 @@ class MainShopperActivity : AppCompatActivity() {
     fun showLoginAlert() {
 
         alert(getString(R.string.nologin), getString(R.string.action_nologin)) {
-            yesButton { //navigateToLogin()
+            yesButton { navigateToLogin()
                  }
             noButton {}
         }.show()
@@ -346,7 +346,7 @@ class MainShopperActivity : AppCompatActivity() {
     fun showDonotloginAlert() {
 
         alert(getString(R.string.donotlogin), getString(R.string.action_login)) {
-            yesButton { //navigateToLogin()
+            yesButton { navigateToLogin()
                  }
             noButton {}
         }.show()
@@ -357,7 +357,7 @@ class MainShopperActivity : AppCompatActivity() {
     fun showDonotcompanyAlert() {
 
         alert(getString(R.string.donotcompany), getString(R.string.getcompany)) {
-            yesButton { //navigateToGetCompany()
+            yesButton { navigateToGetCompany()
                  }
             noButton {}
         }.show()

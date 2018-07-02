@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -40,6 +41,9 @@ public class DomainsViewModelActivity extends AppCompatActivity {
 
     @BindView(R.id.click_count_text)
     protected TextView clickCountText;
+
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
 
     @BindView(R.id.recyclerview)
     protected RecyclerView mRecyclerView;
@@ -81,8 +85,8 @@ public class DomainsViewModelActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this, factory).get(DomainsViewModel.class);
         displayClickCount(viewModel.getCount());
 
-        getSupportActionBar().setTitle(getString(R.string.action_setdomain) + " / "
-                + mSharedPreferences.getString("servername", ""));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.action_setdomain) + " / " + mSharedPreferences.getString("servername", ""));
 
         listener = (item, pos) -> {
             Toast.makeText(this, "Server " + item.getDomain(), Toast.LENGTH_SHORT).show();
