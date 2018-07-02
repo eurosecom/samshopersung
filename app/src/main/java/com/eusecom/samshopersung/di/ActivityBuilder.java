@@ -6,6 +6,7 @@ import com.eusecom.samshopersung.ChooseCompanyActivity;
 import com.eusecom.samshopersung.DomainsViewModelActivity;
 import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
+import com.eusecom.samshopersung.OfferKtActivity;
 import com.eusecom.samshopersung.di.MainActivityComponent;
 import dagger.Binds;
 import dagger.Module;
@@ -35,4 +36,9 @@ public abstract class ActivityBuilder {
     @IntoMap
     @ActivityKey(DomainsViewModelActivity.class)
     abstract AndroidInjector.Factory<? extends Activity> bindDomainsActivity(DomainsActivityComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @ActivityKey(OfferKtActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindOfferActivity(OfferKtActivityComponent.Builder builder);
 }

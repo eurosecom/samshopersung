@@ -1,6 +1,6 @@
 package com.eusecom.samshopersung.di;
 
-import com.eusecom.samshopersung.DomainsViewModelActivity;
+import com.eusecom.samshopersung.OfferKtActivity;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 
@@ -9,7 +9,7 @@ import dagger.android.AndroidInjector;
  */
 @ShopperScope
 @Subcomponent(modules = MainShopperActivityModule.class)
-public interface DomainsActivityComponent extends AndroidInjector<DomainsViewModelActivity>{
+public interface OfferKtActivityComponent extends AndroidInjector<OfferKtActivity>{
     @Subcomponent.Builder
-    abstract class Builder extends AndroidInjector.Builder<DomainsViewModelActivity>{}
+    abstract class Builder extends AndroidInjector.Builder<OfferKtActivity>{}
 }

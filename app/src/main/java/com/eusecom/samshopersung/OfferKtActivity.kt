@@ -9,25 +9,20 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.*
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.divider
-import co.zsmb.materialdrawerkt.draweritems.profile.profile
-import co.zsmb.materialdrawerkt.draweritems.profile.profileSetting
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.bumptech.glide.Glide
+import com.eusecom.samshopersung.di.ShopperScope
 import com.eusecom.samshopersung.models.Album
-import com.eusecom.samshopersung.realm.RealmDomain
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
@@ -62,8 +57,17 @@ class OfferKtActivity : AppCompatActivity() {
     private var menuItem: MenuItem? = null
     private var searchManager: SearchManager? = null
 
+
+    @Inject
+    lateinit var prefs: SharedPreferences
+
+    @ShopperScope
+    @Inject
+    lateinit var mViewModel: ShopperMvvmViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.offer_activity)
         //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar

@@ -10,7 +10,7 @@ import dagger.android.AndroidInjector;
  * Created by mertsimsek on 25/05/2017.
  */
 @ShopperScope
-@Subcomponent(modules = ChooseCompanyActivityModule.class)
+@Subcomponent(modules = MainShopperActivityModule.class)
 public interface ChooseCompanyActivityComponent extends AndroidInjector<ChooseCompanyActivity>{
     @Subcomponent.Builder
     abstract class Builder extends AndroidInjector.Builder<ChooseCompanyActivity>{}

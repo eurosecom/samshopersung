@@ -33,7 +33,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module(subcomponents = {
         MainActivityComponent.class, MainShopperActivityComponent.class
-        , ChooseCompanyActivityComponent.class, DomainsActivityComponent.class})
+        , ChooseCompanyActivityComponent.class, DomainsActivityComponent.class
+        , OfferKtActivityComponent.class})
 public class AppModule {
 
     String mBaseUrl = "http:\\www.eshoptest.sk";
