@@ -140,7 +140,7 @@
 
     //choosecompanyactivity
     <string name="choosecompany">Vybrať eShop</string>
-    <string name="clickchoosecompany">Kliknite pre výber e-shopu</string>
+    <string name="clickchoosecompany">Vyberte eShop</string>
 
     //offer activity
     <string name="action_basket">Košík</string>

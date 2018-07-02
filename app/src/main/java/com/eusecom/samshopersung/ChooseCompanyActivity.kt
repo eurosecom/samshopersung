@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import com.eusecom.samshopersung.realm.RealmDomain
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.mainshopper_activity.*
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import rx.Observable
@@ -45,8 +47,11 @@ class ChooseCompanyActivity : AppCompatActivity() {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_choosecompany)
+        setContentView(R.layout.choosecompany_activity)
 
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        //toolbar!!.setTitle(getString(R.string.clickchoosecompany))
         supportActionBar!!.setTitle(getString(R.string.clickchoosecompany))
 
         //Bind the recyclerview
@@ -157,7 +162,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.choosecompany_menu, menu)
         return true
     }
 
