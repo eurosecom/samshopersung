@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.eusecom.samshopersung.models.Album;
+import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.RealmDomain;
@@ -131,6 +132,22 @@ public class ShopperMvvmViewModel {
 
     /**
      * end methods for OfferKtActivity
+     */
+
+
+    /**
+     * methods for MapActivity
+     */
+
+    //get Employees from List
+    @NonNull
+    public Observable<List<Employee>> getMyObservableEmployeesFromList() {
+        return mDataModel.prepareEmployeeList();
+    }
+
+
+    /**
+     * end methods for MapActivity
      */
 
 

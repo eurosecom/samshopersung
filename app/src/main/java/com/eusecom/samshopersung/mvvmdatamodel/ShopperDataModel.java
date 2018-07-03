@@ -13,6 +13,7 @@ import rx.Observable;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.R;
 import com.eusecom.samshopersung.models.Album;
+import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
@@ -166,6 +167,34 @@ public class ShopperDataModel implements ShopperIDataModel {
 
 
     //end methods for OfferKtActivity
+
+    //methods for MapActivity
+    public Observable<List<Employee>> prepareEmployeeList() {
+
+        List<Employee> employeeList = new ArrayList<>();
+
+        Employee emp = new Employee("username1", "1");
+        emp.setLati("48.6880712");
+        emp.setLongi("17.3694098");
+        emp.setUsatw("1");
+        employeeList.add(emp);
+
+        Employee emp2 = new Employee("username2", "2");
+        emp2.setLati("48.6840712");
+        emp2.setLongi("17.3404098");
+        emp2.setUsatw("1");
+        employeeList.add(emp2);
+
+        Employee emp3 = new Employee("username3", "3");
+        emp3.setLati("48.6920712");
+        emp3.setLongi("17.3904098");
+        emp3.setUsatw("1");
+        employeeList.add(emp3);
+
+
+        return Observable.just(employeeList);
+    }
+    //end methods for MapActivity
 
     //set retrofit by runtime
     public void setRetrofit(String servername) {

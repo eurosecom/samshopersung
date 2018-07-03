@@ -78,10 +78,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         private void bind() {
 
-                //mSubscription.add(mViewModel.getObservableFbEmployeeAtWork()
-                //        .subscribeOn(Schedulers.computation())
-                //        .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                //        .subscribe(this::setEmployeesAtWork));
+                mSubscription.add(mViewModel.getMyObservableEmployeesFromList()
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                        .subscribe(this::setEmployeesAtWork));
 
         }
 
