@@ -11,6 +11,8 @@ import io.realm.RealmResults;
 import rx.Observable;
 
 import com.eusecom.samshopersung.CompanyKt;
+import com.eusecom.samshopersung.R;
+import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
@@ -37,7 +39,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
 
 
-    //method for ChooseCompanyuActivity
+    //methods for ChooseCompanyActivity
 
     @Override
     public Observable<List<CompanyKt>> getCompaniesFromMysqlServer(String servername, String userhash, String userid) {
@@ -96,9 +98,9 @@ public class ShopperDataModel implements ShopperIDataModel {
         });
 
     }
+    //end methods for ChooseCompanyActivity
 
-
-    //method for DomainsActivity
+    //methods for DomainsActivity
     @NonNull
     @Override
     public Observable<List<RealmDomain>> getDomainsFromRealm() {
@@ -109,6 +111,61 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         return Observable.just(results);
     }
+    //end methods for DomainsActivity
+
+
+    //methods for OfferKtActivity
+    public Observable<List<Album>> prepareAlbumsList() {
+
+        List<Album> albumList = new ArrayList<>();;
+        int[] covers = new int[]{
+                R.drawable.album1,
+                R.drawable.album2,
+                R.drawable.album3,
+                R.drawable.album4,
+                R.drawable.album5,
+                R.drawable.album6,
+                R.drawable.album7,
+                R.drawable.album8,
+                R.drawable.album9,
+                R.drawable.album10,
+                R.drawable.album11};
+
+        Album a = new Album("True Romance", 13, covers[0]);
+        albumList.add(a);
+
+        a = new Album("Xscpae", 8, covers[1]);
+        albumList.add(a);
+
+        a = new Album("Maroon 5*", 11, covers[2]);
+        albumList.add(a);
+
+        a = new Album("Born to Die", 12, covers[3]);
+        albumList.add(a);
+
+        a = new Album("Honeymoon", 14, covers[4]);
+        albumList.add(a);
+
+        a = new Album("I Need a Doctor", 1, covers[5]);
+        albumList.add(a);
+
+        a = new Album("Loud", 11, covers[6]);
+        albumList.add(a);
+
+        a = new Album("Legend", 14, covers[7]);
+        albumList.add(a);
+
+        a = new Album("Hello", 11, covers[8]);
+        albumList.add(a);
+
+        a = new Album("Greatest Hits", 17, covers[9]);
+        albumList.add(a);
+
+        return Observable.just(albumList);
+    }
+
+
+    //end methods for OfferKtActivity
 
     //set retrofit by runtime
     public void setRetrofit(String servername) {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.eusecom.samshopersung.models.Album;
+import com.eusecom.samshopersung.realm.RealmDomain;
 
 import java.util.List;
  
@@ -39,6 +40,11 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.MyViewHolder
     public OfferAdapter(Context mContext, List<Album> albumList) {
         this.mContext = mContext;
         this.albumList = albumList;
+    }
+
+    public void setDataItems(List<Album> albums) {
+        albumList = albums;
+        notifyDataSetChanged();
     }
  
     @Override

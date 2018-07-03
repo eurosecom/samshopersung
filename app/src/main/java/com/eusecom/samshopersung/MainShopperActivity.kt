@@ -74,11 +74,11 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         button1.setOnClickListener {
-            _ -> navigateToOfferKt()
+            //_ -> navigateToOfferKt()
         }
 
         button2.setOnClickListener {
-            _ -> navigateToOffer()
+            _ -> navigateToOfferKt()
         }
 
         button3.setOnClickListener {
@@ -273,12 +273,6 @@ class MainShopperActivity : AppCompatActivity() {
         startActivity(`is`)
     }
 
-
-    fun navigateToOffer() {
-
-        val `is` = Intent(this, OfferActivity::class.java)
-        startActivity(`is`)
-    }
 
     fun navigateToOfferKt() {
 

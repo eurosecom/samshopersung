@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.RealmDomain;
@@ -55,7 +57,9 @@ public class ShopperMvvmViewModel {
     }
 
 
-    //recyclerview method for ChooseCompanyActivity
+    /**
+     * methods for ChooseCompanyActivity
+     */
 
     //get companies from MySql server
     public Observable<List<CompanyKt>> getMyCompaniesFromServer() {
@@ -108,6 +112,26 @@ public class ShopperMvvmViewModel {
 
     }
     //end emit Save DomainToRealm
+
+    /**
+     * end methods for ChooseCompanyActivity
+     */
+
+
+    /**
+     * methods for OfferKtActivity
+     */
+
+    //get Albums from List
+    @NonNull
+    public Observable<List<Album>> getMyObservableAlbumsFromList() {
+        return mDataModel.prepareAlbumsList();
+    }
+
+
+    /**
+     * end methods for OfferKtActivity
+     */
 
 
 }

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.*
+import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
@@ -57,13 +58,14 @@ class OfferKtActivity : AppCompatActivity() {
     private var menuItem: MenuItem? = null
     private var searchManager: SearchManager? = null
 
-
     @Inject
     lateinit var prefs: SharedPreferences
 
     @ShopperScope
     @Inject
     lateinit var mViewModel: ShopperMvvmViewModel
+
+    var mSubscription: CompositeSubscription = CompositeSubscription()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -86,7 +88,10 @@ class OfferKtActivity : AppCompatActivity() {
         recyclerView?.setItemAnimator(DefaultItemAnimator())
         recyclerView?.setAdapter(adapter)
 
-        prepareAlbums()
+        //old version
+        //prepareAlbums()
+        //new Mvvm approach
+        bind()
 
         try {
             Glide.with(this).load(R.drawable.pozadie).into(findViewById<View>(R.id.backdrop) as ImageView)
@@ -163,6 +168,38 @@ class OfferKtActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun bind() {
+
+        //andrejko showProgressBar()
+        mSubscription.add(mViewModel.myObservableAlbumsFromList
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
+                    //andrejko hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setAlbums(it) }))
+
+
+    }
+
+    private fun setAlbums(albums: List<Album>) {
+
+        //toast("${albums.get(0).name } name0")
+        albumList = albums.toMutableList()
+        adapter?.setDataItems(albumList)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mSubscription?.unsubscribe()
+        mSubscription?.clear()
+        //andrejko hideProgressBar()
+        //mViewModel.clearObservableSaveDomainToRealm()
     }
 
 
