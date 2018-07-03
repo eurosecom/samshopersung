@@ -210,6 +210,20 @@ class MainShopperActivity : AppCompatActivity() {
 
             }
 
+            if (BuildConfig.DEBUG) {
+
+                divider {}
+                secondaryItem("Map DEMO ") {
+
+                    onClick { _ ->
+                        navigateToMapActivity()
+                        false
+                    }
+                }
+            }else {
+
+            }
+
 
         }
 
@@ -270,6 +284,12 @@ class MainShopperActivity : AppCompatActivity() {
     fun navigateToAlbumsDemo() {
 
         val `is` = Intent(this, AlbumsActivity::class.java)
+        startActivity(`is`)
+    }
+
+    fun navigateToMapActivity() {
+
+        val `is` = Intent(this, MapActivity::class.java)
         startActivity(`is`)
     }
 
