@@ -268,7 +268,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
   override fun onDestroy() {
     super.onDestroy()
-    //no matters map.clear()
+    //no matters to memory leak map.clear()
+    //no matters to memory leak fusedLocationClient.removeLocationUpdates(locationCallback)
+
+    if (ActivityCompat.checkSelfPermission(this,
+            android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this,
+              arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+      return
+    }
+    //no matters to memory leak map.setMyLocationEnabled(false)
+    fusedLocationClient.removeLocationUpdates(locationCallback)
 
   }
 
