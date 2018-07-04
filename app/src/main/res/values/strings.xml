@@ -161,5 +161,8 @@
     <string name="backdrop_title">LOVE MUSIC</string>
     <string name="backdrop_subtitle">This season top 20 albums</string>
 
+    //mapsactivity
+    <string name="title_activity_maps">Map</string>
+
 
 </resources>

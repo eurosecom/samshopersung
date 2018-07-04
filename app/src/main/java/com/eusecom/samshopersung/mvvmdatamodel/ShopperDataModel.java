@@ -180,14 +180,14 @@ public class ShopperDataModel implements ShopperIDataModel {
         employeeList.add(emp);
 
         Employee emp2 = new Employee("username2", "2");
-        emp2.setLati("48.6840712");
-        emp2.setLongi("17.3404098");
+        emp2.setLati("48.5810712");
+        emp2.setLongi("17.3594098");
         emp2.setUsatw("1");
         employeeList.add(emp2);
 
         Employee emp3 = new Employee("username3", "3");
-        emp3.setLati("48.6920712");
-        emp3.setLongi("17.3904098");
+        emp3.setLati("48.6990712");
+        emp3.setLongi("17.3994098");
         emp3.setUsatw("1");
         employeeList.add(emp3);
 
