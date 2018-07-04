@@ -94,10 +94,10 @@ dependencies {
 
     //Firebase
     //Firebase Authentication email password
-    implementation 'com.google.firebase:firebase-auth:9.6.0'
+    implementation 'com.google.firebase:firebase-auth:11.8.0'
     //Firebase database
     implementation 'com.firebaseui:firebase-ui-database:0.4.0'
-    implementation 'com.google.firebase:firebase-database:9.6.0'
+    implementation 'com.google.firebase:firebase-database:11.8.0'
 
     //picasso
     implementation 'com.squareup.picasso:picasso:2.5.0'
@@ -139,7 +139,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     //google maps
-    compile 'com.google.android.gms:play-services-maps:9.6.0'
+    compile 'com.google.android.gms:play-services-maps:11.8.0'
+    implementation 'com.google.android.gms:play-services-location:11.8.0'
+    implementation 'com.google.android.gms:play-services-places:11.8.0'
 
 
 }
