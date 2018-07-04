@@ -106,7 +106,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     }
   }
 
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == REQUEST_CHECK_SETTINGS) {
       if (resultCode == Activity.RESULT_OK) {
@@ -265,4 +265,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
       e.printStackTrace()
     }
   }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    //no matters map.clear()
+
+  }
+
+
+
 }
