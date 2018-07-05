@@ -35,7 +35,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
     lateinit var prefs: SharedPreferences
 
     @Inject
-    lateinit var mViewModel: ShopperMvvmViewModel
+    lateinit var mViewModel: ShopperIMvvmViewModel
 
     private lateinit var recyclerView: RecyclerView
 

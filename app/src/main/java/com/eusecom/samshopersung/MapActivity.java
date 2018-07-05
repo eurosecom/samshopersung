@@ -27,7 +27,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SharedPreferences mSharedPreferences;
 
         @Inject
-        ShopperMvvmViewModel mViewModel;
+        ShopperIMvvmViewModel mViewModel;
 
         @NonNull
         private CompositeSubscription mSubscription;

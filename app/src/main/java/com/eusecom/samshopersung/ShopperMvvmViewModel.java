@@ -15,9 +15,6 @@ import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.RealmDomain;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import rx.Observable;
@@ -27,7 +24,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * View model for the CompaniesMvvmActivity.
  */
-public class ShopperMvvmViewModel {
+public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     //@Inject only by Base constructor injection, then i have got all provided dependencies in module DgFirebaseSubModule
     // injected in class DgAllEmpsAbsListFragment where i inject DgAllEmpsAbsMvvmViewModel

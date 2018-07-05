@@ -63,7 +63,7 @@ class OfferKtActivity : AppCompatActivity() {
 
     @ShopperScope
     @Inject
-    lateinit var mViewModel: ShopperMvvmViewModel
+    lateinit var mViewModel: ShopperIMvvmViewModel
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
 

@@ -47,7 +47,7 @@ class MainShopperActivity : AppCompatActivity() {
 
     @ShopperScope
     @Inject
-    lateinit var mViewModel: ShopperMvvmViewModel
+    lateinit var mViewModel: ShopperIMvvmViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
