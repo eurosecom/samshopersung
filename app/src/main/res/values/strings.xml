@@ -152,6 +152,8 @@
     <string name="offeritems">Offer items</string>
     <string name="searchhint">enter at least 3 characters</string>
     <string name="action_search">Search</string>
+    <string name="offerbackdrop_title">Offer items</string>
+    <string name="offerbackdrop_subtitle">Offer items subtitle</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

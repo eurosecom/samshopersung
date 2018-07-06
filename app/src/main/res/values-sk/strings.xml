@@ -151,6 +151,8 @@
     <string name="offeritems">Ponuka tovaru</string>
     <string name="searchhint">vložte minimálne 3 znaky</string>
     <string name="action_search">Hladať</string>
+    <string name="offerbackdrop_title">Ponuka tovaru</string>
+    <string name="offerbackdrop_subtitle">Ponuka tovaru subtitle</string>
 
 
     //room demo

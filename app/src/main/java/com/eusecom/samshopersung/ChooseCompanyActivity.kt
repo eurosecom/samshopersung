@@ -29,7 +29,7 @@ import javax.inject.Inject
  * github https://github.com/prajakta05/recyclerviewKotlin
  */
 
-class ChooseCompanyActivity : AppCompatActivity() {
+class ChooseCompanyActivity : BaseActivity() {
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -142,14 +142,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
         }
         hideProgressBar()
     }
-
-    protected fun showProgressBar() {
-        mProgressBar?.setVisibility(View.VISIBLE)
-    }
-
-    protected fun hideProgressBar() {
-        mProgressBar?.setVisibility(View.GONE)
-    }
+    
 
     override fun onDestroy() {
         super.onDestroy()

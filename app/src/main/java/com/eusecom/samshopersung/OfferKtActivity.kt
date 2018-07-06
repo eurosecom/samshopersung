@@ -50,8 +50,9 @@ class OfferKtActivity : AppCompatActivity() {
     private lateinit var headerProfil: ProfileDrawerItem
 
     private var recyclerView: RecyclerView? = null
-    private var adapter: OfferAdapter? = null
+    private var adapter: OfferProductAdapter? = null
     private var albumList: MutableList<Album>? = null
+    private var productList: MutableList<ProductKt>? = null
 
     //searchview from DocSearchActivity
     private var searchView: SearchView? = null
@@ -71,7 +72,7 @@ class OfferKtActivity : AppCompatActivity() {
 
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.offer_activity)
+        setContentView(R.layout.offerproduct_activity)
         //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
@@ -79,8 +80,8 @@ class OfferKtActivity : AppCompatActivity() {
 
         recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
 
-        albumList = ArrayList<Album>()
-        adapter = OfferAdapter(this, albumList)
+        productList = ArrayList<ProductKt>()
+        adapter = OfferProductAdapter(this, productList)
 
         val mLayoutManager = GridLayoutManager(this, 2)
         recyclerView?.setLayoutManager(mLayoutManager)
@@ -198,23 +199,17 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     private fun setServerIProducts(products: List<ProductKt>) {
-        
+
         Log.d("showProduct ", products.get(0).nat);
-        //andrejko productszal = products
-        if (products.isEmpty()) {
-            //andrejko mAdapter.setAbsserver(emptyList<ProductKt>())
-        } else {
-            //andrejko mAdapter.setAbsserver(products)
-        }
-        //andrejko nastavResultAs(products)
-        //andrejko hideProgressBar()
+        productList = products.toMutableList()
+        adapter?.setProductItems(productList)
     }
 
     private fun setAlbums(albums: List<Album>) {
 
         //toast("${albums.get(0).name } name0")
-        albumList = albums.toMutableList()
-        adapter?.setDataItems(albumList)
+        //albumList = albums.toMutableList()
+        //adapter?.setDataItems(albumList)
     }
 
     override fun onDestroy() {
@@ -255,47 +250,6 @@ class OfferKtActivity : AppCompatActivity() {
             }
         })
     }
-
-
-    /**
-     * Adding few albums for testing
-     */
-    private fun prepareAlbums() {
-        val covers = intArrayOf(R.drawable.album1, R.drawable.album2, R.drawable.album3, R.drawable.album4, R.drawable.album5, R.drawable.album6, R.drawable.album7, R.drawable.album8, R.drawable.album9, R.drawable.album10, R.drawable.album11)
-
-        var a = Album("True Romance", 13, covers[0])
-        albumList?.add(a)
-
-        a = Album("Xscpae", 8, covers[1])
-        albumList?.add(a)
-
-        a = Album("Maroon 5", 11, covers[2])
-        albumList?.add(a)
-
-        a = Album("Born to Die", 12, covers[3])
-        albumList?.add(a)
-
-        a = Album("Honeymoon", 14, covers[4])
-        albumList?.add(a)
-
-        a = Album("I Need a Doctor", 1, covers[5])
-        albumList?.add(a)
-
-        a = Album("Loud", 11, covers[6])
-        albumList?.add(a)
-
-        a = Album("Legend", 14, covers[7])
-        albumList?.add(a)
-
-        a = Album("Hello", 11, covers[8])
-        albumList?.add(a)
-
-        a = Album("Greatest Hits", 17, covers[9])
-        albumList?.add(a)
-
-        adapter?.notifyDataSetChanged()
-    }
-
 
     /**
      * RecyclerView item decoration - give equal margin around grid item
