@@ -20,13 +20,14 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     private List<ProductKt> productList;
  
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, count;
+        public TextView title, count, count1;
         public ImageView thumbnail, overflow;
  
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             count = (TextView) view.findViewById(R.id.count);
+            count1 = (TextView) view.findViewById(R.id.count1);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
         }
@@ -55,7 +56,14 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         ProductKt prod = productList.get(position);
         holder.title.setText(prod.getNat());
-        holder.count.setText(prod.getCed() + " ced");
+
+        holder.count1.setVisibility(View.VISIBLE);
+        if( prod.getCed1().equals("0")) {
+            holder.count1.setVisibility(View.GONE);
+        }
+
+        holder.count.setText(prod.getCed() + " €");
+        holder.count1.setText(prod.getCed1() + " €");
 
         String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
         // loading prod cover using Glide library

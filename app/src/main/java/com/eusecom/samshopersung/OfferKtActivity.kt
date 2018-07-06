@@ -155,20 +155,6 @@ class OfferKtActivity : AppCompatActivity() {
             }
 
 
-            if (BuildConfig.DEBUG) {
-
-                divider {}
-                secondaryItem("Albums DEMO item") {
-
-                    onClick { _ ->
-                        //navigateToAlbumsDemo()
-                        false
-                    }
-                }
-            }else {
-
-            }
-
 
         }
 
