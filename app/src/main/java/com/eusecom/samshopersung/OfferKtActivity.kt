@@ -15,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
@@ -43,7 +44,7 @@ import javax.inject.Inject
  * github https://github.com/prajakta05/recyclerviewKotlin
  */
 
-class OfferKtActivity : BaseActivity() {
+class OfferKtActivity : AppCompatActivity() {
 
     private lateinit var result: Drawer
     private lateinit var headerResult: AccountHeader
@@ -67,6 +68,7 @@ class OfferKtActivity : BaseActivity() {
     lateinit var mViewModel: ShopperIMvvmViewModel
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
+    private var mProgressBar: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -79,6 +81,7 @@ class OfferKtActivity : BaseActivity() {
         initCollapsingToolbar()
 
         recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
+        mProgressBar = findViewById<View>(R.id.progress_bar) as ProgressBar
 
         productList = ArrayList<ProductKt>()
         adapter = OfferProductAdapter(this, productList)
@@ -174,17 +177,6 @@ class OfferKtActivity : BaseActivity() {
     private fun bind() {
 
         showProgressBar()
-        mSubscription.add(mViewModel.myObservableAlbumsFromList
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
-                    //hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setAlbums(it) }))
-
         mSubscription.add(mViewModel.getMyProductsFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -206,12 +198,6 @@ class OfferKtActivity : BaseActivity() {
         hideProgressBar()
     }
 
-    private fun setAlbums(albums: List<Album>) {
-
-        //toast("${albums.get(0).name } name0")
-        //albumList = albums.toMutableList()
-        //adapter?.setDataItems(albumList)
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -310,6 +296,14 @@ class OfferKtActivity : BaseActivity() {
     inline fun consume(f: () -> Unit): Boolean {
         f()
         return true
+    }
+
+    protected fun showProgressBar() {
+        mProgressBar?.setVisibility(View.VISIBLE)
+    }
+
+    protected fun hideProgressBar() {
+        mProgressBar?.setVisibility(View.GONE)
     }
 
 
