@@ -56,9 +56,10 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
         ProductKt prod = productList.get(position);
         holder.title.setText(prod.getNat());
         holder.count.setText(prod.getCed() + " ced");
- 
+
+        String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
         // loading prod cover using Glide library
-        //Glide.with(mContext).load(prod.getThumbnail()).into(holder.thumbnail);
+        Glide.with(mContext).load(imageurl).into(holder.thumbnail);
  
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override

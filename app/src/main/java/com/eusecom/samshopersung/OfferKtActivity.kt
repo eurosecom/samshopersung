@@ -184,7 +184,30 @@ class OfferKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setAlbums(it) }))
 
+        mSubscription.add(mViewModel.getMyProductsFromSqlServer("1")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
+                    //andrejko hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setServerIProducts(it) }))
 
+    }
+
+    private fun setServerIProducts(products: List<ProductKt>) {
+        
+        Log.d("showProduct ", products.get(0).nat);
+        //andrejko productszal = products
+        if (products.isEmpty()) {
+            //andrejko mAdapter.setAbsserver(emptyList<ProductKt>())
+        } else {
+            //andrejko mAdapter.setAbsserver(products)
+        }
+        //andrejko nastavResultAs(products)
+        //andrejko hideProgressBar()
     }
 
     private fun setAlbums(albums: List<Album>) {

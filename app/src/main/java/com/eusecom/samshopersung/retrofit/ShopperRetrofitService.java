@@ -2,6 +2,7 @@ package com.eusecom.samshopersung.retrofit;
 
 
 import com.eusecom.samshopersung.CompanyKt;
+import com.eusecom.samshopersung.ProductKt;
 
 import java.util.List;
 
@@ -11,8 +12,15 @@ import rx.Observable;
 
 public interface ShopperRetrofitService {
 
-    //recyclerview method for ChooseCompanyActivity
+    //method for ChooseCompanyActivity
     @GET("/androidfantozzi/get_all_firmy.php")
     Observable<List<CompanyKt>> getCompaniesFromServer(@Query("userhash") String userhash, @Query("userid") String userid);
+
+    //methods for OfferKtActivity
+    @GET("/androidshopper/get_products.php")
+    Observable<List<ProductKt>> getProductsFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
 
 }
