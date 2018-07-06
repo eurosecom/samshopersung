@@ -41,7 +41,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class EmailPasswordActivity extends BaseListActivity implements
+public class EmailPasswordActivity extends BaseActivity implements
         View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -128,7 +128,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
         if (!validateForm()) {
             return;
         }
-        showProgressDialog();
+        showProgressBar();
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -145,7 +145,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            hideProgressDialog();
+                            hideProgressBar();
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -163,7 +163,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
             return;
         }
 
-        showProgressDialog();
+        showProgressBar();
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -180,7 +180,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            hideProgressDialog();
+                            hideProgressBar();
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -225,7 +225,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
                         String approvetopic = "approve" + userico;
                         String mytopic = "mytopic" + myuserid;
 
-                        hideProgressDialog();
+                        hideProgressBar();
 
                     }
 
@@ -245,7 +245,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
                         editor.putString("firnaz", "").apply();
 
                         editor.commit();
-                        hideProgressDialog();
+                        hideProgressBar();
                     }
                 });
 
@@ -272,7 +272,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
 
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail(), "0", "0", "0", "0");
-        hideProgressDialog();
+        hideProgressBar();
 
     }
 
@@ -299,7 +299,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
     // [END basic_write]
 
     private void signOut() {
-        showProgressDialog();
+        showProgressBar();
         mAuth.signOut();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = prefs.edit();
@@ -316,7 +316,7 @@ public class EmailPasswordActivity extends BaseListActivity implements
         String approvetopic = "approve" + userico;
         String mytopic = "mytopic" + myuserid;
 
-        hideProgressDialog();
+        hideProgressBar();
 
         updateUI(null);
     }

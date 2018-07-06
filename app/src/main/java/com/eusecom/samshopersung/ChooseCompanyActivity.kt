@@ -142,7 +142,7 @@ class ChooseCompanyActivity : BaseActivity() {
         }
         hideProgressBar()
     }
-    
+
 
     override fun onDestroy() {
         super.onDestroy()

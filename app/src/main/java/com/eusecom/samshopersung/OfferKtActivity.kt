@@ -43,7 +43,7 @@ import javax.inject.Inject
  * github https://github.com/prajakta05/recyclerviewKotlin
  */
 
-class OfferKtActivity : AppCompatActivity() {
+class OfferKtActivity : BaseActivity() {
 
     private lateinit var result: Drawer
     private lateinit var headerResult: AccountHeader
@@ -173,13 +173,13 @@ class OfferKtActivity : AppCompatActivity() {
 
     private fun bind() {
 
-        //andrejko showProgressBar()
+        showProgressBar()
         mSubscription.add(mViewModel.myObservableAlbumsFromList
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
                     Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
-                    //andrejko hideProgressBar()
+                    //hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
@@ -190,7 +190,7 @@ class OfferKtActivity : AppCompatActivity() {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
                     Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
-                    //andrejko hideProgressBar()
+                    hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
@@ -203,6 +203,7 @@ class OfferKtActivity : AppCompatActivity() {
         Log.d("showProduct ", products.get(0).nat);
         productList = products.toMutableList()
         adapter?.setProductItems(productList)
+        hideProgressBar()
     }
 
     private fun setAlbums(albums: List<Album>) {
@@ -216,7 +217,7 @@ class OfferKtActivity : AppCompatActivity() {
         super.onDestroy()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
-        //andrejko hideProgressBar()
+        hideProgressBar()
         //mViewModel.clearObservableSaveDomainToRealm()
     }
 
