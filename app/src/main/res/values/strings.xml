@@ -155,6 +155,10 @@
     <string name="offerbackdrop_title">Offer items</string>
     <string name="offerbackdrop_subtitle">Offer items subtitle</string>
 
+    <string name="choosecat">Choose category</string>
+    <string name="allcat">All categories</string>
+    <string name="favitems">Favourite items</string>
+
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>

@@ -53,9 +53,10 @@
                         android:textSize="@dimen/backdrop_title" />
  
                     <TextView
+                        android:id="@+id/offersubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/offerbackdrop_subtitle"
+                        android:text="@string/allcat"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_subtitle" />
  

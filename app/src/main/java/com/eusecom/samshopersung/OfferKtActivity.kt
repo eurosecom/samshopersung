@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
@@ -27,7 +28,10 @@ import com.eusecom.samshopersung.di.ShopperScope
 import com.eusecom.samshopersung.models.Album
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.DividerDrawerItem
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.mainshopper_activity.*
 import org.jetbrains.anko.support.v4.toast
@@ -54,6 +58,7 @@ class OfferKtActivity : AppCompatActivity() {
     private var adapter: OfferProductAdapter? = null
     private var albumList: MutableList<Album>? = null
     private var productList: MutableList<ProductKt>? = null
+    private var offersubtitle: TextView? = null
 
     //searchview from DocSearchActivity
     private var searchView: SearchView? = null
@@ -82,6 +87,7 @@ class OfferKtActivity : AppCompatActivity() {
 
         recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
         mProgressBar = findViewById<View>(R.id.progress_bar) as ProgressBar
+        offersubtitle = findViewById<View>(R.id.offersubtitle) as TextView
 
         productList = ArrayList<ProductKt>()
         adapter = OfferProductAdapter(this, productList)
@@ -118,28 +124,26 @@ class OfferKtActivity : AppCompatActivity() {
 
             }
 
-            sectionHeader(getString(R.string.app_desc)) {
+            sectionHeader(getString(R.string.choosecat)) {
                 divider = false
             }
 
             divider {}
-            primaryItem("Primary item") {
+            primaryItem(getString(R.string.allcat)) {
 
                 onClick { _ ->
-                    //Log.d("DRAWER", "Click.")
-                    //navigateToAccountReportsKt()
+                    navigateToCategory("0")
                     false
                 }
 
             }
 
-
             divider {}
-            secondaryItem("Secondary item") {
+            primaryItem(getString(R.string.favitems)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    //navigateToSaldoCustomerKt()
+                    navigateToCategory("99999")
                     false
                 }
             }
@@ -180,6 +184,25 @@ class OfferKtActivity : AppCompatActivity() {
     private fun setServerCategories(cats: List<CategoryKt>) {
 
         Log.d("showCategory ", cats.get(0).nac);
+
+        cats.forEach { i ->
+
+            result.addItemsAtPosition(6, DividerDrawerItem())
+            result.addItemsAtPosition(7, PrimaryDrawerItem().withName(i.nac)
+                    .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                        override fun onItemClick(view: View, position: Int, drawerItem: IDrawerItem<out Any?, out RecyclerView.ViewHolder>?): Boolean {
+                            Log.d("DRAWER", i.nac + " Clicked!")
+
+
+                            //return true //remain opened drawer
+                            return false
+                        }
+                    })
+
+            )
+        }
+
+
 
     }
 
@@ -283,6 +306,11 @@ class OfferKtActivity : AppCompatActivity() {
     fun navigateToSettings(){
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
+    }
+
+    fun navigateToCategory(cat: String){
+        if(cat.equals("0")) { offersubtitle?.text = getString(R.string.allcat) }
+        if(cat.equals("99999")) { offersubtitle?.text = getString(R.string.favitems) }
     }
 
     //consume oncreateoptionmenu
