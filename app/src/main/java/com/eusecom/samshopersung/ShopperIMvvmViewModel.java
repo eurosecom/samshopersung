@@ -28,6 +28,9 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<ProductKt>> getMyProductsFromSqlServer(String drh);
 
+    @NonNull
+    public Observable<List<CategoryKt>> getMyCatsFromSqlServer(String drh);
+
 
     //methods for MapActivity
     @NonNull

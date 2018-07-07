@@ -123,16 +123,6 @@ class OfferKtActivity : AppCompatActivity() {
             }
 
             divider {}
-            primaryItem(getString(R.string.action_loginout)) {
-
-                onClick { _ ->
-                    //Log.d("DRAWER", "Click.")
-                    //navigateToLogin()
-                    false
-                }
-
-            }
-            divider {}
             primaryItem("Primary item") {
 
                 onClick { _ ->
@@ -172,11 +162,28 @@ class OfferKtActivity : AppCompatActivity() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setServerIProducts(it) }))
+                .subscribe({ it -> setServerProducts(it) }))
+
+        mSubscription.add(mViewModel.getMyCatsFromSqlServer("1")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setServerCategories(it) }))
 
     }
 
-    private fun setServerIProducts(products: List<ProductKt>) {
+    private fun setServerCategories(cats: List<CategoryKt>) {
+
+        Log.d("showCategory ", cats.get(0).nac);
+
+    }
+
+    private fun setServerProducts(products: List<ProductKt>) {
 
         Log.d("showProduct ", products.get(0).nat);
         productList = products.toMutableList()
