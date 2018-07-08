@@ -316,8 +316,22 @@ class MainShopperActivity : AppCompatActivity() {
 
     fun navigateToOfferKt() {
 
-        val `is` = Intent(this, OfferKtActivity::class.java)
-        startActivity(`is`)
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, OfferKtActivity::class.java)
+                startActivity(`is`)
+            }
+
+        }
+
     }
 
     fun navigateToSettings(){

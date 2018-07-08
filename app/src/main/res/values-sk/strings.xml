@@ -27,7 +27,7 @@
     <string name="resetpass_title">Resetovať heslo</string>
     <string name="resetpass_summary">Resetovať heslo FB účtu</string>
     <string name="company">Firma</string>
-    <string name="getcompany">Get company</string>
+    <string name="getcompany">Vybrať firmu</string>
     <string name="textok">Ok</string>
     <string name="donotlogin">Musíte vytvoriť email účet a prihlásiť sa.</string>
     <string name="didnotlogin">Nie ste prihlásený</string>
