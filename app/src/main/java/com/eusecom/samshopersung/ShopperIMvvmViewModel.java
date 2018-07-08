@@ -31,6 +31,10 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<CategoryKt>> getMyCatsFromSqlServer(String drh);
 
+    //methods for BasketKtActivity
+    @NonNull
+    public Observable<List<BasketKt>> getMyBasketFromSqlServer(String drh);
+
 
     //methods for MapActivity
     @NonNull

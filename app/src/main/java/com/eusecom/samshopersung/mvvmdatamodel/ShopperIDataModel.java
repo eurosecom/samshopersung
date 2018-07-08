@@ -2,6 +2,7 @@ package com.eusecom.samshopersung.mvvmdatamodel;
 
 import android.support.annotation.NonNull;
 
+import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.ProductKt;
@@ -32,7 +33,13 @@ public interface ShopperIDataModel {
     public Observable<List<ProductKt>> getProductsFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
+    @NonNull
     public Observable<List<CategoryKt>> getCatFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex, String dokx);
+
+    //methods for BasketKtActivity
+    @NonNull
+    public Observable<List<BasketKt>> getBasketFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
     //methods for MapActivity

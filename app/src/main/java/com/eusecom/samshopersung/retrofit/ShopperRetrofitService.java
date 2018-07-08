@@ -1,6 +1,7 @@
 package com.eusecom.samshopersung.retrofit;
 
 
+import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.ProductKt;
@@ -26,6 +27,13 @@ public interface ShopperRetrofitService {
 
     @GET("/androidshopper/get_categories.php")
     Observable<List<CategoryKt>> getCatFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
+
+    //methods for BasketKtActivity
+    @GET("/androidshopper/get_basket.php")
+    Observable<List<BasketKt>> getBasketFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);

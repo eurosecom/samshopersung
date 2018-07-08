@@ -76,18 +76,29 @@ class BasketKtActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("ChooseCompanyActivity", "Error Throwable " + throwable.message)
+                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setCompanies(it) }))
 
+        mSubscription.add(mViewModel.getMyBasketFromSqlServer("1")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setBasket(it) }))
+
         mSubscription.add(mViewModel.myObservableSaveDomainToRealm
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("ChooseCompanyActivity", "Error Throwable " + throwable.message)
+                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
@@ -98,6 +109,10 @@ class BasketKtActivity : AppCompatActivity() {
 
     private fun savedDomain(domain: RealmDomain) {
         toast("Server " + domain.domain)
+    }
+
+    private fun setBasket(basket: List<BasketKt>) {
+        toast("Basket " + basket.get(0).xdok)
     }
 
     private fun setCompanies(companies: List<CompanyKt>) {

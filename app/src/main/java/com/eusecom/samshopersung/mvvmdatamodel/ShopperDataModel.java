@@ -10,6 +10,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
 
+import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.ProductKt;
@@ -196,6 +197,24 @@ public class ShopperDataModel implements ShopperIDataModel {
 
 
     //end methods for OfferKtActivity
+
+    //methods for BasketKtActivity
+
+    //get basket from MySql
+    @Override
+    public Observable<List<BasketKt>> getBasketFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
+        Log.d("GenDoc dokx", dokx);
+        Log.d("GenDoc drh", drh);
+        Log.d("GenDoc ucex", ucex);
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.getBasketFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+
+    }
+
+
+    //end methods for BasketKtActivity
 
     //methods for MapActivity
     public Observable<List<Employee>> prepareEmployeeList() {
