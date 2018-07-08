@@ -2,6 +2,7 @@ package com.eusecom.samshopersung.di;
 
 import android.app.Activity;
 
+import com.eusecom.samshopersung.BasketKtActivity;
 import com.eusecom.samshopersung.ChooseCompanyActivity;
 import com.eusecom.samshopersung.DomainsViewModelActivity;
 import com.eusecom.samshopersung.MainActivity;
@@ -41,10 +42,15 @@ public abstract class ActivityBuilder {
     @Binds
     @IntoMap
     @ActivityKey(OfferKtActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindOfferActivity(OfferKtActivityComponent.Builder builder);
+    abstract AndroidInjector.Factory<? extends Activity> bindOfferKtActivity(OfferKtActivityComponent.Builder builder);
 
     @Binds
     @IntoMap
     @ActivityKey(MapActivity.class)
     abstract AndroidInjector.Factory<? extends Activity> bindMapActivity(MapActivityComponent.Builder builder);
+
+    @Binds
+    @IntoMap
+    @ActivityKey(BasketKtActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity> bindBasketKtActivity(BasketKtActivityComponent.Builder builder);
 }
