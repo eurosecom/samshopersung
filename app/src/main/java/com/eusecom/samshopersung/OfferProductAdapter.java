@@ -1,6 +1,7 @@
 package com.eusecom.samshopersung;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -58,8 +59,10 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
         holder.title.setText(prod.getNat());
 
         holder.count1.setVisibility(View.VISIBLE);
+        holder.count.setPaintFlags(holder.count.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         if( prod.getCed1().equals("0")) {
             holder.count1.setVisibility(View.GONE);
+            holder.count.setPaintFlags(holder.count.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
         }
 
         holder.count.setText(prod.getCed() + " €");

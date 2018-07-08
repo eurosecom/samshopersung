@@ -175,4 +175,5 @@
     <!-- Colors Album Demo -->
     <color name="viewBg">#f1f5f8</color>
     <color name="album_title">#4c4c4c</color>
+    <color name="album_titlecount1">@color/material_red_A400</color>
 </resources>
