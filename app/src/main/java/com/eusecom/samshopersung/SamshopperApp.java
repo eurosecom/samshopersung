@@ -30,7 +30,6 @@ public class SamshopperApp extends MultiDexApplication implements HasActivityInj
 
     @NonNull
     private DatabaseReference mDatabaseReference;
-    private Realm mRealm;
     private SharedPreferences prefs;
 
     //Room
