@@ -26,6 +26,7 @@ import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.bumptech.glide.Glide
 import com.eusecom.samshopersung.di.ShopperScope
 import com.eusecom.samshopersung.models.Album
+import com.eusecom.samshopersung.rxbus.RxBus
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
@@ -33,6 +34,8 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import dagger.android.AndroidInjection
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.mainshopper_activity.*
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
@@ -40,6 +43,7 @@ import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import java.util.ArrayList
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -67,12 +71,15 @@ class OfferKtActivity : AppCompatActivity() {
 
     @Inject
     lateinit var prefs: SharedPreferences
+    @Inject
+    lateinit var  _rxBus: RxBus
 
     @ShopperScope
     @Inject
     lateinit var mViewModel: ShopperIMvvmViewModel
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
+    private var _disposables = CompositeDisposable()
     private var mProgressBar: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,8 +96,34 @@ class OfferKtActivity : AppCompatActivity() {
         mProgressBar = findViewById<View>(R.id.progress_bar) as ProgressBar
         offersubtitle = findViewById<View>(R.id.offersubtitle) as TextView
 
+        _disposables = CompositeDisposable()
+
+        val tapEventEmitter = _rxBus.asFlowable().publish()
+
+        _disposables
+                .add(tapEventEmitter.subscribe { event ->
+                    if (event is ProductKt) {
+
+                        val usnamex = event.nat + " " + event.prm1
+
+                        Log.d("OfferKtActivityBus ", usnamex)
+                        //getTodoDialog(event)
+
+
+                    }
+
+                })
+
+        _disposables
+                .add(tapEventEmitter.publish { stream -> stream.buffer(stream.debounce(1, TimeUnit.SECONDS)) }
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe { taps ->
+                    ///_showTapCount(taps.size()); OK
+                })
+
+        _disposables.add(tapEventEmitter.connect())
+
         productList = ArrayList<ProductKt>()
-        adapter = OfferProductAdapter(this, productList)
+        adapter = OfferProductAdapter(this, productList, _rxBus )
 
         val mLayoutManager = GridLayoutManager(this, 2)
         recyclerView?.setLayoutManager(mLayoutManager)
@@ -219,6 +252,7 @@ class OfferKtActivity : AppCompatActivity() {
         super.onDestroy()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
+        _disposables.dispose()
         hideProgressBar()
         //mViewModel.clearObservableSaveDomainToRealm()
     }

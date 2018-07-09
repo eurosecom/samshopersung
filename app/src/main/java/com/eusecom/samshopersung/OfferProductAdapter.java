@@ -13,12 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.eusecom.samshopersung.rxbus.RxBus;
+
 import java.util.List;
 
 public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapter.MyViewHolder> {
  
     private Context mContext;
     private List<ProductKt> productList;
+    private RxBus mRxBus;
  
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count, count1;
@@ -35,9 +38,10 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     }
  
  
-    public OfferProductAdapter(Context mContext, List<ProductKt> productList) {
+    public OfferProductAdapter(Context mContext, List<ProductKt> productList, RxBus rxbus) {
         this.mContext = mContext;
         this.productList = productList;
+        this.mRxBus = rxbus;
     }
 
     public void setProductItems(List<ProductKt> products) {
@@ -75,7 +79,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(holder.overflow);
+                showPopupMenu(holder.overflow, prod);
             }
         });
     }
@@ -83,12 +87,12 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     /**
      * Showing popup menu when tapping on 3 dots
      */
-    private void showPopupMenu(View view) {
+    private void showPopupMenu(View view, ProductKt product) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.offeritem_menu, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(product));
         popup.show();
     }
  
@@ -96,19 +100,34 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
      * Click listener for popup menu items
      */
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
- 
-        public MyMenuItemClickListener() {
+
+        private ProductKt mprod;
+        public MyMenuItemClickListener(ProductKt product) {
+            this.mprod=product;
         }
  
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
+
+                case R.id.action_add_basket:
+                    Toast.makeText(mContext, "Add to basket " + mprod.getNat(), Toast.LENGTH_SHORT).show();
+                    mprod.setPrm1("1");
+                    mRxBus.send(mprod);
+                    return true;
+
                 case R.id.action_add_favourite:
-                    Toast.makeText(mContext, "Add to favourite", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Add to favourite " + mprod.getNat(), Toast.LENGTH_SHORT).show();
+                    mprod.setPrm1("2");
+                    mRxBus.send(mprod);
                     return true;
-                case R.id.action_play_next:
-                    Toast.makeText(mContext, "Play next", Toast.LENGTH_SHORT).show();
+
+                case R.id.action_getdetail:
+                    Toast.makeText(mContext, "Get detail " + mprod.getNat(), Toast.LENGTH_SHORT).show();
+                    mprod.setPrm1("3");
+                    mRxBus.send(mprod);
                     return true;
+
                 default:
             }
             return false;
