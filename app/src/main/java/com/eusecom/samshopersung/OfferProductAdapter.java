@@ -111,19 +111,19 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
             switch (menuItem.getItemId()) {
 
                 case R.id.action_add_basket:
-                    Toast.makeText(mContext, "Add to basket " + mprod.getNat(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "Add to basket " + mprod.getNat(), Toast.LENGTH_SHORT).show();
                     mprod.setPrm1("1");
                     mRxBus.send(mprod);
                     return true;
 
                 case R.id.action_add_favourite:
-                    Toast.makeText(mContext, "Add to favourite " + mprod.getNat(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "Add to favourite " + mprod.getNat(), Toast.LENGTH_SHORT).show();
                     mprod.setPrm1("2");
                     mRxBus.send(mprod);
                     return true;
 
                 case R.id.action_getdetail:
-                    Toast.makeText(mContext, "Get detail " + mprod.getNat(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "Get detail " + mprod.getNat(), Toast.LENGTH_SHORT).show();
                     mprod.setPrm1("3");
                     mRxBus.send(mprod);
                     return true;

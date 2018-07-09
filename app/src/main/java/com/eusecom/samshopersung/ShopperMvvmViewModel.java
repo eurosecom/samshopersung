@@ -196,6 +196,55 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end get categories from MySql server
 
+
+    //emit save product to basket to Mysql
+    public void emitMyObservableSaveBasketToServer(ProductKt invx) {
+
+        mObservableBasketToServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<ProductKt> mObservableBasketToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<BasketKt>> getMyObservableSaveBasketToServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "1";
+        String dodx = "1";
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableBasketToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.getBasketFromMysqlServer(serverx, encrypted2, ds, firx, rokx, drh, dodx, umex, "0"));
+    }
+
+    public void clearMyObservableSaveBasketToServer() {
+
+        mObservableBasketToServer = BehaviorSubject.create();
+
+    }
+    //end save product to basket to Mysql
+
     //get Albums from List
     @NonNull
     public Observable<List<Album>> getMyObservableAlbumsFromList() {

@@ -225,6 +225,24 @@ class OfferKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setServerCategories(it) }))
 
+        mSubscription.add(mViewModel.getMyObservableSaveBasketToServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setSavedBasket(it) }))
+
+    }
+
+    private fun setSavedBasket(basket: List<BasketKt>) {
+
+        //mViewModel.clearMyObservableSaveBasketToServer()
+        Log.d("savedBasket ", basket.get(0).xnat);
+        hideProgressBar()
     }
 
     private fun setServerCategories(cats: List<CategoryKt>) {
@@ -266,7 +284,7 @@ class OfferKtActivity : AppCompatActivity() {
         mSubscription?.clear()
         _disposables.dispose()
         hideProgressBar()
-        //mViewModel.clearObservableSaveDomainToRealm()
+        mViewModel.clearMyObservableSaveBasketToServer()
     }
 
 
@@ -384,8 +402,8 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     fun navigateToAddToBasket(product: ProductKt){
-        //showProgressBar()
-        //mViewModel.emitDelInvFromServer(invoice)
+        showProgressBar()
+        mViewModel.emitMyObservableSaveBasketToServer(product)
 
     }
 
