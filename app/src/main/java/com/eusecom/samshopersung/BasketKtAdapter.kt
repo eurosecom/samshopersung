@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_choosecompany.view.*
 
-class BasketKtAdapter(var myAndroidOSList: List<CompanyKt>, val listener: (CompanyKt) -> Unit) : RecyclerView.Adapter<BasketKtAdapter.ViewHolder>() {
+class BasketKtAdapter(var myAndroidOSList: List<BasketKt>, val listener: (BasketKt) -> Unit) : RecyclerView.Adapter<BasketKtAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketKtAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.basket_item, parent, false)
@@ -22,17 +22,17 @@ class BasketKtAdapter(var myAndroidOSList: List<CompanyKt>, val listener: (Compa
         return myAndroidOSList.size
     }
 
-    fun setAbsserver(listabsserver: List<CompanyKt>) {
+    fun setAbsserver(listabsserver: List<BasketKt>) {
         myAndroidOSList = listabsserver
         notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItems(myAndroidOS: CompanyKt, listener: (CompanyKt) -> Unit) = with(itemView)  {
+        fun bindItems(myAndroidOS: BasketKt, listener: (BasketKt) -> Unit) = with(itemView)  {
 
-            itemView.tvName.text = myAndroidOS.xcf + " " + myAndroidOS.naz
-            itemView.tvVersion.text = myAndroidOS.rok
+            itemView.tvName.text = myAndroidOS.xcpl + " " + myAndroidOS.xnat
+            itemView.tvVersion.text = myAndroidOS.xmno
             //itemView.ivIcon.setImageResource(myAndroidOS.imageIcon)
             Picasso.with(itemView.context).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(itemView.ivIcon)
             itemView.setOnClickListener{listener(myAndroidOS)}

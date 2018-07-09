@@ -153,6 +153,12 @@
     <string name="action_search">Hladať</string>
     <string name="offerbackdrop_title">Ponuka tovaru</string>
     <string name="offerbackdrop_subtitle">Ponuka tovaru subtitle</string>
+    <string name="choosecat">Vyberte kategóriu</string>
+    <string name="allcat">Všetky kategórie</string>
+    <string name="favitems">Obľúbené položky</string>
+
+    //basket activity
+    <string name="mybasket">Môj košík</string>
 
 
     //room demo

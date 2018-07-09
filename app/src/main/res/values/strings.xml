@@ -154,10 +154,14 @@
     <string name="action_search">Search</string>
     <string name="offerbackdrop_title">Offer items</string>
     <string name="offerbackdrop_subtitle">Offer items subtitle</string>
-
     <string name="choosecat">Choose category</string>
     <string name="allcat">All categories</string>
     <string name="favitems">Favourite items</string>
+
+    //basket activity
+    <string name="mybasket">My Basket</string>
+    <string name="action_pay">To cash</string>
+    <string name="clear_basket">Clear basket</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

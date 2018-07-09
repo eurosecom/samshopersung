@@ -51,8 +51,7 @@ class BasketKtActivity : AppCompatActivity() {
 
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        //toolbar!!.setTitle(getString(R.string.clickchoosecompany))
-        supportActionBar!!.setTitle(getString(R.string.clickchoosecompany))
+        supportActionBar!!.setTitle(getString(R.string.mybasket))
 
         //Bind the recyclerview
         recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
@@ -112,50 +111,19 @@ class BasketKtActivity : AppCompatActivity() {
     }
 
     private fun setBasket(basket: List<BasketKt>) {
-        toast("Basket " + basket.get(0).xdok)
+
+        recyclerView.adapter = BasketKtAdapter(basket){
+            toast("${it.xdok + " " + it.xcpl + " " + it.xnat } Clicked")
+
+
+        }
+        hideProgressBar()
     }
 
     private fun setCompanies(companies: List<CompanyKt>) {
 
-        recyclerView.adapter = BasketKtAdapter(companies){
-            toast("${it.xcf + " " + it.naz + " " + it.rok } Clicked")
+        toast("comp 0 " + companies.get(0).xcf + " " + companies.get(0).naz)
 
-            var domainx: RealmDomain = RealmDomain()
-            domainx.setDomain(prefs.getString("servername", ""))
-            mViewModel.emitSaveDomainToRealm(domainx)
-
-            val editor = prefs.edit()
-            editor.putString("fir", it.xcf).apply();
-            editor.putString("usico", it.firico).apply();
-            editor.putString("firnaz", it.naz).apply();
-            editor.putString("firiban", it.iban).apply();
-            editor.putString("rok", it.rok).apply();
-            editor.putString("ume", "01." + it.rok).apply();
-            editor.putString("firduct", it.duj).apply();
-
-            editor.putString("firdph", it.firdph).apply();
-            editor.putString("firdph+", it.firdph1).apply();
-            editor.putString("firdphľ", it.firdph2).apply();
-
-            editor.putString("pokluce", it.pokluce).apply();
-            editor.putString("pokldok", it.pokldok).apply();
-            editor.putString("pokldov", it.pokldov).apply();
-
-            editor.putString("bankuce", it.bankuce).apply();
-            editor.putString("bankdok", it.bankdok).apply();
-            editor.putString("odbuce", it.odbuce).apply();
-            editor.putString("odbdok", it.odbdok).apply();
-            editor.putString("doduce", it.doduce).apply();
-            editor.putString("doddok", it.doddok).apply();
-            editor.putString("genuce", it.genuce).apply();
-            editor.putString("gendok", it.gendok).apply();
-
-            editor.commit();
-            val i = intent
-            setResult(101, i)
-            finish()
-        }
-        hideProgressBar()
     }
 
 
@@ -170,19 +138,20 @@ class BasketKtActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.choosecompany_menu, menu)
+        menuInflater.inflate(R.menu.basket_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_settings -> consume { navigateToSettings() }
+        R.id.action_offer -> consume { navigateToOffer() }
 
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun navigateToSettings(){
-        val intent = Intent(this, SettingsActivity::class.java)
+    fun navigateToOffer(){
+        val intent = Intent(this, OfferKtActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     //consume oncreateoptionmenu

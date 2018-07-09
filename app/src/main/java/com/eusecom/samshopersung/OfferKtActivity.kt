@@ -298,14 +298,15 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_settings -> consume { navigateToSettings() }
+        R.id.action_basket -> consume { navigateToBasket() }
 
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun navigateToSettings(){
-        val intent = Intent(this, SettingsActivity::class.java)
+    fun navigateToBasket(){
+        val intent = Intent(this, BasketKtActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun navigateToCategory(cat: String){
