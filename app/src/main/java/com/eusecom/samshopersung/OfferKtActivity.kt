@@ -37,8 +37,12 @@ import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.mainshopper_activity.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.yesButton
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -107,7 +111,16 @@ class OfferKtActivity : AppCompatActivity() {
                         val usnamex = event.nat + " " + event.prm1
 
                         Log.d("OfferKtActivityBus ", usnamex)
-                        //getTodoDialog(event)
+                        if(event.prm1.equals("1")){
+                            showAddToBasketDialog(event)
+                        }
+                        if(event.prm1.equals("2")){
+                            showAddToFavDialog(event)
+                        }
+                        if(event.prm1.equals("3")){
+
+                        }
+
 
 
                     }
@@ -225,7 +238,6 @@ class OfferKtActivity : AppCompatActivity() {
                     .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                         override fun onItemClick(view: View, position: Int, drawerItem: IDrawerItem<out Any?, out RecyclerView.ViewHolder>?): Boolean {
                             Log.d("DRAWER", i.nac + " Clicked!")
-
 
                             //return true //remain opened drawer
                             return false
@@ -360,6 +372,36 @@ class OfferKtActivity : AppCompatActivity() {
 
     protected fun hideProgressBar() {
         mProgressBar?.setVisibility(View.GONE)
+    }
+
+    fun showAddToBasketDialog(product: ProductKt) {
+
+        alert("", getString(R.string.action_add_tobasket) + " " + product.nat) {
+            yesButton { navigateToAddToBasket(product) }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToAddToBasket(product: ProductKt){
+        //showProgressBar()
+        //mViewModel.emitDelInvFromServer(invoice)
+
+    }
+
+    fun showAddToFavDialog(product: ProductKt) {
+
+        alert("", getString(R.string.action_add_favourite) + " " + product.nat) {
+            yesButton { navigateToAddToFav(product)  }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToAddToFav(product: ProductKt){
+        //showProgressBar()
+        //mViewModel.emitDelInvFromServer(invoice)
+
     }
 
 

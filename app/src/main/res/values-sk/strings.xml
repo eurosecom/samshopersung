@@ -159,6 +159,9 @@
 
     //basket activity
     <string name="mybasket">Môj košík</string>
+    <string name="action_pay">Platiť</string>
+    <string name="clear_basket">Vymazať košík</string>
+    <string name="amount">Množstvo:</string>
 
 
     //room demo
