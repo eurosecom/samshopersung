@@ -71,17 +71,6 @@ class BasketKtActivity : AppCompatActivity() {
     private fun bind() {
 
         showProgressBar()
-        mSubscription.add(mViewModel.myCompaniesFromServer
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setCompanies(it) }))
-
         mSubscription.add(mViewModel.getMyBasketFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -119,13 +108,6 @@ class BasketKtActivity : AppCompatActivity() {
         }
         hideProgressBar()
     }
-
-    private fun setCompanies(companies: List<CompanyKt>) {
-
-        toast("comp 0 " + companies.get(0).xcf + " " + companies.get(0).naz)
-
-    }
-
 
     override fun onDestroy() {
         super.onDestroy()

@@ -162,6 +162,7 @@
     <string name="mybasket">My Basket</string>
     <string name="action_pay">To cash</string>
     <string name="clear_basket">Clear basket</string>
+    <string name="amount">Amount:</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

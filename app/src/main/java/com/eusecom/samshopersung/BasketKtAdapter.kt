@@ -1,10 +1,13 @@
 package com.eusecom.samshopersung
 
+import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.basket_item.view.*
 import kotlinx.android.synthetic.main.item_choosecompany.view.*
 
 class BasketKtAdapter(var myAndroidOSList: List<BasketKt>, val listener: (BasketKt) -> Unit) : RecyclerView.Adapter<BasketKtAdapter.ViewHolder>() {
@@ -31,10 +34,15 @@ class BasketKtAdapter(var myAndroidOSList: List<BasketKt>, val listener: (Basket
 
         fun bindItems(myAndroidOS: BasketKt, listener: (BasketKt) -> Unit) = with(itemView)  {
 
-            itemView.tvName.text = myAndroidOS.xcpl + " " + myAndroidOS.xnat
-            itemView.tvVersion.text = myAndroidOS.xmno
-            //itemView.ivIcon.setImageResource(myAndroidOS.imageIcon)
-            Picasso.with(itemView.context).load(R.drawable.ic_check_circle_black_24dp).resize(120, 120).into(itemView.ivIcon)
+            itemView.title.text = myAndroidOS.xcis + " " + myAndroidOS.xnat
+
+            itemView.count.text = myAndroidOS.xmno + " x "
+            itemView.count1.text = myAndroidOS.xced + " €"
+
+            val imageurl = "https://picsum.photos/500/500?image=" + myAndroidOS.xcis
+            // loading prod cover using Glide library
+            Glide.with(itemView.context).load(imageurl).into(itemView.thumbnail)
+
             itemView.setOnClickListener{listener(myAndroidOS)}
 
         }
