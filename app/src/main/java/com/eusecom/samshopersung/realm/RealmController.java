@@ -3,6 +3,10 @@ package com.eusecom.samshopersung.realm;
 import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
  
@@ -31,6 +35,25 @@ public class RealmController {
  
         realm.refresh();
     }
- 
+
+
+    /**
+     * methods for DomainsActivity
+     */
+
+    //get domains from RealmDomain
+    public List<RealmDomain> getDomainsFromRealmDomain() {
+
+        Log.d("DomainsViewModelRealm", realm.toString());
+        List<RealmDomain> domains = null;
+        domains = realm.where(RealmDomain.class).findAll();
+        return domains;
+    }
+    //end get domains from RealmDomain
+
+
+    /**
+     * end methods for DomainsActivity
+     */
 
 }

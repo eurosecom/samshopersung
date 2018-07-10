@@ -17,6 +17,7 @@ import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.R;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
+import com.eusecom.samshopersung.realm.RealmController;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
@@ -29,17 +30,20 @@ public class ShopperDataModel implements ShopperIDataModel {
     Resources mResources;
     Realm mRealm;
     ExampleInterceptor mInterceptor;
+    RealmController mRealmController;
 
     public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
                                  @NonNull final ShopperRetrofitService shopperRetrofitService,
                                  @NonNull final Resources resources,
                                  @NonNull final Realm realm,
-                                 @NonNull final ExampleInterceptor interceptor) {
+                                 @NonNull final ExampleInterceptor interceptor,
+                                 @NonNull final RealmController realmcontroller) {
         mFirebaseDatabase = databaseReference;
         mShopperRetrofitService = shopperRetrofitService;
         mResources = resources;
         mRealm = realm;
         mInterceptor = interceptor;
+        mRealmController = realmcontroller;
     }
 
 
@@ -109,9 +113,14 @@ public class ShopperDataModel implements ShopperIDataModel {
     @Override
     public Observable<List<RealmDomain>> getDomainsFromRealm() {
 
-        Log.d("DomainsViewModel realm ", mRealm.toString());
+        Log.d("DomainsViewModelRealm ", mRealm.toString());
         List<RealmDomain> results = null;
-        results = mRealm.where(RealmDomain.class).findAll();
+        //old version without realmcontroller
+        //results = mRealm.where(RealmDomain.class).findAll();
+
+        //new version with realmcontroller
+        results = mRealmController.getDomainsFromRealmDomain();
+
 
         return Observable.just(results);
     }
@@ -203,13 +212,13 @@ public class ShopperDataModel implements ShopperIDataModel {
     //get basket from MySql
     @Override
     public Observable<List<BasketKt>> getBasketFromMysqlServer(String servername, String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
+            , String vyb_rok, String drh, String ucex, String prodx, String dokx) {
         Log.d("GenDoc dokx", dokx);
         Log.d("GenDoc drh", drh);
         Log.d("GenDoc ucex", ucex);
 
         setRetrofit(servername);
-        return mShopperRetrofitService.getBasketFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+        return mShopperRetrofitService.getBasketFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, prodx, dokx);
 
     }
 
