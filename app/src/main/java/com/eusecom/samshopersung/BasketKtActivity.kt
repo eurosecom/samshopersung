@@ -71,7 +71,7 @@ class BasketKtActivity : AppCompatActivity() {
     private fun bind() {
 
         showProgressBar()
-        mSubscription.add(mViewModel.getMyBasketFromSqlServer("1")
+        mSubscription.add(mViewModel.getMyBasketFromSqlServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->

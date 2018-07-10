@@ -40,7 +40,7 @@ public interface ShopperIDataModel {
     //methods for BasketKtActivity
     @NonNull
     public Observable<List<BasketKt>> getBasketFromMysqlServer(String servername, String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String ucex, String umex, String dokx);
+            , String vyb_rok, String drh, String ucex, String prodx, String dokx);
 
     //methods for MapActivity
     public Observable<List<Employee>> prepareEmployeeList();

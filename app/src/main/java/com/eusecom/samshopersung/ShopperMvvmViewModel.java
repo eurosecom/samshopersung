@@ -228,14 +228,14 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
-        String drh = "1";
         String dodx = "1";
-        String umex = mSharedPreferences.getString("ume", "");
+        String prodx = "";
         String serverx = mSharedPreferences.getString("servername", "");
 
         return mObservableBasketToServer
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(invx -> mDataModel.getBasketFromMysqlServer(serverx, encrypted2, ds, firx, rokx, drh, dodx, umex, "0"));
+                .flatMap(invx -> mDataModel.getBasketFromMysqlServer(serverx, encrypted2, ds, firx
+                        , rokx, invx.getPrm1(), dodx, JsonFromProduct(invx), "0"));
     }
 
     public void clearMyObservableSaveBasketToServer() {
@@ -262,7 +262,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
      */
 
     //get basket from MySql server
-    public Observable<List<BasketKt>> getMyBasketFromSqlServer(String drh) {
+    public Observable<List<BasketKt>> getMyBasketFromSqlServer() {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
@@ -282,20 +282,12 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
-        String dodx = mSharedPreferences.getString("doduce", "");
-        if (drh.equals("1")) {
-            dodx = mSharedPreferences.getString("odbuce", "");
-        }
-        if (drh.equals("3")) {
-            dodx = mSharedPreferences.getString("pokluce", "");
-        }
-        if (drh.equals("4")) {
-            dodx = mSharedPreferences.getString("bankuce", "");
-        }
-        String umex = mSharedPreferences.getString("ume", "");
+        String drh = "0";
+        String dodx = "1";
+        String prodx = "";
         String serverx = mSharedPreferences.getString("servername", "");
 
-        return mDataModel.getBasketFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+        return mDataModel.getBasketFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, prodx, "0");
     }
     //end get basket from MySql server
 
@@ -320,5 +312,26 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
      * end methods for MapActivity
      */
 
+
+    //JSON from ProductKt
+    public String JsonFromProduct(ProductKt invx) {
+
+        String jsonstring = "{" +
+                "  \"cis\":" + "\"" + invx.getCis() + "\"" +
+                ", \"nat\":" + "\"" + invx.getNat() + "\"" +
+                ", \"mer\":" + "\"" + invx.getMer() + "\"" +
+                ", \"cep\":" + "\"" + invx.getCep() + "\"" +
+                ", \"ced\":" + "\"" + invx.getCed() + "\"" +
+                ", \"dph\":" + "\"" + invx.getDph() + "\"" +
+                ", \"zas\":" + "\"" + invx.getZas() + "\"" +
+                ", \"cat\":" + "\"" + invx.getCat() + "\"" +
+                ", \"cep1\":" + "\"" + invx.getCep1() + "\"" +
+                ", \"ced1\":" + "\"" + invx.getCed1() + "\"" +
+                ", \"prm1\":" + "\"" + invx.getPrm1() + "\"" +
+                " }";
+
+        return jsonstring;
+    }
+    //end JSON from Product
 
 }
