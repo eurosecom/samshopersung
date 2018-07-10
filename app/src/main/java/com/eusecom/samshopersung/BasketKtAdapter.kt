@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.basket_item.view.*
 import kotlinx.android.synthetic.main.item_choosecompany.view.*
 
-class BasketKtAdapter(var myAndroidOSList: List<BasketKt>, val listener: (BasketKt) -> Unit) : RecyclerView.Adapter<BasketKtAdapter.ViewHolder>() {
+class BasketKtAdapter(var myAndroidOSList: MutableList<BasketKt>, val listener: (BasketKt) -> Unit) : RecyclerView.Adapter<BasketKtAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasketKtAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.basket_item, parent, false)
@@ -25,10 +25,7 @@ class BasketKtAdapter(var myAndroidOSList: List<BasketKt>, val listener: (Basket
         return myAndroidOSList.size
     }
 
-    fun setAbsserver(listabsserver: List<BasketKt>) {
-        myAndroidOSList = listabsserver
-        notifyDataSetChanged()
-    }
+
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

@@ -44,6 +44,7 @@ class BasketKtActivity : AppCompatActivity() {
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
     private var mProgressBar: ProgressBar? = null
+    private lateinit var mybasket: MutableList<BasketKt>
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -101,14 +102,19 @@ class BasketKtActivity : AppCompatActivity() {
 
     private fun setDeletedBasket(basket: List<BasketKt>) {
 
-        toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
+        //toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
         //Log.d("savedBasket ", basket.get(0).xnat);
         hideProgressBar()
+
+        mybasket.removeAt(0)
+        recyclerView?.adapter?.notifyItemRemoved(0)
+
     }
 
     private fun setBasket(basket: List<BasketKt>) {
 
-        recyclerView.adapter = BasketKtAdapter(basket){
+        mybasket = basket.toMutableList()
+        recyclerView.adapter = BasketKtAdapter(mybasket){
             //toast("${it.xdok + " " + it.xcpl + " " + it.xnat } Clicked")
             var mprod: ProductKt = ProductKt(it.xcis, it.xnat, "", "", ""
                     , "", it.xcpl, "", "", "", "" )
