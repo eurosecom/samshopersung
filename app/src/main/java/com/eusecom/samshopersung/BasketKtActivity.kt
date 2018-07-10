@@ -114,8 +114,9 @@ class BasketKtActivity : AppCompatActivity() {
     private fun setBasket(basket: List<BasketKt>) {
 
         mybasket = basket.toMutableList()
-        recyclerView.adapter = BasketKtAdapter(mybasket){
-            //toast("${it.xdok + " " + it.xcpl + " " + it.xnat } Clicked")
+        recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int ->
+
+            toast("${it.xdok + " " + it.xcpl + " " + it.xnat + " " + posx } Clicked")
             var mprod: ProductKt = ProductKt(it.xcis, it.xnat, "", "", ""
                     , "", it.xcpl, "", "", "", "" )
             mprod.prm1 = "4"
