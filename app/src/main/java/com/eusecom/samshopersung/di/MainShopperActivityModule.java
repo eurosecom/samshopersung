@@ -8,7 +8,7 @@ import com.eusecom.samshopersung.ShopperMvvmViewModel;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperDataModel;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
-import com.eusecom.samshopersung.realm.RealmController;
+import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +25,7 @@ public class MainShopperActivityModule {
                                                             ShopperRetrofitService shopperretrofitservice,
                                                             Resources resources, Realm realm,
                                                             ExampleInterceptor interceptor,
-                                                            RealmController realmcontroller) {
+                                                            IRealmController realmcontroller) {
         return new ShopperDataModel(databasereference, shopperretrofitservice
                 , resources, realm, interceptor, realmcontroller);
     }

@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import com.eusecom.samshopersung.SamshopperApp;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.RealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
@@ -66,13 +67,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RealmController providesRealmConroller(Application application) {
+    IRealmController providesIRealmConroller(Application application) {
         return new RealmController(application);
     }
 
     @Provides
     @Singleton
-    Realm providesRealm(RealmController realmcontroller) {
+    Realm providesRealm(IRealmController realmcontroller) {
         return realmcontroller.getRealm();
     }
 

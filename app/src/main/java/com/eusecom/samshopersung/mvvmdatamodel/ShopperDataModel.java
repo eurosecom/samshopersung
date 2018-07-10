@@ -1,7 +1,6 @@
 package com.eusecom.samshopersung.mvvmdatamodel;
 
 import android.content.res.Resources;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
-
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
@@ -17,7 +15,7 @@ import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.R;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
-import com.eusecom.samshopersung.realm.RealmController;
+import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
@@ -30,14 +28,14 @@ public class ShopperDataModel implements ShopperIDataModel {
     Resources mResources;
     Realm mRealm;
     ExampleInterceptor mInterceptor;
-    RealmController mRealmController;
+    IRealmController mRealmController;
 
     public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
                                  @NonNull final ShopperRetrofitService shopperRetrofitService,
                                  @NonNull final Resources resources,
                                  @NonNull final Realm realm,
                                  @NonNull final ExampleInterceptor interceptor,
-                                 @NonNull final RealmController realmcontroller) {
+                                 @NonNull final IRealmController realmcontroller) {
         mFirebaseDatabase = databaseReference;
         mShopperRetrofitService = shopperRetrofitService;
         mResources = resources;

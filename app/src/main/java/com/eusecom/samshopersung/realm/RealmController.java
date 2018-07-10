@@ -11,7 +11,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
  
  
-public class RealmController {
+public class RealmController implements IRealmController{
  
     private static RealmController instance;
     private final Realm realm;
@@ -24,7 +24,8 @@ public class RealmController {
 
         return instance;
     }
- 
+
+    //get realm
     public Realm getRealm() {
  
         return realm;
