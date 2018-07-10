@@ -240,8 +240,8 @@ class OfferKtActivity : AppCompatActivity() {
 
     private fun setSavedBasket(basket: List<BasketKt>) {
 
-        //mViewModel.clearMyObservableSaveBasketToServer()
-        Log.d("savedBasket ", basket.get(0).xnat);
+        toast(basket.get(0).xnat + " " + getString(R.string.savedtobasket))
+        //Log.d("savedBasket ", basket.get(0).xnat);
         hideProgressBar()
     }
 

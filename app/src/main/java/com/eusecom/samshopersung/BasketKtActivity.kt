@@ -16,8 +16,11 @@ import android.widget.ProgressBar
 import com.eusecom.samshopersung.realm.RealmDomain
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.mainshopper_activity.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.yesButton
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -82,7 +85,7 @@ class BasketKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setBasket(it) }))
 
-        mSubscription.add(mViewModel.myObservableSaveDomainToRealm
+        mSubscription.add(mViewModel.getMyObservableSaveBasketToServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -91,19 +94,26 @@ class BasketKtActivity : AppCompatActivity() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> savedDomain(it) }))
+                .subscribe({ it -> setDeletedBasket(it) }))
 
     }
 
-    private fun savedDomain(domain: RealmDomain) {
-        toast("Server " + domain.domain)
+
+    private fun setDeletedBasket(basket: List<BasketKt>) {
+
+        toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
+        //Log.d("savedBasket ", basket.get(0).xnat);
+        hideProgressBar()
     }
 
     private fun setBasket(basket: List<BasketKt>) {
 
         recyclerView.adapter = BasketKtAdapter(basket){
-            toast("${it.xdok + " " + it.xcpl + " " + it.xnat } Clicked")
-
+            //toast("${it.xdok + " " + it.xcpl + " " + it.xnat } Clicked")
+            var mprod: ProductKt = ProductKt(it.xcis, it.xnat, "", "", ""
+                    , "", it.xcpl, "", "", "", "" )
+            mprod.prm1 = "4"
+            showDeleteFromBasketDialog(mprod)
 
         }
         hideProgressBar()
@@ -114,7 +124,7 @@ class BasketKtActivity : AppCompatActivity() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         hideProgressBar()
-        mViewModel.clearObservableSaveDomainToRealm()
+        mViewModel.clearMyObservableSaveBasketToServer()
     }
 
 
@@ -150,5 +160,19 @@ class BasketKtActivity : AppCompatActivity() {
         mProgressBar?.setVisibility(View.GONE)
     }
 
+    fun showDeleteFromBasketDialog(product: ProductKt) {
+
+        alert("", getString(R.string.action_delete_item) + " " + product.nat) {
+            yesButton { navigateToDeleteFromBasket(product) }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToDeleteFromBasket(product: ProductKt){
+        showProgressBar()
+        mViewModel.emitMyObservableSaveBasketToServer(product)
+
+    }
 
 }

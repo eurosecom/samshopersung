@@ -146,6 +146,7 @@
     <string name="action_basket">Košík</string>
     <string name="action_add_tobasket">Pridať do košíka</string>
     <string name="action_add_favourite">Pridať do obľúbených</string>
+    <string name="action_delete_item">Zmazať položku</string>
     <string name="action_getdetail">Detail info</string>
     <string name="action_play_next">Prehrať</string>
     <string name="offeritems">Ponuka tovaru</string>
@@ -162,6 +163,8 @@
     <string name="action_pay">Platiť</string>
     <string name="clear_basket">Vymazať košík</string>
     <string name="amount">Množstvo:</string>
+    <string name="savedtobasket"> - uložené do košíka</string>
+    <string name="deletedfrombasket"> - zmazané z košíka</string>
 
 
     //room demo

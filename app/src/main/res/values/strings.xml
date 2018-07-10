@@ -147,6 +147,7 @@
     <string name="action_basket">Basket</string>
     <string name="action_add_tobasket">Add to Basket</string>
     <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_delete_item">Delete item</string>
     <string name="action_getdetail">Get Detail info</string>
     <string name="action_play_next">Play Next</string>
     <string name="offeritems">Offer items</string>
@@ -157,12 +158,15 @@
     <string name="choosecat">Choose category</string>
     <string name="allcat">All categories</string>
     <string name="favitems">Favourite items</string>
+    product: ProductKt
 
     //basket activity
     <string name="mybasket">My Basket</string>
     <string name="action_pay">To cash</string>
     <string name="clear_basket">Clear basket</string>
     <string name="amount">Amount:</string>
+    <string name="savedtobasket"> - saved to basket</string>
+    <string name="deletedfrombasket"> - deleted from basket</string>
 
     //room demo
     <string name="price_format">$%1$s</string>
