@@ -89,6 +89,17 @@ class BasketKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setBasket(it) }))
 
+        mSubscription.add(mViewModel.getMySumBasketFromSqlServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setSumBasket(it) }))
+
         mSubscription.add(mViewModel.getMyObservableSaveBasketToServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -135,6 +146,12 @@ class BasketKtActivity : AppCompatActivity() {
 
         }
         hideProgressBar()
+    }
+
+    private fun setSumBasket(sumbasket: SumBasketKt) {
+
+        Log.d("SumBasket0 ", sumbasket.basketitems.get(0).xnat);
+
     }
 
     override fun onDestroy() {

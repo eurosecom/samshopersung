@@ -44,6 +44,9 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<BasketKt>> getMyBasketFromSqlServer();
 
+    @NonNull
+    public Observable<SumBasketKt> getMySumBasketFromSqlServer();
+
 
     //methods for MapActivity
     @NonNull

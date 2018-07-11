@@ -13,6 +13,7 @@ import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.R;
+import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.realm.IRealmController;
@@ -217,6 +218,19 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         setRetrofit(servername);
         return mShopperRetrofitService.getBasketFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, prodx, dokx);
+
+    }
+
+    //get sumbasket from MySql
+    @Override
+    public Observable<SumBasketKt> getSumBasketFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String prodx, String dokx) {
+        Log.d("GenDoc dokx", dokx);
+        Log.d("GenDoc drh", drh);
+        Log.d("GenDoc ucex", ucex);
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.getSumBasketFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, prodx, dokx);
 
     }
 

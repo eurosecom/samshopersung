@@ -6,6 +6,7 @@ import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.ProductKt;
+import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.realm.RealmDomain;
@@ -40,6 +41,10 @@ public interface ShopperIDataModel {
     //methods for BasketKtActivity
     @NonNull
     public Observable<List<BasketKt>> getBasketFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String prodx, String dokx);
+
+    @NonNull
+    public Observable<SumBasketKt> getSumBasketFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String prodx, String dokx);
 
     //methods for MapActivity

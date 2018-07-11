@@ -5,6 +5,7 @@ import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.ProductKt;
+import com.eusecom.samshopersung.SumBasketKt;
 
 import java.util.List;
 
@@ -34,6 +35,12 @@ public interface ShopperRetrofitService {
     //methods for BasketKtActivity
     @GET("/androidshopper/get_basket.php")
     Observable<List<BasketKt>> getBasketFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("prodx") String prodx, @Query("dokx") String dokx);
+
+    @GET("/androidshopper/get_sumbasket.php")
+    Observable<SumBasketKt> getSumBasketFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("prodx") String prodx, @Query("dokx") String dokx);

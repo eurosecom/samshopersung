@@ -292,6 +292,37 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end get basket from MySql server
 
 
+    //get sumbasket from MySql server
+    public Observable<SumBasketKt> getMySumBasketFromSqlServer() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "0";
+        String dodx = "1";
+        String prodx = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mDataModel.getSumBasketFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, prodx, "0");
+    }
+    //end get sumbasket from MySql server
+
+
     /**
      * end methods for BasketKtActivity
      */
