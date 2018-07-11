@@ -165,6 +165,7 @@
     <string name="amount">Množstvo:</string>
     <string name="savedtobasket"> - uložené do košíka</string>
     <string name="deletedfrombasket"> - zmazané z košíka</string>
+    <string name="allitems">Všetky položky</string>
 
 
     //room demo

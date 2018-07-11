@@ -106,8 +106,13 @@ class BasketKtActivity : AppCompatActivity() {
 
         var posd: Int = Integer.parseInt(basket.get(0).xdph);
 
-        mybasket.removeAt(posd)
-        recyclerView?.adapter?.notifyItemRemoved(posd)
+        if (basket.get(0).xid == "4") {
+            mybasket.removeAt(posd)
+            recyclerView?.adapter?.notifyItemRemoved(posd)
+        }else {
+            mybasket.clear()
+        }
+
         recyclerView?.adapter?.notifyDataSetChanged()
 
     }
@@ -144,6 +149,7 @@ class BasketKtActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_offer -> consume { navigateToOffer() }
+        R.id.clear_basket -> consume { showClearBasketDialog() }
 
         else -> super.onOptionsItemSelected(item)
     }
@@ -180,6 +186,24 @@ class BasketKtActivity : AppCompatActivity() {
     fun navigateToDeleteFromBasket(product: ProductKt){
         showProgressBar()
         mViewModel.emitMyObservableSaveBasketToServer(product)
+
+    }
+
+    fun showClearBasketDialog() {
+
+        alert("", getString(R.string.clear_basket)) {
+            yesButton { navigateToClearBasket() }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToClearBasket(){
+        showProgressBar()
+        var mprod: ProductKt = ProductKt("", getString(R.string.allitems), "", "", ""
+                , "0", "", "", "", "", "" )
+        mprod.prm1 = "5"
+        mViewModel.emitMyObservableSaveBasketToServer(mprod)
 
     }
 
