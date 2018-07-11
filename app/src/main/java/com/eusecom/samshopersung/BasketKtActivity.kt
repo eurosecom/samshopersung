@@ -13,9 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import com.eusecom.samshopersung.realm.RealmDomain
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.mainshopper_activity.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.toast
@@ -102,12 +100,15 @@ class BasketKtActivity : AppCompatActivity() {
 
     private fun setDeletedBasket(basket: List<BasketKt>) {
 
-        //toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
+        toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
         //Log.d("savedBasket ", basket.get(0).xnat);
         hideProgressBar()
 
-        mybasket.removeAt(0)
-        recyclerView?.adapter?.notifyItemRemoved(0)
+        var posd: Int = Integer.parseInt(basket.get(0).xdph);
+
+        mybasket.removeAt(posd)
+        recyclerView?.adapter?.notifyItemRemoved(posd)
+        recyclerView?.adapter?.notifyDataSetChanged()
 
     }
 
@@ -116,9 +117,9 @@ class BasketKtActivity : AppCompatActivity() {
         mybasket = basket.toMutableList()
         recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int ->
 
-            toast("${it.xdok + " " + it.xcpl + " " + it.xnat + " " + posx } Clicked")
+            //toast("${it.xdok + " " + it.xcpl + " " + it.xnat + " posx " + posx } Clicked")
             var mprod: ProductKt = ProductKt(it.xcis, it.xnat, "", "", ""
-                    , "", it.xcpl, "", "", "", "" )
+                    , posx.toString(), it.xcpl, "", "", "", "" )
             mprod.prm1 = "4"
             showDeleteFromBasketDialog(mprod)
 

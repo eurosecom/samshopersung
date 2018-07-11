@@ -75,7 +75,14 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
         String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
         // loading prod cover using Glide library
         Glide.with(mContext).load(imageurl).into(holder.thumbnail);
- 
+
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(holder.overflow, prod);
+            }
+        });
+
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
