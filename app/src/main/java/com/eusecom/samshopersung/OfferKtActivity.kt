@@ -85,6 +85,7 @@ class OfferKtActivity : AppCompatActivity() {
     var mSubscription: CompositeSubscription = CompositeSubscription()
     private var _disposables = CompositeDisposable()
     private var mProgressBar: ProgressBar? = null
+    private var mcount: String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -135,7 +136,7 @@ class OfferKtActivity : AppCompatActivity() {
 
         _disposables.add(tapEventEmitter.connect())
 
-        productList = ArrayList<ProductKt>()
+        productList = ArrayList<ProductKt>().toMutableList()
         adapter = OfferProductAdapter(this, productList, _rxBus )
 
         val mLayoutManager = GridLayoutManager(this, 2)
@@ -242,6 +243,8 @@ class OfferKtActivity : AppCompatActivity() {
 
         toast(basket.get(0).xnat + " " + getString(R.string.savedtobasket))
         //Log.d("savedBasket ", basket.get(0).xnat);
+        mcount = basket.get(0).xmno;
+        showBasketItemsCount()
         hideProgressBar()
     }
 
@@ -272,8 +275,12 @@ class OfferKtActivity : AppCompatActivity() {
     private fun setServerProducts(products: List<ProductKt>) {
 
         Log.d("showProduct ", products.get(0).nat);
+        Log.d("showProduct ", products.get(0).prm1);
         productList = products.toMutableList()
         adapter?.setProductItems(productList)
+
+        mcount = products.get(0).prm1;
+        showBasketItemsCount()
         hideProgressBar()
     }
 
@@ -355,22 +362,21 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     //option menu
-    //var notifCount: Button? = null
+    var item: MenuItem? = null;
     var notifView: RelativeLayout? = null
     var notifCount: TextView? = null
-    var mNotifCount = 0
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.offeractivity_menu, menu)
 
-        var item: MenuItem = menu.findItem(R.id.action_badge)
+        item = menu.findItem(R.id.action_badge)
         MenuItemCompat.setActionView(item, R.layout.feed_update_count2)
         //notifCount = MenuItemCompat.getActionView(item) as Button?
         notifView = MenuItemCompat.getActionView(item) as RelativeLayout?
 
         notifCount = notifView?.findViewById<View>(R.id.actionbar_notifcation_textview) as TextView?
-        notifCount?.text = "12"
+        notifCount?.text = mcount
 
         return true
     }
@@ -381,8 +387,8 @@ class OfferKtActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun setNotifCount(count: Int) {
-        mNotifCount = count
+    fun showBasketItemsCount() {
+
         invalidateOptionsMenu()
     }
 
