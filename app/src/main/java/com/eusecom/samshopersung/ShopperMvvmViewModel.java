@@ -245,6 +245,54 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end save product to basket to Mysql
 
+    //emit save product to basket to Mysql
+    public void emitMyObservableSaveSumBasketToServer(ProductKt invx) {
+
+        mObservableSumBasketToServer.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<ProductKt> mObservableSumBasketToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<SumBasketKt> getMyObservableSaveSumBasketToServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String prodx = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableSumBasketToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx -> mDataModel.getSumBasketFromMysqlServer(serverx, encrypted2, ds, firx
+                        , rokx, invx.getPrm1(), dodx, JsonFromProduct(invx), "0"));
+    }
+
+    public void clearMyObservableSaveSumBasketToServer() {
+
+        mObservableSumBasketToServer = BehaviorSubject.create();
+
+    }
+    //end save product to basket to Mysql
+
     //get Albums from List
     @NonNull
     public Observable<List<Album>> getMyObservableAlbumsFromList() {

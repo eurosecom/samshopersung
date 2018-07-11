@@ -226,7 +226,7 @@ class OfferKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setServerCategories(it) }))
 
-        mSubscription.add(mViewModel.getMyObservableSaveBasketToServer()
+        mSubscription.add(mViewModel.getMyObservableSaveSumBasketToServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -239,11 +239,11 @@ class OfferKtActivity : AppCompatActivity() {
 
     }
 
-    private fun setSavedBasket(basket: List<BasketKt>) {
+    private fun setSavedBasket(sumbasket: SumBasketKt) {
 
-        toast(basket.get(0).xnat + " " + getString(R.string.savedtobasket))
+        toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.savedtobasket))
         //Log.d("savedBasket ", basket.get(0).xnat);
-        mcount = basket.get(0).xmno;
+        mcount = sumbasket.smno;
         showBasketItemsCount()
         hideProgressBar()
     }
@@ -291,7 +291,7 @@ class OfferKtActivity : AppCompatActivity() {
         mSubscription?.clear()
         _disposables.dispose()
         hideProgressBar()
-        mViewModel.clearMyObservableSaveBasketToServer()
+        mViewModel.clearMyObservableSaveSumBasketToServer()
     }
 
 
@@ -435,7 +435,7 @@ class OfferKtActivity : AppCompatActivity() {
 
     fun navigateToAddToBasket(product: ProductKt){
         showProgressBar()
-        mViewModel.emitMyObservableSaveBasketToServer(product)
+        mViewModel.emitMyObservableSaveSumBasketToServer(product)
 
     }
 
