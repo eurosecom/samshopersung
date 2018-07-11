@@ -168,6 +168,7 @@
     <string name="savedtobasket"> - saved to basket</string>
     <string name="deletedfrombasket"> - deleted from basket</string>
     <string name="allitems">All items</string>
+    <string name="totalbasket">Total %s items %s €</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

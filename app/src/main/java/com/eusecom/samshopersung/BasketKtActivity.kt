@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -26,7 +28,7 @@ import javax.inject.Inject
 import android.widget.TextView
 import android.support.v4.view.MenuItemCompat.getActionView
 import android.widget.RelativeLayout
-
+import kotlinx.android.synthetic.main.basket_activity.*
 
 
 /**
@@ -48,6 +50,9 @@ class BasketKtActivity : AppCompatActivity() {
     var mSubscription: CompositeSubscription = CompositeSubscription()
     private var mProgressBar: ProgressBar? = null
     private lateinit var mybasket: MutableList<BasketKt>
+    var totmno: String = "0"
+    var tothdd: String = "0.00"
+    var totalbasket: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -55,10 +60,12 @@ class BasketKtActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.basket_activity)
-
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar!!.setTitle(getString(R.string.mybasket))
+        initCollapsingToolbar()
+
+        totalbasket = findViewById<View>(R.id.totalbasket) as TextView
+        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
 
         //Bind the recyclerview
         recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
@@ -73,6 +80,36 @@ class BasketKtActivity : AppCompatActivity() {
         Log.d("ShopperMvvmViewModel", "instx " + mViewModel.toString())
         Log.d("SharedPreferences", "instx " + prefs.toString())
 
+    }
+
+    /**
+     * Initializing collapsing toolbar
+     * Will show and hide the toolbar title on scroll
+     */
+    private fun initCollapsingToolbar() {
+        val collapsingToolbar = findViewById<View>(R.id.collapsing_toolbar) as CollapsingToolbarLayout
+        collapsingToolbar.title = " "
+        val appBarLayout = findViewById<View>(R.id.appbar) as AppBarLayout
+        appBarLayout.setExpanded(true)
+
+        // hiding & showing the title when toolbar expanded & collapsed
+        appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            internal var isShow = false
+            internal var scrollRange = -1
+
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.totalScrollRange
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbar.title = getString(R.string.mybasket)
+                    isShow = true
+                } else if (isShow) {
+                    collapsingToolbar.title = " "
+                    isShow = false
+                }
+            }
+        })
     }
 
     private fun bind() {
@@ -150,7 +187,10 @@ class BasketKtActivity : AppCompatActivity() {
 
     private fun setSumBasket(sumbasket: SumBasketKt) {
 
-        Log.d("SumBasket0 ", sumbasket.basketitems.get(0).xnat);
+        //Log.d("SumBasket0 ", sumbasket.basketitems.get(0).xnat);
+        totmno = sumbasket.smno
+        tothdd = sumbasket.shdd
+        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
 
     }
 
