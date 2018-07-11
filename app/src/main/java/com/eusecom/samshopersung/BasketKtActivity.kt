@@ -23,6 +23,11 @@ import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
+import android.widget.TextView
+import android.support.v4.view.MenuItemCompat.getActionView
+import android.widget.RelativeLayout
+
+
 
 /**
  * Kotlin activity Recyclerview with classic XML itemlayout without Anko DSL
@@ -144,6 +149,7 @@ class BasketKtActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.basket_menu, menu)
+
         return true
     }
 

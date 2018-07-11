@@ -22,4 +22,13 @@
         app:showAsAction="always"
         />
 
+    <item
+        android:id="@+id/action_badge"
+        android:orderInCategory="100"
+        android:title="@string/action_basket"
+        android:icon="@drawable/baseline_credit_card_white_24dp"
+        android:iconifiedByDefault="true"
+        app:showAsAction="always">
+    </item>
+
 </menu>

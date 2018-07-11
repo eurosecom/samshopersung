@@ -8,15 +8,15 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.*
+import android.support.v7.widget.SearchView
 import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
@@ -355,14 +355,40 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     //option menu
+    //var notifCount: Button? = null
+    var notifView: RelativeLayout? = null
+    var notifCount: TextView? = null
+    var mNotifCount = 0
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.offeractivity_menu, menu)
+
+        var item: MenuItem = menu.findItem(R.id.action_badge)
+        MenuItemCompat.setActionView(item, R.layout.feed_update_count2)
+        //notifCount = MenuItemCompat.getActionView(item) as Button?
+        notifView = MenuItemCompat.getActionView(item) as RelativeLayout?
+
+        notifCount = notifView?.findViewById<View>(R.id.actionbar_notifcation_textview) as TextView?
+        notifCount?.text = "12"
+
         return true
+    }
+
+    fun goToBasket(view: View){
+        val intent = Intent(this, BasketKtActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun setNotifCount(count: Int) {
+        mNotifCount = count
+        invalidateOptionsMenu()
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_basket -> consume { navigateToBasket() }
+        R.id.action_badge -> consume { navigateToBasket() }
 
         else -> super.onOptionsItemSelected(item)
     }
