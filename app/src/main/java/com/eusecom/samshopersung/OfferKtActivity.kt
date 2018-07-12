@@ -371,11 +371,11 @@ class OfferKtActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.offeractivity_menu, menu)
 
         item = menu.findItem(R.id.action_badge)
-        MenuItemCompat.setActionView(item, R.layout.feed_update_count2)
+        MenuItemCompat.setActionView(item, R.layout.offeractivity_basket_menuitem)
         //notifCount = MenuItemCompat.getActionView(item) as Button?
         notifView = MenuItemCompat.getActionView(item) as RelativeLayout?
 
-        notifCount = notifView?.findViewById<View>(R.id.actionbar_notifcation_textview) as TextView?
+        notifCount = notifView?.findViewById<View>(R.id.actionbar_itemsamount_textview) as TextView?
         notifCount?.text = mcount
 
         return true
@@ -393,7 +393,6 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_basket -> consume { navigateToBasket() }
         R.id.action_badge -> consume { navigateToBasket() }
 
         else -> super.onOptionsItemSelected(item)
