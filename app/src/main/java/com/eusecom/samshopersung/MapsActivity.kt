@@ -54,6 +54,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.mainshopper_activity.*
 import java.io.IOException
 
 /**
@@ -100,10 +101,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
     createLocationRequest()
 
-    val fab = findViewById<FloatingActionButton>(R.id.fab)
     fab.setOnClickListener {
       loadPlacePicker()
     }
+
+
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
