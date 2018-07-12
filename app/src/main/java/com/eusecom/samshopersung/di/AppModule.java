@@ -6,7 +6,14 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+
+import com.eusecom.samshopersung.BasketKt;
+import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SamshopperApp;
+import com.eusecom.samshopersung.SumBasketKt;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
+import com.eusecom.samshopersung.models.ShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.RealmController;
@@ -57,6 +64,12 @@ public class AppModule {
     @Singleton
     ConnectivityManager provideConnectivityManager(Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    IShopperModelsFactory provideIShopperModelsFactory() {
+        return new ShopperModelsFactory();
     }
 
     @Provides

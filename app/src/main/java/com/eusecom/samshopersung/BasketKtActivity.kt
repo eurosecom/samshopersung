@@ -8,7 +8,6 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -18,7 +17,6 @@ import android.widget.ProgressBar
 import dagger.android.AndroidInjection
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
 import rx.Observable
@@ -26,8 +24,6 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 import android.widget.TextView
-import android.support.v4.view.MenuItemCompat.getActionView
-import android.widget.RelativeLayout
 import com.eusecom.samshopersung.models.IShopperModelsFactory
 import com.eusecom.samshopersung.models.ShopperModelsFactory
 import kotlinx.android.synthetic.main.basket_activity.*
@@ -46,6 +42,9 @@ class BasketKtActivity : AppCompatActivity() {
 
     @Inject
     lateinit var mViewModel: ShopperIMvvmViewModel
+
+    @Inject
+    lateinit var mModelsFactory: IShopperModelsFactory
 
     private lateinit var recyclerView: RecyclerView
 
@@ -182,8 +181,10 @@ class BasketKtActivity : AppCompatActivity() {
         mybasket = sumbasket.basketitems.toMutableList()
         recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int ->
 
-            var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
-            var mprod: ProductKt = shoppermodelsfactory.productKt
+            //classic instance of factory
+            // var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
+            //dagger2 instance
+            var mprod: ProductKt = mModelsFactory.productKt
 
             mprod.cis = it.xcis
             mprod.nat = it.xnat
@@ -268,8 +269,10 @@ class BasketKtActivity : AppCompatActivity() {
     fun navigateToClearBasket(){
         showProgressBar()
 
-        var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
-        var mprod: ProductKt = shoppermodelsfactory.productKt
+        //classic instance of factory
+        // var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
+        //dagger2 instance
+        var mprod: ProductKt = mModelsFactory.productKt
         mprod.prm1 = "5"
         mprod.nat = getString(R.string.allitems)
         mViewModel.emitMyObservableSaveSumBasketToServer(mprod)
