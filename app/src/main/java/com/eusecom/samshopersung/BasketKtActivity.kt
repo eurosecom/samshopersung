@@ -28,6 +28,8 @@ import javax.inject.Inject
 import android.widget.TextView
 import android.support.v4.view.MenuItemCompat.getActionView
 import android.widget.RelativeLayout
+import com.eusecom.samshopersung.models.IShopperModelsFactory
+import com.eusecom.samshopersung.models.ShopperModelsFactory
 import kotlinx.android.synthetic.main.basket_activity.*
 
 
@@ -180,9 +182,14 @@ class BasketKtActivity : AppCompatActivity() {
         mybasket = sumbasket.basketitems.toMutableList()
         recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int ->
 
-            //toast("${it.xdok + " " + it.xcpl + " " + it.xnat + " posx " + posx } Clicked")
-            var mprod: ProductKt = ProductKt(it.xcis, it.xnat, "", "", ""
-                    , posx.toString(), it.xcpl, "", "", "", "" )
+            var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
+            var mprod: ProductKt = shoppermodelsfactory.productKt
+
+            mprod.cis = it.xcis
+            mprod.nat = it.xnat
+            mprod.dph = posx.toString()
+            mprod.zas = it.xcpl
+
             mprod.prm1 = "4"
             showDeleteFromBasketDialog(mprod)
 
@@ -260,9 +267,11 @@ class BasketKtActivity : AppCompatActivity() {
 
     fun navigateToClearBasket(){
         showProgressBar()
-        var mprod: ProductKt = ProductKt("", getString(R.string.allitems), "", "", ""
-                , "0", "", "", "", "", "" )
+
+        var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
+        var mprod: ProductKt = shoppermodelsfactory.productKt
         mprod.prm1 = "5"
+        mprod.nat = getString(R.string.allitems)
         mViewModel.emitMyObservableSaveSumBasketToServer(mprod)
 
     }
