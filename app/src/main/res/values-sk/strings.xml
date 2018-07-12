@@ -166,6 +166,7 @@
     <string name="savedtobasket"> - uložené do košíka</string>
     <string name="deletedfrombasket"> - zmazané z košíka</string>
     <string name="allitems">Všetky položky</string>
+    <string name="totalbasket">Celkom %s položiek %s €</string>
 
 
     //room demo

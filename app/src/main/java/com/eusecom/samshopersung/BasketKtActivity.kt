@@ -115,17 +115,6 @@ class BasketKtActivity : AppCompatActivity() {
     private fun bind() {
 
         showProgressBar()
-        mSubscription.add(mViewModel.getMyBasketFromSqlServer()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setBasket(it) }))
-
         mSubscription.add(mViewModel.getMySumBasketFromSqlServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -137,7 +126,7 @@ class BasketKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setSumBasket(it) }))
 
-        mSubscription.add(mViewModel.getMyObservableSaveBasketToServer()
+        mSubscription.add(mViewModel.getMyObservableSaveSumBasketToServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -151,8 +140,13 @@ class BasketKtActivity : AppCompatActivity() {
     }
 
 
-    private fun setDeletedBasket(basket: List<BasketKt>) {
+    private fun setDeletedBasket(sumbasket: SumBasketKt) {
 
+        totmno = sumbasket.smno
+        tothdd = sumbasket.shdd
+        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
+
+        var basket: List<BasketKt> = sumbasket.basketitems
         toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
         //Log.d("savedBasket ", basket.get(0).xnat);
         hideProgressBar()
@@ -172,7 +166,18 @@ class BasketKtActivity : AppCompatActivity() {
 
     private fun setBasket(basket: List<BasketKt>) {
 
-        mybasket = basket.toMutableList()
+
+    }
+
+    private fun setSumBasket(sumbasket: SumBasketKt) {
+
+        //Log.d("SumBasket0 ", sumbasket.basketitems.get(0).xnat);
+        totmno = sumbasket.smno
+        tothdd = sumbasket.shdd
+        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
+
+
+        mybasket = sumbasket.basketitems.toMutableList()
         recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int ->
 
             //toast("${it.xdok + " " + it.xcpl + " " + it.xnat + " posx " + posx } Clicked")
@@ -183,14 +188,6 @@ class BasketKtActivity : AppCompatActivity() {
 
         }
         hideProgressBar()
-    }
-
-    private fun setSumBasket(sumbasket: SumBasketKt) {
-
-        //Log.d("SumBasket0 ", sumbasket.basketitems.get(0).xnat);
-        totmno = sumbasket.smno
-        tothdd = sumbasket.shdd
-        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
 
     }
 
@@ -199,7 +196,7 @@ class BasketKtActivity : AppCompatActivity() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         hideProgressBar()
-        mViewModel.clearMyObservableSaveBasketToServer()
+        mViewModel.clearMyObservableSaveSumBasketToServer()
     }
 
 
@@ -248,7 +245,7 @@ class BasketKtActivity : AppCompatActivity() {
 
     fun navigateToDeleteFromBasket(product: ProductKt){
         showProgressBar()
-        mViewModel.emitMyObservableSaveBasketToServer(product)
+        mViewModel.emitMyObservableSaveSumBasketToServer(product)
 
     }
 
@@ -266,7 +263,7 @@ class BasketKtActivity : AppCompatActivity() {
         var mprod: ProductKt = ProductKt("", getString(R.string.allitems), "", "", ""
                 , "0", "", "", "", "", "" )
         mprod.prm1 = "5"
-        mViewModel.emitMyObservableSaveBasketToServer(mprod)
+        mViewModel.emitMyObservableSaveSumBasketToServer(mprod)
 
     }
 
