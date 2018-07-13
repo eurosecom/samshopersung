@@ -9,15 +9,26 @@ import io.realm.Realm;
 public interface IRealmController {
 
     //get realm
-    public Realm getRealm();
+    Realm getRealm();
 
     //Refresh the realm istance
-    public void refresh();
+    void refresh();
 
     //methods for DomainsActivity
 
     //get domains from RealmDomain
-    @NonNull
-    public List<RealmDomain> getDomainsFromRealmDomain();
+    List<RealmDomain> getDomainsFromRealmDomain();
+
+
+    //methods for ChooseCompanyActivity
+
+    //try if exist domain in RealmDomain
+    RealmDomain existRealmDomain(@NonNull final RealmDomain domx);
+
+    //to save domain into RealmDomain
+    void setRealmDomainData(@NonNull final RealmDomain domx);
+
+    //delete domain from RealmDomain
+    void deleteRealmDomainData(@NonNull final RealmDomain domx);
 
 }

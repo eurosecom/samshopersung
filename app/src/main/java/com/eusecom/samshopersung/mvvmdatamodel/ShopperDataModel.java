@@ -80,29 +80,41 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     public RealmDomain existRealmDomain(@NonNull final RealmDomain domx) {
 
-        String dokx = domx.getDomain();
-        return mRealm.where(RealmDomain.class).equalTo("domain", dokx).findFirst();
+        //old version without realmcontroller
+        //String dokx = domx.getDomain();
+        //return mRealm.where(RealmDomain.class).equalTo("domain", dokx).findFirst();
+
+        //new version with realmcontroller
+        return mRealmController.existRealmDomain(domx);
+
     }
 
     private void setRealmDomainData(@NonNull final RealmDomain domx) {
 
-        mRealm.beginTransaction();
-        mRealm.copyToRealm(domx);
-        mRealm.commitTransaction();
+        //old version without realmcontroller
+        //mRealm.beginTransaction();
+        //mRealm.copyToRealm(domx);
+        //mRealm.commitTransaction();
+
+        //new version with realmcontroller
+        mRealmController.setRealmDomainData(domx);
 
     }
 
     private void deleteRealmDomainData(@NonNull final RealmDomain domx) {
 
-        String dokx = domx.getDomain();
+        //old version without realmcontroller
+        //String dokx = domx.getDomain();
+        //mRealm.executeTransaction(new Realm.Transaction() {
+        //    @Override
+        //    public void execute(Realm realm) {
+        //        RealmResults<RealmDomain> result = realm.where(RealmDomain.class).equalTo("domain", dokx).findAll();
+        //        result.clear();
+        //    }
+        //});
 
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmResults<RealmDomain> result = realm.where(RealmDomain.class).equalTo("domain", dokx).findAll();
-                result.clear();
-            }
-        });
+        //new version with realmcontroller
+        mRealmController.deleteRealmDomainData(domx);
 
     }
     //end methods for ChooseCompanyActivity
@@ -112,7 +124,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     @Override
     public Observable<List<RealmDomain>> getDomainsFromRealm() {
 
-        Log.d("DomainsViewModelRealm ", mRealm.toString());
+        //Log.d("DomainsViewModelRealm ", mRealm.toString());
         List<RealmDomain> results = null;
         //old version without realmcontroller
         //results = mRealm.where(RealmDomain.class).findAll();

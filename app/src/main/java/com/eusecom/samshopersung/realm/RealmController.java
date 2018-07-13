@@ -2,6 +2,7 @@ package com.eusecom.samshopersung.realm;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -55,6 +56,51 @@ public class RealmController implements IRealmController{
 
     /**
      * end methods for DomainsActivity
+     */
+
+
+    /**
+     * methods for ChooseCompanyActivity
+     */
+
+    //try if exist domain in RealmDomain
+    public RealmDomain existRealmDomain(@NonNull final RealmDomain domx) {
+
+        String dokx = domx.getDomain();
+        return realm.where(RealmDomain.class).equalTo("domain", dokx).findFirst();
+
+    }
+    //end try if exist domain in RealmDomain
+
+    //to save domain into RealmDomain
+    public void setRealmDomainData(@NonNull final RealmDomain domx) {
+
+        realm.beginTransaction();
+        realm.copyToRealm(domx);
+        realm.commitTransaction();
+
+    }
+    //end to save domain into RealmDomain
+
+    //delete domain from RealmDomain
+    public void deleteRealmDomainData(@NonNull final RealmDomain domx) {
+
+        String dokx = domx.getDomain();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmDomain> result = realm.where(RealmDomain.class).equalTo("domain", dokx).findAll();
+                result.clear();
+            }
+        });
+
+    }
+    //end delete domain from RealmDomain
+
+
+    /**
+     * end methods for ChooseCompanyActivity
      */
 
 }
