@@ -179,7 +179,7 @@ class BasketKtActivity : AppCompatActivity() {
 
 
         mybasket = sumbasket.basketitems.toMutableList()
-        recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int ->
+        recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int, type: Int ->
 
             //classic instance of factory
             // var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
@@ -192,7 +192,14 @@ class BasketKtActivity : AppCompatActivity() {
             mprod.zas = it.xcpl
 
             mprod.prm1 = "4"
-            showDeleteFromBasketDialog(mprod)
+
+            if( type == 0 ){
+                showDeleteFromBasketDialog(mprod)
+            }else{
+                showMoveToFavtDialog(mprod)
+            }
+
+
 
         }
         hideProgressBar()
@@ -218,6 +225,7 @@ class BasketKtActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_offer -> consume { navigateToOffer() }
         R.id.clear_basket -> consume { showClearBasketDialog() }
+        R.id.action_pay -> consume { showOrderBasketDialog() }
 
         else -> super.onOptionsItemSelected(item)
     }
@@ -257,6 +265,21 @@ class BasketKtActivity : AppCompatActivity() {
 
     }
 
+    fun showMoveToFavtDialog(product: ProductKt) {
+
+        alert("", getString(R.string.movetofav) + " " + product.nat) {
+            yesButton { navigateToMoveToFav(product) }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToMoveToFav(product: ProductKt){
+        //showProgressBar()
+        //mViewModel.emitMyObservableMoveFavSumBasketToServer(product)
+
+    }
+
     fun showClearBasketDialog() {
 
         alert("", getString(R.string.clear_basket)) {
@@ -276,6 +299,25 @@ class BasketKtActivity : AppCompatActivity() {
         mprod.prm1 = "5"
         mprod.nat = getString(R.string.allitems)
         mViewModel.emitMyObservableSaveSumBasketToServer(mprod)
+
+    }
+
+    fun showOrderBasketDialog() {
+
+        alert("", getString(R.string.order_basket)) {
+            yesButton { navigateToOrderBasket() }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToOrderBasket(){
+        //showProgressBar()
+
+        var mprod: ProductKt = mModelsFactory.productKt
+        mprod.prm1 = "6"
+        mprod.nat = getString(R.string.allitems)
+        //mViewModel.emitMyObservableOrderSumBasketToServer(mprod)
 
     }
 
