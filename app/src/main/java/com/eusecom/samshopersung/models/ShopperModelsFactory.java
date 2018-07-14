@@ -17,9 +17,7 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
 
     /**
      * This method is used to get ProductKt POJO
-     * @param --numA This is the first paramter to addNum method
-     * @param --numB  This is the second parameter to addNum method
-     * @return int This returns sum of numA and numB.
+     * @return int This returns new ProductKt POJO.
      */
     @NonNull
     public ProductKt getProductKt(){
@@ -29,10 +27,7 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
 
     /**
      * This method is used to get BasketKt POJO
-     * @param --args Unused.
-     * @return BasketKt POJO.
-     * @exception --IOException On input error.
-     * @see --IOException
+     * @return int This returns new BasketKt POJO.
      */
     @NonNull
     public BasketKt getBasketKt(){
@@ -41,12 +36,11 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
                 ,"","","","","", "");
     }
 
+
     /**
      * This method is used to get SumBasketKt POJO
-     * @param --args Unused.
-     * @return SumBasketKt POJO.
-     * @exception --IOException On input error.
-     * @see --IOException
+     * @return int This returns new SumBasketKt POJO.
+     * @see SumBasketKt#methodName
      */
     @NonNull
     public SumBasketKt getSumBasketKt(){

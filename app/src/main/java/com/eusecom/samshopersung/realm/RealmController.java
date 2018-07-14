@@ -1,17 +1,19 @@
 package com.eusecom.samshopersung.realm;
 
-import android.app.Activity;
 import android.app.Application;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-
 import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
- 
- 
+
+/**
+ * The Implementation of RealmController for Realm data operations.
+ *
+ * @author  eurosecom
+ * @version 1.0
+ * @since   2018-06-23
+ */
 public class RealmController implements IRealmController{
  
     private static RealmController instance;
@@ -39,10 +41,6 @@ public class RealmController implements IRealmController{
     }
 
 
-    /**
-     * methods for DomainsActivity
-     */
-
     //get domains from RealmDomain
     public List<RealmDomain> getDomainsFromRealmDomain() {
 
@@ -54,16 +52,15 @@ public class RealmController implements IRealmController{
     //end get domains from RealmDomain
 
 
-    /**
-     * end methods for DomainsActivity
-     */
-
+    // methods for ChooseCompanyActivity
 
     /**
-     * methods for ChooseCompanyActivity
+     * This method is used to try if exist domain domx in database table RealmDomain
+     * @param domx String Name of domain to try if exist in database table RealmDomain
+     * @return RealmDomain This returns RealmDomain domx, when exists in database table RealmDomain.
+     * {@link  com.eusecom.samshopersung.realm.RealmDomain}
+     * @see com.eusecom.samshopersung.realm.RealmDomain
      */
-
-    //try if exist domain in RealmDomain
     public RealmDomain existRealmDomain(@NonNull final RealmDomain domx) {
 
         String dokx = domx.getDomain();
@@ -98,9 +95,6 @@ public class RealmController implements IRealmController{
     }
     //end delete domain from RealmDomain
 
-
-    /**
-     * end methods for ChooseCompanyActivity
-     */
+    // end methods for ChooseCompanyActivity
 
 }

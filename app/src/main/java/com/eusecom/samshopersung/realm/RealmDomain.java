@@ -3,6 +3,13 @@ package com.eusecom.samshopersung.realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+/**
+ * RealmObject POJO for domains where can I connect.
+ *
+ * @author  eurosecom
+ * @version 1.0
+ * @since   2018-06-23
+ */
 public class RealmDomain extends RealmObject {
 
     @PrimaryKey
