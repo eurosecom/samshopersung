@@ -40,7 +40,7 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
     /**
      * This method is used to get SumBasketKt POJO
      * @return int This returns new SumBasketKt POJO.
-     * @see SumBasketKt#methodName
+     * @see SumBasketKt
      */
     @NonNull
     public SumBasketKt getSumBasketKt(){
