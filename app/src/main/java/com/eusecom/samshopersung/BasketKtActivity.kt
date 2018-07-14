@@ -148,7 +148,12 @@ class BasketKtActivity : AppCompatActivity() {
         totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
 
         var basket: List<BasketKt> = sumbasket.basketitems
-        toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
+
+        if (basket.get(0).xid != "6") {
+            toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
+        }else {
+            toast(basket.get(0).xnat + " " + getString(R.string.itemsordered))
+        }
         //Log.d("savedBasket ", basket.get(0).xnat);
         hideProgressBar()
 
@@ -317,7 +322,7 @@ class BasketKtActivity : AppCompatActivity() {
         var mprod: ProductKt = mModelsFactory.productKt
         mprod.prm1 = "6"
         mprod.nat = getString(R.string.allitems)
-        //mViewModel.emitMyObservableOrderSumBasketToServer(mprod)
+        mViewModel.emitMyObservableSaveSumBasketToServer(mprod)
 
     }
 
