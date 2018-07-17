@@ -29,6 +29,7 @@ import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasFragmentInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
 
 /**
@@ -38,8 +39,10 @@ import dagger.android.HasFragmentInjector;
  *
  */
 
-public class  OrderListActivity extends AppCompatActivity  {
+public class  OrderListActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -109,7 +112,7 @@ public class  OrderListActivity extends AppCompatActivity  {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        String serverx = "From fragment " + mSharedPreferences.getString("servername", "");
+        String serverx = "From act " + mSharedPreferences.getString("servername", "");
         Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
 
     }
@@ -121,6 +124,11 @@ public class  OrderListActivity extends AppCompatActivity  {
         mViewPager=null;
         mPagerAdapter=null;
 
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
     }
 
 

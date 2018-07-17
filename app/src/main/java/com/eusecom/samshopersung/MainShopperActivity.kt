@@ -181,6 +181,19 @@ class MainShopperActivity : AppCompatActivity() {
                 }
             }
 
+            if (BuildConfig.DEBUG) {
+
+                divider {}
+                secondaryItem("Detail dagger2 DEMO ") {
+
+                    onClick { _ ->
+                        navigateToDetailDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
 
             if (BuildConfig.DEBUG) {
 
@@ -313,6 +326,11 @@ class MainShopperActivity : AppCompatActivity() {
         startActivity(`is`)
     }
 
+    fun navigateToDetailDemo() {
+
+        val `is` = Intent(this, DetailActivity::class.java)
+        startActivity(`is`)
+    }
     fun navigateToAlbumsDemo() {
 
         val `is` = Intent(this, AlbumsActivity::class.java)

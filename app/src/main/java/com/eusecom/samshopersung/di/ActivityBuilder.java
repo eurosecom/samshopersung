@@ -4,13 +4,13 @@ import android.app.Activity;
 
 import com.eusecom.samshopersung.BasketKtActivity;
 import com.eusecom.samshopersung.ChooseCompanyActivity;
+import com.eusecom.samshopersung.DetailActivity;
 import com.eusecom.samshopersung.DomainsViewModelActivity;
 import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
 import com.eusecom.samshopersung.MapActivity;
 import com.eusecom.samshopersung.OfferKtActivity;
 import com.eusecom.samshopersung.OrderListActivity;
-import com.eusecom.samshopersung.di.MainActivityComponent;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;
@@ -62,7 +62,10 @@ public abstract class ActivityBuilder {
     /**
      * New dagger2 2.11 annotation. @ContributesAndroidInjector
      */
-    @ContributesAndroidInjector(modules = {OrderListActivityModule.class})
+    @ContributesAndroidInjector(modules = {OrderListActivityModule.class, OrderListKtFragmentProvider.class})
     abstract OrderListActivity bindOrderListActivity();
+
+    @ContributesAndroidInjector(modules = {OrderListActivityModule.class, DetailFragmentProvider.class})
+    abstract DetailActivity bindDetailActivity();
 
 }
