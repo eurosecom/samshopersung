@@ -124,7 +124,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     @Override
     public Observable<List<RealmDomain>> getDomainsFromRealm() {
 
-        //Log.d("DomainsViewModelRealm ", mRealm.toString());
+        Log.d("DomainsViewModelRealm ", mRealm.toString());
         List<RealmDomain> results = null;
         //old version without realmcontroller
         //results = mRealm.where(RealmDomain.class).findAll();

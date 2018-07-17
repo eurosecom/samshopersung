@@ -175,6 +175,10 @@
     <string name="itemsordered"> - ordered</string>
 
 
+    //orderlistactivity
+    <string name="empty">Empty</string>
+
+
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>

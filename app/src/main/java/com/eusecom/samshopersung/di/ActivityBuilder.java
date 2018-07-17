@@ -9,11 +9,13 @@ import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
 import com.eusecom.samshopersung.MapActivity;
 import com.eusecom.samshopersung.OfferKtActivity;
+import com.eusecom.samshopersung.OrderListActivity;
 import com.eusecom.samshopersung.di.MainActivityComponent;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;
 import dagger.android.AndroidInjector;
+import dagger.android.ContributesAndroidInjector;
 import dagger.multibindings.IntoMap;
 
 @Module
@@ -49,8 +51,18 @@ public abstract class ActivityBuilder {
     @ActivityKey(MapActivity.class)
     abstract AndroidInjector.Factory<? extends Activity> bindMapActivity(MapActivityComponent.Builder builder);
 
+    /**
+     * Old dagger2 2.11 annotation.
+     */
     @Binds
     @IntoMap
     @ActivityKey(BasketKtActivity.class)
     abstract AndroidInjector.Factory<? extends Activity> bindBasketKtActivity(BasketKtActivityComponent.Builder builder);
+
+    /**
+     * New dagger2 2.11 annotation. @ContributesAndroidInjector
+     */
+    @ContributesAndroidInjector(modules = {OrderListActivityModule.class})
+    abstract OrderListActivity bindOrderListActivity();
+
 }

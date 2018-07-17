@@ -82,7 +82,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         button3.setOnClickListener {
-            _ -> //navigateToInvoiceListKt()
+            _ -> navigateToOrder()
         }
 
         button4.setOnClickListener {
@@ -286,6 +286,24 @@ class MainShopperActivity : AppCompatActivity() {
     fun navigateToPrivacyPolicy(){
 
 
+    }
+
+    fun navigateToOrder() {
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, OrderListActivity::class.java)
+                startActivity(`is`)
+            }
+
+        }
     }
 
     fun navigateToRoomDemo() {
