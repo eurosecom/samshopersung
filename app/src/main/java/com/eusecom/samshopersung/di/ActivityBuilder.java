@@ -62,7 +62,8 @@ public abstract class ActivityBuilder {
     /**
      * New dagger2 2.11 annotation. @ContributesAndroidInjector
      */
-    @ContributesAndroidInjector(modules = {OrderListActivityModule.class, OrderListKtFragmentProvider.class})
+    @ContributesAndroidInjector(modules = {OrderListActivityModule.class, OrderListKtFragmentProvider.class
+            , OrderFragmentProvider.class})
     abstract OrderListActivity bindOrderListActivity();
 
     @ContributesAndroidInjector(modules = {OrderListActivityModule.class, DetailFragmentProvider.class})

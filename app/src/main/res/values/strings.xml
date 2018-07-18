@@ -177,6 +177,14 @@
 
     //orderlistactivity
     <string name="empty">Empty</string>
+    <string name="orderbalance">Order balance</string>
+    <string name="date">Date</string>
+    <string name="dateshort">Date</string>
+    <string name="suppidshort">ID</string>
+    <string name="fakshort">Inv.</string>
+    <string name="value">Value</string>
+    <string name="document">Document</string>
+    <string name="docshort">Doc.</string>
 
 
     //room demo

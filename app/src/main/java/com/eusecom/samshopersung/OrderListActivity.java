@@ -62,7 +62,7 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
                         new OrderListKtFragment(),
-                        new EmptyKtFragment()
+                        new OrderFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
                         getString(R.string.empty),
