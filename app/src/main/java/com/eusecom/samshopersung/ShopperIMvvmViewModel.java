@@ -3,6 +3,7 @@ package com.eusecom.samshopersung;
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
+import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import java.util.List;
 import rx.Observable;
@@ -56,6 +57,9 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<SumBasketKt> getMySumBasketFromSqlServer();
 
+    //methods for OrderListActivity
+    @NonNull
+    public Observable<InvoiceList> getMyCashDocsFromSqlServer(String drh);
 
     //methods for MapActivity
     @NonNull

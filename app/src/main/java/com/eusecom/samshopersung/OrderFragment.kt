@@ -142,7 +142,7 @@ class OrderFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyProductsFromSqlServer("1")
+        mSubscription?.add(mViewModel.getMyCashDocsFromSqlServer("0")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -151,7 +151,7 @@ class OrderFragment : Fragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerProducts(it) })
+                .subscribe { it -> setServerCashDocs(it) })
 
 
         ActivityCompat.invalidateOptionsMenu(activity)

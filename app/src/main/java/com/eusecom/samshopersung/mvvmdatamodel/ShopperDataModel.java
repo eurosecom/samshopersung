@@ -16,6 +16,7 @@ import com.eusecom.samshopersung.R;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
+import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
@@ -248,6 +249,20 @@ public class ShopperDataModel implements ShopperIDataModel {
 
 
     //end methods for BasketKtActivity
+
+
+    //methods for OrderListActivity
+
+    @Override
+    public Observable<InvoiceList> getCashDocsFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.getCashDocsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+
+    }
+
+    //end methods for OrderListActivity
 
     //methods for MapActivity
     public Observable<List<Employee>> prepareEmployeeList() {

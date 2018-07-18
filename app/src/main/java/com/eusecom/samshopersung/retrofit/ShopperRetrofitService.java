@@ -6,6 +6,7 @@ import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SumBasketKt;
+import com.eusecom.samshopersung.models.InvoiceList;
 
 import java.util.List;
 
@@ -44,5 +45,12 @@ public interface ShopperRetrofitService {
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("prodx") String prodx, @Query("dokx") String dokx);
+
+    //methods for OrderListActivity
+    @GET("/androidshopper/get_orders.php")
+    Observable<InvoiceList> getCashDocsFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
 
 }
