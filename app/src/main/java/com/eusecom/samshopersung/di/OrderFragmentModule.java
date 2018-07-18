@@ -21,25 +21,6 @@ import io.realm.Realm;
 @Module
 public class OrderFragmentModule {
 
-    @Provides
-    @ShopperScope
-    public ShopperIDataModel providesShopperIDataModel(DatabaseReference databasereference,
-                                                       ShopperRetrofitService shopperretrofitservice,
-                                                       Resources resources, Realm realm,
-                                                       ExampleInterceptor interceptor,
-                                                       IRealmController realmcontroller) {
-        return new ShopperDataModel(databasereference, shopperretrofitservice
-                , resources, realm, interceptor, realmcontroller);
-    }
 
-
-    @Provides
-    @ShopperScope
-    public ShopperIMvvmViewModel providesShopperIMvvmViewModel(ShopperIDataModel dataModel
-            , ISchedulerProvider schedulerProvider, SharedPreferences sharedPreferences
-            , ConnectivityManager connectivityManager) {
-        return new ShopperMvvmViewModel(dataModel, schedulerProvider
-                , sharedPreferences, connectivityManager);
-    }
 
 }

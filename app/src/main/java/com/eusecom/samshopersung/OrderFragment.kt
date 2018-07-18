@@ -71,10 +71,9 @@ class OrderFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //andrejko (activity.application as SamfantozziApp).dgaeacomponent().inject(this)
         setHasOptionsMenu(true)
 
-        Log.d("mViewModel frg ", mViewModel.toString())
+        Log.d("Fromfrg Order ", mViewModel.toString())
 
     }
 
@@ -174,7 +173,7 @@ class OrderFragment : Fragment() {
 
     private fun setServerProducts(products: List<ProductKt>) {
         hideProgressBar()
-        var serverx = "FromOrderfrg " + mSharedPreferences?.getString("servername", "")
+        var serverx = "Fromfrg Ord " + mSharedPreferences?.getString("servername", "")
         Toast.makeText(activity, serverx, Toast.LENGTH_SHORT).show()
 
         Log.d("FromOrderfrg ", mViewModel.toString())

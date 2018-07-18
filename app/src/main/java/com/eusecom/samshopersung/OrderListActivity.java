@@ -61,12 +61,12 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
-                        new OrderListKtFragment(),
-                        new OrderFragment()
+                        new OrderFragment(),
+                        new InvoiceFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
-                        getString(R.string.empty),
-                        getString(R.string.empty)
+                        getString(R.string.orders),
+                        getString(R.string.invoices)
                 };
 
                 @Override
