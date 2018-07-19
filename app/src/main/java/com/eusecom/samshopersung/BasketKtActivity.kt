@@ -54,6 +54,7 @@ class BasketKtActivity : AppCompatActivity() {
     var totmno: String = "0"
     var tothdd: String = "0.00"
     var totalbasket: TextView? = null
+    var totalbasketeur: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -66,7 +67,9 @@ class BasketKtActivity : AppCompatActivity() {
         initCollapsingToolbar()
 
         totalbasket = findViewById<View>(R.id.totalbasket) as TextView
-        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
+        totalbasket?.text = getString(R.string.totalbasket, totmno )
+        totalbasketeur = findViewById<View>(R.id.totalbasketeur) as TextView
+        totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
 
         //Bind the recyclerview
         recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
@@ -145,7 +148,8 @@ class BasketKtActivity : AppCompatActivity() {
 
         totmno = sumbasket.smno
         tothdd = sumbasket.shdd
-        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
+        totalbasket?.text = getString(R.string.totalbasket, totmno )
+        totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
 
         var basket: List<BasketKt> = sumbasket.basketitems
 
@@ -180,8 +184,8 @@ class BasketKtActivity : AppCompatActivity() {
         //Log.d("SumBasket0 ", sumbasket.basketitems.get(0).xnat);
         totmno = sumbasket.smno
         tothdd = sumbasket.shdd
-        totalbasket?.text = getString(R.string.totalbasket, totmno, tothdd)
-
+        totalbasket?.text = getString(R.string.totalbasket, totmno )
+        totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
 
         mybasket = sumbasket.basketitems.toMutableList()
         recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int, type: Int ->

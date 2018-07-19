@@ -11,7 +11,7 @@ public class FlombulatorTestModule {
 
     @Provides
     Flombulator provideTestFlombulator() {
-        System.out.println("I the mocked flumbolator have been summoned, behold my mock power");
+        System.out.println("I am the mocked flombulator");
         Flombulator flum = Mockito.mock(Flombulator.class);
         when(flum.flombulateMe()).thenReturn("flombulated test");
         return flum;

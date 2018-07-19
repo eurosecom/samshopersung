@@ -166,7 +166,8 @@
     <string name="savedtobasket"> - uložené do košíka</string>
     <string name="deletedfrombasket"> - zmazané z košíka</string>
     <string name="allitems">Všetky položky</string>
-    <string name="totalbasket">Celkom množstvo %s ks hodnota %s €</string>
+    <string name="totalbasket">Celkom množstvo %s ks</string>
+    <string name="totalbasketeur">Celkom %s Eur</string>
     <string name="movetofav">Presunúť do obľúbených</string>
     <string name="movedtofav"> - presunuté do obľúbených</string>
     <string name="order_basket">Objednať košík</string>
