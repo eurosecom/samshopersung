@@ -19,7 +19,7 @@ public class TestFlombulatorActivity {
     }
 
     @Test
-    public void addition_isCorrect() throws Exception {
+    public void flombulatedtext_isCorrect() throws Exception {
         myActivity = Robolectric.buildActivity(FlombulatorActivity.class).create().visible().get();
 
         assertEquals("flombulated test", myActivity.flumbolate());

@@ -14,8 +14,8 @@ public class TestApplication extends Application implements HasActivityInjector 
     public void onCreate() {
         super.onCreate();
         System.out.println("HEY IM UP TESTING APPLICATION COMPONENT ==========================+>");
-        DaggerTestApplicationComponent.builder()
-                .application(this)
+        DaggerTestAppComponent.builder()    //name by the TestAppComponent.java
+                .application(this)          //name by the TestAppComponent.java builder TestAppComponent.Builder application(Application application);
                 .build()
                 .inject(this);
     }
