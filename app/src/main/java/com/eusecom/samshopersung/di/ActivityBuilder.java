@@ -6,6 +6,7 @@ import com.eusecom.samshopersung.BasketKtActivity;
 import com.eusecom.samshopersung.ChooseCompanyActivity;
 import com.eusecom.samshopersung.DetailActivity;
 import com.eusecom.samshopersung.DomainsViewModelActivity;
+import com.eusecom.samshopersung.FlombulatorActivity;
 import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
 import com.eusecom.samshopersung.MapActivity;
@@ -69,5 +70,8 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = {OrderListActivityModule.class, DetailFragmentProvider.class})
     abstract DetailActivity bindDetailActivity();
+
+    @ContributesAndroidInjector(modules = {FlombulatorModule.class })
+    abstract FlombulatorActivity bindFlombulatorActivity();
 
 }

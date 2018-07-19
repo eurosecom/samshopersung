@@ -184,6 +184,20 @@ class MainShopperActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
+                secondaryItem("Flumborator dagger2 DEMO ") {
+
+                    onClick { _ ->
+                        navigateToFlumboratorDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
+
+            if (BuildConfig.DEBUG) {
+
+                divider {}
                 secondaryItem("Detail dagger2 DEMO ") {
 
                     onClick { _ ->
@@ -323,6 +337,12 @@ class MainShopperActivity : AppCompatActivity() {
         val servx = prefs.getString("servername", "")
         toast("servername " + servx)
         val `is` = Intent(this, RoomDemoActivity::class.java)
+        startActivity(`is`)
+    }
+
+    fun navigateToFlumboratorDemo() {
+
+        val `is` = Intent(this, FlombulatorActivity::class.java)
         startActivity(`is`)
     }
 

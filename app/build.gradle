@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-
 android {
     compileSdkVersion 26
     buildToolsVersion "25.0.2"
@@ -61,11 +60,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$design_version"
     implementation "com.android.support:cardview-v7:$design_version"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-
-    androidTestImplementation ('com.android.support.test.espresso:espresso-core:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcannary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcannary_version"
@@ -139,6 +133,26 @@ dependencies {
     implementation "com.google.android.gms:play-services-places:$google_version"
     implementation 'com.firebaseui:firebase-ui-database:0.4.0'
 
+    //unitTest
+    testCompile "org.robolectric:robolectric:3.2.2"
+    testCompile 'junit:junit:4.12'
+    compile 'org.mockito:mockito-core:2.7.12'
+    compile "org.projectlombok:lombok:1.16.10"
+    androidTestImplementation ('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testImplementation "com.google.dagger:dagger:$daggerVer"
+    testImplementation "com.google.dagger:dagger-android-support:$daggerVer"
+    testAnnotationProcessor "com.google.dagger:dagger-android-processor:$daggerVer"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVer"
 
 }
+
+//unitTesting
+android.applicationVariants.all {
+    def aptOutputDir = new File(buildDir, "generated/source/apt/${it.unitTestVariant.dirName}")
+    it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
+}
+
 apply plugin: 'com.google.gms.google-services'
