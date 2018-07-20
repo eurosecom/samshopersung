@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.eusecom.samshopersung.di.AppModule;
 import com.eusecom.samshopersung.di.TestBindingModule;
+
+import javax.inject.Singleton;
+
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.Module;
@@ -11,6 +14,7 @@ import dagger.android.AndroidInjectionModule;
 
 // !!! Some problem with to move TestAppModule and TestAppComponent to /di folder
 
+@Singleton
 @Component(
         modules = {
                 AndroidInjectionModule.class,
