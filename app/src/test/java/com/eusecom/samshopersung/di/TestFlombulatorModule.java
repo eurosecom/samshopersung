@@ -57,7 +57,8 @@ public class TestFlombulatorModule {
     @Provides @Named("testing")
     public ISchedulerProvider providesISchedulerProvider(Application application) {
 
-        return ((TestApplication) application).getSchedulerProvider();
+        //return ((TestApplication) application).getSchedulerProvider(); to remove getSchedulerProvider from TestAplication
+        return new ImmediateSchedulerProvider();
     }
 
     @Provides
