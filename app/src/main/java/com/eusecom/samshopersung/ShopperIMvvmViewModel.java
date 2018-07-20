@@ -65,6 +65,10 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<Employee>> getMyObservableEmployeesFromList();
 
+    //methods for FlombulatorActivity
+    @NonNull
+    public String getStringFromMVVM();
+
 
 
 }

@@ -292,6 +292,14 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
     //end methods for MapActivity
 
+    //methods for FlombulatorActivity
+    public String getStringFromDataModel() {
+
+        return "Flombulated Real String from DataModel";
+    }
+    //end methods for FlombulatorActivity
+
+
     //set retrofit by runtime
     public void setRetrofit(String servername) {
 

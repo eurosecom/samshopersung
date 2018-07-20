@@ -19,7 +19,7 @@ import dagger.android.AndroidInjectionModule;
         modules = {
                 AndroidInjectionModule.class,
                 TestBindingModule.class,
-                AppModule.class //!!! To get AppModule.java from real build main folder
+                AppModule.class
         })
 interface TestAppComponent {
 

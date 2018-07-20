@@ -56,5 +56,8 @@ public interface ShopperIDataModel {
     //methods for MapActivity
     public Observable<List<Employee>> prepareEmployeeList();
 
+    //methods for FlombulatorActivity
+    public String getStringFromDataModel();
+
 
 }

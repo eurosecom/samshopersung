@@ -10,9 +10,6 @@ import dagger.android.AndroidInjector;
 })
 public interface TestFlombulatorActivityComponent extends AndroidInjector<FlombulatorActivity> {
 
-    @Module
-    class MainActivityModule {}
-
     @Subcomponent.Builder
     abstract class Builder extends AndroidInjector.Builder<FlombulatorActivity> {}
 }

@@ -433,6 +433,17 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
      */
 
 
+    /**
+     * methods for FlombulatorActivity
+     */
+    public String getStringFromMVVM() {
+
+        return mDataModel.getStringFromDataModel();
+    }
+    /**
+     * end methods for FlombulatorActivity
+     */
+
     //JSON from ProductKt
     public String JsonFromProduct(ProductKt invx) {
 
