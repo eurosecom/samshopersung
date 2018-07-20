@@ -1,6 +1,8 @@
 package com.eusecom.samshopersung.di;
 
 import com.eusecom.samshopersung.Flombulator;
+import com.eusecom.samshopersung.FlombulatorI;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -8,7 +10,7 @@ import dagger.Provides;
 public class FlombulatorModule {
 
     @Provides
-    Flombulator provideFlombulator() {
+    FlombulatorI provideFlombulatorI() {
         System.out.println("Flombulated real implementation of FlombulatorModule");
         return new Flombulator();
     }

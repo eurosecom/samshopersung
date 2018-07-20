@@ -13,7 +13,7 @@ public class FlombulatorActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getCanonicalName();
 
     @Inject
-    Flombulator flombulator;
+    FlombulatorI flombulator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
