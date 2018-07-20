@@ -21,6 +21,9 @@ public class FlombulatorActivity extends AppCompatActivity {
     @Inject
     SharedPreferences mSharedPreferences;
 
+    //@Inject
+    //ShopperIMvvmViewModel mViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -31,11 +34,16 @@ public class FlombulatorActivity extends AppCompatActivity {
         Log.d("Flombulated text", flumx );
 
         String serverx = "From act " + mSharedPreferences.getString("servername", "");
-        Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, textFromPref(), Toast.LENGTH_SHORT).show();
 
     }
 
     public String flumbolate() {
         return flombulator.flombulateMe();
+    }
+
+    public String textFromPref() {
+        String textpref = "From act " + mSharedPreferences.getString("servername", "");
+        return textpref;
     }
 }

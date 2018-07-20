@@ -5,6 +5,7 @@ import dagger.Module;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 
+@ShopperScope
 @Subcomponent(modules = {
         FlombulatorModule.class
 })

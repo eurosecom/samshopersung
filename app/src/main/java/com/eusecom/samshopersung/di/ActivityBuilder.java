@@ -71,6 +71,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {OrderListActivityModule.class, DetailFragmentProvider.class})
     abstract DetailActivity bindDetailActivity();
 
+    @ShopperScope
     @ContributesAndroidInjector(modules = {FlombulatorModule.class })
     abstract FlombulatorActivity bindFlombulatorActivity();
 

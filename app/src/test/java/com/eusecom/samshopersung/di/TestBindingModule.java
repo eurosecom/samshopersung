@@ -3,6 +3,8 @@ package com.eusecom.samshopersung.di;
 import android.app.Activity;
 
 import com.eusecom.samshopersung.FlombulatorActivity;
+import com.eusecom.samshopersung.TestFlombulatorActivity;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;

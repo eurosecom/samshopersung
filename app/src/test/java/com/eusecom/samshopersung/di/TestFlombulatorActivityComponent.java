@@ -6,8 +6,7 @@ import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 
 @Subcomponent(modules = {
-        TestFlombulatorModule.class,
-        TestFlombulatorActivityComponent.MainActivityModule.class
+        TestFlombulatorModule.class
 })
 public interface TestFlombulatorActivityComponent extends AndroidInjector<FlombulatorActivity> {
 
