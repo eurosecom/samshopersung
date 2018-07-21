@@ -115,15 +115,12 @@ class OrderFragment : Fragment() {
         _disposables
                 .add(tapEventEmitter.subscribe { event ->
                     if (event is OrderFragment.ClickFobEvent) {
-                        //Log.d("OrderListActivity  ", " fobClick ")
                         //andrejko showNewCashDocDialog()
 
                     }
                     if (event is Invoice) {
 
-                        val usnamex = event.nai
-
-                        //Log.d("OrderFragment ", usnamex)
+                        Log.d("onShortClickListenerFrg", event.nai)
                         //andrejko getTodoDialog(event)
 
 

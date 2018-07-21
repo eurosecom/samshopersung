@@ -113,7 +113,7 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
         tabLayout.setupWithViewPager(mViewPager);
 
         String serverx = "From act " + mSharedPreferences.getString("servername", "");
-        Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
 
     }
 

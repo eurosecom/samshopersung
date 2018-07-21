@@ -60,13 +60,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
       holder.invoice_name.setText(mListabsserver.get(position).getNai() + " " + mListabsserver.get(position).getKto());
       Picasso.with(holder.mContext).load(R.drawable.baseline_favorite_black_24dp).resize(120, 120).into(holder.invoice_photo);
 
-      //holder.docx.setText(mListabsserver.get(position).getDok() + " pos." + mListabsserver.get(position).getPoh());
       holder.docx.setText(mListabsserver.get(position).getDok());
 
-      //holder.datex.setText(getDateString(mListabsserver.get(position).getDat()));
       holder.datex.setText(mListabsserver.get(position).getDat());
-
-      //holder.invoicex.setText(mListabsserver.get(position).getFak());
 
       holder.valuex.setText(mListabsserver.get(position).getHod());
 
@@ -76,7 +72,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
                   // View v at position pos is long-clicked.
                   Log.d("onLongClickListener", mListabsserver.get(pos).getNai());
-                  //getDialog(mListabsserver.get(position).longi, mListabsserver.get(position), holder.mContext);
 
 
               } else {

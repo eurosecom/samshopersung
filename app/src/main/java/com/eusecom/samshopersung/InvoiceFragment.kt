@@ -36,7 +36,7 @@ class InvoiceFragment : Fragment() {
 
 
         var serverx = "Fromfrg Inv " + mSharedPreferences?.getString("servername", "")
-        Toast.makeText(activity, serverx, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(activity, serverx, Toast.LENGTH_SHORT).show()
 
 
         Log.d("Fromfrg Inv ", mViewModel.toString())
