@@ -99,7 +99,7 @@ public class FlombulatorActivity extends AppCompatActivity {
         unBind();
     }
 
-    public Observable<List<String>> getRxString() {
+    protected Observable<List<String>> getRxString() {
 
         return mViewModel.getRxStringFromMvvm();
     }
