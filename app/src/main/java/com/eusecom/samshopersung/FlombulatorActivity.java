@@ -3,6 +3,7 @@ package com.eusecom.samshopersung;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,11 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
 
 public class FlombulatorActivity extends AppCompatActivity {
 
@@ -24,6 +30,9 @@ public class FlombulatorActivity extends AppCompatActivity {
     @Inject
     ShopperIMvvmViewModel mViewModel;
 
+    @NonNull
+    private CompositeSubscription mSubscription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
@@ -33,10 +42,39 @@ public class FlombulatorActivity extends AppCompatActivity {
         String flumx = flumbolate();
         Log.d("Flombulated text", flumx );
 
-        Toast.makeText(this, textFromPref(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, textFromPref(), Toast.LENGTH_SHORT).show();
+        Log.d("Flombulated text", textFromPref() );
 
-        Toast.makeText(this, textFromMvvm(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, textFromMvvm(), Toast.LENGTH_SHORT).show();
+        Log.d("Flombulated text", textFromMvvm() );
 
+        bind();
+
+    }
+
+    private void bind() {
+
+        mSubscription = new CompositeSubscription();
+
+        mSubscription.add(mViewModel.getRxStringFromMvvm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error SupplierListFragment " + throwable.getMessage());
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setRxStringFromMvvm));
+    }
+
+    private void setRxStringFromMvvm(String rxstringfrommvvm) {
+
+        Log.d("Flombulated text", rxstringfrommvvm );
+    }
+
+    private void unBind() {
+
+        mSubscription.unsubscribe();
+        mSubscription.clear();
     }
 
     public String flumbolate() {
@@ -49,10 +87,15 @@ public class FlombulatorActivity extends AppCompatActivity {
     }
 
     public String textFromMvvm() {
-        String textmvvm = mViewModel.getStringFromMVVM();
+        String textmvvm = mViewModel.getStringFromMvvm();
         return textmvvm;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unBind();
+    }
 
 
 }

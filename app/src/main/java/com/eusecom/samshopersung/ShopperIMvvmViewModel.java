@@ -67,7 +67,10 @@ public interface ShopperIMvvmViewModel {
 
     //methods for FlombulatorActivity
     @NonNull
-    public String getStringFromMVVM();
+    public String getStringFromMvvm();
+
+    @NonNull
+    public Observable<String> getRxStringFromMvvm();
 
 
 

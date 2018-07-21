@@ -297,6 +297,12 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         return "Flombulated Real String from DataModel";
     }
+
+    public Observable<String> getRxStringFromDataModel() {
+
+        return Observable.just("Flombulated Real RxString from DataModel");
+    }
+
     //end methods for FlombulatorActivity
 
 

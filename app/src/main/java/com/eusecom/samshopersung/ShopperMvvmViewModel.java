@@ -436,9 +436,14 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     /**
      * methods for FlombulatorActivity
      */
-    public String getStringFromMVVM() {
+    public String getStringFromMvvm() {
 
         return mDataModel.getStringFromDataModel();
+    }
+
+    public Observable<String> getRxStringFromMvvm() {
+
+        return mDataModel.getRxStringFromDataModel();
     }
     /**
      * end methods for FlombulatorActivity
