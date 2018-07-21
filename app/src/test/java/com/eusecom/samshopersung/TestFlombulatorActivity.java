@@ -40,4 +40,10 @@ public class TestFlombulatorActivity {
         assertEquals("From act www.eshoptest.sk", myActivity.textFromPref());
     }
 
+    @Test
+    public void textFromMvvm_isCorrect() throws Exception {
+
+        assertEquals("Mocked String from DataModel", myActivity.textFromMvvm());
+    }
+
 }

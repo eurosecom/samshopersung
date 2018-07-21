@@ -35,7 +35,7 @@ public class FlombulatorActivity extends AppCompatActivity {
 
         Toast.makeText(this, textFromPref(), Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, textFromMVVM(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, textFromMvvm(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -48,7 +48,7 @@ public class FlombulatorActivity extends AppCompatActivity {
         return textpref;
     }
 
-    public String textFromMVVM() {
+    public String textFromMvvm() {
         String textmvvm = mViewModel.getStringFromMVVM();
         return textmvvm;
     }
