@@ -441,7 +441,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mDataModel.getStringFromDataModel();
     }
 
-    public Observable<String> getRxStringFromMvvm() {
+    public Observable<List<String>> getRxStringFromMvvm() {
 
         return mDataModel.getRxStringFromDataModel();
     }

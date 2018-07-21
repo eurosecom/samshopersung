@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
@@ -56,7 +58,7 @@ public class FlombulatorActivity extends AppCompatActivity {
 
         mSubscription = new CompositeSubscription();
 
-        mSubscription.add(mViewModel.getRxStringFromMvvm()
+        mSubscription.add(getRxString()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error SupplierListFragment " + throwable.getMessage());
@@ -66,9 +68,9 @@ public class FlombulatorActivity extends AppCompatActivity {
                 .subscribe(this::setRxStringFromMvvm));
     }
 
-    private void setRxStringFromMvvm(String rxstringfrommvvm) {
+    private void setRxStringFromMvvm(List<String> rxstringfrommvvm) {
 
-        Log.d("Flombulated text", rxstringfrommvvm );
+        Log.d("Flombulated text", rxstringfrommvvm.get(0) );
     }
 
     private void unBind() {
@@ -95,6 +97,11 @@ public class FlombulatorActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         unBind();
+    }
+
+    public Observable<List<String>> getRxString() {
+
+        return mViewModel.getRxStringFromMvvm();
     }
 
 

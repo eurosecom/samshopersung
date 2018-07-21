@@ -59,6 +59,6 @@ public interface ShopperIDataModel {
     //methods for FlombulatorActivity
     public String getStringFromDataModel();
 
-    public Observable<String> getRxStringFromDataModel();
+    public Observable<List<String>> getRxStringFromDataModel();
 
 }

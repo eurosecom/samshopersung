@@ -70,7 +70,7 @@ public interface ShopperIMvvmViewModel {
     public String getStringFromMvvm();
 
     @NonNull
-    public Observable<String> getRxStringFromMvvm();
+    public Observable<List<String>> getRxStringFromMvvm();
 
 
 

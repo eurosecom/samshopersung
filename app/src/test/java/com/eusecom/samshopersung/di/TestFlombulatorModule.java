@@ -23,12 +23,16 @@ import com.google.firebase.database.DatabaseReference;
 
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
+import rx.Observable;
 import rx.internal.schedulers.ImmediateScheduler;
 
 import static org.mockito.Mockito.when;
@@ -49,7 +53,13 @@ public class TestFlombulatorModule {
 
         System.out.println("I am the mocked datamodel");
         ShopperIDataModel datamodel = Mockito.mock(ShopperDataModel.class);
+
         when(datamodel.getStringFromDataModel()).thenReturn("Mocked String from DataModel");
+
+        List<String> mockedliststr = new ArrayList<>();
+        mockedliststr.add("Mocked Rx String from DataModel");
+        when(datamodel.getRxStringFromDataModel()).thenReturn(Observable.just(mockedliststr));
+
         return datamodel;
 
     }
