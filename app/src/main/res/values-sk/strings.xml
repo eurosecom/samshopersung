@@ -173,6 +173,17 @@
     <string name="order_basket">Objednať košík</string>
     <string name="itemsordered"> - objednané</string>
 
+    //orderlistactivity
+    <string name="empty">Prázdne</string>
+    <string name="orderbalance">Zostatok objednávok</string>
+    <string name="date">Dátum</string>
+    <string name="dateshort">Dát.</string>
+    <string name="suppidshort">Ičo</string>
+    <string name="fakshort">Fak.</string>
+    <string name="value">Hodnota</string>
+    <string name="document">Doklad</string>
+    <string name="docshort">Dok.</string>
+
 
     //room demo
     <string name="price_format">$%1$s</string>

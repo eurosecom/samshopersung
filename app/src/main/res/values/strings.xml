@@ -178,7 +178,7 @@
 
     //orderlistactivity
     <string name="empty">Empty</string>
-    <string name="orderbalance">Order balance</string>
+    <string name="orderbalance">Orders balance</string>
     <string name="date">Date</string>
     <string name="dateshort">Date</string>
     <string name="suppidshort">ID</string>
