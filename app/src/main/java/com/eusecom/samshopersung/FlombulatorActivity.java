@@ -56,16 +56,30 @@ public class FlombulatorActivity extends AppCompatActivity {
         mSubscription.add(getRxString()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error SupplierListFragment " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error FlombulatorActivity " + throwable.getMessage());
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setRxStringFromMvvm));
+
+        mSubscription.add(getCompaniesFromServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error FlombulatorActivity " + throwable.getMessage());
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setRxCompaniesFromMvvm));
     }
 
     private void setRxStringFromMvvm(List<String> rxstringfrommvvm) {
 
         Log.d("Flombulated text", rxstringfrommvvm.get(0) );
+    }
+
+    private void setRxCompaniesFromMvvm(List<CompanyKt> rxcompfrommvvm) {
+
+        Log.d("Flombulated company ", rxcompfrommvvm.get(0).getNaz() );
     }
 
     private void unBind() {
@@ -99,5 +113,9 @@ public class FlombulatorActivity extends AppCompatActivity {
         return mViewModel.getRxStringFromMvvm();
     }
 
+    protected Observable<List<CompanyKt>> getCompaniesFromServer() {
+
+        return mViewModel.getFlombulateCompaniesFromServer();
+    }
 
 }

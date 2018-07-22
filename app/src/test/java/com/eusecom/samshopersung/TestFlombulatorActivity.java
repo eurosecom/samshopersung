@@ -27,6 +27,8 @@ public class TestFlombulatorActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(RuntimeEnvironment.application);
         sharedPreferences.edit().putString("servername", "www.eshoptest.sk").commit();
+        sharedPreferences.edit().putString("usuid", "IgPWMlG2TfOx5eAdAR2R7Ai3wZa2").commit();
+
 
     }
 
@@ -50,7 +52,7 @@ public class TestFlombulatorActivity {
 
 
     @Test
-    public void rxTextFromMvvm_isCorrect2() throws Exception {
+    public void rxTextFromMvvm_isCorrect() throws Exception {
 
         TestSubscriber<List<String>> testSubscriber = new TestSubscriber<>();
         myActivity.getRxString().subscribe(testSubscriber);
@@ -65,7 +67,32 @@ public class TestFlombulatorActivity {
 
         String observedstring = listresult.get(0).get(0).toString();
         System.out.println("observedstring " + observedstring);
-        Assert.assertEquals(observedstring, "Mocked Rx String from DataModel");
+        Assert.assertEquals("Mocked Rx String from DataModel", observedstring);
+
+    }
+
+    @Test
+    public void rxCompaniesFromMvvm_isCorrect() throws Exception {
+
+        TestSubscriber<List<CompanyKt>> testSubscriber = new TestSubscriber<>();
+        myActivity.getCompaniesFromServer().subscribe(testSubscriber);
+
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertUnsubscribed();
+        testSubscriber.assertTerminalEvent();
+        String threadname = testSubscriber.getLastSeenThread().getName();
+        System.out.println("threadname " + threadname);
+
+        List<List<CompanyKt>> listresult = testSubscriber.getOnNextEvents();
+
+        CompanyKt comp = new CompanyKt("999","Mocked F999","", 0,"","","",""
+                ,"","","","","","","","",""
+                ,"","","","");
+        String expected = comp.toString();
+
+        String observedstring = listresult.get(0).get(0).toString();
+        System.out.println("observedstring " + observedstring);
+        Assert.assertEquals(expected, observedstring);
 
     }
 

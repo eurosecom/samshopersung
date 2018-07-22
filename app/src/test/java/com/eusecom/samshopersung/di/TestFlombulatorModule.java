@@ -6,12 +6,14 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 
+import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.Flombulator;
 import com.eusecom.samshopersung.FlombulatorI;
 import com.eusecom.samshopersung.SamshopperApp;
 import com.eusecom.samshopersung.ShopperIMvvmViewModel;
 import com.eusecom.samshopersung.ShopperMvvmViewModel;
 import com.eusecom.samshopersung.TestApplication;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperDataModel;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
@@ -59,6 +61,18 @@ public class TestFlombulatorModule {
         List<String> mockedliststr = new ArrayList<>();
         mockedliststr.add("Mocked Rx String from DataModel");
         when(datamodel.getRxStringFromDataModel()).thenReturn(Observable.just(mockedliststr));
+
+        List<CompanyKt> mockedlistcompany = new ArrayList<>();
+        CompanyKt comp = new CompanyKt("999","Mocked F999","", 0,"","","",""
+                ,"","","","","","","","",""
+                ,"","","","");
+        mockedlistcompany.add(comp);
+
+        String serverx="www.eshoptest.sk";
+        String encrypted="c62296b32155f6afce6b8d3997b52689a37e10372b29b92146fd8e08c5c3d567822e5db86f261f76cba252e8261980bd92e33b83ef84a8a2c9deea42f779ee1a8e5600ccf32aa38bfbd4639c19594809";
+        String ds="4.857403475138863";
+
+        when(datamodel.getCompaniesFromMysqlServer(serverx, encrypted, ds)).thenReturn(Observable.just(mockedlistcompany));
 
         return datamodel;
 
