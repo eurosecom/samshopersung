@@ -1,15 +1,10 @@
 package com.eusecom.samshopersung;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;

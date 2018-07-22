@@ -2,9 +2,6 @@ package com.eusecom.samshopersung;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.Toast;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,18 +11,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import java.util.List;
-import javax.inject.Inject;
-
-import io.reactivex.annotations.CheckReturnValue;
-import io.reactivex.annotations.SchedulerSupport;
-import io.reactivex.observers.TestObserver;
-import rx.Subscriber;
-import rx.Subscription;
 import rx.observers.TestSubscriber;
-import rx.schedulers.Schedulers;
-
 import static junit.framework.Assert.assertEquals;
-import static rx.Observable.empty;
 
 @Config(constants = BuildConfig.class, sdk = 21, application = TestApplication.class)
 @RunWith(RobolectricTestRunner.class)

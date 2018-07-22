@@ -6,7 +6,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.Observable;
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;

@@ -1,22 +1,17 @@
 package com.eusecom.samshopersung;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
-
 import java.util.List;
-
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
 public class FlombulatorActivity extends AppCompatActivity {
