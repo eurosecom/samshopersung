@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.view.MenuItemCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -121,7 +122,7 @@ class OrderFragment : Fragment() {
                     if (event is Invoice) {
 
                         Log.d("onShortClickListenerFrg", event.nai)
-                        //andrejko getTodoDialog(event)
+                        getTodoDialog(event)
 
 
                     }
@@ -278,6 +279,38 @@ class OrderFragment : Fragment() {
 
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun getTodoDialog(invoice: Invoice) {
+
+        val inflater = LayoutInflater.from(activity)
+        val textenter = inflater.inflate(R.layout.invoice_edit_dialog, null)
+
+        val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
+        valuex.text = invoice.hod
+
+        val builder = AlertDialog.Builder(activity)
+        builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.dok)
+
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.editdoc), getString(R.string.deletewholedoc))
+        ) { dialog, which ->
+            // The 'which' argument contains the index position
+            // of the selected item
+            when (which) {
+                0 -> {
+
+                }
+                1 -> {
+                    //navigateToEditDoc(invoice)
+                }
+                2 -> {
+                    //showDeleteDialog(invoice)
+                }
+            }
+        }
+        val dialog = builder.create()
+        builder.show()
+
     }
 
 
