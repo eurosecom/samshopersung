@@ -115,7 +115,7 @@ public class FlombulatorActivity extends AppCompatActivity {
 
     protected Observable<List<CompanyKt>> getCompaniesFromServer() {
 
-        return mViewModel.getFlombulateCompaniesFromServer();
+        return mViewModel.getMyCompaniesFromServer();
     }
 
 }

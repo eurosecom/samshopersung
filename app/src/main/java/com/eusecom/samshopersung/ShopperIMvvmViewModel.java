@@ -72,8 +72,6 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<String>> getRxStringFromMvvm();
 
-    public Observable<List<CompanyKt>> getFlombulateCompaniesFromServer();
-
 
 
 }

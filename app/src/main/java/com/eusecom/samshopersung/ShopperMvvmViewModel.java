@@ -446,21 +446,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mDataModel.getRxStringFromDataModel();
     }
 
-
-    //get companies from MySql server
-    public Observable<List<CompanyKt>> getFlombulateCompaniesFromServer() {
-
-        String serverx="www.eshoptest.sk";
-        String encrypted="c62296b32155f6afce6b8d3997b52689a37e10372b29b92146fd8e08c5c3d567822e5db86f261f76cba252e8261980bd92e33b83ef84a8a2c9deea42f779ee1a8e5600ccf32aa38bfbd4639c19594809";
-        String ds="4.857403475138863";
-
-        Log.d("WhatStr serverx ", serverx);
-        Log.d("WhatStr encrypted ", encrypted);
-        Log.d("WhatStr ds ", ds);
-
-        return mDataModel.getCompaniesFromMysqlServer(serverx, encrypted, ds);
-    }
-    //end get companies from MySql server
     /**
      * end methods for FlombulatorActivity
      */
