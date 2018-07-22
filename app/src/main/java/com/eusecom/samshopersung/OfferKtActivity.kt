@@ -204,7 +204,7 @@ class OfferKtActivity : AppCompatActivity() {
     private fun bind() {
 
         showProgressBar()
-        mSubscription.add(mViewModel.getMyProductsFromSqlServer("1")
+        mSubscription.add(getMyProductsFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -293,6 +293,11 @@ class OfferKtActivity : AppCompatActivity() {
         hideProgressBar()
         mViewModel.clearMyObservableSaveSumBasketToServer()
     }
+
+    protected fun getMyProductsFromSqlServer(category: String): Observable<List<ProductKt>>  {
+        return mViewModel.getMyProductsFromSqlServer(category);
+    }
+
 
 
     /**
