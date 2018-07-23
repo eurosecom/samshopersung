@@ -158,7 +158,7 @@
     <string name="choosecat">Choose category</string>
     <string name="allcat">All categories</string>
     <string name="favitems">Favourite items</string>
-    product: ProductKt
+    <string name="category">Category</string>
 
     //basket activity
     <string name="mybasket">My Basket</string>

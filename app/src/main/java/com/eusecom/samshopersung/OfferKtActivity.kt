@@ -179,7 +179,7 @@ class OfferKtActivity : AppCompatActivity() {
             primaryItem(getString(R.string.allcat)) {
 
                 onClick { _ ->
-                    navigateToCategory("0")
+                    navigateToCategory("0", "")
                     false
                 }
 
@@ -190,7 +190,7 @@ class OfferKtActivity : AppCompatActivity() {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    navigateToCategory("99999")
+                    navigateToCategory("99999", "")
                     false
                 }
             }
@@ -204,7 +204,7 @@ class OfferKtActivity : AppCompatActivity() {
     private fun bind() {
 
         showProgressBar()
-        mSubscription.add(getMyProductsFromSqlServer("1")
+        mSubscription.add(getMyProductsFromSqlServer("0")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -215,7 +215,7 @@ class OfferKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setServerProducts(it) }))
 
-        mSubscription.add(mViewModel.getMyCatsFromSqlServer("1")
+        mSubscription.add(getMyCatsFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -226,7 +226,7 @@ class OfferKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setServerCategories(it) }))
 
-        mSubscription.add(mViewModel.getMyObservableSaveSumBasketToServer()
+        mSubscription.add(getMyObservableSaveSumBasketToServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -236,6 +236,21 @@ class OfferKtActivity : AppCompatActivity() {
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setSavedBasket(it) }))
+
+        mSubscription.add(getMyCatProductsFromSqlServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setServerProducts(it) }))
+
+
+
+
 
     }
 
@@ -250,16 +265,17 @@ class OfferKtActivity : AppCompatActivity() {
 
     private fun setServerCategories(cats: List<CategoryKt>) {
 
-        Log.d("showCategory ", cats.get(0).nac);
+        //Log.d("showCategory ", cats.get(0).nac);
 
         cats.forEach { i ->
 
             result.addItemsAtPosition(6, DividerDrawerItem())
-            result.addItemsAtPosition(7, PrimaryDrawerItem().withName(i.nac)
+            result.addItemsAtPosition(7, PrimaryDrawerItem().withName(i.cat + " " + i.nac)
                     .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                         override fun onItemClick(view: View, position: Int, drawerItem: IDrawerItem<out Any?, out RecyclerView.ViewHolder>?): Boolean {
-                            Log.d("DRAWER", i.nac + " Clicked!")
+                            Log.d("DRAWER", i.cat + " " + i.nac + " Clicked!")
 
+                            navigateToCategory(i.cat, i.nac)
                             //return true //remain opened drawer
                             return false
                         }
@@ -274,8 +290,8 @@ class OfferKtActivity : AppCompatActivity() {
 
     private fun setServerProducts(products: List<ProductKt>) {
 
-        Log.d("showProduct ", products.get(0).nat);
-        Log.d("showProduct ", products.get(0).prm1);
+        //Log.d("showProduct ", products.get(0).nat);
+        //Log.d("showProduct ", products.get(0).prm1);
         productList = products.toMutableList()
         adapter?.setProductItems(productList)
 
@@ -292,11 +308,30 @@ class OfferKtActivity : AppCompatActivity() {
         _disposables.dispose()
         hideProgressBar()
         mViewModel.clearMyObservableSaveSumBasketToServer()
+        mViewModel.clearMyCatProductsFromSqlServe()
     }
 
     protected fun getMyProductsFromSqlServer(category: String): Observable<List<ProductKt>>  {
         return mViewModel.getMyProductsFromSqlServer(category);
     }
+
+    protected fun getMyCatsFromSqlServer(category: String): Observable<List<CategoryKt>>  {
+        return mViewModel.getMyCatsFromSqlServer(category);
+    }
+
+    protected fun getMyObservableSaveSumBasketToServer(): Observable<SumBasketKt>  {
+        return mViewModel.getMyObservableSaveSumBasketToServer()
+    }
+
+    protected fun emitMyCatProductsFromSqlServer(category: String)  {
+        return mViewModel.emitMyCatProductsFromSqlServer(category);
+    }
+
+    protected fun getMyCatProductsFromSqlServer(): Observable<List<ProductKt>>   {
+        return mViewModel.getMyCatProductsFromSqlServer();
+    }
+
+
 
 
 
@@ -409,9 +444,11 @@ class OfferKtActivity : AppCompatActivity() {
         finish()
     }
 
-    fun navigateToCategory(cat: String){
+    fun navigateToCategory(cat: String, nac: String){
+        offersubtitle?.text = getString(R.string.category) + " " + cat + " " + nac
         if(cat.equals("0")) { offersubtitle?.text = getString(R.string.allcat) }
         if(cat.equals("99999")) { offersubtitle?.text = getString(R.string.favitems) }
+        emitMyCatProductsFromSqlServer(cat)
     }
 
     //consume oncreateoptionmenu

@@ -50,6 +50,15 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearMyObservableSaveSumBasketToServer();
 
+    @NonNull
+    public void emitMyCatProductsFromSqlServer(String cat);
+
+    @NonNull
+    public Observable<List<ProductKt>> getMyCatProductsFromSqlServer();
+
+    @NonNull
+    public void clearMyCatProductsFromSqlServe();
+
     //methods for BasketKtActivity
     @NonNull
     public Observable<List<BasketKt>> getMyBasketFromSqlServer();

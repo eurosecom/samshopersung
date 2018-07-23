@@ -142,16 +142,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
-        String dodx = mSharedPreferences.getString("doduce", "");
-        if (drh.equals("1")) {
-            dodx = mSharedPreferences.getString("odbuce", "");
-        }
-        if (drh.equals("3")) {
-            dodx = mSharedPreferences.getString("pokluce", "");
-        }
-        if (drh.equals("4")) {
-            dodx = mSharedPreferences.getString("bankuce", "");
-        }
+        String dodx = "1";
         String umex = mSharedPreferences.getString("ume", "");
         String serverx = mSharedPreferences.getString("servername", "");
 
@@ -180,16 +171,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
-        String dodx = mSharedPreferences.getString("doduce", "");
-        if (drh.equals("1")) {
-            dodx = mSharedPreferences.getString("odbuce", "");
-        }
-        if (drh.equals("3")) {
-            dodx = mSharedPreferences.getString("pokluce", "");
-        }
-        if (drh.equals("4")) {
-            dodx = mSharedPreferences.getString("bankuce", "");
-        }
+        String dodx = "0";
+
         String umex = mSharedPreferences.getString("ume", "");
         String serverx = mSharedPreferences.getString("servername", "");
 
@@ -299,6 +282,54 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     public Observable<List<Album>> getMyObservableAlbumsFromList() {
         return mDataModel.prepareAlbumsList();
     }
+
+    //andrejko
+    //emit product by cat from Mysql
+    public void emitMyCatProductsFromSqlServer(String drhx) {
+
+        mObservableCatProductsFromServer.onNext(drhx);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableCatProductsFromServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<ProductKt>> getMyCatProductsFromSqlServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted3=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableCatProductsFromServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(drhx -> mDataModel.getProductsFromMysqlServer(serverx, encrypted3, ds, firx, rokx, drhx, dodx, umex, "0"));
+    }
+
+    public void clearMyCatProductsFromSqlServe() {
+
+        mObservableCatProductsFromServer = BehaviorSubject.create();
+
+    }
+    //end emit product by cat from Mysql
 
 
     /**
