@@ -98,6 +98,7 @@ class OfferKtActivity : AppCompatActivity() {
     private var _disposables = CompositeDisposable()
     private var mProgressBar: ProgressBar? = null
     private var mcount: String = "0"
+    protected var isCollapsed: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -106,6 +107,10 @@ class OfferKtActivity : AppCompatActivity() {
         setContentView(R.layout.offerproduct_activity)
         //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+
+        Log.d("OffAct lc", "onCreate " + dgEventsStates.querystring + dgEventsStates.collapsed.toString())
+        setQueryString(dgEventsStates.querystring)
+        isCollapsed=dgEventsStates.collapsed
 
         initCollapsingToolbar()
 
@@ -211,8 +216,6 @@ class OfferKtActivity : AppCompatActivity() {
 
         }
 
-        Log.d("OffAct lc", "onCreate " + dgEventsStates.querystring)
-        setQueryString(dgEventsStates.querystring)
     }
 
     private fun bind() {
@@ -376,6 +379,7 @@ class OfferKtActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         dgEventsStates.querystring = querystring
+        dgEventsStates.collapsed = isCollapsed
         Log.d("OffAct lc", "onPause")
     }
 
@@ -407,13 +411,6 @@ class OfferKtActivity : AppCompatActivity() {
         return mViewModel.emitMyQueryProductsFromSqlServer(query);
     }
 
-    protected fun getQueryListProduct(query: String): List<ProductKt>  {
-        return mViewModel.getQueryListProduct(query);
-    }
-
-
-
-
 
     /**
      * Initializing collapsing toolbar
@@ -433,13 +430,16 @@ class OfferKtActivity : AppCompatActivity() {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.totalScrollRange
+                    isCollapsed = false
                 }
                 if (scrollRange + verticalOffset == 0) {
                     collapsingToolbar.title = getString(R.string.offeritems)
                     isShow = true
+                    isCollapsed = true
                 } else if (isShow) {
                     collapsingToolbar.title = " "
                     isShow = false
+                    isCollapsed = false
                 }
             }
         })

@@ -65,7 +65,7 @@ public class AppModule {
     @Provides
     @Singleton
     EventsStatesKt provideEventsStatesKt() {
-        return new EventsStatesKt("","","", "","","");
+        return new EventsStatesKt("",0, false,"", "","","");
     }
 
     @Provides
