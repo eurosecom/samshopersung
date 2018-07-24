@@ -533,9 +533,12 @@ class OfferKtActivity : AppCompatActivity() {
         if(cat.equals("0")) { offersubtitle?.text = getString(R.string.allcat) }
         if(cat.equals("99999")) { offersubtitle?.text = getString(R.string.favitems) }
         querystring = ""
-        searchView?.setIconified(false)
         searchView?.setQuery(querystring, true)
-        menuItem?.setVisible(true)
+        searchView?.setIconified(true)
+        searchView?.clearFocus()
+        searchView?.onActionViewCollapsed()
+        menuItem?.collapseActionView()
+        //menuItem?.setVisible(true)
         showProgressBar()
         emitMyCatProductsFromSqlServer(cat)
     }
@@ -599,8 +602,8 @@ class OfferKtActivity : AppCompatActivity() {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result ->
-                    hideProgressBar()
-                    //setServerProducts(result)
+                    offersubtitle?.text = getString(R.string.allcat)
+                    showProgressBar()
                 }
 
     }
@@ -632,7 +635,7 @@ class OfferKtActivity : AppCompatActivity() {
         })
 
         return searchViewTextChangeObservable
-                .filter { query -> query.length >= 3 || query.equals("")  }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
+                .filter { query -> query.length >= 3 }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
     }
 
 

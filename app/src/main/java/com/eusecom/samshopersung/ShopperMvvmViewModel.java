@@ -371,7 +371,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         return mObservableQueryProductsFromServer
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(drhx -> mDataModel.getProductsFromMysqlServer(serverx, encrypted3, ds, firx, rokx, drhx, dodx, umex, "0"));
+                .flatMap(drhx -> mDataModel.getProductsFromMysqlServer(serverx, encrypted3, ds, firx, rokx, drhx, dodx, umex, "1"));
     }
 
     public void clearMyQueryProductsFromSqlServe() {
