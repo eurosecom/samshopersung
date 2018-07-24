@@ -11,6 +11,8 @@ import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.RealmDomain;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import rx.Observable;
@@ -283,7 +285,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mDataModel.prepareAlbumsList();
     }
 
-    //andrejko
     //emit product by cat from Mysql
     public void emitMyCatProductsFromSqlServer(String drhx) {
 
@@ -330,6 +331,67 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
     //end emit product by cat from Mysql
+
+
+    //andrejko
+    //emit product by query from Mysql
+    public void emitMyQueryProductsFromSqlServer(String drhx) {
+
+        mObservableQueryProductsFromServer.onNext(drhx);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableQueryProductsFromServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<ProductKt>> getMyQueryProductsFromSqlServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted3=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableQueryProductsFromServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(drhx -> mDataModel.getProductsFromMysqlServer(serverx, encrypted3, ds, firx, rokx, drhx, dodx, umex, "0"));
+    }
+
+    public void clearMyQueryProductsFromSqlServe() {
+
+        mObservableQueryProductsFromServer = BehaviorSubject.create();
+
+    }
+    //end emit product by query from Mysql
+
+
+    public List<ProductKt> getQueryListProduct(String query) {
+
+        List<ProductKt> listprod = new ArrayList<>();
+        ProductKt prod = new ProductKt("999","Nat 999","", "","","","",""
+                ,"","","4","");
+        listprod.add(prod);
+
+
+        return listprod;
+    }
 
 
     /**
@@ -501,5 +563,27 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return jsonstring;
     }
     //end JSON from Product
+
+
+    //emit search query
+    public void emitMyObservableCashListQuery(String queryx) { mObservableCashListQuery.onNext(queryx); }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableCashListQuery = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<String> getMyObservableCashListQuery() {
+
+        return mObservableCashListQuery
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(queryx -> Observable.just(queryx));
+    }
+
+    public void clearObservableCashListQuery() {
+
+        mObservableCashListQuery = BehaviorSubject.create();
+
+    }
+    //end emit search query
 
 }

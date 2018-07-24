@@ -59,6 +59,18 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearMyCatProductsFromSqlServe();
 
+    @NonNull
+    public List<ProductKt> getQueryListProduct(String query);
+
+    @NonNull
+    public void emitMyQueryProductsFromSqlServer(String query);
+
+    @NonNull
+    public Observable<List<ProductKt>> getMyQueryProductsFromSqlServer();
+
+    @NonNull
+    public void clearMyQueryProductsFromSqlServe();
+
     //methods for BasketKtActivity
     @NonNull
     public Observable<List<BasketKt>> getMyBasketFromSqlServer();
@@ -80,6 +92,16 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public Observable<List<String>> getRxStringFromMvvm();
+
+    //methods for all
+    @NonNull
+    public void emitMyObservableCashListQuery(String queryx);
+
+    @NonNull
+    public Observable<String> getMyObservableCashListQuery();
+
+    @NonNull
+    public void clearObservableCashListQuery();
 
 
 

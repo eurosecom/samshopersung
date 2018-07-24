@@ -1,6 +1,7 @@
 package com.eusecom.samshopersung
 
 import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.v4.app.ActivityCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.*
 import android.support.v7.widget.SearchView
@@ -34,8 +36,11 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import dagger.android.AndroidInjection
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
 import kotlinx.android.synthetic.main.mainshopper_activity.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
@@ -68,10 +73,13 @@ class OfferKtActivity : AppCompatActivity() {
     private var productList: MutableList<ProductKt>? = null
     private var offersubtitle: TextView? = null
 
-    //searchview from DocSearchActivity
+    //searchview
     private var searchView: SearchView? = null
     private var menuItem: MenuItem? = null
     private var searchManager: SearchManager? = null
+    private var querystring = ""
+    private var mDisposable: Disposable? = null
+    private var onQueryTextListener: SearchView.OnQueryTextListener? = null
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -213,7 +221,7 @@ class OfferKtActivity : AppCompatActivity() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setServerProducts(it) }))
+                .subscribe({ it -> setServerFirstProducts(it) }))
 
         mSubscription.add(getMyCatsFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
@@ -248,9 +256,27 @@ class OfferKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setServerProducts(it) }))
 
+        mSubscription.add(getMyQueryProductsFromSqlServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setServerProducts(it) }))
 
-
-
+        mSubscription?.add(mViewModel.getMyObservableCashListQuery()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setQueryString(it) })
 
     }
 
@@ -288,6 +314,15 @@ class OfferKtActivity : AppCompatActivity() {
 
     }
 
+    private fun setServerFirstProducts(products: List<ProductKt>) {
+
+
+        mcount = products.get(0).prm1;
+        showBasketItemsCount()
+        setServerProducts(products)
+
+    }
+
     private fun setServerProducts(products: List<ProductKt>) {
 
         //Log.d("showProduct ", products.get(0).nat);
@@ -295,9 +330,29 @@ class OfferKtActivity : AppCompatActivity() {
         productList = products.toMutableList()
         adapter?.setProductItems(productList)
 
-        mcount = products.get(0).prm1;
-        showBasketItemsCount()
+        if (querystring == "") {
+
+
+        } else {
+            Log.d("newText setServerProd", querystring)
+            searchView?.setIconified(false)
+            searchView?.setQuery(querystring, false)
+            menuItem?.setVisible(true)
+
+        }
+
         hideProgressBar()
+    }
+
+    private fun setQueryString(querystringx: String) {
+
+        Log.d("newText querystringx", querystringx)
+        if (querystringx == "") {
+
+        } else {
+            querystring = querystringx
+        }
+
     }
 
 
@@ -306,9 +361,19 @@ class OfferKtActivity : AppCompatActivity() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
+        if (mDisposable != null) {
+            mDisposable?.dispose()
+        }
         hideProgressBar()
         mViewModel.clearMyObservableSaveSumBasketToServer()
         mViewModel.clearMyCatProductsFromSqlServe()
+        mViewModel.clearMyQueryProductsFromSqlServe()
+        mViewModel.clearObservableCashListQuery()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ActivityCompat.invalidateOptionsMenu(this)
     }
 
     protected fun getMyProductsFromSqlServer(category: String): Observable<List<ProductKt>>  {
@@ -329,6 +394,18 @@ class OfferKtActivity : AppCompatActivity() {
 
     protected fun getMyCatProductsFromSqlServer(): Observable<List<ProductKt>>   {
         return mViewModel.getMyCatProductsFromSqlServer();
+    }
+
+    protected fun getMyQueryProductsFromSqlServer(): Observable<List<ProductKt>>   {
+        return mViewModel.getMyQueryProductsFromSqlServer();
+    }
+
+    protected fun emitMyQueryProductsFromSqlServer(query: String)  {
+        return mViewModel.emitMyQueryProductsFromSqlServer(query);
+    }
+
+    protected fun getQueryListProduct(query: String): List<ProductKt>  {
+        return mViewModel.getQueryListProduct(query);
     }
 
 
@@ -412,14 +489,21 @@ class OfferKtActivity : AppCompatActivity() {
 
         item = menu.findItem(R.id.action_badge)
         MenuItemCompat.setActionView(item, R.layout.offeractivity_basket_menuitem)
-        //notifCount = MenuItemCompat.getActionView(item) as Button?
         notifView = MenuItemCompat.getActionView(item) as RelativeLayout?
-
         notifCount = notifView?.findViewById<View>(R.id.actionbar_itemsamount_textview) as TextView?
         notifCount?.text = mcount
 
+        searchView = MenuItemCompat.getActionView(menu!!.findItem(R.id.action_search)) as SearchView
+        menuItem = menu.findItem(R.id.action_search)
+        searchManager = this.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView?.setSearchableInfo(searchManager?.getSearchableInfo(this.componentName))
+        searchView?.setQueryHint(getString(R.string.searchhint))
+        getObservableSearchViewText()
+
+
         return true
     }
+
 
     fun goToBasket(view: View){
         val intent = Intent(this, BasketKtActivity::class.java)
@@ -448,6 +532,11 @@ class OfferKtActivity : AppCompatActivity() {
         offersubtitle?.text = getString(R.string.category) + " " + cat + " " + nac
         if(cat.equals("0")) { offersubtitle?.text = getString(R.string.allcat) }
         if(cat.equals("99999")) { offersubtitle?.text = getString(R.string.favitems) }
+        querystring = ""
+        searchView?.setIconified(false)
+        searchView?.setQuery(querystring, true)
+        menuItem?.setVisible(true)
+        showProgressBar()
         emitMyCatProductsFromSqlServer(cat)
     }
 
@@ -493,6 +582,57 @@ class OfferKtActivity : AppCompatActivity() {
         //showProgressBar()
         //mViewModel.emitDelInvFromServer(invoice)
 
+    }
+
+
+    //listener to searchview
+    private fun getObservableSearchViewText() {
+
+        val searchViewChangeStream = createSearchViewTextChangeObservable()
+
+        mDisposable = searchViewChangeStream
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { showProgressBar() }
+                .observeOn(io.reactivex.schedulers.Schedulers.io())
+                .map(Function<String, Unit> {
+                    query -> emitMyQueryProductsFromSqlServer(query)
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { result ->
+                    hideProgressBar()
+                    //setServerProducts(result)
+                }
+
+    }
+
+
+    private fun createSearchViewTextChangeObservable(): io.reactivex.Observable<String> {
+        val searchViewTextChangeObservable = io.reactivex.Observable.create(ObservableOnSubscribe<String> { emitter ->
+            onQueryTextListener = object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    // use this method when query submitted
+                    emitter.onNext(query.toString())
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    // use this method for auto complete search process
+                    Log.d("newText", newText.toString())
+                    emitter.onNext(newText.toString())
+                    mViewModel.emitMyObservableCashListQuery(newText.toString())
+                    return false
+                }
+
+
+            }
+
+            searchView?.setOnQueryTextListener(onQueryTextListener)
+
+            emitter.setCancellable { searchView?.setOnQueryTextListener(null) }
+        })
+
+        return searchViewTextChangeObservable
+                .filter { query -> query.length >= 3 || query.equals("")  }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
     }
 
 
