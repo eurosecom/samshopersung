@@ -83,8 +83,12 @@ class OfferKtActivity : AppCompatActivity() {
 
     @Inject
     lateinit var prefs: SharedPreferences
+
     @Inject
     lateinit var  _rxBus: RxBus
+
+    @Inject
+    lateinit var  dgEventsStates: EventsStatesKt
 
     @ShopperScope
     @Inject
@@ -207,6 +211,8 @@ class OfferKtActivity : AppCompatActivity() {
 
         }
 
+        Log.d("OffAct lc", "onCreate " + dgEventsStates.querystring)
+        setQueryString(dgEventsStates.querystring)
     }
 
     private fun bind() {
@@ -266,17 +272,6 @@ class OfferKtActivity : AppCompatActivity() {
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setServerProducts(it) }))
-
-        mSubscription?.add(mViewModel.getMyObservableCashListQuery()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("OfferKtActivity", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setQueryString(it) })
 
     }
 
@@ -368,12 +363,20 @@ class OfferKtActivity : AppCompatActivity() {
         mViewModel.clearMyObservableSaveSumBasketToServer()
         mViewModel.clearMyCatProductsFromSqlServe()
         mViewModel.clearMyQueryProductsFromSqlServe()
-        mViewModel.clearObservableCashListQuery()
+
+        Log.d("OffAct lc", "onDestroy")
     }
 
     override fun onResume() {
         super.onResume()
         ActivityCompat.invalidateOptionsMenu(this)
+        Log.d("OffAct lc", "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        dgEventsStates.querystring = querystring
+        Log.d("OffAct lc", "onPause")
     }
 
     protected fun getMyProductsFromSqlServer(category: String): Observable<List<ProductKt>>  {
@@ -621,8 +624,9 @@ class OfferKtActivity : AppCompatActivity() {
                 override fun onQueryTextChange(newText: String): Boolean {
                     // use this method for auto complete search process
                     Log.d("newText", newText.toString())
+                    setQueryString(newText.toString())
                     emitter.onNext(newText.toString())
-                    mViewModel.emitMyObservableCashListQuery(newText.toString())
+
                     return false
                 }
 

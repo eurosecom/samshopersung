@@ -565,25 +565,4 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end JSON from Product
 
 
-    //emit search query
-    public void emitMyObservableCashListQuery(String queryx) { mObservableCashListQuery.onNext(queryx); }
-
-    @NonNull
-    private BehaviorSubject<String> mObservableCashListQuery = BehaviorSubject.create();
-
-    @NonNull
-    public Observable<String> getMyObservableCashListQuery() {
-
-        return mObservableCashListQuery
-                .observeOn(mSchedulerProvider.ui())
-                .flatMap(queryx -> Observable.just(queryx));
-    }
-
-    public void clearObservableCashListQuery() {
-
-        mObservableCashListQuery = BehaviorSubject.create();
-
-    }
-    //end emit search query
-
 }

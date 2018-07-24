@@ -93,16 +93,5 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<String>> getRxStringFromMvvm();
 
-    //methods for all
-    @NonNull
-    public void emitMyObservableCashListQuery(String queryx);
-
-    @NonNull
-    public Observable<String> getMyObservableCashListQuery();
-
-    @NonNull
-    public void clearObservableCashListQuery();
-
-
 
 }

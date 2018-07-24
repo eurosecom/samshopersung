@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
+import com.eusecom.samshopersung.EventsStatesKt;
 import com.eusecom.samshopersung.SamshopperApp;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.ShopperModelsFactory;
@@ -59,6 +60,12 @@ public class AppModule {
     @Singleton
     ConnectivityManager provideConnectivityManager(Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    EventsStatesKt provideEventsStatesKt() {
+        return new EventsStatesKt("","","", "","","");
     }
 
     @Provides
