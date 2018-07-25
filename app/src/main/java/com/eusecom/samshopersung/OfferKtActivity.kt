@@ -216,11 +216,17 @@ class OfferKtActivity : AppCompatActivity() {
 
         }
 
+        if (querystring == "") {
+            emitMyCatProductsFromSqlServer("0")
+        } else {
+            emitMyQueryProductsFromSqlServer(querystring)
+        }
     }
 
     private fun bind() {
 
         showProgressBar()
+
         mSubscription.add(getMyProductsFromSqlServer("0")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -317,7 +323,7 @@ class OfferKtActivity : AppCompatActivity() {
 
         mcount = products.get(0).prm1;
         showBasketItemsCount()
-        setServerProducts(products)
+        //setServerProducts(products)
 
     }
 
@@ -535,13 +541,13 @@ class OfferKtActivity : AppCompatActivity() {
         offersubtitle?.text = getString(R.string.category) + " " + cat + " " + nac
         if(cat.equals("0")) { offersubtitle?.text = getString(R.string.allcat) }
         if(cat.equals("99999")) { offersubtitle?.text = getString(R.string.favitems) }
-        querystring = ""
-        searchView?.setQuery(querystring, true)
-        searchView?.setIconified(true)
-        searchView?.clearFocus()
-        searchView?.onActionViewCollapsed()
-        menuItem?.collapseActionView()
-        //menuItem?.setVisible(true)
+        //next 6 lines collapse searchview widget, i do not want yet
+        //querystring = ""
+        //searchView?.setQuery(querystring, true)
+        //searchView?.setIconified(true)
+        //searchView?.clearFocus()
+        //searchView?.onActionViewCollapsed()
+        //menuItem?.collapseActionView()
         showProgressBar()
         emitMyCatProductsFromSqlServer(cat)
     }
@@ -617,6 +623,7 @@ class OfferKtActivity : AppCompatActivity() {
             onQueryTextListener = object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     // use this method when query submitted
+                    querystring=query.toString()
                     emitter.onNext(query.toString())
                     return false
                 }
@@ -624,7 +631,8 @@ class OfferKtActivity : AppCompatActivity() {
                 override fun onQueryTextChange(newText: String): Boolean {
                     // use this method for auto complete search process
                     Log.d("newText", newText.toString())
-                    setQueryString(newText.toString())
+                    querystring=newText.toString()
+                    //setQueryString(newText.toString())
                     emitter.onNext(newText.toString())
 
                     return false
@@ -639,7 +647,7 @@ class OfferKtActivity : AppCompatActivity() {
         })
 
         return searchViewTextChangeObservable
-                .filter { query -> query.length >= 3 }.debounce(300, TimeUnit.MILLISECONDS)  // add this line
+                .filter { query -> query.length >= 3 || query.equals("")}.debounce(400, TimeUnit.MILLISECONDS)  // add this line
     }
 
 
