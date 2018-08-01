@@ -22,7 +22,6 @@ import android.widget.*
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
-import co.zsmb.materialdrawerkt.draweritems.badgeable.secondaryItem
 import co.zsmb.materialdrawerkt.draweritems.divider
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.bumptech.glide.Glide
@@ -35,6 +34,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -69,7 +69,6 @@ class OfferKtActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
     private var adapter: OfferProductAdapter? = null
-    private var albumList: MutableList<Album>? = null
     private var productList: MutableList<ProductKt>? = null
     private var offersubtitle: TextView? = null
 
@@ -93,6 +92,9 @@ class OfferKtActivity : AppCompatActivity() {
     @ShopperScope
     @Inject
     lateinit var mViewModel: ShopperIMvvmViewModel
+
+    @Inject
+    lateinit var mPicasso: Picasso
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
     private var _disposables = CompositeDisposable()
@@ -154,7 +156,7 @@ class OfferKtActivity : AppCompatActivity() {
         _disposables.add(tapEventEmitter.connect())
 
         productList = ArrayList<ProductKt>().toMutableList()
-        adapter = OfferProductAdapter(this, productList, _rxBus )
+        adapter = OfferProductAdapter(this, productList, _rxBus, mPicasso )
 
         val mLayoutManager = GridLayoutManager(this, 2)
         recyclerView?.setLayoutManager(mLayoutManager)

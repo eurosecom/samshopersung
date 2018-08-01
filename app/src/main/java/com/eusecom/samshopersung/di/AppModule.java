@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -78,6 +79,13 @@ public class AppModule {
     @Singleton
     RxBus providesRxBus(Application application) {
         return ((SamshopperApp) application).getRxBusSingleton();
+    }
+
+    @Provides
+    @Singleton
+    public Picasso providesPicasso(Context context){
+        return new Picasso.Builder(context).
+                build();
     }
 
     @Provides

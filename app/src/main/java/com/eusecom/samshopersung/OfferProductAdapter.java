@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.eusecom.samshopersung.rxbus.RxBus;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     private Context mContext;
     private List<ProductKt> productList;
     private RxBus mRxBus;
+    private Picasso mPicasso;
  
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count, count1;
@@ -38,10 +40,11 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     }
  
  
-    public OfferProductAdapter(Context mContext, List<ProductKt> productList, RxBus rxbus) {
-        this.mContext = mContext;
+    public OfferProductAdapter(Context context, List<ProductKt> productList, RxBus rxbus, Picasso picasso) {
+        this.mContext = context;
         this.productList = productList;
         this.mRxBus = rxbus;
+        this.mPicasso = picasso;
     }
 
     public void setProductItems(List<ProductKt> products) {
@@ -74,7 +77,11 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
 
         String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
         // loading prod cover using Glide library
-        Glide.with(mContext).load(imageurl).into(holder.thumbnail);
+        //Glide.with(mContext).load(imageurl).into(holder.thumbnail);
+
+        // loading album cover using Dagger2 and Picasso library
+        //Picasso.with(mContext).load(imageurl).resize(120, 120).into(holder.thumbnail);
+        mPicasso.load(imageurl).resize(120, 120).into(holder.thumbnail);
 
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
