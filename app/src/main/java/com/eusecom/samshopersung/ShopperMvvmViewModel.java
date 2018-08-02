@@ -558,6 +558,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 ", \"cep1\":" + "\"" + invx.getCep1() + "\"" +
                 ", \"ced1\":" + "\"" + invx.getCed1() + "\"" +
                 ", \"prm1\":" + "\"" + invx.getPrm1() + "\"" +
+                ", \"prm2\":" + "\"" + invx.getPrm2() + "\"" +
                 " }";
 
         return jsonstring;

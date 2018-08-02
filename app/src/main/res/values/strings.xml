@@ -166,6 +166,7 @@
     <string name="clear_basket">Clear basket</string>
     <string name="amount">Amount:</string>
     <string name="savedtobasket"> - saved to basket</string>
+    <string name="savedtofav"> - saved to Favourites</string>
     <string name="deletedfrombasket"> - deleted from basket</string>
     <string name="allitems">All items</string>
     <string name="totalbasket">Total %s items</string>

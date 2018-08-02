@@ -26,7 +26,6 @@ import co.zsmb.materialdrawerkt.draweritems.divider
 import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.bumptech.glide.Glide
 import com.eusecom.samshopersung.di.ShopperScope
-import com.eusecom.samshopersung.models.Album
 import com.eusecom.samshopersung.rxbus.RxBus
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
@@ -288,10 +287,14 @@ class OfferKtActivity : AppCompatActivity() {
 
     private fun setSavedBasket(sumbasket: SumBasketKt) {
 
-        toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.savedtobasket))
-        //Log.d("savedBasket ", basket.get(0).xnat);
-        mcount = sumbasket.smno;
-        showBasketItemsCount()
+        if(sumbasket.sprm1.equals("0")) {
+            toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.savedtobasket))
+            //Log.d("savedBasket ", basket.get(0).xnat);
+            mcount = sumbasket.smno;
+            showBasketItemsCount()
+        }else{
+            toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.savedtofav))
+        }
         hideProgressBar()
     }
 
@@ -593,8 +596,8 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     fun navigateToAddToFav(product: ProductKt){
-        //showProgressBar()
-        //mViewModel.emitDelInvFromServer(invoice)
+        showProgressBar()
+        mViewModel.emitMyObservableSaveSumBasketToServer(product)
 
     }
 
