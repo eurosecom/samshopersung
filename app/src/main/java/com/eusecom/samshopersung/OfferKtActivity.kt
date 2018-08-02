@@ -299,10 +299,12 @@ class OfferKtActivity : AppCompatActivity() {
         if(sumbasket.sprm1.equals("1") && sumbasket.sprm2.equals("1")){
             toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.savedtofav))
         }
+        hideProgressBar()
         if(sumbasket.sprm1.equals("1") && sumbasket.sprm2.equals("4")){
             toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.deletedfromfav))
+            navigateToCategory("99999", "")
         }
-        hideProgressBar()
+
     }
 
     private fun setServerCategories(cats: List<CategoryKt>) {
@@ -620,7 +622,6 @@ class OfferKtActivity : AppCompatActivity() {
     fun navigateToDelFromFav(product: ProductKt){
         showProgressBar()
 
-        //andrejko position product.dph = posx.toString()
         product.prm1 = "14"
         mViewModel.emitMyObservableSaveSumBasketToServer(product)
 
