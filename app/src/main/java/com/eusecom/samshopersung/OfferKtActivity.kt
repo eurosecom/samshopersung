@@ -139,6 +139,9 @@ class OfferKtActivity : AppCompatActivity() {
                         if(event.prm1.equals("3")){
 
                         }
+                        if(event.prm1.equals("14")){
+                            showDelFromFavDialog(event)
+                        }
 
 
 
@@ -292,8 +295,12 @@ class OfferKtActivity : AppCompatActivity() {
             //Log.d("savedBasket ", basket.get(0).xnat);
             mcount = sumbasket.smno;
             showBasketItemsCount()
-        }else{
+        }
+        if(sumbasket.sprm1.equals("1") && sumbasket.sprm2.equals("1")){
             toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.savedtofav))
+        }
+        if(sumbasket.sprm1.equals("1") && sumbasket.sprm2.equals("4")){
+            toast(sumbasket.basketitems.get(0).xnat + " " + getString(R.string.deletedfromfav))
         }
         hideProgressBar()
     }
@@ -597,6 +604,24 @@ class OfferKtActivity : AppCompatActivity() {
 
     fun navigateToAddToFav(product: ProductKt){
         showProgressBar()
+        mViewModel.emitMyObservableSaveSumBasketToServer(product)
+
+    }
+
+    fun showDelFromFavDialog(product: ProductKt) {
+
+        alert("", getString(R.string.action_del_favourite) + " " + product.nat) {
+            yesButton { navigateToDelFromFav(product)  }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToDelFromFav(product: ProductKt){
+        showProgressBar()
+
+        //andrejko position product.dph = posx.toString()
+        product.prm1 = "14"
         mViewModel.emitMyObservableSaveSumBasketToServer(product)
 
     }

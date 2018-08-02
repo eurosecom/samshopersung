@@ -16,4 +16,9 @@
         android:orderInCategory="100"
         android:title="@string/action_getdetail" />
 
+    <item
+        android:id="@+id/action_delfav"
+        android:orderInCategory="100"
+        android:title="@string/action_delfav" />
+
 </menu>

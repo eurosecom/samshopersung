@@ -147,8 +147,10 @@
     <string name="action_basket">Basket</string>
     <string name="action_add_tobasket">Add to Basket</string>
     <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_del_favourite">Delete from Favourites</string>
     <string name="action_delete_item">Delete item</string>
     <string name="action_getdetail">Get Detail info</string>
+    <string name="action_delfav">Delete from favourites</string>
     <string name="action_play_next">Play Next</string>
     <string name="offeritems">Offer items</string>
     <string name="searchhint">enter at least 3 characters</string>
@@ -168,6 +170,7 @@
     <string name="savedtobasket"> - saved to basket</string>
     <string name="savedtofav"> - saved to Favourites</string>
     <string name="deletedfrombasket"> - deleted from basket</string>
+    <string name="deletedfromfav"> - deleted from Favourites</string>
     <string name="allitems">All items</string>
     <string name="totalbasket">Total %s items</string>
     <string name="totalbasketeur">Total %s Eur</string>

@@ -240,6 +240,7 @@ public class ShopperDataModel implements ShopperIDataModel {
         Log.d("GenDoc dokx", dokx);
         Log.d("GenDoc drh", drh);
         Log.d("GenDoc ucex", ucex);
+        Log.d("GenDoc prodx", prodx);
 
         setRetrofit(servername);
         return mShopperRetrofitService.getSumBasketFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, prodx, dokx);
