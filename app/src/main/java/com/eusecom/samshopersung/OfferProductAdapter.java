@@ -132,7 +132,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
 
                 case R.id.action_add_favourite:
                     //Toast.makeText(mContext, "Add to favourite " + mprod.getNat(), Toast.LENGTH_SHORT).show();
-                    mprod.setPrm1("2");
+                    mprod.setPrm1("11");
                     mRxBus.send(mprod);
                     return true;
 

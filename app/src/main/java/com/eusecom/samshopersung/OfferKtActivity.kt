@@ -133,7 +133,7 @@ class OfferKtActivity : AppCompatActivity() {
                         if(event.prm1.equals("1")){
                             showAddToBasketDialog(event)
                         }
-                        if(event.prm1.equals("2")){
+                        if(event.prm1.equals("11")){
                             showAddToFavDialog(event)
                         }
                         if(event.prm1.equals("3")){
