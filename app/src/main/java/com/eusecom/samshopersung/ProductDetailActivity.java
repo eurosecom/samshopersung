@@ -52,7 +52,7 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
                         new ProductDetailFragment(),
-                        new EmptyKtFragment()
+                        new ProductDetailKtFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
                         getString(R.string.orders),
