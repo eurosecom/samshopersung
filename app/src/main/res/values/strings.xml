@@ -136,8 +136,8 @@
     <string name="bankdok_summary">The following number of bank document.</string>
     <string name="newdok_summary">New document.</string>
     <string name="newdok_title">0=no, 1=yes</string>
-    <string name="edidok_summary">Number of edited documet, IDC, 0=no edited item</string>
-    <string name="edidok_title">Edit document, IDC.</string>
+    <string name="edidok_summary">Number of edited documet, IDC, product 0=no edited item</string>
+    <string name="edidok_title">Edit document, IDC, product.</string>
 
     //choosecompanyactivity
     <string name="choosecompany">Choose eShop</string>

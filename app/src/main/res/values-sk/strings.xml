@@ -135,8 +135,8 @@
     <string name="bankdok_summary">Nasledujúce číslo bankového dokladu.</string>
     <string name="newdok_summary">Nový doklad.</string>
     <string name="newdok_title">0=nie, 1=áno</string>
-    <string name="edidok_summary">Číslo editovaného dokladu, IČO, 0=žiadna editovaná položka</string>
-    <string name="edidok_title">Editovaný doklad, IČO.</string>
+    <string name="edidok_summary">Číslo editovaného dokladu, IČO, tovaru 0=žiadna editovaná položka</string>
+    <string name="edidok_title">Editovaný doklad, IČO, tovar.</string>
 
     //choosecompanyactivity
     <string name="choosecompany">Vybrať eShop</string>

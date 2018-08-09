@@ -137,7 +137,7 @@ class OfferKtActivity : AppCompatActivity() {
                             showAddToFavDialog(event)
                         }
                         if(event.prm1.equals("3")){
-
+                            goToDetail(event.cis)
                         }
                         if(event.prm1.equals("14")){
                             showDelFromFavDialog(event)
@@ -527,6 +527,13 @@ class OfferKtActivity : AppCompatActivity() {
         return true
     }
 
+    fun goToDetail(cis: String){
+        val intent = Intent(this, ProductDetailActivity::class.java)
+        val editor = prefs.edit()
+        editor.putString("edidok", cis).apply();
+        editor.commit();
+        startActivity(intent)
+    }
 
     fun goToBasket(view: View){
         val intent = Intent(this, BasketKtActivity::class.java)
