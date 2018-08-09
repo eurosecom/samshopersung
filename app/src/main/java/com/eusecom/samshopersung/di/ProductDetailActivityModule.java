@@ -17,7 +17,7 @@ import dagger.Provides;
 import io.realm.Realm;
 
 @Module
-public class OrderListActivityModule {
+public class ProductDetailActivityModule {
 
     @Provides
     @ShopperScope

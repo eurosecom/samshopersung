@@ -51,7 +51,7 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
-                        new EmptyKtFragment(),
+                        new ProductDetailFragment(),
                         new EmptyKtFragment()
                 };
                 private final String[] mFragmentNames = new String[]{

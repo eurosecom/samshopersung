@@ -13,7 +13,6 @@ import com.eusecom.samshopersung.MapActivity;
 import com.eusecom.samshopersung.OfferKtActivity;
 import com.eusecom.samshopersung.OrderListActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;
@@ -77,7 +76,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {FlombulatorModule.class })
     abstract FlombulatorActivity bindFlombulatorActivity();
 
-    @ContributesAndroidInjector(modules = {OrderListActivityModule.class, DetailFragmentProvider.class})
+    @ContributesAndroidInjector(modules = {ProductDetailActivityModule.class, ProductDetailFragmentProvider.class})
     abstract ProductDetailActivity bindProductDetailActivity();
 
 }

@@ -5,31 +5,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import java.util.Collections;
-
 import javax.inject.Inject;
-
 import dagger.android.support.AndroidSupportInjection;
 
-/**
- * Created by mertsimsek on 02/06/2017.
- */
-
-public class DetailFragment extends Fragment {
+public class ProductDetailFragment extends Fragment {
 
     @Inject
     SharedPreferences mSharedPreferences;
 
-    public static DetailFragment newInstance() {
+    public static ProductDetailFragment newInstance() {
         Bundle args = new Bundle();
-        DetailFragment fragment = new DetailFragment();
+        ProductDetailFragment fragment = new ProductDetailFragment();
         fragment.setArguments(args);
         return fragment;
     }
