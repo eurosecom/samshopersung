@@ -24,7 +24,7 @@ class ProductDetailKtFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        toast("From fragment 2" + mSharedPreferences?.getString("edidok", ""))
+        //toast("From fragment 2" + mSharedPreferences?.getString("edidok", ""))
 
     }
 

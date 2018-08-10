@@ -46,7 +46,7 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_suppliers);
+        setContentView(R.layout.activity_prodetail);
 
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -55,8 +55,8 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
                         new ProductDetailKtFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
-                        getString(R.string.orders),
-                        getString(R.string.invoices)
+                        getString(R.string.detail1),
+                        getString(R.string.detail2)
                 };
 
                 @Override
