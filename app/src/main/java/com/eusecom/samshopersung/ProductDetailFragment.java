@@ -7,22 +7,44 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.eusecom.samshopersung.rxbus.RxBus;
+import com.squareup.picasso.Picasso;
+
+import java.util.Collections;
+import java.util.List;
+
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 import io.reactivex.disposables.CompositeDisposable;
+import rx.Observable;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
 
 public class ProductDetailFragment extends Fragment {
 
     @Inject
     SharedPreferences mSharedPreferences;
+    @Inject
+    RxBus rxBus;
+    @Inject
+    Picasso mPicasso;
+    @Inject
+    ShopperIMvvmViewModel mViewModel;
 
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-    CompositeDisposable disposables;
+    private ProductDetailAdapter mAdapter;
+    private CompositeDisposable disposables;
+    private CompositeSubscription mSubscription;
 
     public static ProductDetailFragment newInstance() {
         Bundle args = new Bundle();
@@ -48,11 +70,13 @@ public class ProductDetailFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mAdapter = new ProductDetailAdapter(getActivity(), rxBus, mPicasso );
+        mAdapter.setProductItems(Collections.<ProductKt>emptyList());
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
-        //mRecycler.setAdapter(mAdapter);
+        mRecycler.setAdapter(mAdapter);
 
         //String serverx = "From fragment " + mSharedPreferences.getString("edidok", "");
         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
@@ -80,8 +104,8 @@ public class ProductDetailFragment extends Fragment {
     private void unBind() {
 
         //mViewModel.clearObservableInvoiceDelFromServer();
-        //mSubscription.unsubscribe();
-        //mSubscription.clear();
+        mSubscription.unsubscribe();
+        mSubscription.clear();
         disposables.dispose();
         //hideProgressBar();
 
@@ -90,8 +114,33 @@ public class ProductDetailFragment extends Fragment {
     private void bind() {
 
         disposables = new CompositeDisposable();
+        mSubscription = new CompositeSubscription();
 
+        mSubscription.add(getMyQueryProductsFromSqlServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error ProductDetailFragment " + throwable.getMessage());
+                    //hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setServerProducts));
 
+        emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
+
+    }
+
+    private void setServerProducts(List<ProductKt> products) {
+
+        mAdapter.setProductItems(products);
+    }
+
+    protected Observable<List<ProductKt>> getMyQueryProductsFromSqlServer() {
+        return mViewModel.getMyQueryProductsFromSqlServer();
+    }
+
+    protected void emitMyQueryProductsFromSqlServer(String query)  {
+        mViewModel.emitMyQueryProductsFromSqlServer(query);
     }
 
     @Override
