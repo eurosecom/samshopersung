@@ -22,7 +22,8 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
     @NonNull
     public ProductKt getProductKt(){
 
-        return new ProductKt("","","","","","","","","","","", "");
+        return new ProductKt("","","","","","","","","",""
+                ,"", "", "");
     }
 
     /**

@@ -24,7 +24,7 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
     private Picasso mPicasso;
  
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, count, count1;
+        public TextView title, count, count1, desc1;
         public ImageView thumbnail, overflow;
  
         public MyViewHolder(View view) {
@@ -32,6 +32,7 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
             title = (TextView) view.findViewById(R.id.title);
             count = (TextView) view.findViewById(R.id.count);
             count1 = (TextView) view.findViewById(R.id.count1);
+            desc1 = (TextView) view.findViewById(R.id.desc1);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
         }
@@ -71,6 +72,7 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
 
         holder.count.setText(prod.getCed() + " €");
         holder.count1.setText(prod.getCed1() + " €");
+        holder.desc1.setText(prod.getDesc());
 
         String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
         // loading prod cover using Glide library

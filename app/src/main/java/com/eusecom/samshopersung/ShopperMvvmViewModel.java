@@ -386,7 +386,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         List<ProductKt> listprod = new ArrayList<>();
         ProductKt prod = new ProductKt("999","Nat 999","", "","","","",""
-                ,"","","4","");
+                ,"","","4","","");
         listprod.add(prod);
 
 

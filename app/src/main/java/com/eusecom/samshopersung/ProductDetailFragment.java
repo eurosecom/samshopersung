@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eusecom.samshopersung.rxbus.RxBus;
@@ -18,14 +19,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
-
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 import io.reactivex.disposables.CompositeDisposable;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
@@ -45,6 +44,7 @@ public class ProductDetailFragment extends Fragment {
     private ProductDetailAdapter mAdapter;
     private CompositeDisposable disposables;
     private CompositeSubscription mSubscription;
+    private ProgressBar mProgressBar;
 
     public static ProductDetailFragment newInstance() {
         Bundle args = new Bundle();
@@ -62,6 +62,7 @@ public class ProductDetailFragment extends Fragment {
 
         mRecycler = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mRecycler.setHasFixedSize(true);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
         return rootView;
     }
@@ -107,7 +108,7 @@ public class ProductDetailFragment extends Fragment {
         mSubscription.unsubscribe();
         mSubscription.clear();
         disposables.dispose();
-        //hideProgressBar();
+        hideProgressBar();
 
     }
 
@@ -120,7 +121,7 @@ public class ProductDetailFragment extends Fragment {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> { Log.e(TAG, "Error ProductDetailFragment " + throwable.getMessage());
-                    //hideProgressBar();
+                    hideProgressBar();
                     Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
@@ -133,6 +134,7 @@ public class ProductDetailFragment extends Fragment {
     private void setServerProducts(List<ProductKt> products) {
 
         mAdapter.setProductItems(products);
+        hideProgressBar();
     }
 
     protected Observable<List<ProductKt>> getMyQueryProductsFromSqlServer() {
@@ -140,6 +142,7 @@ public class ProductDetailFragment extends Fragment {
     }
 
     protected void emitMyQueryProductsFromSqlServer(String query)  {
+        showProgressBar();
         mViewModel.emitMyQueryProductsFromSqlServer(query);
     }
 
@@ -147,6 +150,14 @@ public class ProductDetailFragment extends Fragment {
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
+    }
+
+    protected void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    protected void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
     }
 
 

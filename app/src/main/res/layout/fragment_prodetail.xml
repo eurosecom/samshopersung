@@ -14,4 +14,14 @@
         app:spanCount="2"
         tools:listitem="@layout/row_prodetail" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminate="false"
+        android:layout_centerInParent="true"
+        />
+
 </LinearLayout>
