@@ -125,19 +125,19 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
 
                 case R.id.action_add_basket:
                     //Toast.makeText(mContext, "Add to basket " + mprod.getNat(), Toast.LENGTH_SHORT).show();
-                    mprod.setPrm1("1");
+                    mprod.setPrm1("101");
                     mRxBus.send(mprod);
                     return true;
 
                 case R.id.action_add_favourite:
                     //Toast.makeText(mContext, "Add to favourite " + mprod.getNat(), Toast.LENGTH_SHORT).show();
-                    mprod.setPrm1("11");
+                    mprod.setPrm1("111");
                     mRxBus.send(mprod);
                     return true;
 
                 case R.id.action_delfav:
                     //Toast.makeText(mContext, "Get detail " + mprod.getNat(), Toast.LENGTH_SHORT).show();
-                    mprod.setPrm1("14");
+                    mprod.setPrm1("114");
                     mRxBus.send(mprod);
                     return true;
 

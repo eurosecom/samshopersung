@@ -18,11 +18,15 @@ package com.eusecom.samshopersung;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.eusecom.samshopersung.rxbus.RxBus;
+
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
@@ -39,6 +43,8 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
 
     @Inject
     SharedPreferences mSharedPreferences;
+    @Inject
+    RxBus rxBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +108,16 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        String serverx = "From act " + mSharedPreferences.getString("servername", "");
+        //String serverx = "From act " + mSharedPreferences.getString("servername", "");
         //Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+
+                    rxBus.send(new ClickFobEvent());
+
+                }
+        );
 
     }
 
@@ -121,5 +135,6 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
         return fragmentDispatchingAndroidInjector;
     }
 
+    public static class ClickFobEvent {}
 
 }

@@ -1,6 +1,7 @@
 package com.eusecom.samshopersung;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,9 +20,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.flowables.ConnectableFlowable;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -115,6 +120,40 @@ public class ProductDetailFragment extends Fragment {
     private void bind() {
 
         disposables = new CompositeDisposable();
+
+        ConnectableFlowable<Object> tapEventEmitter = rxBus.asFlowable().publish();
+
+        disposables
+                .add(tapEventEmitter.subscribe(event -> {
+                    if (event instanceof ProductDetailActivity.ClickFobEvent) {
+                        Log.d("ProductDetailFragment  ", " fobClick ");
+
+
+
+                    }
+                    if (event instanceof ProductKt) {
+
+                        String usnamex = ((ProductKt) event).getNat();
+
+
+                        Log.d("ProductDetailFragment ",  usnamex);
+                        //getInvoiceDialog(((Invoice) event));
+
+
+                    }
+
+                }));
+
+        disposables
+                .add(tapEventEmitter.publish(stream ->
+                        stream.buffer(stream.debounce(1, TimeUnit.SECONDS)))
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(taps -> {
+                            ///_showTapCount(taps.size()); OK
+                        }));
+
+        disposables.add(tapEventEmitter.connect());
+
+
         mSubscription = new CompositeSubscription();
 
         mSubscription.add(getMyQueryProductsFromSqlServer()
@@ -137,11 +176,11 @@ public class ProductDetailFragment extends Fragment {
         hideProgressBar();
     }
 
-    protected Observable<List<ProductKt>> getMyQueryProductsFromSqlServer() {
+    private Observable<List<ProductKt>> getMyQueryProductsFromSqlServer() {
         return mViewModel.getMyQueryProductsFromSqlServer();
     }
 
-    protected void emitMyQueryProductsFromSqlServer(String query)  {
+    private void emitMyQueryProductsFromSqlServer(String query)  {
         showProgressBar();
         mViewModel.emitMyQueryProductsFromSqlServer(query);
     }
