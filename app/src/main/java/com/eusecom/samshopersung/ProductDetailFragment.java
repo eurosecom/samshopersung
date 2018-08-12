@@ -90,6 +90,7 @@ public class ProductDetailFragment extends Fragment {
 
         //String serverx = "From fragment " + mSharedPreferences.getString("edidok", "");
         //Toast.makeText(getActivity(), serverx, Toast.LENGTH_SHORT).show();
+        Log.d("ProductDetailFragment ", mAdapter.toString());
 
     }
 
@@ -113,7 +114,6 @@ public class ProductDetailFragment extends Fragment {
 
     private void unBind() {
 
-        //mViewModel.clearObservableInvoiceDelFromServer();
         mSubscription.unsubscribe();
         mSubscription.clear();
         disposables.dispose();
