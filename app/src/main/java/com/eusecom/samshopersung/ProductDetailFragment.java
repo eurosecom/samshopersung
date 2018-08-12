@@ -42,15 +42,15 @@ public class ProductDetailFragment extends Fragment {
     @Inject
     RxBus rxBus;
     @Inject
-    Picasso mPicasso;
-    @Inject
     ShopperIMvvmViewModel mViewModel;
     @Inject
     IShopperModelsFactory mModelsFactory;
+    @Inject
+    ProductDetailAdapter mAdapter;
 
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-    private ProductDetailAdapter mAdapter;
+    //private ProductDetailAdapter mAdapter;
     private CompositeDisposable disposables;
     private CompositeSubscription mSubscription;
     private ProgressBar mProgressBar;
@@ -80,7 +80,7 @@ public class ProductDetailFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new ProductDetailAdapter(getActivity(), rxBus, mPicasso );
+        //mAdapter = new ProductDetailAdapter(getActivity(), rxBus, mPicasso );
         mAdapter.setProductItems(Collections.<ProductKt>emptyList());
         mManager = new LinearLayoutManager(getActivity());
         mManager.setReverseLayout(true);
@@ -135,7 +135,7 @@ public class ProductDetailFragment extends Fragment {
                         ProductKt prod = mModelsFactory.getProductKt();
                         prod.setCis(mSharedPreferences.getString("edidok", ""));
                         prod.setPrm1("1");
-                        showAddToFavDialog(prod);
+                        showAddToBasketDialog(prod);
 
 
                     }
