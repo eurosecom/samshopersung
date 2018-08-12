@@ -18,13 +18,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.squareup.picasso.Picasso;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,6 +45,8 @@ public class ProductDetailFragment extends Fragment {
     Picasso mPicasso;
     @Inject
     ShopperIMvvmViewModel mViewModel;
+    @Inject
+    IShopperModelsFactory mModelsFactory;
 
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
@@ -131,6 +132,10 @@ public class ProductDetailFragment extends Fragment {
                     if (event instanceof ProductDetailActivity.ClickFobEvent) {
                         Log.d("ProductDetailFragment  ", " fobClick ");
 
+                        ProductKt prod = mModelsFactory.getProductKt();
+                        prod.setCis(mSharedPreferences.getString("edidok", ""));
+                        prod.setPrm1("1");
+                        showAddToFavDialog(prod);
 
 
                     }
