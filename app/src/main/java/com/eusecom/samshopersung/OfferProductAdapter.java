@@ -83,6 +83,14 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
         //Picasso.with(mContext).load(imageurl).resize(120, 120).into(holder.thumbnail);
         mPicasso.load(imageurl).resize(120, 120).into(holder.thumbnail);
 
+        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prod.setPrm1("3");
+                mRxBus.send(prod);
+            }
+        });
+
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

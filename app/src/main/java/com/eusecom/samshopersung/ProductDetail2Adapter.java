@@ -54,7 +54,7 @@ public class ProductDetail2Adapter extends RecyclerView.Adapter<ProductDetail2Ad
         ProductKt prod = productList.get(position);
         holder.title.setText(prod.getCis() + " - " + prod.getNat());
 
-        String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
+        String imageurl = "https://picsum.photos/600/600?image=" + prod.getCis();
         mPicasso.load(imageurl).resize(120, 120).into(holder.thumbnail);
 
         holder.title.setOnClickListener(new View.OnClickListener() {

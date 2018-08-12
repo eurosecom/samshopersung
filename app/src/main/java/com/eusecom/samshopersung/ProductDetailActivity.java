@@ -24,9 +24,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-
 import com.eusecom.samshopersung.rxbus.RxBus;
-
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
@@ -45,6 +43,11 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
     SharedPreferences mSharedPreferences;
     @Inject
     RxBus rxBus;
+    @Inject
+    ProductDetailFragment mProductDetailFragment;
+    @Inject
+    ProductDetailKtFragment mProductDetailKtFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +60,8 @@ public class  ProductDetailActivity extends AppCompatActivity implements HasSupp
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
-                        new ProductDetailFragment(),
-                        new ProductDetailKtFragment()
+                        mProductDetailFragment,
+                        mProductDetailKtFragment
                 };
                 private final String[] mFragmentNames = new String[]{
                         getString(R.string.detail1),

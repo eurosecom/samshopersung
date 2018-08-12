@@ -188,9 +188,14 @@
     <string name="document">Doklad</string>
     <string name="docshort">Dok.</string>
 
-
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>
+
+    //productdetailactivity
+    <string name="detail1">Detail 1</string>
+    <string name="detail2">Detail 2</string>
+    <string name="add">Pridať</string>
+    <string name="close">Zrušiť</string>
 
 </resources>

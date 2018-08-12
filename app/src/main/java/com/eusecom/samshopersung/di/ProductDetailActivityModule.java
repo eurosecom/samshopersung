@@ -3,6 +3,9 @@ package com.eusecom.samshopersung.di;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+
+import com.eusecom.samshopersung.ProductDetailFragment;
+import com.eusecom.samshopersung.ProductDetailKtFragment;
 import com.eusecom.samshopersung.ShopperIMvvmViewModel;
 import com.eusecom.samshopersung.ShopperMvvmViewModel;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperDataModel;
@@ -39,5 +42,18 @@ public class ProductDetailActivityModule {
         return new ShopperMvvmViewModel(dataModel, schedulerProvider
                 , sharedPreferences, connectivityManager);
     }
+
+    @Provides
+    @ShopperScope
+    public ProductDetailFragment providesProductDetailFragment() {
+        return new ProductDetailFragment();
+    }
+
+    @Provides
+    @ShopperScope
+    public ProductDetailKtFragment providesProductDetailKtFragment() {
+        return new ProductDetailKtFragment();
+    }
+
 
 }

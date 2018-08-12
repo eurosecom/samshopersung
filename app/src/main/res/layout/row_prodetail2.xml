@@ -30,7 +30,7 @@
             <ImageView
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_image"
+                android:layout_height="@dimen/detail2_image"
                 android:layout_below="@id/title"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"

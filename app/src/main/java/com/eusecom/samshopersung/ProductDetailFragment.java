@@ -246,7 +246,7 @@ public class ProductDetailFragment extends Fragment {
 
         new AlertDialog.Builder(getActivity())
                 .setTitle(getString(R.string.action_add_tobasket) + " " + product.getNat())
-                .setPositiveButton(R.string.add,
+                .setPositiveButton(R.string.textok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
@@ -277,7 +277,7 @@ public class ProductDetailFragment extends Fragment {
 
         new AlertDialog.Builder(getActivity())
                 .setTitle(getString(R.string.action_add_favourite) + " " + product.getNat())
-                .setPositiveButton(R.string.add,
+                .setPositiveButton(R.string.textok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {

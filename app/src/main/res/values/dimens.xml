@@ -53,5 +53,6 @@
     <dimen name="detail_count1">20dp</dimen>
     <dimen name="detail_desc">20dp</dimen>
     <dimen name="detail_image">300dp</dimen>
+    <dimen name="detail2_image">500dp</dimen>
 
 </resources>
