@@ -211,6 +211,8 @@
     //productdetailactivity
     <string name="detail1">Detail 1</string>
     <string name="detail2">Detail 2</string>
+    <string name="add">Add</string>
+    <string name="close">Close</string>
 
 
 </resources>

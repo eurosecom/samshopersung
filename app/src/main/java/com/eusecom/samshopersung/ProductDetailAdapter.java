@@ -135,11 +135,6 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
                     mRxBus.send(mprod);
                     return true;
 
-                case R.id.action_delfav:
-                    //Toast.makeText(mContext, "Get detail " + mprod.getNat(), Toast.LENGTH_SHORT).show();
-                    mprod.setPrm1("114");
-                    mRxBus.send(mprod);
-                    return true;
 
                 default:
             }

@@ -1,11 +1,14 @@
 package com.eusecom.samshopersung;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -134,10 +137,17 @@ public class ProductDetailFragment extends Fragment {
                     if (event instanceof ProductKt) {
 
                         String usnamex = ((ProductKt) event).getNat();
-
-
                         Log.d("ProductDetailFragment ",  usnamex);
-                        //getInvoiceDialog(((Invoice) event));
+
+                        if(((ProductKt) event).getPrm1().equals("101")){
+                            ((ProductKt) event).setPrm1("1");
+                            showAddToBasketDialog(((ProductKt) event));
+                        }
+
+                        if(((ProductKt) event).getPrm1().equals("111")){
+                            ((ProductKt) event).setPrm1("11");
+                            //showAddToBasketDialog(((ProductKt) event));
+                        }
 
 
                     }
@@ -166,6 +176,16 @@ public class ProductDetailFragment extends Fragment {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerProducts));
 
+        mSubscription.add(getMyObservableSaveSumBasketToServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error ProductDetailFragment " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(getActivity(), "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setSavedBasket));
+
         emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
 
     }
@@ -176,13 +196,30 @@ public class ProductDetailFragment extends Fragment {
         hideProgressBar();
     }
 
+    private void setSavedBasket(SumBasketKt sumbasket) {
+
+
+        hideProgressBar();
+        if(sumbasket.getSprm1().equals("0")) {
+            Toast.makeText(getActivity(), sumbasket.getBasketitems().get(0).getXnat() + " " + getString(R.string.savedtobasket), Toast.LENGTH_SHORT).show();
+        }
+        if(sumbasket.getSprm1().equals("1")) {
+            Toast.makeText(getActivity(), sumbasket.getBasketitems().get(0).getXnat() + " " + getString(R.string.savedtofav), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     private Observable<List<ProductKt>> getMyQueryProductsFromSqlServer() {
         return mViewModel.getMyQueryProductsFromSqlServer();
     }
 
-    private void emitMyQueryProductsFromSqlServer(String query)  {
+    private void emitMyQueryProductsFromSqlServer(String query) {
         showProgressBar();
         mViewModel.emitMyQueryProductsFromSqlServer(query);
+    }
+
+    private Observable<SumBasketKt> getMyObservableSaveSumBasketToServer() {
+        return mViewModel.getMyObservableSaveSumBasketToServer();
     }
 
     @Override
@@ -197,6 +234,37 @@ public class ProductDetailFragment extends Fragment {
 
     protected void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void showAddToBasketDialog(@NonNull final ProductKt product){
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.action_add_tobasket) + " " + product.getNat())
+                .setPositiveButton(R.string.add,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                showProgressBar();
+                                navigateToAddToBasket(product);
+
+                            }
+                        })
+                .setNegativeButton(R.string.close,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+
+
+                            }
+                        })
+                .show();
+
+    }
+
+    private void navigateToAddToBasket(ProductKt product) {
+        showProgressBar();
+        mViewModel.emitMyObservableSaveSumBasketToServer(product);
+
     }
 
 
