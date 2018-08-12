@@ -147,6 +147,12 @@ class OfferKtActivity : AppCompatActivity() {
 
                     }
 
+                    if (event is SumBasketKt) {
+
+                        mcount = event.smno;
+                        //Log.d("ProductDetailFragment ", mcount)
+                    }
+
                 })
 
         _disposables

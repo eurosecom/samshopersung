@@ -146,7 +146,7 @@ public class ProductDetailFragment extends Fragment {
 
                         if(((ProductKt) event).getPrm1().equals("111")){
                             ((ProductKt) event).setPrm1("11");
-                            //showAddToBasketDialog(((ProductKt) event));
+                            showAddToFavDialog(((ProductKt) event));
                         }
 
 
@@ -198,9 +198,9 @@ public class ProductDetailFragment extends Fragment {
 
     private void setSavedBasket(SumBasketKt sumbasket) {
 
-
         hideProgressBar();
         if(sumbasket.getSprm1().equals("0")) {
+            rxBus.send(sumbasket);
             Toast.makeText(getActivity(), sumbasket.getBasketitems().get(0).getXnat() + " " + getString(R.string.savedtobasket), Toast.LENGTH_SHORT).show();
         }
         if(sumbasket.getSprm1().equals("1")) {
@@ -219,6 +219,7 @@ public class ProductDetailFragment extends Fragment {
     }
 
     private Observable<SumBasketKt> getMyObservableSaveSumBasketToServer() {
+        showProgressBar();
         return mViewModel.getMyObservableSaveSumBasketToServer();
     }
 
@@ -262,6 +263,37 @@ public class ProductDetailFragment extends Fragment {
     }
 
     private void navigateToAddToBasket(ProductKt product) {
+        showProgressBar();
+        mViewModel.emitMyObservableSaveSumBasketToServer(product);
+
+    }
+
+    private void showAddToFavDialog(@NonNull final ProductKt product){
+
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.action_add_favourite) + " " + product.getNat())
+                .setPositiveButton(R.string.add,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+                                showProgressBar();
+                                navigateToAddToBasket(product);
+
+                            }
+                        })
+                .setNegativeButton(R.string.close,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int whichButton) {
+
+
+                            }
+                        })
+                .show();
+
+    }
+
+    private void navigateToAddToFav(ProductKt product) {
         showProgressBar();
         mViewModel.emitMyObservableSaveSumBasketToServer(product);
 
