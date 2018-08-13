@@ -192,6 +192,8 @@
     <string name="editdoc">Editovať doklad</string>
     <string name="detaildoc">Položky dokladu</string>
     <string name="pdfdoc">PDF doklad</string>
+    <string name="getinvoice">Urobiť faktúru</string>
+    <string name="getinvoicefrom">Urobiť faktúru z objednávky</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

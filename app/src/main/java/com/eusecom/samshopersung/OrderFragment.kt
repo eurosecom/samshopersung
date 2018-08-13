@@ -22,7 +22,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import org.jetbrains.anko.AlertBuilder
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.yesButton
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -204,7 +208,7 @@ class OrderFragment : Fragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.dok)
 
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc))
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc), getString(R.string.getinvoice))
         ) { dialog, which ->
             // The 'which' argument contains the index position
             // of the selected item
@@ -213,13 +217,46 @@ class OrderFragment : Fragment() {
 
                 }
                 1 -> {
-                    //navigateToDeleteDoc(invoice)
+                    showDeleteOrderDialog(invoice)
+                }
+                2 -> {
+                    showGetInvoiceDialog(invoice)
                 }
 
             }
         }
         val dialog = builder.create()
         builder.show()
+
+    }
+
+    fun showDeleteOrderDialog(order: Invoice) {
+
+        alert("", getString(R.string.deletewholedoc) + " " + order.dok) {
+            yesButton { navigateToDeleteOrder(order) }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToDeleteOrder(order: Invoice){
+        //showProgressBar()
+        //mViewModel.emitMyObservableSaveSumBasketToServer(order)
+
+    }
+
+    fun showGetInvoiceDialog(order: Invoice) {
+
+        alert("", getString(R.string.getinvoicefrom) + " " + order.dok) {
+            yesButton { navigateToGetInvoice(order) }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToGetInvoice(order: Invoice){
+        //showProgressBar()
+        //mViewModel.emitMyObservableSaveSumBasketToServer(order)
 
     }
 

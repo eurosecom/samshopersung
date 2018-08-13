@@ -194,6 +194,8 @@
     <string name="editdoc">Edit document</string>
     <string name="detaildoc">Items of order</string>
     <string name="pdfdoc">PDF document</string>
+    <string name="getinvoice">Get invoice</string>
+    <string name="getinvoicefrom">Get invoice from order</string>
 
 
     //room demo
