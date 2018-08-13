@@ -153,17 +153,21 @@ class BasketKtActivity : AppCompatActivity() {
 
         var basket: List<BasketKt> = sumbasket.basketitems
 
-        if (basket.get(0).xid != "6") {
+        if (basket.get(0).xid == "4") {
             toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
-        }else {
+        }
+        if (basket.get(0).xid == "6") {
             toast(basket.get(0).xnat + " " + getString(R.string.itemsordered))
+        }
+        if (basket.get(0).xid == "7") {
+            toast(basket.get(0).xnat + " " + getString(R.string.movedtofav))
         }
         //Log.d("savedBasket ", basket.get(0).xnat);
         hideProgressBar()
 
         var posd: Int = Integer.parseInt(basket.get(0).xdph);
 
-        if (basket.get(0).xid == "4") {
+        if (basket.get(0).xid != "6") {
             mybasket.removeAt(posd)
             recyclerView?.adapter?.notifyItemRemoved(posd)
         }else {
@@ -200,11 +204,13 @@ class BasketKtActivity : AppCompatActivity() {
             mprod.dph = posx.toString()
             mprod.zas = it.xcpl
 
-            mprod.prm1 = "4"
+
 
             if( type == 0 ){
+                mprod.prm1 = "4"
                 showDeleteFromBasketDialog(mprod)
             }else{
+                mprod.prm1 = "7"
                 showMoveToFavtDialog(mprod)
             }
 
@@ -284,8 +290,8 @@ class BasketKtActivity : AppCompatActivity() {
     }
 
     fun navigateToMoveToFav(product: ProductKt){
-        //showProgressBar()
-        //mViewModel.emitMyObservableMoveFavSumBasketToServer(product)
+        showProgressBar()
+        mViewModel.emitMyObservableSaveSumBasketToServer(product)
 
     }
 
