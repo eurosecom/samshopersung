@@ -476,7 +476,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
 
     //get cashdocs from MySql server
-    public Observable<InvoiceList> getMyCashDocsFromSqlServer(String drh) {
+    public Observable<InvoiceList> getMyOrdersFromSqlServer(String drh) {
 
         Random r = new Random();
         double d = -10.0 + r.nextDouble() * 20.0;
@@ -500,7 +500,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String umex = mSharedPreferences.getString("ume", "");
         String serverx = mSharedPreferences.getString("servername", "");
 
-        return mDataModel.getCashDocsFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+        return mDataModel.getOrdersFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
     }
     //end get cashdocs from MySql server
 

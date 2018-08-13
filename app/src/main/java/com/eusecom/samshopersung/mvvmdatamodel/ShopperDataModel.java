@@ -254,11 +254,11 @@ public class ShopperDataModel implements ShopperIDataModel {
     //methods for OrderListActivity
 
     @Override
-    public Observable<InvoiceList> getCashDocsFromMysqlServer(String servername, String userhash, String userid, String fromfir
+    public Observable<InvoiceList> getOrdersFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx) {
 
         setRetrofit(servername);
-        return mShopperRetrofitService.getCashDocsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+        return mShopperRetrofitService.getOrdersFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
 
     }
 

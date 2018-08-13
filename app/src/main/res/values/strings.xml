@@ -190,7 +190,6 @@
     <string name="value">Value</string>
     <string name="document">Document</string>
     <string name="docshort">Doc.</string>
-
     <string name="deletewholedoc">Delete whole doc</string>
     <string name="editdoc">Edit document</string>
     <string name="detaildoc">Items of order</string>

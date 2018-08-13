@@ -50,7 +50,7 @@ public interface ShopperIDataModel {
 
     //methods for OrderListActivity
     @NonNull
-    public Observable<InvoiceList> getCashDocsFromMysqlServer(String servername, String userhash, String userid, String fromfir
+    public Observable<InvoiceList> getOrdersFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
     //methods for MapActivity

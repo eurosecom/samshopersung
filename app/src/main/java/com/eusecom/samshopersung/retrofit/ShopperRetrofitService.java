@@ -48,7 +48,7 @@ public interface ShopperRetrofitService {
 
     //methods for OrderListActivity
     @GET("/androidshopper/get_orders.php")
-    Observable<InvoiceList> getCashDocsFromSqlServer(@Query("userhash") String userhash
+    Observable<InvoiceList> getOrdersFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
             , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);

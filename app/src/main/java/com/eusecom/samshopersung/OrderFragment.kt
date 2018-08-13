@@ -3,14 +3,11 @@ package com.eusecom.samshopersung
 import android.app.SearchManager
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
@@ -18,7 +15,6 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
 import dagger.android.support.AndroidSupportInjection
@@ -44,11 +40,10 @@ class OrderFragment : Fragment() {
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
     private var balance: TextView? = null
-
     private var mProgressBar: ProgressBar? = null
-
     private var mSubscription: CompositeSubscription? = null
     private var _disposables = CompositeDisposable()
+    private var mDisposable: Disposable? = null
 
     @Inject
     lateinit var mSharedPreferences: SharedPreferences
@@ -58,16 +53,6 @@ class OrderFragment : Fragment() {
 
     @Inject
     lateinit var  _rxBus: RxBus
-
-    private lateinit var alert: AlertBuilder<DialogInterface>
-
-    //searchview
-    private var searchView: SearchView? = null
-    private var onQueryTextListener: SearchView.OnQueryTextListener? = null
-    private var mDisposable: Disposable? = null
-    protected var mOrderSearchEngine: OrderSearchEngine? = null
-    var searchManager: SearchManager? = null
-    private var invoiceszal: MutableList<Invoice>  = mutableListOf<Invoice>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,8 +82,6 @@ class OrderFragment : Fragment() {
 
         mAdapter = OrderAdapter(_rxBus)
         mAdapter?.setAbsserver(emptyList())
-        mOrderSearchEngine = OrderSearchEngine(emptyList())
-        // Set up Layout Manager, reverse layout
         mManager = LinearLayoutManager(context)
         mManager?.setReverseLayout(true)
         mManager?.setStackFromEnd(true)
@@ -140,7 +123,7 @@ class OrderFragment : Fragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyCashDocsFromSqlServer("0")
+        mSubscription?.add(mViewModel.getMyOrdersFromSqlServer("0")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -149,12 +132,10 @@ class OrderFragment : Fragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerCashDocs(it) })
+                .subscribe { it -> setServerOrders(it) })
 
 
         ActivityCompat.invalidateOptionsMenu(activity)
-        //andrejko (activity as AppCompatActivity).supportActionBar!!.setTitle(mSharedPreferences.getString("ume", "") + " "
-        //andrejko         + mSharedPreferences.getString("pokluce", ""))
     }
 
     private fun unBind() {
@@ -169,53 +150,14 @@ class OrderFragment : Fragment() {
 
     }
 
-    private fun setServerProducts(products: List<ProductKt>) {
-        hideProgressBar()
-        var serverx = "Fromfrg Ord " + mSharedPreferences?.getString("servername", "")
-        Toast.makeText(activity, serverx, Toast.LENGTH_SHORT).show()
 
-        Log.d("FromOrderfrg ", mViewModel.toString())
+    private fun setServerOrders(invoices: InvoiceList) {
 
-    }
-
-
-    private fun setQueryString(querystring: String) {
-
-        //toast(" querystring " + querystring)
-        if( querystring.equals("")){
-
-        }else {
-            searchView?.setQuery(querystring, false)
-        }
-
-    }
-
-
-    private fun setServerCashDocs(invoices: InvoiceList) {
-
-        //Log.d("searchModel ", "in setServerInvoices")
-        //toast(" nai0 " + invoices.get(0).nai)
-        invoiceszal = invoices.getInvoice().toMutableList()
         mAdapter?.setAbsserver(invoices.getInvoice())
-        nastavResultAs(invoices.getInvoice())
         balance?.setText(invoices.getBalance())
         hideProgressBar()
     }
 
-    protected fun showResultAs(resultAs: List<Invoice>) {
-
-        if (resultAs.isEmpty()) {
-            //Toast.makeText(getActivity(), R.string.nothing_found, Toast.LENGTH_SHORT).show();
-            mAdapter?.setAbsserver(emptyList<Invoice>())
-        } else {
-            //Log.d("showResultAs ", resultAs.get(0).dmna);
-            mAdapter?.setAbsserver(resultAs)
-        }
-    }
-
-    protected fun nastavResultAs(resultAs: List<Invoice>) {
-        mOrderSearchEngine = OrderSearchEngine(resultAs)
-    }
 
     class ClickFobEvent
 
@@ -251,36 +193,6 @@ class OrderFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-
-        // Retrieve the SearchView and plug it into SearchManager
-        inflater!!.inflate(R.menu.menu_orderfragment, menu)
-        searchView = MenuItemCompat.getActionView(menu!!.findItem(R.id.action_search)) as SearchView
-        searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView?.setSearchableInfo(searchManager?.getSearchableInfo(activity.componentName))
-        //andrejko getObservableSearchViewText()
-    }
-
-    override fun onDestroyOptionsMenu() {
-        searchView?.setOnQueryTextListener(null)
-        searchManager = null
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item!!.itemId
-
-        if (id == R.id.action_settings) {
-
-            val `is` = Intent(activity, SettingsActivity::class.java)
-            startActivity(`is`)
-            return true
-        }
-
-
-
-        return super.onOptionsItemSelected(item)
-    }
-
     fun getTodoDialog(invoice: Invoice) {
 
         val inflater = LayoutInflater.from(activity)
@@ -292,7 +204,7 @@ class OrderFragment : Fragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.dok)
 
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.editdoc), getString(R.string.deletewholedoc))
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc))
         ) { dialog, which ->
             // The 'which' argument contains the index position
             // of the selected item
@@ -301,20 +213,15 @@ class OrderFragment : Fragment() {
 
                 }
                 1 -> {
-                    //navigateToEditDoc(invoice)
+                    //navigateToDeleteDoc(invoice)
                 }
-                2 -> {
-                    //showDeleteDialog(invoice)
-                }
+
             }
         }
         val dialog = builder.create()
         builder.show()
 
     }
-
-
-
 
 
 }

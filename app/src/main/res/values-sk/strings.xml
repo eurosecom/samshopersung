@@ -159,6 +159,7 @@
     <string name="choosecat">Vyberte kategóriu</string>
     <string name="allcat">Všetky kategórie</string>
     <string name="favitems">Obľúbené položky</string>
+    <string name="category">Kategória</string>
 
     //basket activity
     <string name="mybasket">Môj košík</string>
@@ -187,10 +188,21 @@
     <string name="value">Hodnota</string>
     <string name="document">Doklad</string>
     <string name="docshort">Dok.</string>
+    <string name="deletewholedoc">Zmazať doklad</string>
+    <string name="editdoc">Editovať doklad</string>
+    <string name="detaildoc">Položky dokladu</string>
+    <string name="pdfdoc">PDF doklad</string>
 
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>
+
+    //album demo
+    <string name="backdrop_title">MUZIKA</string>
+    <string name="backdrop_subtitle">Top 20 albumov</string>
+
+    //mapsactivity
+    <string name="title_activity_maps">Mapa</string>
 
     //productdetailactivity
     <string name="detail1">Detail 1</string>

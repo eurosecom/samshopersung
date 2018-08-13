@@ -80,7 +80,7 @@ public interface ShopperIMvvmViewModel {
 
     //methods for OrderListActivity
     @NonNull
-    public Observable<InvoiceList> getMyCashDocsFromSqlServer(String drh);
+    public Observable<InvoiceList> getMyOrdersFromSqlServer(String drh);
 
     //methods for MapActivity
     @NonNull
