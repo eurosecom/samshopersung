@@ -215,5 +215,10 @@
     <string name="add">Add</string>
     <string name="close">Close</string>
 
+    //showpdfactivity
+    <string name="showpdf">Show PDF</string>
+    <string name="unpackeditem">Unpacked item</string>
+    <string name="innextversion">Item will be prepared in next App version.</string>
+
 
 </resources>

@@ -82,6 +82,9 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<InvoiceList> getMyOrdersFromSqlServer(String drh);
 
+    @NonNull
+    public void emitGetPdfOrder(Invoice order);
+
     //methods for MapActivity
     @NonNull
     public Observable<List<Employee>> getMyObservableEmployeesFromList();

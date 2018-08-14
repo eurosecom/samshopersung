@@ -10,8 +10,9 @@ import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
+import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -475,7 +476,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
      */
 
 
-    //get cashdocs from MySql server
+    //get orders from MySql server
     public Observable<InvoiceList> getMyOrdersFromSqlServer(String drh) {
 
         Random r = new Random();
@@ -502,7 +503,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         return mDataModel.getOrdersFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
     }
-    //end get cashdocs from MySql server
+    //end get orders from MySql server
 
     /**
      * end methods for OrderListActivity
@@ -564,6 +565,40 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return jsonstring;
     }
     //end JSON from Product
+
+
+    //get PDF order
+    public void emitGetPdfOrder(Invoice order) {
+
+        if(callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)){
+            System.out.println("command approved.");
+        }
+
+
+    }
+    //end get PDF order
+
+    public boolean callCommandExecutorProxy(CommandExecutorProxyImpl.PermType perm , CommandExecutorProxyImpl.ReportTypes reportType
+            , CommandExecutorProxyImpl.ReportName tableName) {
+
+        boolean approved = false;
+
+        CommandExecutorProxy executor = new CommandExecutorProxyImpl();
+
+        executor.setUserParams(mSharedPreferences.getString("usuid", "0")
+                , mSharedPreferences.getString("fir", "0"), mSharedPreferences.getString("usadmin", "0"));
+        try {
+            approved = executor.approveCommand(perm, reportType, tableName);
+        } catch (Exception e ) {
+            Log.d("Exception Message::", e.getMessage());
+            if(e.getMessage().equals("ADM")) { System.out.println("'" + perm + "' command not approved."); }
+            if(e.getMessage().equals("LGN")) { System.out.println("'" + perm + "' command not approved."); }
+            if(e.getMessage().equals("CMP")) { System.out.println("'" + perm + "' command not approved."); }
+        }
+
+        return approved;
+    }
 
 
 }

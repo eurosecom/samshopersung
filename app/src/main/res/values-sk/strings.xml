@@ -212,4 +212,10 @@
     <string name="add">Pridať</string>
     <string name="close">Zrušiť</string>
 
+    //showpdfactivity
+    <string name="showpdf">Zobraz PDF</string>
+    <string name="unpackeditem">Neaktívna položka</string>
+    <string name="innextversion">Položka bude pripravená v nasledujúcej verzii App.</string>
+
+
 </resources>

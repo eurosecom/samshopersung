@@ -1,8 +1,6 @@
 package com.eusecom.samshopersung
 
-import android.app.SearchManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -10,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
@@ -21,8 +18,6 @@ import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import org.jetbrains.anko.AlertBuilder
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
@@ -38,13 +33,12 @@ import javax.inject.Inject
  * template samfantozzi CashListKtFragment.kt
  */
 
-class OrderFragment : Fragment() {
+class OrderFragment : BaseKtFragment() {
 
     private var mAdapter: OrderAdapter? = null
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
     private var balance: TextView? = null
-    private var mProgressBar: ProgressBar? = null
     private var mSubscription: CompositeSubscription? = null
     private var _disposables = CompositeDisposable()
     private var mDisposable: Disposable? = null
@@ -165,13 +159,6 @@ class OrderFragment : Fragment() {
 
     class ClickFobEvent
 
-    protected fun showProgressBar() {
-        mProgressBar?.setVisibility(View.VISIBLE)
-    }
-
-    protected fun hideProgressBar() {
-        mProgressBar?.setVisibility(View.GONE)
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -192,11 +179,6 @@ class OrderFragment : Fragment() {
         unBind()
     }
 
-    override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
-
     fun getTodoDialog(invoice: Invoice) {
 
         val inflater = LayoutInflater.from(activity)
@@ -214,7 +196,7 @@ class OrderFragment : Fragment() {
             // of the selected item
             when (which) {
                 0 -> {
-
+                    navigateToGetPdf(invoice)
                 }
                 1 -> {
                     showDeleteOrderDialog(invoice)
@@ -227,6 +209,12 @@ class OrderFragment : Fragment() {
         }
         val dialog = builder.create()
         builder.show()
+
+    }
+
+    fun navigateToGetPdf(order: Invoice){
+        //showProgressBar()
+        mViewModel.emitGetPdfOrder(order)
 
     }
 
