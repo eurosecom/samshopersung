@@ -1,7 +1,9 @@
 package com.eusecom.samshopersung
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
@@ -132,6 +134,39 @@ class OrderFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerOrders(it) })
 
+        mSubscription?.add(mViewModel.getObservableDocPdf()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setUriPdf(it) })
+
+        mSubscription?.add(mViewModel.getObservableException()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setProxyException(it) })
+
+        mSubscription?.add(mViewModel.getObservableDeleteOrder()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerOrders(it) })
+
 
         ActivityCompat.invalidateOptionsMenu(activity)
     }
@@ -148,12 +183,30 @@ class OrderFragment : BaseKtFragment() {
 
     }
 
+    private fun setUriPdf(uri: Uri) {
+
+        mViewModel.clearObservableDocPDF()
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        //activity.finish()
+
+    }
 
     private fun setServerOrders(invoices: InvoiceList) {
 
         mAdapter?.setAbsserver(invoices.getInvoice())
         balance?.setText(invoices.getBalance())
         hideProgressBar()
+    }
+
+
+
+    private fun setProxyException(excp: String) {
+        toast("Permission " + excp + " not alowed.")
+        mViewModel.clearObservableException()
+        //println(excp + " frg command not approved.")
+
     }
 
 
@@ -228,8 +281,8 @@ class OrderFragment : BaseKtFragment() {
     }
 
     fun navigateToDeleteOrder(order: Invoice){
-        //showProgressBar()
-        //mViewModel.emitMyObservableSaveSumBasketToServer(order)
+        showProgressBar()
+        mViewModel.emitDeleteOrder(order);
 
     }
 

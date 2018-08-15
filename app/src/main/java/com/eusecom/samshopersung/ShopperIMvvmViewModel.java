@@ -1,5 +1,6 @@
 package com.eusecom.samshopersung;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
@@ -84,6 +85,30 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void emitGetPdfOrder(Invoice order);
+
+    @NonNull
+    public void emitDocumentPdfUri(Invoice invx);
+
+    @NonNull
+    public Observable<Uri> getObservableDocPdf();
+
+    @NonNull
+    public void clearObservableDocPDF();
+
+    @NonNull
+    public Observable<String> getObservableException();
+
+    @NonNull
+    public void clearObservableException();
+
+    @NonNull
+    public void emitDeleteOrder(Invoice invx);
+
+    @NonNull
+    public Observable<InvoiceList> getObservableDeleteOrder();
+
+    @NonNull
+    public void clearObservableDeleteOrder();
 
     //methods for MapActivity
     @NonNull

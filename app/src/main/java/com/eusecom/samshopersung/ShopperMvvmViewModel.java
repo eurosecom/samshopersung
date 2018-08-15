@@ -3,6 +3,7 @@ package com.eusecom.samshopersung;
 
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samshopersung.models.Album;
@@ -505,6 +506,51 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end get orders from MySql server
 
+    //delete Order
+    public void emitDeleteOrder(Invoice invx) { mObservableDelOrder.onNext(invx); }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableDelOrder = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<InvoiceList> getObservableDeleteOrder() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableDelOrder
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx ->
+                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "4", dodx, umex, invx.getDok()));
+    }
+
+    public void clearObservableDeleteOrder() {
+
+        mObservableDelOrder = BehaviorSubject.create();
+
+    }
+    //end delete Order
+
     /**
      * end methods for OrderListActivity
      */
@@ -573,11 +619,69 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         if(callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
                 , CommandExecutorProxyImpl.ReportName.ORDER)){
             System.out.println("command approved.");
+
+            order.setDrh("53");
+
+            emitDocumentPdfUri(order);
         }
 
 
     }
     //end get PDF order
+
+    //get PDF Uri document
+    public void emitDocumentPdfUri(Invoice invx) { mObservableDocPDF.onNext(invx); }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableDocPDF = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<Uri> getObservableDocPdf() {
+
+        String firx = mSharedPreferences.getString("fir", "");
+        //String rokx = "2014";
+        String rokx = mSharedPreferences.getString("rok", "");
+        //String serverx = "www.eshoptest.sk";
+        String serverx = mSharedPreferences.getString("servername", "");
+        //String adresx = "www.eshoptest.sk/androiducto";
+        String adresx = mSharedPreferences.getString("servername", "") + "/androiducto";
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+
+        String umex = mSharedPreferences.getString("ume", "");
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/Doklad/" + ds;
+
+        String userxplus = userx + "/" + usuidx;
+        System.out.println("DocPdf userxplus " + userxplus);
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String encrypted2 = encrypted;
+
+        return mObservableDocPDF
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(invx ->
+                        mDataModel.getObservableUriDocPdf(invx, firx, rokx, serverx, adresx, encrypted2, umex));
+    }
+
+    public void clearObservableDocPDF() {
+
+        mObservableDocPDF = BehaviorSubject.create();
+
+    }
+    //end get PDF Uri document
 
     public boolean callCommandExecutorProxy(CommandExecutorProxyImpl.PermType perm , CommandExecutorProxyImpl.ReportTypes reportType
             , CommandExecutorProxyImpl.ReportName tableName) {
@@ -591,14 +695,44 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         try {
             approved = executor.approveCommand(perm, reportType, tableName);
         } catch (Exception e ) {
-            Log.d("Exception Message::", e.getMessage());
-            if(e.getMessage().equals("ADM")) { System.out.println("'" + perm + "' command not approved."); }
-            if(e.getMessage().equals("LGN")) { System.out.println("'" + perm + "' command not approved."); }
-            if(e.getMessage().equals("CMP")) { System.out.println("'" + perm + "' command not approved."); }
+            Log.d("Exc Message approved:", e.getMessage());
+            if(e.getMessage().equals("ADM")) {
+                emitProxyException("ADM");
+                System.out.println("'" + perm + "' command not approved.");
+            }
+            if(e.getMessage().equals("LGN")) {
+                emitProxyException("LGN");
+                System.out.println("'" + perm + "' command not approved.");
+            }
+            if(e.getMessage().equals("CMP")) {
+                emitProxyException("CMP");
+                System.out.println("'" + perm + "' command not approved.");
+            }
         }
 
         return approved;
     }
 
+    //get exception
+    public void emitProxyException(String excp) { mObservableException.onNext(excp); }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableException = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<String> getObservableException() {
+
+
+        return mObservableException
+                .flatMap(excp ->
+                        mDataModel.getObservableExcp(excp));
+    }
+
+    public void clearObservableException() {
+
+        mObservableException = BehaviorSubject.create();
+
+    }
+    //end get exception
 
 }

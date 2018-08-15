@@ -1,6 +1,8 @@
 package com.eusecom.samshopersung
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.ProgressBar
@@ -26,6 +28,7 @@ abstract class BaseKtFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
+
 
 
 

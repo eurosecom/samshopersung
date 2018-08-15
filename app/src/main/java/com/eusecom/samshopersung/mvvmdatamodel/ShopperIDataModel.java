@@ -1,10 +1,12 @@
 package com.eusecom.samshopersung.mvvmdatamodel;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
+import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
@@ -60,5 +62,13 @@ public interface ShopperIDataModel {
     public String getStringFromDataModel();
 
     public Observable<List<String>> getRxStringFromDataModel();
+
+    @NonNull
+    public Observable<Uri> getObservableUriDocPdf(Invoice invx, @NonNull final String firx
+            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
+            , String encrypted, @NonNull final String umex);
+
+    @NonNull
+    public Observable<String> getObservableExcp(String excp);
 
 }

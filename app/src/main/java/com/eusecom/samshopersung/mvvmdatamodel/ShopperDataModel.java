@@ -1,6 +1,7 @@
 package com.eusecom.samshopersung.mvvmdatamodel;
 
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import rx.Observable;
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
+import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.R;
 import com.eusecom.samshopersung.SumBasketKt;
@@ -257,6 +259,8 @@ public class ShopperDataModel implements ShopperIDataModel {
     public Observable<InvoiceList> getOrdersFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx) {
 
+        System.out.println("Delete order dokx " + dokx);
+        System.out.println("Delete order drh " + drh);
         setRetrofit(servername);
         return mShopperRetrofitService.getOrdersFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
 
@@ -318,5 +322,39 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     }
     //end set retrofit by runtime
+
+    @NonNull
+    @Override
+    public Observable<Uri> getObservableUriDocPdf(Invoice invx, @NonNull final String firx
+            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
+            , String encrypted, @NonNull final String umex) {
+
+
+        Log.d("DocPdf dokx ", invx.getDok());
+        Log.d("DocPdf drhx ", invx.getDrh());
+        Log.d("DocPdf ucex ", invx.getUce());
+        Log.d("DocPdf icox ", invx.getIco());
+        System.out.println("DocPdf userhash " + encrypted);
+
+        Uri uri = null;
+        if (invx.getDrh().equals("53")) {
+            String drupoh = "1";
+
+            uri = Uri.parse("http://" + serverx +
+                    "/androidshopper/order_pdf.php?copern=1&drupoh="+ drupoh + "&page=1&zandroidu=1&anduct=1&kli_vume=1.2018"
+                    + "&serverx=" + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx
+                    + "&newfntz=1&h_drp=4&cislo_dok=" + invx.getDok() );
+
+        }
+
+        return Observable.just(uri);
+
+    }
+
+    @NonNull
+    public Observable<String> getObservableExcp(String excp) {
+
+        return Observable.just(excp);
+    }
 
 }
