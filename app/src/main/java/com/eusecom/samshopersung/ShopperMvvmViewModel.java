@@ -507,7 +507,13 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end get orders from MySql server
 
     //delete Order
-    public void emitDeleteOrder(Invoice invx) { mObservableDelOrder.onNext(invx); }
+    public void emitDeleteOrder(Invoice invx) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+            mObservableDelOrder.onNext(invx);
+        }
+    }
 
     @NonNull
     private BehaviorSubject<Invoice> mObservableDelOrder = BehaviorSubject.create();

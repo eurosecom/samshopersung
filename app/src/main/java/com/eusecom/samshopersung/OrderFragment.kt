@@ -203,9 +203,12 @@ class OrderFragment : BaseKtFragment() {
 
 
     private fun setProxyException(excp: String) {
-        toast("Permission " + excp + " not alowed.")
+        //toast("Permission " + excp + " not alowed.")
         mViewModel.clearObservableException()
-        //println(excp + " frg command not approved.")
+        hideProgressBar()
+        if(excp.equals("LGN")) { showDonotloginAlert() }
+        if(excp.equals("ADM")) { showDonotAdminAlert() }
+        if(excp.equals("CMP")) { showDonotcompanyAlert() }
 
     }
 
