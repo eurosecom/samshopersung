@@ -1,18 +1,13 @@
 package com.eusecom.samshopersung;
 
-import android.Manifest;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.jakewharton.rxbinding.view.RxView;
@@ -24,10 +19,14 @@ import dagger.android.AndroidInjection;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
 
-public class NewIdcActivity extends AppCompatActivity {
+
+public class NewIdcActivity extends BaseActivity {
 
     EditText inputIco;
     EditText inputDic;
@@ -61,6 +60,7 @@ public class NewIdcActivity extends AppCompatActivity {
 
         //getSupportActionBar().setTitle(getString(R.string.action_setmfir));
 
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         inputIco = (EditText) findViewById(R.id.inputIco);
         inputDic = (EditText) findViewById(R.id.inputDic);
         inputIcd = (EditText) findViewById(R.id.inputIcd);
@@ -75,7 +75,7 @@ public class NewIdcActivity extends AppCompatActivity {
 
         // save button
         _btnSave = (Button) findViewById(R.id.btnSave);
-        
+
     }
 
 
@@ -99,7 +99,7 @@ public class NewIdcActivity extends AppCompatActivity {
 
     private void unBind() {
 
-        //mViewModel.clearObservableIdModelCompany();
+        mViewModel.clearObservableIdModelCompany();
         //mViewModel.clearObservableIdcSaveToServer();
         //mViewModel.clearObservableIdcSaveToRealm();
         mSubscription.clear();
@@ -109,9 +109,18 @@ public class NewIdcActivity extends AppCompatActivity {
 
     private void bind() {
 
+        showProgressBar();
         mSubscription = new CompositeSubscription();
 
-
+        mSubscription.add(mViewModel.getMyObservableIdModelCompany()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error NewIdcActivity " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setEditedIco));
 
         subscriptionSave = RxView.clicks(_btnSave)
                 .debounce(300, TimeUnit.MILLISECONDS)
@@ -163,6 +172,9 @@ public class NewIdcActivity extends AppCompatActivity {
                     }
                 });
 
+        mViewModel.emitMyObservableIdModelCompany(mSharedPreferences.getString("mfir", ""));
+
+
     }
 
     private void setEditedIco(@NonNull final List<IdCompanyKt> idc) {
@@ -180,7 +192,7 @@ public class NewIdcActivity extends AppCompatActivity {
            inputIb1.setText(idc.get(0).getIb1());
            inputSw1.setText(idc.get(0).getSw1());
         }
-        //hideProgressDialog();
+        hideProgressBar();
     }
 
 

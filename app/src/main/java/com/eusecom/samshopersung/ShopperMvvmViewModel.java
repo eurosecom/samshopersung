@@ -741,4 +741,54 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end get exception
 
+
+    //emit Observable<IdCompanyKt> control IdCompany
+    public void emitMyObservableIdModelCompany(String queryx) {
+        //String querys = String.valueOf(queryx);
+        mObservableIdModelCompany.onNext(queryx);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableIdModelCompany = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<IdCompanyKt>> getMyObservableIdModelCompany() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String encrypted2 = encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String drh = "2";
+
+        Log.d("NewCashLog idc fir ", firx);
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableIdModelCompany
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(queryx -> mDataModel.getObservableIdModelCompany(serverx, encrypted2, ds, firx, rokx, drh, queryx ));
+    }
+
+    public void clearObservableIdModelCompany() {
+
+        mObservableIdModelCompany = BehaviorSubject.create();
+
+    }
+    //end emit Observable<IdCompanyKt> control IdCompany
+
 }

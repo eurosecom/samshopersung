@@ -121,5 +121,15 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<String>> getRxStringFromMvvm();
 
+    //methods for NewIdcActivity
+    @NonNull
+    public void emitMyObservableIdModelCompany(String queryx);
+
+    @NonNull
+    public Observable<List<IdCompanyKt>> getMyObservableIdModelCompany();
+
+    @NonNull
+    public void clearObservableIdModelCompany();
+
 
 }

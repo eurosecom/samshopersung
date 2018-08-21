@@ -20,7 +20,7 @@ import org.jetbrains.anko.yesButton
 
 abstract class BaseKtFragment : Fragment() {
 
-    protected  var mProgressBar: ProgressBar? = null
+    protected var mProgressBar: ProgressBar? = null
 
     protected fun showProgressBar() {
         mProgressBar?.setVisibility(View.VISIBLE)

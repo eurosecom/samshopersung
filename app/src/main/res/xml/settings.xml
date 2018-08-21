@@ -209,7 +209,7 @@
     <EditTextPreference
         android:key="mfir"
         android:defaultValue="0"
-        android:enabled="false"
+        android:enabled="true"
         android:summary="@string/mfir_summary"
         android:title="@string/mfir_title" />
 

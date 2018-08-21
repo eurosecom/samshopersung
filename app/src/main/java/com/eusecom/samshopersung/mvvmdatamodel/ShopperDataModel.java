@@ -11,6 +11,7 @@ import rx.Observable;
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
+import com.eusecom.samshopersung.IdCompanyKt;
 import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.R;
@@ -355,6 +356,15 @@ public class ShopperDataModel implements ShopperIDataModel {
     public Observable<String> getObservableExcp(String excp) {
 
         return Observable.just(excp);
+    }
+
+    //methods for NewIdcActivity
+    @NonNull
+    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String queryx){
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
     }
 
 }

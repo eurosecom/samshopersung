@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
+import com.eusecom.samshopersung.IdCompanyKt;
 import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SumBasketKt;
@@ -71,4 +72,8 @@ public interface ShopperIDataModel {
     @NonNull
     public Observable<String> getObservableExcp(String excp);
 
+    //methods for NewIdcActivity
+    @NonNull
+    public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String queryx);
 }

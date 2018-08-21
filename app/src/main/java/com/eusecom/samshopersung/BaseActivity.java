@@ -1,26 +1,19 @@
 package com.eusecom.samshopersung;
 
-import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ProgressBar;
 
-public class BaseActivity extends AppCompatActivity {
+abstract class BaseActivity extends AppCompatActivity {
 
-    private ProgressDialog mProgressDialog;
+    protected ProgressBar mProgressBar;
 
-    public void showProgressBar() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.setMessage("Loading...");
-        }
-
-        mProgressDialog.show();
+    protected void showProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressBar() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+    protected void hideProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
     }
 
 
