@@ -35,6 +35,7 @@
         <activity android:name=".BasketKtActivity"/>
         <activity android:name=".OrderListActivity"/>
         <activity android:name=".ProductDetailActivity"/>
+        <activity android:name=".NewIdcActivity"/>
 
         <activity android:name=".DetailActivity"/>
         <activity android:name=".MapsActivity"/>

@@ -206,4 +206,18 @@
         android:summary="@string/usatw_summary"
         android:title="@string/usatw_title" />
 
+    <EditTextPreference
+        android:key="mfir"
+        android:defaultValue="0"
+        android:enabled="false"
+        android:summary="@string/mfir_summary"
+        android:title="@string/mfir_title" />
+
+    <EditTextPreference
+        android:key="mfirnaz"
+        android:defaultValue=" "
+        android:enabled="true"
+        android:summary="@string/mfirnaz_summary"
+        android:title="@string/mfirnaz_title" />
+
 </PreferenceScreen>

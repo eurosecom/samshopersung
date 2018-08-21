@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+	<TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisIco"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputIco"
+        android:inputType="number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    
+     <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisDic"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputDic"
+        android:inputType="number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisIcd"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputIcd"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+    
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+   <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisNai"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputNai"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisUli"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputUli"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">   
+    
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisMes"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputMes"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">   
+    
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisPsc"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputPsc"
+        android:inputType="number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+    
+    
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+     
+        
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisTel"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>    
+    
+    <EditText android:id="@+id/inputTel"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+    
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/popisMail"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:layout_weight="1.2"/>
+
+    <EditText android:id="@+id/inputMail"
+        android:inputType="text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0.8"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/popisIb1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textSize="16sp"
+            android:layout_weight="3"/>
+
+        <EditText android:id="@+id/inputIb1"
+            android:inputType="text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/popisSw1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textSize="16sp"
+            android:layout_weight="1.2"/>
+
+        <EditText android:id="@+id/inputSw1"
+            android:inputType="text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="0.8"/>
+
+    </LinearLayout>
+
+    <Button android:id="@+id/btnSave"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save" />
+ 
+</LinearLayout>
+
+</ScrollView>

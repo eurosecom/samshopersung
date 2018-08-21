@@ -10,6 +10,7 @@ import com.eusecom.samshopersung.FlombulatorActivity;
 import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
 import com.eusecom.samshopersung.MapActivity;
+import com.eusecom.samshopersung.NewIdcActivity;
 import com.eusecom.samshopersung.OfferKtActivity;
 import com.eusecom.samshopersung.OrderListActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
@@ -80,5 +81,9 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {ProductDetailActivityModule.class, ProductDetailFragmentProvider.class
             , ProductDetailKtFragmentProvider.class})
     abstract ProductDetailActivity bindProductDetailActivity();
+
+    @ShopperScope
+    @ContributesAndroidInjector(modules = {NewIdcActivityModule.class })
+    abstract NewIdcActivity bindNewIdcActivity();
 
 }

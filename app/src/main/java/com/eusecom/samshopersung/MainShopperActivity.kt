@@ -306,6 +306,7 @@ class MainShopperActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> consume { navigateToSettings() }
         R.id.action_setdomain -> consume { navigateToSetDomain() }
+        R.id.action_setmfir -> consume { navigateToSetMyFir() }
 
         else -> super.onOptionsItemSelected(item)
     }
@@ -437,6 +438,26 @@ class MainShopperActivity : AppCompatActivity() {
             startActivity(`is`)
         }else {
             showLoginAlert()
+        }
+
+    }
+
+    fun navigateToSetMyFir() {
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, NewIdcActivity::class.java)
+                startActivity(`is`)
+            }
+
         }
 
     }

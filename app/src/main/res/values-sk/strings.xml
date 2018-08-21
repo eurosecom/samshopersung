@@ -14,6 +14,7 @@
     <string name="action_accountreports">Účtovné zostavy</string>
     <string name="action_taxreports">Daňové zostavy</string>
     <string name="action_setmonth">Nastaviť mesiac</string>
+    <string name="action_setmfir">Nastaviť moju firmu</string>
     <string name="popisbtnpokl">Hotovosť</string>
     <string name="popisbtnpoklsd">Pokladnica SD</string>
     <string name="popisbtnbanka">Banka</string>
@@ -79,6 +80,10 @@
     <string name="fir_summary">Číslo pripojenej firmy.</string>
     <string name="firnaz_title">Názov pripojenej firmy.</string>
     <string name="firnaz_summary">Názov pripojenej firmy.</string>
+    <string name="mfir_title">IČO mojej firmy.</string>
+    <string name="mfir_summary">IČO mojej firmy pre faktúru.</string>
+    <string name="mfirnaz_title">Názov mojej firmy.</string>
+    <string name="mfirnaz_summary">Názov mojej firmy pre faktúru.</string>
     <string name="firiban_title">IBAN pripojenej firmy.</string>
     <string name="firiban_summary">Prvý IBAN pripojenej firmy.</string>
     <string name="rok_title">Účtovný rok.</string>
@@ -217,5 +222,21 @@
     <string name="unpackeditem">Neaktívna položka</string>
     <string name="innextversion">Položka bude pripravená v nasledujúcej verzii App.</string>
 
+    //newidcactivity
+    <string name="popisIco">IČO firmy</string>
+    <string name="popisDic">DIČ</string>
+    <string name="popisIcd">IČDPH</string>
+    <string name="popisNai">Meno</string>
+    <string name="popisUli">Ulica, číslo</string>
+    <string name="popisMes">Mesto</string>
+    <string name="popisTel">Telefón</string>
+    <string name="popisMail">E-mail</string>
+    <string name="popisWww">WWW</string>
+    <string name="popisPsc">PSČ</string>
+    <string name="newico">Nové IČO</string>
+    <string name="editico">Upraviť IČO</string>
+    <string name="popisIb1">IBAN</string>
+    <string name="popisSw1">Swift kód</string>
+    <string name="save">Uložiť</string>
 
 </resources>
