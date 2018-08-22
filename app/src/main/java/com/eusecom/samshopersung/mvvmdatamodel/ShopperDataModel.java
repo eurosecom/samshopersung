@@ -20,7 +20,9 @@ import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.IRealmController;
+import com.eusecom.samshopersung.realm.IdcController;
 import com.eusecom.samshopersung.realm.RealmDomain;
+import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.google.firebase.database.DatabaseReference;
@@ -33,13 +35,14 @@ public class ShopperDataModel implements ShopperIDataModel {
     Realm mRealm;
     ExampleInterceptor mInterceptor;
     IRealmController mRealmController;
+    IdcController mIdcController;
 
     public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
-                                 @NonNull final ShopperRetrofitService shopperRetrofitService,
-                                 @NonNull final Resources resources,
-                                 @NonNull final Realm realm,
-                                 @NonNull final ExampleInterceptor interceptor,
-                                 @NonNull final IRealmController realmcontroller) {
+                             @NonNull final ShopperRetrofitService shopperRetrofitService,
+                             @NonNull final Resources resources,
+                             @NonNull final Realm realm,
+                             @NonNull final ExampleInterceptor interceptor,
+                             @NonNull final IRealmController realmcontroller) {
         mFirebaseDatabase = databaseReference;
         mShopperRetrofitService = shopperRetrofitService;
         mResources = resources;
@@ -48,6 +51,19 @@ public class ShopperDataModel implements ShopperIDataModel {
         mRealmController = realmcontroller;
     }
 
+    public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
+                            @NonNull final ShopperRetrofitService shopperRetrofitService,
+                            @NonNull final Resources resources,
+                            @NonNull final Realm realm,
+                            @NonNull final ExampleInterceptor interceptor,
+                            @NonNull final IdcController realmcontroller) {
+        mFirebaseDatabase = databaseReference;
+        mShopperRetrofitService = shopperRetrofitService;
+        mResources = resources;
+        mRealm = realm;
+        mInterceptor = interceptor;
+        mIdcController = realmcontroller;
+    }
 
     //methods for ChooseCompanyActivity
 
@@ -366,5 +382,26 @@ public class ShopperDataModel implements ShopperIDataModel {
         setRetrofit(servername);
         return mShopperRetrofitService.controlIdCompanyOnSqlServer(userhash, userid, fromfir, vyb_rok, drh, queryx);
     }
+
+    //save idc to realm
+    @NonNull
+    @Override
+    public Observable<RealmInvoice> getIdcSavingToRealm(@NonNull final List<RealmInvoice> idcs) {
+
+        RealmInvoice idcx = idcs.get(0);
+        RealmInvoice idcexists = mIdcController.existRealmInvoice( idcx );
+
+        if(idcexists != null){
+            System.out.println("existRealmInvoice " + true);
+            mIdcController.deleteRealmInvoiceData( idcx );
+        }else{
+            System.out.println("existRealmInvoice " + false);
+        }
+        //save to realm and get String OK or ERROR
+        mIdcController.setRealmInvoiceData( idcx );
+
+        return Observable.just(idcx);
+    }
+    //end save idc to realm
 
 }

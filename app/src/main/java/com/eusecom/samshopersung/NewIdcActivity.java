@@ -100,8 +100,7 @@ public class NewIdcActivity extends BaseActivity {
     private void unBind() {
 
         mViewModel.clearObservableIdModelCompany();
-        //mViewModel.clearObservableIdcSaveToServer();
-        //mViewModel.clearObservableIdcSaveToRealm();
+        mViewModel.clearObservableIdcSaveToRealm();
         mSubscription.clear();
         subscriptionSave.unsubscribe();
 
@@ -121,6 +120,11 @@ public class NewIdcActivity extends BaseActivity {
                 })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setEditedIco));
+
+        mSubscription.add(mViewModel.getDataIdcSavedToRealm()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(this::dataSavedToRealm));
 
         subscriptionSave = RxView.clicks(_btnSave)
                 .debounce(300, TimeUnit.MILLISECONDS)
@@ -142,32 +146,31 @@ public class NewIdcActivity extends BaseActivity {
                         Log.d("NewInvDoc", "Clicked save ");
                         Toast.makeText(NewIdcActivity.this, "Clicked save", Toast.LENGTH_SHORT).show();
 
+                        List<RealmInvoice> realminvoices = new ArrayList<>();
+                        RealmInvoice realminvoice = new RealmInvoice();
+                        realminvoice.setDrh("99");
+                        realminvoice.setUce("");
+                        realminvoice.setDok(inputIco.getText().toString());
+                        realminvoice.setDat(inputNai.getText().toString());
+                        realminvoice.setIco(inputIco.getText().toString());
+                        realminvoice.setNai(inputNai.getText().toString());
+                        realminvoice.setHod(inputMes.getText().toString());
+                        realminvoice.setZk0(inputDic.getText().toString());
+                        realminvoice.setZk1(inputIcd.getText().toString());
+                        realminvoice.setZk2(inputUli.getText().toString());
+                        realminvoice.setDn1(inputPsc.getText().toString());
+                        realminvoice.setDn2(inputMes.getText().toString());
+                        realminvoice.setPoz(inputTel.getText().toString());
+                        realminvoice.setDas(inputIb1.getText().toString());
+                        realminvoice.setDaz(inputSw1.getText().toString());
+                        realminvoice.setFak("0");
+                        realminvoice.setKto(inputMail.getText().toString());
+                        realminvoice.setPoh("0");
+                        realminvoice.setSaved("false");
+                        realminvoices.add(realminvoice);
 
-                            List<RealmInvoice> realminvoices = new ArrayList<>();
-                            RealmInvoice realminvoice = new RealmInvoice();
-                            realminvoice.setDrh("99");
-                            realminvoice.setUce("");
-                            realminvoice.setDok(inputIco.getText().toString());
-                            realminvoice.setDat(inputNai.getText().toString());
-                            realminvoice.setIco(inputIco.getText().toString());
-                            realminvoice.setNai(inputNai.getText().toString());
-                            realminvoice.setHod(inputMes.getText().toString());
-                            realminvoice.setZk0(inputDic.getText().toString());
-                            realminvoice.setZk1(inputIcd.getText().toString());
-                            realminvoice.setZk2(inputUli.getText().toString());
-                            realminvoice.setDn1(inputPsc.getText().toString());
-                            realminvoice.setDn2(inputMes.getText().toString());
-                            realminvoice.setPoz(inputTel.getText().toString());
-                            realminvoice.setDas(inputIb1.getText().toString());
-                            realminvoice.setDaz(inputSw1.getText().toString());
-                            realminvoice.setFak("0");
-                            realminvoice.setKto(inputMail.getText().toString());
-                            realminvoice.setPoh("0");
-                            realminvoice.setSaved("false");
-                            realminvoices.add(realminvoice);
-
-                            Log.d("EditedIdc ", realminvoice.getDok());
-                            //mViewModel.emitMyObservableIdcToServer(realminvoice);
+                        Log.d("NewIdc ", realminvoice.getDok());
+                        mViewModel.emitRealmIdcToRealm(realminvoices);
 
                     }
                 });
@@ -195,17 +198,13 @@ public class NewIdcActivity extends BaseActivity {
         hideProgressBar();
     }
 
+    private void dataSavedToRealm(@NonNull final RealmInvoice invoice) {
+        mViewModel.clearObservableIdcSaveToRealm();
 
-    private void savedInvoiceToServer(List<Invoice> saveds) {
-
-        Log.d("invxstring saved ", saveds.get(0).getDok());
-        Log.d("invxstring  ", saveds.get(0).getNai());
-        //mViewModel.clearObservableIdcSaveToServer();
-
-        Log.d("invxstring ", "saved ");
+        Toast.makeText(this, "Saved doc " + invoice.getDok(), Toast.LENGTH_SHORT).show();
         finish();
-
     }
+
 
 
 

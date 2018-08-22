@@ -6,6 +6,8 @@ import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.RealmDomain;
+import com.eusecom.samshopersung.realm.RealmInvoice;
+
 import java.util.List;
 import rx.Observable;
 
@@ -130,6 +132,15 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearObservableIdModelCompany();
+
+    @NonNull
+    public void emitRealmIdcToRealm(List<RealmInvoice> invoice);
+
+    @NonNull
+    public Observable<RealmInvoice> getDataIdcSavedToRealm();
+
+    @NonNull
+    public void clearObservableIdcSaveToRealm();
 
 
 }

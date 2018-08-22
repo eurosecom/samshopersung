@@ -14,6 +14,8 @@ import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.RealmDomain;
+import com.eusecom.samshopersung.realm.RealmInvoice;
+
 import java.util.List;
 import rx.Observable;
 
@@ -76,4 +78,8 @@ public interface ShopperIDataModel {
     @NonNull
     public Observable<List<IdCompanyKt>> getObservableIdModelCompany(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String queryx);
+
+    @NonNull
+    public Observable<RealmInvoice> getIdcSavingToRealm(@NonNull final List<RealmInvoice> invoices);
+
 }

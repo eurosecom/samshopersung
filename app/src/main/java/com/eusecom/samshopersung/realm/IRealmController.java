@@ -31,4 +31,5 @@ public interface IRealmController {
     //delete domain from RealmDomain
     void deleteRealmDomainData(@NonNull final RealmDomain domx);
 
+
 }

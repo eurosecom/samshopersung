@@ -14,6 +14,8 @@ import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
+import com.eusecom.samshopersung.realm.RealmInvoice;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -790,5 +792,27 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
     //end emit Observable<IdCompanyKt> control IdCompany
+
+    //save idc to realm
+    public void emitRealmIdcToRealm(List<RealmInvoice> invoice) {
+        mIdcSaveToRealm.onNext(invoice);
+    }
+
+    @NonNull
+    private BehaviorSubject<List<RealmInvoice>> mIdcSaveToRealm = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<RealmInvoice> getDataIdcSavedToRealm() {
+        return mIdcSaveToRealm
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(list -> mDataModel.getIdcSavingToRealm(list));
+    }
+
+    public void clearObservableIdcSaveToRealm() {
+
+        mIdcSaveToRealm = BehaviorSubject.create();
+
+    }
+    //end save idc to realm
 
 }

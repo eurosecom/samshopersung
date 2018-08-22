@@ -14,7 +14,7 @@ import io.realm.RealmResults;
  * @version 1.0
  * @since   2018-06-23
  */
-public class RealmController implements IRealmController{
+public class RealmController implements IRealmController, IdcController {
  
     private static RealmController instance;
     private final Realm realm;
@@ -96,5 +96,52 @@ public class RealmController implements IRealmController{
     //end delete domain from RealmDomain
 
     // end methods for ChooseCompanyActivity
+
+
+    // methods for NewIdcActivity
+
+    /**
+     * This method is used to try if exist icox in database table RealmInvoice
+     * @param icox String ID of company to try if exist in database table RealmInvoice
+     * @return RealmInvoice This returns RealmInvoice inv, when exists in database table RealmInvoice.
+     * {@link  com.eusecom.samshopersung.realm.RealmInvoice}
+     * @see com.eusecom.samshopersung.realm.RealmInvoice
+     */
+    public RealmInvoice existRealmInvoice(@NonNull final RealmInvoice icox) {
+
+        String idx = icox.getIco();
+        return realm.where(RealmInvoice.class).equalTo("ico", idx).findFirst();
+
+    }
+    //end try if exist ID in RealmInvoice
+
+    //to save ID into RealmInvoice
+    public void setRealmInvoiceData(@NonNull final RealmInvoice icox) {
+
+        System.out.println("RealmInvoice " + icox.getIco() + " " + icox.getNai() + " " + icox.getHod());
+        realm.beginTransaction();
+        realm.copyToRealm(icox);
+        realm.commitTransaction();
+
+    }
+    //end to save ID into RealmInvoice
+
+    //delete ID from RealmInvoice
+    public void deleteRealmInvoiceData(@NonNull final RealmInvoice icox) {
+
+        String idx = icox.getIco();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<RealmInvoice> result = realm.where(RealmInvoice.class).equalTo("ico", idx).findAll();
+                result.clear();
+            }
+        });
+
+    }
+    //end delete ID from RealmInvoice
+
+    // end methods for NewIdcActivity
 
 }
