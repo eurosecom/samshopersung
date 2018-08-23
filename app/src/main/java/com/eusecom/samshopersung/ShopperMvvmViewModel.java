@@ -815,4 +815,11 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end save idc to realm
 
+    //get saved idc from realm
+    public Observable<List<RealmInvoice>> getNoSavedDocFromRealm(String fromact) {
+
+        return mDataModel.getObservableNosavedDocRealm(fromact);
+    }
+    //end get saved idc from realm
+
 }

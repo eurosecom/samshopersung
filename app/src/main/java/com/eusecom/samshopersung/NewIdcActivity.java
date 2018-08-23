@@ -1,10 +1,15 @@
 package com.eusecom.samshopersung;
 
+import android.*;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -39,7 +44,7 @@ public class NewIdcActivity extends BaseActivity {
     EditText inputMail;
     EditText inputIb1;
     EditText inputSw1;
-    Button _btnSave;
+    Button btnSave, btnIco;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -73,8 +78,22 @@ public class NewIdcActivity extends BaseActivity {
         inputIb1 = (EditText) findViewById(R.id.inputIb1);
         inputSw1 = (EditText) findViewById(R.id.inputSw1);
 
+        inputIco.setText(mSharedPreferences.getString("mfir", ""));
+
         // save button
-        _btnSave = (Button) findViewById(R.id.btnSave);
+        btnSave = (Button) findViewById(R.id.btnSave);
+
+        //ico button
+        btnIco = (Button) findViewById(R.id.btnIco);
+        btnIco.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                mViewModel.emitMyObservableIdModelCompany(inputIco.getText().toString());
+
+            }
+        });
 
     }
 
@@ -126,7 +145,19 @@ public class NewIdcActivity extends BaseActivity {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .subscribe(this::dataSavedToRealm));
 
-        subscriptionSave = RxView.clicks(_btnSave)
+
+        mSubscription.add(mViewModel.getNoSavedDocFromRealm("3")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error NewIdcActivity " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setNoSavedDocs));
+
+
+        subscriptionSave = RxView.clicks(btnSave)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Object>() {
@@ -175,9 +206,6 @@ public class NewIdcActivity extends BaseActivity {
                     }
                 });
 
-        mViewModel.emitMyObservableIdModelCompany(mSharedPreferences.getString("mfir", ""));
-
-
     }
 
     private void setEditedIco(@NonNull final List<IdCompanyKt> idc) {
@@ -201,11 +229,32 @@ public class NewIdcActivity extends BaseActivity {
     private void dataSavedToRealm(@NonNull final RealmInvoice invoice) {
         mViewModel.clearObservableIdcSaveToRealm();
 
-        Toast.makeText(this, "Saved doc " + invoice.getDok(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Saved ID " + invoice.getDok(), Toast.LENGTH_SHORT).show();
         finish();
     }
 
 
+    private void setNoSavedDocs(@NonNull final List<RealmInvoice> idc) {
+
+        Toast.makeText(this, "Getting ID " + idc.get(0).getIco(), Toast.LENGTH_SHORT).show();
+
+        if( idc.size() > 0 ){
+            inputIco.setText(idc.get(0).getIco());
+            inputDic.setText(idc.get(0).getZk0());
+            inputIcd.setText(idc.get(0).getZk1());
+            inputNai.setText(idc.get(0).getNai());
+            inputUli.setText(idc.get(0).getZk2());
+            inputPsc.setText(idc.get(0).getDn1());
+            inputMes.setText(idc.get(0).getHod());
+            inputTel.setText(idc.get(0).getPoz());
+            inputMail.setText(idc.get(0).getKto());
+            inputIb1.setText(idc.get(0).getDas());
+            inputSw1.setText(idc.get(0).getDaz());
+
+        }
+        hideProgressBar();
+
+    }
 
 
 }

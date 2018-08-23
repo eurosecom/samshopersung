@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         
-	<TextView android:layout_width="fill_parent"
+	<Button android:id="@+id/btnIco"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/popisIco"
         android:paddingLeft="10dp"

@@ -82,4 +82,7 @@ public interface ShopperIDataModel {
     @NonNull
     public Observable<RealmInvoice> getIdcSavingToRealm(@NonNull final List<RealmInvoice> invoices);
 
+    @NonNull
+    public Observable<List<RealmInvoice>> getObservableNosavedDocRealm(String fromact);
+
 }

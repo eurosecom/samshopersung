@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import rx.Observable;
 
 /**
  * The Implementation of RealmController for Realm data operations.
@@ -99,6 +100,15 @@ public class RealmController implements IRealmController, IdcController {
 
 
     // methods for NewIdcActivity
+
+    //to get ID from RealmInvoice
+    public List<RealmInvoice> getMyIdcData(@NonNull final String fromact) {
+
+
+        return realm.where(RealmInvoice.class).findAll();
+
+    }
+    //end to get ID from RealmInvoice
 
     /**
      * This method is used to try if exist icox in database table RealmInvoice
