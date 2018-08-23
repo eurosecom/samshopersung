@@ -83,6 +83,7 @@ public class NewIdcActivity extends BaseActivity {
             @Override
             public void onClick(View arg0) {
 
+                showProgressBar();
                 mViewModel.emitMyObservableIdModelCompany(inputIco.getText().toString());
 
             }
@@ -167,8 +168,8 @@ public class NewIdcActivity extends BaseActivity {
                     @Override
                     public void onNext(Object o) {
 
-                        Log.d("NewInvDoc", "Clicked save ");
-                        Toast.makeText(NewIdcActivity.this, "Clicked save", Toast.LENGTH_SHORT).show();
+                        //Log.d("NewInvDoc", "Clicked save ");
+                        //Toast.makeText(NewIdcActivity.this, "Clicked save", Toast.LENGTH_SHORT).show();
 
                         List<RealmInvoice> realminvoices = new ArrayList<>();
                         RealmInvoice realminvoice = new RealmInvoice();
@@ -235,7 +236,7 @@ public class NewIdcActivity extends BaseActivity {
 
     private void setNoSavedDocs(@NonNull final List<RealmInvoice> idc) {
 
-        Toast.makeText(this, "Getting ID " + idc.get(0).getIco(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Getting ID " + idc.get(0).getIco(), Toast.LENGTH_SHORT).show();
 
         if( idc.size() > 0 ){
             inputIco.setText(idc.get(0).getIco());
