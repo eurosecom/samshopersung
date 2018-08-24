@@ -614,6 +614,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 ", \"ced1\":" + "\"" + invx.getCed1() + "\"" +
                 ", \"prm1\":" + "\"" + invx.getPrm1() + "\"" +
                 ", \"prm2\":" + "\"" + invx.getPrm2() + "\"" +
+                ", \"desc\":" + "\"" + invx.getDesc() + "\"" +
                 " }";
 
         return jsonstring;
@@ -819,6 +820,13 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     public Observable<List<RealmInvoice>> getNoSavedDocFromRealm(String fromact) {
 
         return mDataModel.getObservableNosavedDocRealm(fromact);
+    }
+    //end get saved idc from realm
+
+    //get saved idc from realm
+    public Observable<List<RealmInvoice>> getMyIdcData(String fromact) {
+
+        return mDataModel.getObservableMyIdc(fromact);
     }
     //end get saved idc from realm
 

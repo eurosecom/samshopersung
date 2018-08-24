@@ -31,5 +31,8 @@ public interface IRealmController {
     //delete domain from RealmDomain
     void deleteRealmDomainData(@NonNull final RealmDomain domx);
 
+    //to get my ID from RealmInvoice
+    public List<RealmInvoice> getMyIdcData(@NonNull final String fromact);
+
 
 }

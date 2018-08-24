@@ -145,5 +145,8 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Observable<List<RealmInvoice>> getNoSavedDocFromRealm(String fromact);
 
+    @NonNull
+    public Observable<List<RealmInvoice>> getMyIdcData(String fromact);
+
 
 }

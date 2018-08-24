@@ -178,6 +178,7 @@
     <string name="allitems">Všetky položky</string>
     <string name="totalbasket">Celkom množstvo %s ks</string>
     <string name="totalbasketeur">Celkom %s Eur</string>
+    <string name="myidc">Moje IČO a email %s</string>
     <string name="movetofav">Presunúť do obľúbených</string>
     <string name="movedtofav"> - presunuté do obľúbených</string>
     <string name="order_basket">Objednať košík</string>

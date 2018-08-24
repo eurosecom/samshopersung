@@ -413,4 +413,13 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
     //end get my idc from realm
 
+    //get my idc from realm in basket
+    @NonNull
+    @Override
+    public Observable<List<RealmInvoice>> getObservableMyIdc(String fromact) {
+
+        return Observable.just(mRealmController.getMyIdcData(fromact));
+    }
+    //end get my idc from realm in basket
+
 }

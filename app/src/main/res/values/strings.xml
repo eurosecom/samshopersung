@@ -179,6 +179,7 @@
     <string name="allitems">All items</string>
     <string name="totalbasket">Total %s items</string>
     <string name="totalbasketeur">Total %s Eur</string>
+    <string name="myidc">My IDc and email %s</string>
     <string name="movetofav">Move to Favourites</string>
     <string name="movedtofav"> - moved to favourites</string>
     <string name="order_basket">Order basket</string>

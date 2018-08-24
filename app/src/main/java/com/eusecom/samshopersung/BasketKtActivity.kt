@@ -26,6 +26,7 @@ import javax.inject.Inject
 import android.widget.TextView
 import com.eusecom.samshopersung.models.IShopperModelsFactory
 import com.eusecom.samshopersung.models.ShopperModelsFactory
+import com.eusecom.samshopersung.realm.RealmInvoice
 import kotlinx.android.synthetic.main.basket_activity.*
 
 
@@ -55,6 +56,7 @@ class BasketKtActivity : AppCompatActivity() {
     var tothdd: String = "0.00"
     var totalbasket: TextView? = null
     var totalbasketeur: TextView? = null
+    var myfir: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -70,6 +72,7 @@ class BasketKtActivity : AppCompatActivity() {
         totalbasket?.text = getString(R.string.totalbasket, totmno )
         totalbasketeur = findViewById<View>(R.id.totalbasketeur) as TextView
         totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
+        myfir = findViewById<View>(R.id.myfir) as TextView
 
         //Bind the recyclerview
         recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
@@ -141,8 +144,33 @@ class BasketKtActivity : AppCompatActivity() {
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setDeletedBasket(it) }))
 
+        mSubscription.add(mViewModel.getMyIdcData("3")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext({ throwable -> Observable.empty() })
+                .subscribe({ it -> setNoSavedDocs(it) }))
+
     }
 
+    private fun setNoSavedDocs(idc: List<RealmInvoice>) {
+
+        //Toast.makeText(this, "Getting ID " + idc.get(0).getIco(), Toast.LENGTH_SHORT).show();
+
+        if (idc.size > 0) {
+
+            val myfirx: String = idc[0].ico + " - " + idc[0].kto
+            myfir?.text = getString(R.string.myidc, myfirx )
+
+
+        }
+        hideProgressBar()
+
+    }
 
     private fun setDeletedBasket(sumbasket: SumBasketKt) {
 
@@ -332,6 +360,8 @@ class BasketKtActivity : AppCompatActivity() {
         var mprod: ProductKt = mModelsFactory.productKt
         mprod.prm1 = "6"
         mprod.nat = getString(R.string.allitems)
+        mprod.desc = myfir?.text.toString()
+        mprod.prm2 = prefs.getString("mfir", "");
         mViewModel.emitMyObservableSaveSumBasketToServer(mprod)
 
     }
