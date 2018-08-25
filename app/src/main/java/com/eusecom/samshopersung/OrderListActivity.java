@@ -157,7 +157,7 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
-            
+
             Intent is = new Intent(getApplicationContext(), OfferKtActivity.class);
             startActivity(is);
             finish();

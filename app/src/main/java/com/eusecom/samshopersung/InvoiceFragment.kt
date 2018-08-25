@@ -16,7 +16,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
-import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -37,10 +36,9 @@ import javax.inject.Inject
 
 class InvoiceFragment : BaseKtFragment() {
 
-    private var mAdapter: OrderAdapter? = null
+    private var mAdapter: InvoiceAdapter? = null
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
-    private var balance: TextView? = null
     private var mSubscription: CompositeSubscription? = null
     private var _disposables = CompositeDisposable()
     private var mDisposable: Disposable? = null
@@ -66,9 +64,8 @@ class InvoiceFragment : BaseKtFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater!!.inflate(R.layout.fragment_order, container, false)
-
-        balance = rootView.findViewById<View>(R.id.balance) as TextView
+        val rootView = inflater!!.inflate(R.layout.fragment_invoice, container, false)
+        
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
         mProgressBar = rootView.findViewById<View>(R.id.progress_bar) as ProgressBar
@@ -80,7 +77,7 @@ class InvoiceFragment : BaseKtFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mAdapter = OrderAdapter(_rxBus)
+        mAdapter = InvoiceAdapter(_rxBus)
         mAdapter?.setAbsserver(emptyList())
         mManager = LinearLayoutManager(context)
         mManager?.setReverseLayout(true)
@@ -123,7 +120,7 @@ class InvoiceFragment : BaseKtFragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyOrdersFromSqlServer("0")
+        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -132,7 +129,7 @@ class InvoiceFragment : BaseKtFragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerOrders(it) })
+                .subscribe { it -> setServerInvoices(it) })
 
         mSubscription?.add(mViewModel.getObservableDocPdf()
                 .subscribeOn(Schedulers.computation())
@@ -156,16 +153,6 @@ class InvoiceFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setProxyException(it) })
 
-        mSubscription?.add(mViewModel.getObservableDeleteOrder()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerOrders(it) })
 
 
         ActivityCompat.invalidateOptionsMenu(activity)
@@ -193,10 +180,9 @@ class InvoiceFragment : BaseKtFragment() {
 
     }
 
-    private fun setServerOrders(invoices: InvoiceList) {
+    private fun setServerInvoices(invoices: List<Invoice>) {
 
-        mAdapter?.setAbsserver(invoices.getInvoice())
-        balance?.setText(invoices.getBalance())
+        mAdapter?.setAbsserver(invoices)
         hideProgressBar()
     }
 

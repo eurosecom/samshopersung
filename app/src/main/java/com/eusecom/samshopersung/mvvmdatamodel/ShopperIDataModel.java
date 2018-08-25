@@ -58,6 +58,10 @@ public interface ShopperIDataModel {
     public Observable<InvoiceList> getOrdersFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx);
 
+    @NonNull
+    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex, String dokx);
+
     //methods for MapActivity
     public Observable<List<Employee>> prepareEmployeeList();
 

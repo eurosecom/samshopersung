@@ -283,6 +283,18 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     }
 
+    @Override
+    public Observable<List<Invoice>> getInvoicesFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
+        Log.d("GenDoc dokx", dokx);
+        Log.d("GenDoc drh", drh);
+        Log.d("GenDoc ucex", ucex);
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+
+    }
+
     //end methods for OrderListActivity
 
     //methods for MapActivity

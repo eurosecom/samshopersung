@@ -5,6 +5,7 @@ import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.IdCompanyKt;
+import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.InvoiceList;
@@ -59,5 +60,12 @@ public interface ShopperRetrofitService {
     Observable<List<IdCompanyKt>> controlIdCompanyOnSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh, @Query("queryx") String queryx);
+
+    //methods for InvoiceFragment
+    @GET("/androidfantozzi/get_invoices.php")
+    Observable<List<Invoice>> getInvoicesFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh
+            , @Query("uce") String uce, @Query("ume") String ume, @Query("dokx") String dokx);
 
 }

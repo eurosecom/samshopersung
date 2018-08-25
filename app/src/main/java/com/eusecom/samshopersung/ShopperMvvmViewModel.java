@@ -337,7 +337,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end emit product by cat from Mysql
 
 
-    //andrejko
     //emit product by query from Mysql
     public void emitMyQueryProductsFromSqlServer(String drhx) {
 
@@ -507,6 +506,37 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mDataModel.getOrdersFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
     }
     //end get orders from MySql server
+
+    //get invoices from MySql server
+    public Observable<List<Invoice>> getMyInvoicesFromSqlServer(String drh) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("doduce", "");
+        dodx = mSharedPreferences.getString("odbuce", "");
+
+        String umex = "08.2018";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mDataModel.getInvoicesFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+    }
+    //end get invoices from MySql server
 
     //delete Order
     public void emitDeleteOrder(Invoice invx) {

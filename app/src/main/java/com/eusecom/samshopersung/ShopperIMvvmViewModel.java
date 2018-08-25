@@ -86,6 +86,9 @@ public interface ShopperIMvvmViewModel {
     public Observable<InvoiceList> getMyOrdersFromSqlServer(String drh);
 
     @NonNull
+    public Observable<List<Invoice>> getMyInvoicesFromSqlServer(String drh);
+
+    @NonNull
     public void emitGetPdfOrder(Invoice order);
 
     @NonNull
