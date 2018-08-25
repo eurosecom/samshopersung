@@ -66,11 +66,8 @@ class MainShopperActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
 
-            //view ->
-            //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-            //_ -> navigateToRoomDemo()
-            //Log.d("ShopperMvvmViewModel", "instx " + mViewModel.toString())
-            //Log.d("SharedPreferences", "instx " + prefs.toString())
+            _ -> navigateToOfferKt()
+
         }
 
         button1.setOnClickListener {
@@ -86,7 +83,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         button4.setOnClickListener {
-            _ -> //navigateToSupplierList()
+            _ -> navigateToInvoice()
         }
 
         button5.setOnClickListener {
@@ -328,6 +325,30 @@ class MainShopperActivity : AppCompatActivity() {
             }else {
 
                 val `is` = Intent(this, OrderListActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("saltype", 0)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
+
+        }
+    }
+
+    fun navigateToInvoice() {
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, OrderListActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("saltype", 1)
+                `is`.putExtras(extras)
                 startActivity(`is`)
             }
 

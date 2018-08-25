@@ -42,6 +42,8 @@
     <string name="resetpass_title">Reset password</string>
     <string name="orders">Orders</string>
     <string name="invoices">Invoices</string>
+    <string name="myorders">My Orders</string>
+    <string name="myinvoices">My Invoices</string>
     <string name="basket">Basket</string>
     <string name="reports">Reports</string>
     <string name="offer">Offer</string>

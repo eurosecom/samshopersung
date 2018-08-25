@@ -16,8 +16,10 @@
 
 package com.eusecom.samshopersung;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -50,6 +52,8 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
     @Inject
     SharedPreferences mSharedPreferences;
 
+    int saltype  = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,6 +62,13 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
 
         setContentView(R.layout.activity_suppliers);
 
+        Intent i = getIntent();
+        //0=ordders, 1=invoices
+        Bundle extras = i.getExtras();
+        saltype = extras.getInt("saltype");
+
+        if( saltype == 0 ){
+
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
@@ -65,8 +76,8 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
                         new InvoiceFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
-                        getString(R.string.orders),
-                        getString(R.string.invoices)
+                        getString(R.string.myorders),
+                        getString(R.string.myinvoices)
                 };
 
                 @Override
@@ -85,7 +96,36 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
                 }
             };
 
+        }else{
 
+            // Create the adapter that will return a fragment for each section
+            mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+                private final Fragment[] mFragments = new Fragment[]{
+                        new InvoiceFragment(),
+                        new OrderFragment()
+                };
+                private final String[] mFragmentNames = new String[]{
+                        getString(R.string.myinvoices),
+                        getString(R.string.myorders)
+                };
+
+                @Override
+                public Fragment getItem(int position) {
+                    return mFragments[position];
+                }
+
+                @Override
+                public int getCount() {
+                    return mFragments.length;
+                }
+
+                @Override
+                public CharSequence getPageTitle(int position) {
+                    return mFragmentNames[position];
+                }
+            };
+
+        }
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -114,6 +154,16 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
 
         String serverx = "From act " + mSharedPreferences.getString("servername", "");
         //Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            
+            Intent is = new Intent(getApplicationContext(), OfferKtActivity.class);
+            startActivity(is);
+            finish();
+
+                }
+        );
 
     }
 

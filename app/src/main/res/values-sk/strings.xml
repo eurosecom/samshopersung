@@ -42,6 +42,8 @@
     <string name="action_nologin">Odhlásiť sa.</string>
     <string name="orders">Objednávky</string>
     <string name="invoices">Faktúry</string>
+    <string name="myorders">Moje Objednávky</string>
+    <string name="myinvoices">Moje Faktúry</string>
     <string name="basket">Košík</string>
     <string name="reports">Zostavy</string>
     <string name="offer">Ponuka</string>
