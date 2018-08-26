@@ -244,7 +244,7 @@ class InvoiceFragment : BaseKtFragment() {
                     navigateToGetPdf(invoice)
                 }
                 1 -> {
-                    showDeleteOrderDialog(invoice)
+                    showDeleteInvoiceDialog(invoice)
                 }
 
             }
@@ -255,23 +255,23 @@ class InvoiceFragment : BaseKtFragment() {
     }
 
     fun navigateToGetPdf(order: Invoice){
-        //showProgressBar()
-        mViewModel.emitGetPdfOrder(order)
+        showProgressBar()
+        mViewModel.emitGetPdfInvoice(order)
 
     }
 
-    fun showDeleteOrderDialog(order: Invoice) {
+    fun showDeleteInvoiceDialog(order: Invoice) {
 
         alert("", getString(R.string.deletewholedoc) + " " + order.dok) {
-            yesButton { navigateToDeleteOrder(order) }
+            yesButton { navigateToDeleteInvoice(order) }
             noButton {}
         }.show()
 
     }
 
-    fun navigateToDeleteOrder(order: Invoice){
+    fun navigateToDeleteInvoice(order: Invoice){
         showProgressBar()
-        mViewModel.emitDeleteOrder(order);
+        //mViewModel.emitDeleteInvoice(order);
 
     }
 

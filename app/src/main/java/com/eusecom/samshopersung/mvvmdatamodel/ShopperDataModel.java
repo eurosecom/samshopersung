@@ -376,6 +376,16 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         }
 
+        if (invx.getDrh().equals("54")) {
+            String drupoh = "1";
+
+            uri = Uri.parse("http://" + serverx +
+                    "/faktury/vstf_pdf.php?cislo_dok=" + invx.getDok() + "&hladaj_dok=" + invx.getDok()
+                    + "&mini=0&tlacitR=1&sysx=UCT&rozuct=NIE&zandroidu=1&anduct=1&h_razitko=1&copern=20&drupoh=1&page=1&serverx="
+                    + adresx + "&userhash=" + encrypted + "&rokx=" + rokx + "&firx=" + firx + "&newfntz=1");
+
+        }
+
         return Observable.just(uri);
 
     }

@@ -650,6 +650,19 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end JSON from Product
 
+    //get PDF invoice
+    public void emitGetPdfInvoice(Invoice order) {
+
+        if(callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.INVOICE)){
+            System.out.println("command approved.");
+
+            order.setDrh("54");
+
+            emitDocumentPdfUri(order);
+        }
+
+    }
 
     //get PDF order
     public void emitGetPdfOrder(Invoice order) {
@@ -662,7 +675,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
             emitDocumentPdfUri(order);
         }
-
 
     }
     //end get PDF order
