@@ -145,19 +145,6 @@ class InvoiceFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setUriPdf(it) })
 
-        mSubscription?.add(mViewModel.getObservableException()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setProxyException(it) })
-
-
-
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
@@ -189,17 +176,6 @@ class InvoiceFragment : BaseKtFragment() {
         hideProgressBar()
     }
 
-
-
-    private fun setProxyException(excp: String) {
-        //toast("Permission " + excp + " not alowed.")
-        mViewModel.clearObservableException()
-        hideProgressBar()
-        if(excp.equals("LGN")) { showDonotloginAlert() }
-        if(excp.equals("ADM")) { showDonotAdminAlert() }
-        if(excp.equals("CMP")) { showDonotcompanyAlert() }
-
-    }
 
 
     class ClickFobEvent
@@ -270,7 +246,7 @@ class InvoiceFragment : BaseKtFragment() {
     }
 
     fun navigateToDeleteInvoice(order: Invoice){
-        showProgressBar()
+        //showProgressBar()
         //mViewModel.emitDeleteInvoice(order);
 
     }
