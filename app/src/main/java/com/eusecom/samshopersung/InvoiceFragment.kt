@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -14,7 +13,6 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -45,9 +43,6 @@ class InvoiceFragment : BaseKtFragment() {
 
     @Inject
     lateinit var mSharedPreferences: SharedPreferences
-
-    @Inject
-    lateinit var mViewModel: ShopperIMvvmViewModel
 
     @Inject
     lateinit var  _rxBus: RxBus

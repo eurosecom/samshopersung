@@ -49,9 +49,6 @@ class OrderFragment : BaseKtFragment() {
     lateinit var mSharedPreferences: SharedPreferences
 
     @Inject
-    lateinit var mViewModel: ShopperIMvvmViewModel
-
-    @Inject
     lateinit var  _rxBus: RxBus
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,17 +200,6 @@ class OrderFragment : BaseKtFragment() {
         hideProgressBar()
     }
 
-
-
-    private fun setProxyException(excp: String) {
-        //toast("Permission " + excp + " not alowed.")
-        mViewModel.clearObservableException()
-        hideProgressBar()
-        if(excp.equals("LGN")) { showDonotloginAlert() }
-        if(excp.equals("ADM")) { showDonotAdminAlert() }
-        if(excp.equals("CMP")) { showDonotcompanyAlert() }
-
-    }
 
 
     class ClickFobEvent
