@@ -530,8 +530,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String rokx = mSharedPreferences.getString("rok", "");
         String dodx = mSharedPreferences.getString("doduce", "");
         dodx = mSharedPreferences.getString("odbuce", "");
-
-        String umex = "08.2018";
+        String umex = "01.2018";
         String serverx = mSharedPreferences.getString("servername", "");
 
         return mDataModel.getInvoicesFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");

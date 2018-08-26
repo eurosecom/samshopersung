@@ -62,7 +62,7 @@ public interface ShopperRetrofitService {
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh, @Query("queryx") String queryx);
 
     //methods for InvoiceFragment
-    @GET("/androidfantozzi/get_invoices.php")
+    @GET("/androidshopper/get_invoices.php")
     Observable<List<Invoice>> getInvoicesFromSqlServer(@Query("userhash") String userhash
             , @Query("userid") String userid, @Query("fromfir") String fromfir
             , @Query("vyb_rok") String vyb_rok, @Query("drh") String drh

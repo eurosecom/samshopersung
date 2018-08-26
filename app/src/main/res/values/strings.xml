@@ -197,6 +197,8 @@
     <string name="fakshort">Inv.</string>
     <string name="value">Value</string>
     <string name="document">Document</string>
+    <string name="invoice">Invoice</string>
+    <string name="order">Order</string>
     <string name="docshort">Doc.</string>
     <string name="deletewholedoc">Delete whole doc</string>
     <string name="editdoc">Edit document</string>

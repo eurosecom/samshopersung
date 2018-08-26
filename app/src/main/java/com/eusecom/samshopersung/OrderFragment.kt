@@ -105,7 +105,10 @@ class OrderFragment : BaseKtFragment() {
                     if (event is Invoice) {
 
                         Log.d("onShortClickListenerFrg", event.nai)
-                        getTodoDialog(event)
+                        if(!event.uce.equals("31100")){
+                            getTodoDialog(event)
+                        }
+
 
 
                     }
@@ -244,7 +247,7 @@ class OrderFragment : BaseKtFragment() {
         valuex.text = invoice.hod
 
         val builder = AlertDialog.Builder(activity)
-        builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.dok)
+        builder.setView(textenter).setTitle(getString(R.string.order) + " " + invoice.dok)
 
         builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc), getString(R.string.getinvoice))
         ) { dialog, which ->

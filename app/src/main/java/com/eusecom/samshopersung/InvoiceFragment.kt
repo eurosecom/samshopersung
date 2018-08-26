@@ -65,7 +65,7 @@ class InvoiceFragment : BaseKtFragment() {
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater!!.inflate(R.layout.fragment_invoice, container, false)
-        
+
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
         mProgressBar = rootView.findViewById<View>(R.id.progress_bar) as ProgressBar
@@ -102,7 +102,10 @@ class InvoiceFragment : BaseKtFragment() {
                     if (event is Invoice) {
 
                         Log.d("onShortClickListenerFrg", event.nai)
-                        getTodoDialog(event)
+                        if(event.uce.equals("31100")){
+                            getTodoDialog(event)
+                        }
+
 
 
                     }
@@ -230,9 +233,9 @@ class InvoiceFragment : BaseKtFragment() {
         valuex.text = invoice.hod
 
         val builder = AlertDialog.Builder(activity)
-        builder.setView(textenter).setTitle(getString(R.string.document) + " " + invoice.dok)
+        builder.setView(textenter).setTitle(getString(R.string.invoice) + " " + invoice.dok)
 
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc), getString(R.string.getinvoice))
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc))
         ) { dialog, which ->
             // The 'which' argument contains the index position
             // of the selected item
@@ -242,9 +245,6 @@ class InvoiceFragment : BaseKtFragment() {
                 }
                 1 -> {
                     showDeleteOrderDialog(invoice)
-                }
-                2 -> {
-                    showGetInvoiceDialog(invoice)
                 }
 
             }
@@ -275,20 +275,6 @@ class InvoiceFragment : BaseKtFragment() {
 
     }
 
-    fun showGetInvoiceDialog(order: Invoice) {
-
-        alert("", getString(R.string.getinvoicefrom) + " " + order.dok) {
-            yesButton { navigateToGetInvoice(order) }
-            noButton {}
-        }.show()
-
-    }
-
-    fun navigateToGetInvoice(order: Invoice){
-        //showProgressBar()
-        //mViewModel.emitMyObservableSaveSumBasketToServer(order)
-
-    }
 
 
 }
