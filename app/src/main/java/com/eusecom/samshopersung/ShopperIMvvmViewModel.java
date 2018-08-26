@@ -118,6 +118,15 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearObservableDeleteOrder();
 
+    @NonNull
+    public void emitOrderToInv(Invoice invx);
+
+    @NonNull
+    public Observable<InvoiceList> getObservableOrderToInv();
+
+    @NonNull
+    public void clearObservableOrderToInv();
+
     //methods for MapActivity
     @NonNull
     public Observable<List<Employee>> getMyObservableEmployeesFromList();

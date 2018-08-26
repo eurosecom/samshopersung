@@ -588,6 +588,58 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end delete Order
 
+
+    //Order to Invoice
+    public void emitOrderToInv(Invoice invx) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+            mObservableOrderToInv.onNext(invx);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableOrderToInv = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<InvoiceList> getObservableOrderToInv() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("odbuce", "");
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableOrderToInv
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx ->
+                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "6", dodx, umex, invx.getDok()));
+    }
+
+    public void clearObservableOrderToInv() {
+
+        mObservableOrderToInv = BehaviorSubject.create();
+
+    }
+    //end Order to Invoice
+
     /**
      * end methods for OrderListActivity
      */

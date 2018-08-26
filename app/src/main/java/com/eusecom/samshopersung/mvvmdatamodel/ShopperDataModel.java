@@ -276,8 +276,9 @@ public class ShopperDataModel implements ShopperIDataModel {
     public Observable<InvoiceList> getOrdersFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx) {
 
-        System.out.println("Delete order dokx " + dokx);
-        System.out.println("Delete order drh " + drh);
+        System.out.println("order dokx " + dokx);
+        System.out.println("order drh " + drh);
+        System.out.println("order uce " + ucex);
         setRetrofit(servername);
         return mShopperRetrofitService.getOrdersFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
 

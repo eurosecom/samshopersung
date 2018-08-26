@@ -167,12 +167,24 @@ class OrderFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerOrders(it) })
 
+        mSubscription?.add(mViewModel.getObservableOrderToInv()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerOrders(it) })
 
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
     private fun unBind() {
 
+        mViewModel.clearObservableDeleteOrder()
+        mViewModel.clearObservableOrderToInv()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -288,8 +300,8 @@ class OrderFragment : BaseKtFragment() {
     }
 
     fun navigateToGetInvoice(order: Invoice){
-        //showProgressBar()
-        //mViewModel.emitMyObservableSaveSumBasketToServer(order)
+        showProgressBar()
+        mViewModel.emitOrderToInv(order)
 
     }
 
