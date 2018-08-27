@@ -502,8 +502,9 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String dodx = "1";
         String umex = mSharedPreferences.getString("ume", "");
         String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
 
-        return mDataModel.getOrdersFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+        return mDataModel.getOrdersFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0", ustp);
     }
     //end get orders from MySql server
 
@@ -532,8 +533,9 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         dodx = mSharedPreferences.getString("odbuce", "");
         String umex = "01.2018";
         String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
 
-        return mDataModel.getInvoicesFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0");
+        return mDataModel.getInvoicesFromMysqlServer(serverx, encrypted, ds, firx, rokx, drh, dodx, umex, "0", ustp);
     }
     //end get invoices from MySql server
 
@@ -574,11 +576,12 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String dodx = "1";
         String umex = mSharedPreferences.getString("ume", "");
         String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
 
         return mObservableDelOrder
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(invx ->
-                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "4", dodx, umex, invx.getDok()));
+                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "4", dodx, umex, invx.getDok(), ustp));
     }
 
     public void clearObservableDeleteOrder() {
@@ -626,11 +629,12 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String dodx = mSharedPreferences.getString("odbuce", "");
         String umex = mSharedPreferences.getString("ume", "");
         String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
 
         return mObservableOrderToInv
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(invx ->
-                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "6", dodx, umex, invx.getDok()));
+                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "6", dodx, umex, invx.getDok(), ustp));
     }
 
     public void clearObservableOrderToInv() {

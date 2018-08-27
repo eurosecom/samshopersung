@@ -274,25 +274,27 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     @Override
     public Observable<InvoiceList> getOrdersFromMysqlServer(String servername, String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
+            , String vyb_rok, String drh, String ucex, String umex, String dokx, String ustp) {
 
         System.out.println("order dokx " + dokx);
         System.out.println("order drh " + drh);
         System.out.println("order uce " + ucex);
+        System.out.println("order ustp " + ustp);
         setRetrofit(servername);
-        return mShopperRetrofitService.getOrdersFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+        return mShopperRetrofitService.getOrdersFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx, ustp);
 
     }
 
     @Override
     public Observable<List<Invoice>> getInvoicesFromMysqlServer(String servername, String userhash, String userid, String fromfir
-            , String vyb_rok, String drh, String ucex, String umex, String dokx) {
+            , String vyb_rok, String drh, String ucex, String umex, String dokx, String ustp) {
         Log.d("GenDoc dokx", dokx);
         Log.d("GenDoc drh", drh);
         Log.d("GenDoc ucex", ucex);
+        Log.d("GenDoc ustp", ustp);
 
         setRetrofit(servername);
-        return mShopperRetrofitService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);
+        return mShopperRetrofitService.getInvoicesFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx, ustp);
 
     }
 
