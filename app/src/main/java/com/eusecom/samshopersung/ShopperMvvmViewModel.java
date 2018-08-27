@@ -594,7 +594,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     //Order to Invoice
     public void emitOrderToInv(Invoice invx) {
-        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
             mObservableOrderToInv.onNext(invx);
@@ -797,7 +797,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         CommandExecutorProxy executor = new CommandExecutorProxyImpl();
 
         executor.setUserParams(mSharedPreferences.getString("usuid", "0")
-                , mSharedPreferences.getString("fir", "0"), mSharedPreferences.getString("usadmin", "0"));
+                , mSharedPreferences.getString("fir", "0"), mSharedPreferences.getString("usadmin", "0")
+                , mSharedPreferences.getString("ustype", "0"));
         try {
             approved = executor.approveCommand(perm, reportType, tableName);
         } catch (Exception e ) {

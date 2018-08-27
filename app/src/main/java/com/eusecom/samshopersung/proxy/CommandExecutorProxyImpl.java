@@ -21,8 +21,8 @@ public class CommandExecutorProxyImpl implements CommandExecutorProxy {
 
     }
 
-    public void setUserParams(String usuid, String fir, String usadmin) {
-        if (usadmin.equals("1")) isAdmin = true;
+    public void setUserParams(String usuid, String fir, String usadmin, String ustype) {
+        if (usadmin.equals("1") || usadmin.equals("99")) isAdmin = true;
         if (!usuid.equals("0")) isLogin = true;
         if (usuid.equals("")) isLogin = false;
         if (!fir.equals("")) isCompany = true;
