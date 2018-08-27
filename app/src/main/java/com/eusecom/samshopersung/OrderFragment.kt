@@ -176,7 +176,7 @@ class OrderFragment : BaseKtFragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerOrders(it) })
+                .subscribe { it -> setServerOrderToInv(it) })
 
         ActivityCompat.invalidateOptionsMenu(activity)
     }
@@ -210,6 +210,20 @@ class OrderFragment : BaseKtFragment() {
         mAdapter?.setAbsserver(invoices.getInvoice())
         balance?.setText(invoices.getBalance())
         hideProgressBar()
+    }
+
+    private fun setServerOrderToInv(invoices: InvoiceList) {
+
+        mAdapter?.setAbsserver(invoices.getInvoice())
+        balance?.setText(invoices.getBalance())
+        hideProgressBar()
+
+        val `is` = Intent(activity, OrderListActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 1)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        activity.finish()
     }
 
 

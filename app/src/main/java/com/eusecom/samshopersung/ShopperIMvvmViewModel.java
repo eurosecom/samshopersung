@@ -119,6 +119,15 @@ public interface ShopperIMvvmViewModel {
     public void clearObservableDeleteOrder();
 
     @NonNull
+    public void emitDeleteInvoice(Invoice invx);
+
+    @NonNull
+    public Observable<List<Invoice>> getObservableDeleteInvoice();
+
+    @NonNull
+    public void clearObservableDeleteInvoice();
+
+    @NonNull
     public void emitOrderToInv(Invoice invx);
 
     @NonNull

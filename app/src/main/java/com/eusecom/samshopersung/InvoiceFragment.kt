@@ -122,7 +122,7 @@ class InvoiceFragment : BaseKtFragment() {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    Log.e("InvoiceFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
@@ -133,18 +133,30 @@ class InvoiceFragment : BaseKtFragment() {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    Log.e("InvoiceFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setUriPdf(it) })
 
+        mSubscription?.add(mViewModel.getObservableDeleteInvoice()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("InvoiceFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerInvoices(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
     private fun unBind() {
 
+        mViewModel.clearObservableDeleteInvoice()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -241,8 +253,8 @@ class InvoiceFragment : BaseKtFragment() {
     }
 
     fun navigateToDeleteInvoice(order: Invoice){
-        //showProgressBar()
-        //mViewModel.emitDeleteInvoice(order);
+        showProgressBar()
+        mViewModel.emitDeleteInvoice(order);
 
     }
 
