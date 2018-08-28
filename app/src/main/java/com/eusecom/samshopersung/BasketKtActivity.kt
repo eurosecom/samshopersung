@@ -168,7 +168,6 @@ class BasketKtActivity : AppCompatActivity() {
 
 
         }
-        hideProgressBar()
 
     }
 
