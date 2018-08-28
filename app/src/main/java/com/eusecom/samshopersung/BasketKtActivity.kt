@@ -184,6 +184,9 @@ class BasketKtActivity : AppCompatActivity() {
         if (basket.get(0).xid == "4") {
             toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
         }
+        if (basket.get(0).xid == "5") {
+            toast(getString(R.string.allitems) + " " + getString(R.string.deletedfrombasket))
+        }
         if (basket.get(0).xid == "6") {
             toast(basket.get(0).xnat + " " + getString(R.string.itemsordered))
         }
@@ -195,7 +198,7 @@ class BasketKtActivity : AppCompatActivity() {
 
         var posd: Int = Integer.parseInt(basket.get(0).xdph);
 
-        if (basket.get(0).xid != "6") {
+        if (basket.get(0).xid != "5" && basket.get(0).xid != "6") {
             mybasket.removeAt(posd)
             recyclerView?.adapter?.notifyItemRemoved(posd)
         }else {
