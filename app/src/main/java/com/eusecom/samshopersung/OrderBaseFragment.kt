@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -101,8 +100,9 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                     if (event is Invoice) {
 
                         Log.d("onShortClickListenerFrg", event.nai)
-                        if(!event.uce.equals("31100")){
-                            getTodoDialog(event)
+                        if(!event.uce.equals(mSharedPreferences.getString("odbuce", ""))){
+                                getTodoDialog(event)
+
                         }
 
 

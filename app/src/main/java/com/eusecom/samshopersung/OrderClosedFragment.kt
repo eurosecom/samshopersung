@@ -32,28 +32,33 @@ class OrderClosedFragment : OrderBaseFragment() {
 
     override fun getTodoDialog(invoice: Invoice) {
 
-        val inflater = LayoutInflater.from(activity)
-        val textenter = inflater.inflate(R.layout.invoice_edit_dialog, null)
+        if(!invoice.fak.equals("0")){
 
-        val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
-        valuex.text = invoice.hod
+            val inflater = LayoutInflater.from(activity)
+            val textenter = inflater.inflate(R.layout.invoice_edit_dialog, null)
 
-        val builder = AlertDialog.Builder(activity)
-        builder.setView(textenter).setTitle(getString(R.string.orderclosed) + " " + invoice.dok)
+            val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
+            valuex.text = invoice.hod
 
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc))
-        ) { dialog, which ->
-            // The 'which' argument contains the index position
-            // of the selected item
-            when (which) {
-                0 -> {
-                    navigateToGetPdf(invoice)
+            val builder = AlertDialog.Builder(activity)
+            builder.setView(textenter).setTitle(getString(R.string.orderclosed) + " " + invoice.dok)
+
+            builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc))
+            ) { dialog, which ->
+                // The 'which' argument contains the index position
+                // of the selected item
+                when (which) {
+                    0 -> {
+                        navigateToGetPdf(invoice)
+                    }
+
                 }
-
             }
+            val dialog = builder.create()
+            builder.show()
+
         }
-        val dialog = builder.create()
-        builder.show()
+
 
     }
 

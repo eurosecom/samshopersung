@@ -96,7 +96,7 @@ class InvoiceFragment : BaseKtFragment() {
                     if (event is Invoice) {
 
                         Log.d("onShortClickListenerFrg", event.nai)
-                        if(event.uce.equals("31100")){
+                        if(event.uce.equals(mSharedPreferences.getString("odbuce", ""))){
                             getTodoDialog(event)
                         }
 
