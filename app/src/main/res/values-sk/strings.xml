@@ -43,6 +43,7 @@
     <string name="orders">Objednávky</string>
     <string name="invoices">Faktúry</string>
     <string name="myorders">Moje Objednávky</string>
+    <string name="myordersclosed">Uzatvorené Objednávky</string>
     <string name="myinvoices">Moje Faktúry</string>
     <string name="basket">Košík</string>
     <string name="reports">Zostavy</string>
@@ -197,6 +198,7 @@
     <string name="document">Doklad</string>
     <string name="invoice">Faktúra</string>
     <string name="order">Objednávka</string>
+    <string name="orderclosed">Uzatvorená Objednávka</string>
     <string name="docshort">Dok.</string>
     <string name="deletewholedoc">Zmazať doklad</string>
     <string name="editdoc">Editovať doklad</string>

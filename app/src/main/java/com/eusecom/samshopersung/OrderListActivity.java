@@ -25,12 +25,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasFragmentInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
 
@@ -73,11 +71,13 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
                         new OrderFragment(),
-                        new InvoiceFragment()
+                        new InvoiceFragment(),
+                        new OrderClosedFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
                         getString(R.string.myorders),
-                        getString(R.string.myinvoices)
+                        getString(R.string.myinvoices),
+                        getString(R.string.myordersclosed)
                 };
 
                 @Override
@@ -102,11 +102,13 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
                         new InvoiceFragment(),
-                        new OrderFragment()
+                        new OrderFragment(),
+                        new OrderClosedFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
                         getString(R.string.myinvoices),
-                        getString(R.string.myorders)
+                        getString(R.string.myorders),
+                        getString(R.string.myordersclosed)
                 };
 
                 @Override

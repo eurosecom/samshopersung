@@ -14,15 +14,15 @@ import rx.schedulers.Schedulers
  * Kotlin fragment Recyclerview with classic XML itemlayout without Anko DSL
  */
 
-class OrderFragment : OrderBaseFragment() {
+class OrderClosedFragment : OrderBaseFragment() {
 
     override fun bindOrders() {
 
-        mSubscription?.add(mViewModel.getMyOrdersFromSqlServer("0")
+        mSubscription?.add(mViewModel.getMyOrdersFromSqlServer("1")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    Log.e("OrderClosedFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
@@ -39,21 +39,15 @@ class OrderFragment : OrderBaseFragment() {
         valuex.text = invoice.hod
 
         val builder = AlertDialog.Builder(activity)
-        builder.setView(textenter).setTitle(getString(R.string.order) + " " + invoice.dok)
+        builder.setView(textenter).setTitle(getString(R.string.orderclosed) + " " + invoice.dok)
 
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc), getString(R.string.getinvoice))
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc))
         ) { dialog, which ->
             // The 'which' argument contains the index position
             // of the selected item
             when (which) {
                 0 -> {
                     navigateToGetPdf(invoice)
-                }
-                1 -> {
-                    showDeleteOrderDialog(invoice)
-                }
-                2 -> {
-                    showGetInvoiceDialog(invoice)
                 }
 
             }
@@ -62,6 +56,5 @@ class OrderFragment : OrderBaseFragment() {
         builder.show()
 
     }
-
 
 }

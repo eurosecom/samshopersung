@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -31,12 +32,13 @@ import javax.inject.Inject
  * template samfantozzi CashListKtFragment.kt
  */
 
-class InvoiceFragment : BaseKtFragment() {
+abstract class OrderBaseFragment : BaseKtFragment() {
 
-    private var mAdapter: InvoiceAdapter? = null
+    private var mAdapter: OrderAdapter? = null
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
-    private var mSubscription: CompositeSubscription? = null
+    private var balance: TextView? = null
+    var mSubscription: CompositeSubscription? = null
     private var _disposables = CompositeDisposable()
     private var mDisposable: Disposable? = null
 
@@ -58,8 +60,9 @@ class InvoiceFragment : BaseKtFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater!!.inflate(R.layout.fragment_invoice, container, false)
+        val rootView = inflater!!.inflate(R.layout.fragment_order, container, false)
 
+        balance = rootView.findViewById<View>(R.id.balance) as TextView
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
         mProgressBar = rootView.findViewById<View>(R.id.progress_bar) as ProgressBar
@@ -71,7 +74,7 @@ class InvoiceFragment : BaseKtFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mAdapter = InvoiceAdapter(_rxBus)
+        mAdapter = OrderAdapter(_rxBus)
         mAdapter?.setAbsserver(emptyList())
         mManager = LinearLayoutManager(context)
         mManager?.setReverseLayout(true)
@@ -80,6 +83,8 @@ class InvoiceFragment : BaseKtFragment() {
         mRecycler?.setAdapter(mAdapter)
 
     }
+
+    abstract fun bindOrders()
 
     private fun bind() {
 
@@ -96,7 +101,7 @@ class InvoiceFragment : BaseKtFragment() {
                     if (event is Invoice) {
 
                         Log.d("onShortClickListenerFrg", event.nai)
-                        if(event.uce.equals("31100")){
+                        if(!event.uce.equals("31100")){
                             getTodoDialog(event)
                         }
 
@@ -117,45 +122,59 @@ class InvoiceFragment : BaseKtFragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("1")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("InvoiceFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerInvoices(it) })
+        bindOrders()
 
         mSubscription?.add(mViewModel.getObservableDocPdf()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("InvoiceFragment", "Error Throwable " + throwable.message)
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setUriPdf(it) })
 
-        mSubscription?.add(mViewModel.getObservableDeleteInvoice()
+        mSubscription?.add(mViewModel.getObservableException()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("InvoiceFragment", "Error Throwable " + throwable.message)
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerInvoices(it) })
+                .subscribe { it -> setProxyException(it) })
+
+        mSubscription?.add(mViewModel.getObservableDeleteOrder()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerOrders(it) })
+
+        mSubscription?.add(mViewModel.getObservableOrderToInv()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerOrderToInv(it) })
 
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
     private fun unBind() {
 
-        mViewModel.clearObservableDeleteInvoice()
+        mViewModel.clearObservableDeleteOrder()
+        mViewModel.clearObservableOrderToInv()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -176,10 +195,25 @@ class InvoiceFragment : BaseKtFragment() {
 
     }
 
-    private fun setServerInvoices(invoices: List<Invoice>) {
+    fun setServerOrders(invoices: InvoiceList) {
 
-        mAdapter?.setAbsserver(invoices)
+        mAdapter?.setAbsserver(invoices.getInvoice())
+        balance?.setText(invoices.getBalance())
         hideProgressBar()
+    }
+
+    private fun setServerOrderToInv(invoices: InvoiceList) {
+
+        mAdapter?.setAbsserver(invoices.getInvoice())
+        balance?.setText(invoices.getBalance())
+        hideProgressBar()
+
+        val `is` = Intent(activity, OrderListActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 1)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        activity.finish()
     }
 
 
@@ -206,57 +240,43 @@ class InvoiceFragment : BaseKtFragment() {
         unBind()
     }
 
-    fun getTodoDialog(invoice: Invoice) {
-
-        val inflater = LayoutInflater.from(activity)
-        val textenter = inflater.inflate(R.layout.invoice_edit_dialog, null)
-
-        val valuex = textenter.findViewById<View>(R.id.valuex) as TextView
-        valuex.text = invoice.hod
-
-        val builder = AlertDialog.Builder(activity)
-        builder.setView(textenter).setTitle(getString(R.string.invoice) + " " + invoice.dok)
-
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc))
-        ) { dialog, which ->
-            // The 'which' argument contains the index position
-            // of the selected item
-            when (which) {
-                0 -> {
-                    navigateToGetPdf(invoice)
-                }
-                1 -> {
-                    showDeleteInvoiceDialog(invoice)
-                }
-
-            }
-        }
-        val dialog = builder.create()
-        builder.show()
-
-    }
+    abstract fun getTodoDialog(invoice: Invoice)
 
     fun navigateToGetPdf(order: Invoice){
-        showProgressBar()
-        mViewModel.emitGetPdfInvoice(order)
+        //showProgressBar()
+        mViewModel.emitGetPdfOrder(order)
 
     }
 
-    fun showDeleteInvoiceDialog(order: Invoice) {
+    fun showDeleteOrderDialog(order: Invoice) {
 
         alert("", getString(R.string.deletewholedoc) + " " + order.dok) {
-            yesButton { navigateToDeleteInvoice(order) }
+            yesButton { navigateToDeleteOrder(order) }
             noButton {}
         }.show()
 
     }
 
-    fun navigateToDeleteInvoice(order: Invoice){
+    fun navigateToDeleteOrder(order: Invoice){
         showProgressBar()
-        mViewModel.emitDeleteInvoice(order);
+        mViewModel.emitDeleteOrder(order);
 
     }
 
+    fun showGetInvoiceDialog(order: Invoice) {
+
+        alert("", getString(R.string.getinvoicefrom) + " " + order.dok) {
+            yesButton { navigateToGetInvoice(order) }
+            noButton {}
+        }.show()
+
+    }
+
+    fun navigateToGetInvoice(order: Invoice){
+        showProgressBar()
+        mViewModel.emitOrderToInv(order)
+
+    }
 
 
 }
