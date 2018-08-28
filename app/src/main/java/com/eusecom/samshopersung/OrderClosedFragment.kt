@@ -43,13 +43,16 @@ class OrderClosedFragment : OrderBaseFragment() {
             val builder = AlertDialog.Builder(activity)
             builder.setView(textenter).setTitle(getString(R.string.orderclosed) + " " + invoice.dok)
 
-            builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc))
+            builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.orderdetail))
             ) { dialog, which ->
                 // The 'which' argument contains the index position
                 // of the selected item
                 when (which) {
                     0 -> {
                         navigateToGetPdf(invoice)
+                    }
+                    1 -> {
+                        navigateOrderDetail(invoice)
                     }
 
                 }

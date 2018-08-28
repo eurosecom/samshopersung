@@ -248,6 +248,12 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
     }
 
+    fun navigateOrderDetail(order: Invoice){
+        //showProgressBar()
+        //mViewModel.emitGetPdfOrder(order)
+
+    }
+
     fun showDeleteOrderDialog(order: Invoice) {
 
         alert("", getString(R.string.deletewholedoc) + " " + order.dok) {

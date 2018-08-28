@@ -201,6 +201,7 @@
     <string name="orderclosed">Uzatvorená Objednávka</string>
     <string name="docshort">Dok.</string>
     <string name="deletewholedoc">Zmazať doklad</string>
+    <string name="orderdetail">Detail objednávky</string>
     <string name="editdoc">Editovať doklad</string>
     <string name="detaildoc">Položky dokladu</string>
     <string name="pdfdoc">PDF doklad</string>

@@ -43,7 +43,8 @@ class OrderFragment : OrderBaseFragment() {
             val builder = AlertDialog.Builder(activity)
             builder.setView(textenter).setTitle(getString(R.string.order) + " " + invoice.dok)
 
-            builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.deletewholedoc), getString(R.string.getinvoice))
+            builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.orderdetail)
+                    , getString(R.string.deletewholedoc), getString(R.string.getinvoice))
             ) { dialog, which ->
                 // The 'which' argument contains the index position
                 // of the selected item
@@ -52,9 +53,12 @@ class OrderFragment : OrderBaseFragment() {
                         navigateToGetPdf(invoice)
                     }
                     1 -> {
-                        showDeleteOrderDialog(invoice)
+                        navigateOrderDetail(invoice)
                     }
                     2 -> {
+                        showDeleteOrderDialog(invoice)
+                    }
+                    3 -> {
                         showGetInvoiceDialog(invoice)
                     }
 
