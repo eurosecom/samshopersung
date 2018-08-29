@@ -250,5 +250,16 @@
     <string name="popisSw1">Swift code</string>
     <string name="save">Save</string>
 
+    //orderdetailactivity
+    <string name="ordereid">Order eID</string>
+    <string name="payment">Payment</string>
+    <string name="select_payment">Select Payment</string>
+    <string name="state">State of Order</string>
+    <string name="select_state">Select State</string>
+    <string name="transport">Transport</string>
+    <string name="select_transport">Select Transport</string>
+    <string name="deliverydate">Delivery Date</string>
+    <string name="ordersave">Order %s save</string>
+    <string name="datedialogpos">Set date</string>
 
 </resources>

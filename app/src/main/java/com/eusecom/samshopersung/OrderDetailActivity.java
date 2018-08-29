@@ -1,5 +1,8 @@
 package com.eusecom.samshopersung;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.jakewharton.rxbinding.view.RxView;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -26,18 +31,11 @@ import static rx.Observable.empty;
 
 public class OrderDetailActivity extends BaseActivity {
 
-    EditText inputIco;
-    EditText inputDic;
-    EditText inputIcd;
-    EditText inputNai;
-    EditText inputUli;
-    EditText inputMes;
-    EditText inputPsc;
-    EditText inputTel;
-    EditText inputMail;
-    EditText inputIb1;
-    EditText inputSw1;
-    Button btnSave, btnIco;
+
+    EditText inputIco, inputEid, inputNai, datex;
+    Spinner inputState, inputPay, inputTrans;
+    String order="0";
+    Button btnSave, btnIco, datebutton;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -52,29 +50,28 @@ public class OrderDetailActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.newidc_activity);
+        setContentView(R.layout.orderdetail_activity);
 
         AndroidInjection.inject(this);
 
-        //getSupportActionBar().setTitle(getString(R.string.action_setmfir));
+        Intent i = getIntent();
+        Bundle extras = i.getExtras();
+        order = extras.getString("order");
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         inputIco = (EditText) findViewById(R.id.inputIco);
-        inputDic = (EditText) findViewById(R.id.inputDic);
-        inputIcd = (EditText) findViewById(R.id.inputIcd);
         inputNai = (EditText) findViewById(R.id.inputNai);
-        inputUli = (EditText) findViewById(R.id.inputUli);
-        inputMes = (EditText) findViewById(R.id.inputMes);
-        inputPsc = (EditText) findViewById(R.id.inputPsc);
-        inputTel = (EditText) findViewById(R.id.inputTel);
-        inputMail = (EditText) findViewById(R.id.inputMail);
-        inputIb1 = (EditText) findViewById(R.id.inputIb1);
-        inputSw1 = (EditText) findViewById(R.id.inputSw1);
+        inputEid = (EditText) findViewById(R.id.inputEid);
+        datex = (EditText) findViewById(R.id.datex);
+
 
         inputIco.setText(mSharedPreferences.getString("mfir", ""));
+        inputIco.setText(mSharedPreferences.getString("mfirnaz", ""));
 
         // save button
         btnSave = (Button) findViewById(R.id.btnSave);
+        btnSave.setText(String.format(getResources().getString(R.string.ordersave), order));
+
 
         //ico button
         btnIco = (Button) findViewById(R.id.btnIco);
@@ -85,6 +82,16 @@ public class OrderDetailActivity extends BaseActivity {
 
                 showProgressBar();
                 mViewModel.emitMyObservableIdModelCompany(inputIco.getText().toString());
+
+            }
+        });
+
+
+        datebutton = (Button) findViewById(R.id.datebutton);
+        datebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDatePicker(datex.getText().toString()).show();
 
             }
         });
@@ -176,20 +183,10 @@ public class OrderDetailActivity extends BaseActivity {
                         realminvoice.setDrh("99");
                         realminvoice.setUce("");
                         realminvoice.setDok(inputIco.getText().toString());
-                        realminvoice.setDat(inputNai.getText().toString());
                         realminvoice.setIco(inputIco.getText().toString());
                         realminvoice.setNai(inputNai.getText().toString());
-                        realminvoice.setHod(inputMes.getText().toString());
-                        realminvoice.setZk0(inputDic.getText().toString());
-                        realminvoice.setZk1(inputIcd.getText().toString());
-                        realminvoice.setZk2(inputUli.getText().toString());
-                        realminvoice.setDn1(inputPsc.getText().toString());
-                        realminvoice.setDn2(inputMes.getText().toString());
-                        realminvoice.setPoz(inputTel.getText().toString());
-                        realminvoice.setDas(inputIb1.getText().toString());
-                        realminvoice.setDaz(inputSw1.getText().toString());
+                        realminvoice.setZk0(inputEid.getText().toString());
                         realminvoice.setFak("0");
-                        realminvoice.setKto(inputMail.getText().toString());
                         realminvoice.setPoh("0");
                         realminvoice.setSaved("false");
                         realminvoices.add(realminvoice);
@@ -201,7 +198,7 @@ public class OrderDetailActivity extends BaseActivity {
                         editor.putString("mfirnaz", inputNai.getText().toString()).apply();
                         editor.commit();
 
-                        mViewModel.emitRealmIdcToRealm(realminvoices);
+                        //mViewModel.emitRealmIdcToRealm(realminvoices);
 
                     }
                 });
@@ -212,16 +209,8 @@ public class OrderDetailActivity extends BaseActivity {
 
         if( idc.size() > 0 ){
            inputIco.setText(idc.get(0).getIco());
-           inputDic.setText(idc.get(0).getDic());
-           inputIcd.setText(idc.get(0).getIcd());
            inputNai.setText(idc.get(0).getNai());
-           inputUli.setText(idc.get(0).getUli());
-           inputPsc.setText(idc.get(0).getPsc());
-           inputMes.setText(idc.get(0).getMes());
-           inputTel.setText(idc.get(0).getTel());
-           inputMail.setText(idc.get(0).getEmail());
-           inputIb1.setText(idc.get(0).getIb1());
-           inputSw1.setText(idc.get(0).getSw1());
+
         }
         hideProgressBar();
     }
@@ -240,21 +229,59 @@ public class OrderDetailActivity extends BaseActivity {
 
         if( idc.size() > 0 ){
             inputIco.setText(idc.get(0).getIco());
-            inputDic.setText(idc.get(0).getZk0());
-            inputIcd.setText(idc.get(0).getZk1());
             inputNai.setText(idc.get(0).getNai());
-            inputUli.setText(idc.get(0).getZk2());
-            inputPsc.setText(idc.get(0).getDn1());
-            inputMes.setText(idc.get(0).getHod());
-            inputTel.setText(idc.get(0).getPoz());
-            inputMail.setText(idc.get(0).getKto());
-            inputIb1.setText(idc.get(0).getDas());
-            inputSw1.setText(idc.get(0).getDaz());
 
         }
         hideProgressBar();
 
     }
+
+    private DatePickerDialog getDatePicker(String datumx) {
+
+        String datumx2=datumx;
+        if(datumx2.equals("")){ datumx2 = "01.08.2018";}
+        final Calendar calendar = Calendar.getInstance();
+        int yy = calendar.get(Calendar.YEAR);
+        int mm = calendar.get(Calendar.MONTH);
+        int dd = calendar.get(Calendar.DAY_OF_MONTH);
+        //dd = 38;
+
+        //String datumx = "12.12.2017";
+
+        String delims = "[.]+";
+        String[] datumxxx = datumx2.split(delims);
+
+        String ddx = datumxxx[0];
+        String mmx = datumxxx[1];
+        String yyx = datumxxx[2];
+
+        int ddi = Integer.parseInt(ddx);
+        int mmi = Integer.parseInt(mmx);
+        int yyi = Integer.parseInt(yyx);
+        dd=ddi; mm=mmi-1; yy=yyi;
+
+        DatePickerDialog dpd = new DatePickerDialog(this, null, yy, mm, dd);
+        //dpd.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Button Neg Text", dpd);
+        dpd.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.datedialogpos), new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+
+                    int dayx = dpd.getDatePicker().getDayOfMonth();
+                    int monthx = dpd.getDatePicker().getMonth();
+                    int yearx = dpd.getDatePicker().getYear();
+                    int monthy = monthx + 1;
+
+                    datex.setText(dayx + "." + monthy + "." + yearx);
+                }
+            }
+
+        });
+
+
+        return dpd;
+    }
+
 
 
 }
