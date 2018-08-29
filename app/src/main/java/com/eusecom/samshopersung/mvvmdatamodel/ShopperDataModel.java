@@ -285,6 +285,7 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     }
 
+
     @Override
     public Observable<List<Invoice>> getInvoicesFromMysqlServer(String servername, String userhash, String userid, String fromfir
             , String vyb_rok, String drh, String ucex, String umex, String dokx, String ustp) {

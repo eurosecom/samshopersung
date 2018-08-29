@@ -249,8 +249,12 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     }
 
     fun navigateOrderDetail(order: Invoice){
-        //showProgressBar()
-        //mViewModel.emitGetPdfOrder(order)
+
+        val `is` = Intent(activity, OrderDetailActivity::class.java)
+        val extras = Bundle()
+        extras.putString("order", order.dok)
+        `is`.putExtras(extras)
+        startActivity(`is`)
 
     }
 

@@ -12,6 +12,7 @@ import com.eusecom.samshopersung.MainShopperActivity;
 import com.eusecom.samshopersung.MapActivity;
 import com.eusecom.samshopersung.NewIdcActivity;
 import com.eusecom.samshopersung.OfferKtActivity;
+import com.eusecom.samshopersung.OrderDetailActivity;
 import com.eusecom.samshopersung.OrderListActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
 import dagger.Binds;
@@ -86,4 +87,7 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = {NewIdcActivityModule.class })
     abstract NewIdcActivity bindNewIdcActivity();
 
+    @ShopperScope
+    @ContributesAndroidInjector(modules = {NewIdcActivityModule.class })
+    abstract OrderDetailActivity bindOrderDetailActivity();
 }
