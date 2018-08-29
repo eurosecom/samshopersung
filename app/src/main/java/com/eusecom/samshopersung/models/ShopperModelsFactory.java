@@ -2,6 +2,7 @@ package com.eusecom.samshopersung.models;
 
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.BasketKt;
+import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SumBasketKt;
 import java.util.Collections;
@@ -49,5 +50,16 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
         return new SumBasketKt("","","", Collections.emptyList(),"","","", "");
     }
 
+    /**
+     * This method is used to get Invoice POJO
+     * @return int This returns new Invoice POJO.
+     * @see Invoice
+     */
+    @NonNull
+    public Invoice getInvoice(){
+
+        return new Invoice("", "","","","","","","","","","","",""
+                ,"","","","","","",false,0l,"","","","");
+    }
 
 }

@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
+import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.jakewharton.rxbinding.view.RxView;
 import java.util.ArrayList;
@@ -47,6 +50,9 @@ public class OrderDetailActivity extends BaseActivity {
     @Inject
     ShopperIMvvmViewModel mViewModel;
 
+    @Inject
+    IShopperModelsFactory mModelsFactory;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +72,7 @@ public class OrderDetailActivity extends BaseActivity {
 
 
         inputIco.setText(mSharedPreferences.getString("mfir", ""));
-        inputIco.setText(mSharedPreferences.getString("mfirnaz", ""));
+        inputNai.setText(mSharedPreferences.getString("mfirnaz", ""));
 
         // save button
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -120,7 +126,6 @@ public class OrderDetailActivity extends BaseActivity {
     private void unBind() {
 
         mViewModel.clearObservableIdModelCompany();
-        mViewModel.clearObservableIdcSaveToRealm();
         mSubscription.clear();
         subscriptionSave.unsubscribe();
 
@@ -128,36 +133,31 @@ public class OrderDetailActivity extends BaseActivity {
 
     private void bind() {
 
-        showProgressBar();
         mSubscription = new CompositeSubscription();
 
+        //get Nai by Ico from MySql after click on btnIco
         mSubscription.add(mViewModel.getMyObservableIdModelCompany()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error NewIdcActivity " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error OrderDetailActivity " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::setEditedIco));
+                .subscribe(this::setClickedIco));
 
-        mSubscription.add(mViewModel.getDataIdcSavedToRealm()
+        //get Order Detail from MySql emited in onCreate
+        mSubscription.add(mViewModel.getObservableDetailOrder()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(this::dataSavedToRealm));
-
-
-        mSubscription.add(mViewModel.getNoSavedDocFromRealm("3")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error NewIdcActivity " + throwable.getMessage());
+                .doOnError(throwable -> { Log.e(TAG, "Error OrderDetailActivity " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
-                .subscribe(this::setNoSavedDocs));
+                .subscribe(this::setDetailOrder));
 
-
+        //save orders detail to MySql
         subscriptionSave = RxView.clicks(btnSave)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -198,14 +198,20 @@ public class OrderDetailActivity extends BaseActivity {
                         editor.putString("mfirnaz", inputNai.getText().toString()).apply();
                         editor.commit();
 
-                        //mViewModel.emitRealmIdcToRealm(realminvoices);
+                        //mViewModel.emitSaveOrderDetailToSql(realminvoices);
 
                     }
                 });
 
+        Invoice invx = mModelsFactory.getInvoice();
+        invx.setDrh("8");
+        invx.setDok(order);
+
+        mViewModel.emitDetailOrder(invx);
+
     }
 
-    private void setEditedIco(@NonNull final List<IdCompanyKt> idc) {
+    private void setClickedIco(@NonNull final List<IdCompanyKt> idc) {
 
         if( idc.size() > 0 ){
            inputIco.setText(idc.get(0).getIco());
@@ -215,26 +221,20 @@ public class OrderDetailActivity extends BaseActivity {
         hideProgressBar();
     }
 
-    private void dataSavedToRealm(@NonNull final RealmInvoice invoice) {
-        mViewModel.clearObservableIdcSaveToRealm();
+    private void setDetailOrder(@NonNull final InvoiceList detail) {
 
-        Toast.makeText(this, "Saved ID " + invoice.getDok(), Toast.LENGTH_SHORT).show();
-        finish();
-    }
+        Log.d("order detail", detail.getInvoice().get(0).getIco());
+        Invoice detx = detail.getInvoice().get(0);
+        if( detail.getInvoice().size() > 0 ){
 
-
-    private void setNoSavedDocs(@NonNull final List<RealmInvoice> idc) {
-
-        //Toast.makeText(this, "Getting ID " + idc.get(0).getIco(), Toast.LENGTH_SHORT).show();
-
-        if( idc.size() > 0 ){
-            inputIco.setText(idc.get(0).getIco());
-            inputNai.setText(idc.get(0).getNai());
+            inputEid.setText(detx.getZk1());
+            datex.setText(detx.getZk0());
+            //inputNai.setText(idc.get(0).getNai());
 
         }
         hideProgressBar();
-
     }
+
 
     private DatePickerDialog getDatePicker(String datumx) {
 

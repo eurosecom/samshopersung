@@ -2,6 +2,7 @@ package com.eusecom.samshopersung.models;
 
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.BasketKt;
+import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SumBasketKt;
 
@@ -22,6 +23,9 @@ public interface IShopperModelsFactory {
 
     @NonNull
     SumBasketKt getSumBasketKt();
+
+    @NonNull
+    public Invoice getInvoice();
 
 
 }
