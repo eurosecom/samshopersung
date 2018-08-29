@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.eusecom.samshopersung.models.Account;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.RealmInvoice;
@@ -36,9 +39,10 @@ public class OrderDetailActivity extends BaseActivity {
 
 
     EditText inputIco, inputEid, inputNai, datex;
-    Spinner inputState, inputPay, inputTrans;
+    Spinner spinnState, spinnPay, spinnTrans;
     String order="0";
     Button btnSave, btnIco, datebutton;
+    protected ArrayAdapter<Account> mAdapter;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -69,7 +73,7 @@ public class OrderDetailActivity extends BaseActivity {
         inputNai = (EditText) findViewById(R.id.inputNai);
         inputEid = (EditText) findViewById(R.id.inputEid);
         datex = (EditText) findViewById(R.id.datex);
-
+        spinnPay = (Spinner) findViewById(R.id.spinnPay);
 
         inputIco.setText(mSharedPreferences.getString("mfir", ""));
         inputNai.setText(mSharedPreferences.getString("mfirnaz", ""));
@@ -101,6 +105,15 @@ public class OrderDetailActivity extends BaseActivity {
 
             }
         });
+
+        ArrayList<Account> pohybys = new ArrayList<>();
+        pohybys.add(new Account("Payment 1", "1", "", "", "", "","true"));
+        pohybys.add(new Account("Payment 2", "2", "", "", "", "","true"));
+        pohybys.add(new Account("Payment 3", "3", "", "", "", "","true"));
+        pohybys.add(new Account("Payment 4", "4", "", "", "", "","true"));
+        pohybys.add(new Account("Payment 5", "5", "", "", "", "","true"));
+        setPaySpinner(pohybys);
+
 
     }
 
@@ -229,10 +242,25 @@ public class OrderDetailActivity extends BaseActivity {
 
             inputEid.setText(detx.getZk1());
             datex.setText(detx.getZk0());
-            //inputNai.setText(idc.get(0).getNai());
+            //spinnPay.setSelection(2);
+            spinnPay.setSelection(getIndex(spinnPay, "4 Payment 4"));
+
+
+
 
         }
         hideProgressBar();
+    }
+
+    //private method of your class
+    private int getIndex(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+
+        return 0;
     }
 
 
@@ -282,6 +310,37 @@ public class OrderDetailActivity extends BaseActivity {
         return dpd;
     }
 
+    private void setPaySpinner(@NonNull final List<Account> pohyby) {
+
+        if (pohyby.size() > 0) {
+
+            ArrayList<Account> pohybys = new ArrayList<>();
+
+            for (int i = 0; i < pohyby.size(); i++) {
+                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", "","true"));
+            }
+
+            mAdapter = new ArrayAdapter<Account>(this, android.R.layout.simple_spinner_item, pohybys);
+            mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnPay.setAdapter(mAdapter);
+            //if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText(pohyby.get(0).getAccnumber()); }
+            //if(_inputPoh.getText().toString().equals("0")) { _inputPoh.setText(pohyby.get(0).getAccnumber()); }
+            spinnPay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view,
+                                           int position, long id) {
+                    // Here you get the current item (a User object) that is selected by its position
+                    Account account = mAdapter.getItem(position);
+                    //_inputPoh.setText(account.getAccnumber());
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapter) {  }
+            });
+
+        }
+
+    }
 
 
 }

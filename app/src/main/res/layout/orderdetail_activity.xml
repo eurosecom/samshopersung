@@ -104,7 +104,7 @@
 
         <Spinner android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:id="@+id/inputPay"
+            android:id="@+id/spinnPay"
             android:layout_marginTop="1dp"
             android:layout_marginRight="1dp"
             android:layout_marginLeft="1dp"
@@ -132,7 +132,7 @@
 
         <Spinner android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:id="@+id/inputState"
+            android:id="@+id/spinnState"
             android:layout_marginTop="1dp"
             android:layout_marginRight="1dp"
             android:layout_marginLeft="1dp"
@@ -160,7 +160,7 @@
 
         <Spinner android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:id="@+id/inputTrans"
+            android:id="@+id/spinnTrans"
             android:layout_marginTop="1dp"
             android:layout_marginRight="1dp"
             android:layout_marginLeft="1dp"
