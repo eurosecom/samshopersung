@@ -15,6 +15,7 @@ import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.RealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
+import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
@@ -179,6 +180,12 @@ public class AppModule {
     public Resources providesResources(Application application) {
 
         return ((SamshopperApp) application).getResources();
+    }
+
+    @Provides
+    @Singleton
+    public MyDatabase providesMyDatabase(Application application) {
+        return ((SamshopperApp) application).get().getDB();
     }
 
 

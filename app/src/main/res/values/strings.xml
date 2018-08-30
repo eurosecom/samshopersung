@@ -214,6 +214,8 @@
     //room demo
     <string name="price_format">$%1$s</string>
     <string name="name_format">Product %1$s</string>
+    <string name="action_addroomitem">Add room Product item</string>
+    <string name="action_delroomitem">Delete room Product item</string>
 
     //album demo
     <string name="backdrop_title">LOVE MUSIC</string>

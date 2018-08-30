@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for one item of absence at RcViewer OrderFragmentjava with OrderViewHolder.java -->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:background="@drawable/selector_medium_high"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+     <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:id="@+id/invoice_type"
+            android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/invoice_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+         <TextView
+             android:id="@+id/doc"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="5dp"
+             android:gravity="center_vertical"
+             android:text="sometext"
+             />
+
+         <TextView
+             android:id="@+id/docx"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="5dp"
+             android:gravity="center_vertical"
+             android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/invoice_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            tools:text="someauthor@email.com" />
+
+    </LinearLayout>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

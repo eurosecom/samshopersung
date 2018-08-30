@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
-import com.eusecom.samshopersung.database.MyDatabase;
 import com.eusecom.samshopersung.di.DaggerAppComponent;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.mvvmschedulers.SchedulerProvider;
+import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,8 +35,6 @@ public class SamshopperApp extends MultiDexApplication implements HasActivityInj
     //Room
     public static SamshopperApp INSTANCE;
     private static final String DATABASE_NAME = "MyDatabase";
-    private static final String PREFERENCES = "RoomDemo.preferences";
-    private static final String KEY_FORCE_UPDATE = "force_update";
     private MyDatabase database;
 
     //Room
@@ -117,21 +115,6 @@ public class SamshopperApp extends MultiDexApplication implements HasActivityInj
     public MyDatabase getDB() {
         return database;
     }
-
-    public boolean isForceUpdate() {
-        return getSP().getBoolean(KEY_FORCE_UPDATE, true);
-    }
-
-    public void setForceUpdate(boolean force) {
-        SharedPreferences.Editor edit = getSP().edit();
-        edit.putBoolean(KEY_FORCE_UPDATE, force);
-        edit.apply();
-    }
-
-    private SharedPreferences getSP() {
-        return getSharedPreferences(PREFERENCES, MODE_PRIVATE);
-    }
-
 
 
 

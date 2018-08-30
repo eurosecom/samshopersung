@@ -15,6 +15,7 @@ import com.eusecom.samshopersung.OfferKtActivity;
 import com.eusecom.samshopersung.OrderDetailActivity;
 import com.eusecom.samshopersung.OrderListActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
+import com.eusecom.samshopersung.RoomDemoActivity;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;
@@ -90,4 +91,8 @@ public abstract class ActivityBuilder {
     @ShopperScope
     @ContributesAndroidInjector(modules = {NewIdcActivityModule.class })
     abstract OrderDetailActivity bindOrderDetailActivity();
+
+    @ShopperScope
+    @ContributesAndroidInjector(modules = {RoomDemoActivityModule.class })
+    abstract RoomDemoActivity bindRoomDemoActivity();
 }
