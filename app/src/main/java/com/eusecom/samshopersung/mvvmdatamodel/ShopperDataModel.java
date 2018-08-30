@@ -25,6 +25,7 @@ import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
+import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.google.firebase.database.DatabaseReference;
 
 public class ShopperDataModel implements ShopperIDataModel {
@@ -36,6 +37,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     ExampleInterceptor mInterceptor;
     IRealmController mRealmController;
     IdcController mIdcController;
+    MyDatabase mRoomDatabase;
 
     public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
                              @NonNull final ShopperRetrofitService shopperRetrofitService,
@@ -52,17 +54,25 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
 
     public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
-                            @NonNull final ShopperRetrofitService shopperRetrofitService,
-                            @NonNull final Resources resources,
-                            @NonNull final Realm realm,
-                            @NonNull final ExampleInterceptor interceptor,
-                            @NonNull final IdcController realmcontroller) {
+                             @NonNull final ShopperRetrofitService shopperRetrofitService,
+                             @NonNull final Resources resources,
+                             @NonNull final Realm realm,
+                             @NonNull final ExampleInterceptor interceptor,
+                             @NonNull final IdcController realmcontroller) {
         mFirebaseDatabase = databaseReference;
         mShopperRetrofitService = shopperRetrofitService;
         mResources = resources;
         mRealm = realm;
         mInterceptor = interceptor;
         mIdcController = realmcontroller;
+    }
+
+    public ShopperDataModel(@NonNull final ShopperRetrofitService shopperRetrofitService,
+                            @NonNull final ExampleInterceptor interceptor,
+                            @NonNull MyDatabase roomDatabase) {
+        mShopperRetrofitService = shopperRetrofitService;
+        mInterceptor = interceptor;
+        mRoomDatabase = roomDatabase;
     }
 
     //methods for ChooseCompanyActivity

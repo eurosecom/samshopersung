@@ -15,6 +15,7 @@ import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
+import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
@@ -28,13 +29,10 @@ public class RoomDemoActivityModule {
 
     @Provides
     @ShopperScope
-    public ShopperIDataModel providesShopperIDataModel(DatabaseReference databasereference,
-                                                       ShopperRetrofitService shopperretrofitservice,
-                                                       Resources resources, Realm realm,
+    public ShopperIDataModel providesShopperIDataModel(ShopperRetrofitService shopperretrofitservice,
                                                        ExampleInterceptor interceptor,
-                                                       IRealmController realmcontroller) {
-        return new ShopperDataModel(databasereference, shopperretrofitservice
-                , resources, realm, interceptor, realmcontroller);
+                                                       MyDatabase roomDatabase) {
+        return new ShopperDataModel(shopperretrofitservice, interceptor, roomDatabase);
     }
 
 
