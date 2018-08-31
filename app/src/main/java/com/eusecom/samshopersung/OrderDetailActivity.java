@@ -75,8 +75,8 @@ public class OrderDetailActivity extends BaseActivity {
         datex = (EditText) findViewById(R.id.datex);
         spinnPay = (Spinner) findViewById(R.id.spinnPay);
 
-        inputIco.setText(mSharedPreferences.getString("mfir", ""));
-        inputNai.setText(mSharedPreferences.getString("mfirnaz", ""));
+        //inputIco.setText(mSharedPreferences.getString("mfir", ""));
+        //inputNai.setText(mSharedPreferences.getString("mfirnaz", ""));
 
         // save button
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -240,10 +240,13 @@ public class OrderDetailActivity extends BaseActivity {
         Invoice detx = detail.getInvoice().get(0);
         if( detail.getInvoice().size() > 0 ){
 
+            inputIco.setText(detx.getIco());
+            inputNai.setText(detx.getNai());
             inputEid.setText(detx.getZk1());
             datex.setText(detx.getZk0());
             //spinnPay.setSelection(2);
-            spinnPay.setSelection(getIndex(spinnPay, "4 Payment 4"));
+            String payx = detx.getZk2() + " Payment " + detx.getZk2();
+            spinnPay.setSelection(getIndex(spinnPay, payx));
 
 
 
