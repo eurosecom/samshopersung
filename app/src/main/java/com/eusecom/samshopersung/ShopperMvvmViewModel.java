@@ -9,6 +9,7 @@ import android.util.Log;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
+import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
@@ -19,6 +20,9 @@ import com.eusecom.samshopersung.realm.RealmInvoice;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
@@ -1031,5 +1035,39 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mDataModel.getObservableMyIdc(fromact);
     }
     //end get saved idc from realm
+
+    //methods for RoomDemocActivity
+
+    //get products
+    public Flowable<List<Product>> loadProducts() {
+
+        return mDataModel.loadProductsData();
+
+    }
+
+    /**
+     * Insert product.
+     * @param prodName the new product name
+     * @return a {@link Completable} that completes when the user name is updated
+     */
+    public Completable updateProductName(final String prodName) {
+        return Completable.fromAction(() -> {
+
+            mDataModel.insertOrUpdateProductData(prodName);
+        });
+    }
+
+    /**
+     * Delete product by Uid.
+     * @param prodId the uid of deleted product
+     * @return a {@link Completable} that completes when the user name is updated
+     */
+    public Completable deleteRxProductById(final int prodId) {
+        return Completable.fromAction(() -> {
+
+            mDataModel.deleteRxProductByIdData(prodId);
+        });
+    }
+
 
 }

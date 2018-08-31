@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.RoomDemoAdapter;
 import com.eusecom.samshopersung.ShopperIMvvmViewModel;
 import com.eusecom.samshopersung.ShopperMvvmViewModel;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperDataModel;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
@@ -31,8 +32,9 @@ public class RoomDemoActivityModule {
     @ShopperScope
     public ShopperIDataModel providesShopperIDataModel(ShopperRetrofitService shopperretrofitservice,
                                                        ExampleInterceptor interceptor,
-                                                       MyDatabase roomDatabase) {
-        return new ShopperDataModel(shopperretrofitservice, interceptor, roomDatabase);
+                                                       MyDatabase roomDatabase,
+                                                       IShopperModelsFactory modelsFactory) {
+        return new ShopperDataModel(shopperretrofitservice, interceptor, roomDatabase, modelsFactory);
     }
 
 

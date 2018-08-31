@@ -71,14 +71,14 @@ class RoomDemoActivity : AppCompatActivity() {
     private fun setDisposable() {
 
         showProgressBar()
-        //mDisposable.add(loadProducts()
-        //        .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-        //        .observeOn(AndroidSchedulers.mainThread())
-        //        .doOnError { throwable ->
-        //            hideProgressBar()
-        //            Log.e("RoomDemoActivityLog", "Error Throwable " + throwable.message)
-        //        }
-        //        .subscribe({ it -> setProducts(it) }))
+        mDisposable.add(loadProducts()
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    hideProgressBar()
+                    Log.e("RoomDemoActivityLog", "Error Throwable " + throwable.message)
+                }
+                .subscribe({ it -> setProducts(it) }))
 
         val tapEventEmitter = mRxBus.asFlowable().publish()
 
@@ -108,15 +108,15 @@ class RoomDemoActivity : AppCompatActivity() {
 
     private fun setProducts(prods: List<Product>) {
         //Log.d("RoomDemoActivityLog", "cat0 " + prods.get(0).name)
-        //mAdapter?.setDataToAdapter(prods)
+        mAdapter?.setDataToAdapter(prods)
         //Scroll item 2 to 20 pixels from the top
         mManager?.scrollToPositionWithOffset(0, 0);
         hideProgressBar()
     }
 
-    //protected fun loadProducts(): Flowable<List<Product>> {
-    //    return mViewModel.loadProducts();
-    //}
+    protected fun loadProducts(): Flowable<List<Product>> {
+        return mViewModel.loadProducts();
+    }
 
     fun showDeleteDialog(prodId: Int) {
 
@@ -130,14 +130,14 @@ class RoomDemoActivity : AppCompatActivity() {
     fun navigateToRxDeleteById(prodId: Int){
 
         showProgressBar()
-        //mDisposable.add(mViewModel.deleteRxProductById(prodId)
-        //        .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-        //        .observeOn(AndroidSchedulers.mainThread())
-        //        .doOnComplete({  -> Log.d("RoomDemoActivityLog", " completed") })
-        //        .doOnError { throwable ->
-        //            Log.e("RoomDemoActivityLog", "Error Throwable " + throwable.message)
-        //        }
-        //        .subscribe({  -> Unit }))
+        mDisposable.add(mViewModel.deleteRxProductById(prodId)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete({  -> Log.d("RoomDemoActivityLog", " completed") })
+                .doOnError { throwable ->
+                    Log.e("RoomDemoActivityLog", "Error Throwable " + throwable.message)
+                }
+                .subscribe({  -> Unit }))
 
     }
 
@@ -157,14 +157,14 @@ class RoomDemoActivity : AppCompatActivity() {
     fun navigateToUpdateRoomItem(){
 
         showProgressBar()
-        //mDisposable.add(mViewModel.updateProductName("namename")
-        //        .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-        //        .observeOn(AndroidSchedulers.mainThread())
-        //        .doOnComplete({  -> Log.d("RoomDemoActivityLog", " completed") })
-        //        .doOnError { throwable ->
-        //            Log.e("RoomDemoActivityLog", "Error Throwable " + throwable.message)
-        //        }
-        //        .subscribe({  -> Unit }))
+        mDisposable.add(mViewModel.updateProductName("namename")
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete({  -> Log.d("RoomDemoActivityLog", " completed") })
+                .doOnError { throwable ->
+                    Log.e("RoomDemoActivityLog", "Error Throwable " + throwable.message)
+                }
+                .subscribe({  -> Unit }))
 
 
     }

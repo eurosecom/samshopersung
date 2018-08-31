@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import io.reactivex.Flowable;
 import io.realm.Realm;
 import rx.Observable;
 import com.eusecom.samshopersung.BasketKt;
@@ -18,7 +19,9 @@ import com.eusecom.samshopersung.R;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
+import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.IdcController;
 import com.eusecom.samshopersung.realm.RealmDomain;
@@ -38,6 +41,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     IRealmController mRealmController;
     IdcController mIdcController;
     MyDatabase mRoomDatabase;
+    IShopperModelsFactory mModelsFactory;
 
     public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
                              @NonNull final ShopperRetrofitService shopperRetrofitService,
@@ -69,10 +73,12 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     public ShopperDataModel(@NonNull final ShopperRetrofitService shopperRetrofitService,
                             @NonNull final ExampleInterceptor interceptor,
-                            @NonNull MyDatabase roomDatabase) {
+                            @NonNull MyDatabase roomDatabase,
+                            @NonNull IShopperModelsFactory modelsFactory) {
         mShopperRetrofitService = shopperRetrofitService;
         mInterceptor = interceptor;
         mRoomDatabase = roomDatabase;
+        mModelsFactory = modelsFactory;
     }
 
     //methods for ChooseCompanyActivity
@@ -457,5 +463,35 @@ public class ShopperDataModel implements ShopperIDataModel {
         return Observable.just(mRealmController.getMyIdcData(fromact));
     }
     //end get my idc from realm in basket
+
+    //methods for RoomDemocActivity
+
+    @Override
+    public Flowable<List<Product>> loadProductsData() {
+
+        return mRoomDatabase.productDao().getRxAll();
+
+    }
+
+    private Product mProduct;
+
+    @Override
+    public void insertOrUpdateProductData(String prodName) {
+
+        mProduct = mModelsFactory.getProductModel();
+        mProduct.setName(prodName);
+        mProduct.setImageUrl("https://picsum.photos/500/500?image=14");
+        mProduct.setPrice(1300);
+
+        mRoomDatabase.productDao().insertProduct(mProduct);
+    }
+
+    @Override
+    public void deleteRxProductByIdData(int prodId) {
+
+        mRoomDatabase.productDao().deleteByUid(prodId);
+
+    }
+
 
 }

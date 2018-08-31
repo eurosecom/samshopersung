@@ -13,10 +13,13 @@ import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
+import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 
 import java.util.List;
+
+import io.reactivex.Flowable;
 import rx.Observable;
 
 public interface ShopperIDataModel {
@@ -91,5 +94,17 @@ public interface ShopperIDataModel {
 
     @NonNull
     public Observable<List<RealmInvoice>> getObservableMyIdc(String fromact);
+
+
+    //methods for RoomDemocActivity
+
+    @NonNull
+    public Flowable<List<Product>> loadProductsData();
+
+    @NonNull
+    public void insertOrUpdateProductData(String prodName);
+
+    @NonNull
+    public void deleteRxProductByIdData(int prodId);
 
 }

@@ -27,5 +27,8 @@ public interface IShopperModelsFactory {
     @NonNull
     public Invoice getInvoice();
 
+    @NonNull
+    public Product getProductModel();
+
 
 }

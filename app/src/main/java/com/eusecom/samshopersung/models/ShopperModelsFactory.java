@@ -62,4 +62,10 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
                 ,"","","","","","",false,0l,"","","","");
     }
 
+    @NonNull
+    public Product getProductModel() {
+
+        return new Product();
+    }
+
 }
