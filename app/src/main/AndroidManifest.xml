@@ -40,7 +40,6 @@
 
         <activity android:name=".MapsActivity"/>
         <activity android:name=".MapActivity"/>
-        <activity android:name=".AlbumsActivity"/>
         <activity android:name=".RoomDemoActivity"/>
         <activity android:name=".FlombulatorActivity"/>
 
