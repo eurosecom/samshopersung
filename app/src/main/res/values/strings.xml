@@ -262,6 +262,7 @@
     <string name="select_transport">Select Transport</string>
     <string name="deliverydate">Delivery Date</string>
     <string name="ordersave">Save Order %s</string>
+    <string name="savedorderdetails">Saved Detail Order %s</string>
     <string name="datedialogpos">Set date</string>
     <string-array name="payment">
         <item>Bankový prevod</item>

@@ -646,6 +646,58 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end get Order Detail
 
+    //save Order Detail
+    public void emitSaveDetailOrder(Invoice invx) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+            mObservableSaveDetailOrder.onNext(invx);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableSaveDetailOrder = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<InvoiceList> getObservableSaveDetailOrder() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
+
+        return mObservableSaveDetailOrder
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx ->
+                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "9", dodx, JsonFromInvoice(invx), invx.getDok(), ustp));
+    }
+
+    public void clearObservableSaveDetailOrder() {
+
+        mObservableSaveDetailOrder = BehaviorSubject.create();
+
+    }
+    //end save Order Detail
+
 
     //delete Invoice
     public void emitDeleteInvoice(Invoice invx) {
@@ -813,6 +865,25 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return jsonstring;
     }
     //end JSON from Product
+
+    //JSON from Invoice
+    public String JsonFromInvoice(Invoice invx) {
+
+        String jsonstring = "{" +
+                "  \"drh\":" + "\"" + invx.getDrh() + "\"" +
+                ", \"dok\":" + "\"" + invx.getDok() + "\"" +
+                ", \"ico\":" + "\"" + invx.getIco() + "\"" +
+                ", \"nai\":" + "\"" + invx.getNai() + "\"" +
+                ", \"zk0\":" + "\"" + invx.getZk0() + "\"" +
+                ", \"zk1\":" + "\"" + invx.getZk1() + "\"" +
+                ", \"zk2\":" + "\"" + invx.getZk2() + "\"" +
+                ", \"dn1\":" + "\"" + invx.getDn1() + "\"" +
+                ", \"dn2\":" + "\"" + invx.getDn2() + "\"" +
+                " }";
+
+        return jsonstring;
+    }
+    //end JSON from Invoice
 
     //get PDF invoice
     public void emitGetPdfInvoice(Invoice order) {

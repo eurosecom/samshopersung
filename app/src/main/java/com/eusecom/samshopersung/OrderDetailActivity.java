@@ -164,6 +164,7 @@ public class OrderDetailActivity extends BaseActivity {
     private void unBind() {
 
         mViewModel.clearObservableIdModelCompany();
+        mViewModel.clearObservableSaveDetailOrder();
         mSubscription.clear();
         subscriptionSave.unsubscribe();
 
@@ -195,6 +196,17 @@ public class OrderDetailActivity extends BaseActivity {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setDetailOrder));
 
+        //saved Order Detail from MySql emited in onCreate
+        mSubscription.add(mViewModel.getObservableSaveDetailOrder()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error OrderDetailActivity " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setSavedDetailOrder));
+
         //save orders detail to MySql
         subscriptionSave = RxView.clicks(btnSave)
                 .debounce(300, TimeUnit.MILLISECONDS)
@@ -214,29 +226,19 @@ public class OrderDetailActivity extends BaseActivity {
                     public void onNext(Object o) {
 
                         //Log.d("NewInvDoc", "Clicked save ");
-                        //Toast.makeText(NewIdcActivity.this, "Clicked save", Toast.LENGTH_SHORT).show();
 
-                        List<RealmInvoice> realminvoices = new ArrayList<>();
-                        RealmInvoice realminvoice = new RealmInvoice();
-                        realminvoice.setDrh("99");
-                        realminvoice.setUce("");
-                        realminvoice.setDok(inputIco.getText().toString());
-                        realminvoice.setIco(inputIco.getText().toString());
-                        realminvoice.setNai(inputNai.getText().toString());
-                        realminvoice.setZk0(inputEid.getText().toString());
-                        realminvoice.setFak("0");
-                        realminvoice.setPoh("0");
-                        realminvoice.setSaved("false");
-                        realminvoices.add(realminvoice);
+                        Invoice invoice = mModelsFactory.getInvoice();
+                        invoice.setDrh("9");
+                        invoice.setDok(order);
+                        invoice.setIco(inputIco.getText().toString());
+                        invoice.setNai(inputNai.getText().toString());
+                        invoice.setZk0(datex.getText().toString());
+                        invoice.setZk1(inputEid.getText().toString());
+                        invoice.setZk2(String.valueOf(xpay));
+                        invoice.setDn1(String.valueOf(xstate));
+                        invoice.setDn2(String.valueOf(xtrans));
 
-                        Log.d("NewIdc ", realminvoice.getDok());
-
-                        SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putString("mfir", inputIco.getText().toString()).apply();
-                        editor.putString("mfirnaz", inputNai.getText().toString()).apply();
-                        editor.commit();
-
-                        //mViewModel.emitSaveOrderDetailToSql(realminvoices);
+                        mViewModel.emitSaveDetailOrder(invoice);
 
                     }
                 });
@@ -259,6 +261,13 @@ public class OrderDetailActivity extends BaseActivity {
         hideProgressBar();
     }
 
+    private void setSavedDetailOrder(@NonNull final InvoiceList detail) {
+
+
+        Toast.makeText(this, String.format(getResources().getString(R.string.savedorderdetails), order), Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
     private void setDetailOrder(@NonNull final InvoiceList detail) {
 
         Log.d("order detail", detail.getInvoice().get(0).getIco());
@@ -273,8 +282,9 @@ public class OrderDetailActivity extends BaseActivity {
             spinnTrans.setSelection(Integer.valueOf(detx.getDn2()));
             spinnState.setSelection(Integer.valueOf(detx.getDn1()));
             xpay = Integer.valueOf(detx.getZk2());
-            xtrans = Integer.valueOf(detx.getDn2());
             xstate = Integer.valueOf(detx.getDn1());
+            xtrans = Integer.valueOf(detx.getDn2());
+
 
 
 

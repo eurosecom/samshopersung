@@ -296,6 +296,7 @@ public class ShopperDataModel implements ShopperIDataModel {
         System.out.println("order drh " + drh);
         System.out.println("order uce " + ucex);
         System.out.println("order ustp " + ustp);
+        System.out.println("order umex " + umex);
         setRetrofit(servername);
         return mShopperRetrofitService.getOrdersFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx, ustp);
 
