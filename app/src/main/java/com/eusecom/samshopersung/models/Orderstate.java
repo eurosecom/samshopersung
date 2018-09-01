@@ -9,32 +9,32 @@ import android.arch.persistence.room.PrimaryKey;
  */
 
 @Entity
-public class Payment {
+public class Orderstate {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "pay")
-    private int pay;
+    @ColumnInfo(name = "ost")
+    private int ost;
 
-    @ColumnInfo(name = "nap")
-    private String nap;
+    @ColumnInfo(name = "nas")
+    private String nas;
 
     @ColumnInfo(name = "prm1")
     private int prm1;
 
-    public int getPay() {
-        return pay;
+    public int getOst() {
+        return ost;
     }
 
-    public void setPay(int pay) {
-        this.pay = pay;
+    public void setOst(int ost) {
+        this.ost = ost;
     }
 
-    public String getNap() {
-        return nap;
+    public String getNas() {
+        return nas;
     }
 
-    public void setNap(String nap) {
-        this.nap = nap;
+    public void setNas(String nas) {
+        this.nas = nas;
     }
 
     public int getPrm1() {

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.eusecom.samshopersung.models.Account;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
@@ -42,7 +41,8 @@ public class OrderDetailActivity extends BaseActivity {
     Spinner spinnState, spinnPay, spinnTrans;
     String order="0";
     Button btnSave, btnIco, datebutton;
-    protected ArrayAdapter<Account> mAdapter;
+    protected ArrayAdapter<Account> mPayAdapter, mTransAdapter, mOstateAdapter;
+    private int xpay, xtrans, xstate;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -74,6 +74,8 @@ public class OrderDetailActivity extends BaseActivity {
         inputEid = (EditText) findViewById(R.id.inputEid);
         datex = (EditText) findViewById(R.id.datex);
         spinnPay = (Spinner) findViewById(R.id.spinnPay);
+        spinnTrans = (Spinner) findViewById(R.id.spinnTrans);
+        spinnState = (Spinner) findViewById(R.id.spinnState);
 
         //inputIco.setText(mSharedPreferences.getString("mfir", ""));
         //inputNai.setText(mSharedPreferences.getString("mfirnaz", ""));
@@ -106,15 +108,38 @@ public class OrderDetailActivity extends BaseActivity {
             }
         });
 
-        ArrayList<Account> pohybys = new ArrayList<>();
-        pohybys.add(new Account("Payment 1", "1", "", "", "", "","true"));
-        pohybys.add(new Account("Payment 2", "2", "", "", "", "","true"));
-        pohybys.add(new Account("Payment 3", "3", "", "", "", "","true"));
-        pohybys.add(new Account("Payment 4", "4", "", "", "", "","true"));
-        pohybys.add(new Account("Payment 5", "5", "", "", "", "","true"));
-        setPaySpinner(pohybys);
+        ArrayList<Account> pays = new ArrayList<>();
+        String[] payArray = getResources().getStringArray(R.array.payment);
+        for(int ix = 0;ix<payArray.length; ix++)
+        {
 
+            pays.add(new Account( payArray[ix], ix + "", "", "", "", "","true"));
 
+        }
+
+        setPaySpinner(pays);
+
+        ArrayList<Account> transes = new ArrayList<>();
+        String[] transArray = getResources().getStringArray(R.array.transport);
+        for(int ix = 0;ix<transArray.length; ix++)
+        {
+
+            transes.add(new Account( transArray[ix], ix + "", "", "", "", "","true"));
+
+        }
+
+        setTransSpinner(transes);
+
+        ArrayList<Account> states = new ArrayList<>();
+        String[] stateArray = getResources().getStringArray(R.array.orderstate);
+        for(int ix = 0;ix<stateArray.length; ix++)
+        {
+
+            states.add(new Account( stateArray[ix], ix + "", "", "", "", "","true"));
+
+        }
+
+        setOstateSpinner(states);
     }
 
 
@@ -244,26 +269,17 @@ public class OrderDetailActivity extends BaseActivity {
             inputNai.setText(detx.getNai());
             inputEid.setText(detx.getZk1());
             datex.setText(detx.getZk0());
-            //spinnPay.setSelection(2);
-            String payx = detx.getZk2() + " Payment " + detx.getZk2();
-            spinnPay.setSelection(getIndex(spinnPay, payx));
-
+            spinnPay.setSelection(Integer.valueOf(detx.getZk2()));
+            spinnTrans.setSelection(Integer.valueOf(detx.getDn2()));
+            spinnState.setSelection(Integer.valueOf(detx.getDn1()));
+            xpay = Integer.valueOf(detx.getZk2());
+            xtrans = Integer.valueOf(detx.getDn2());
+            xstate = Integer.valueOf(detx.getDn1());
 
 
 
         }
         hideProgressBar();
-    }
-
-    //private method of your class
-    private int getIndex(Spinner spinner, String myString){
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
-                return i;
-            }
-        }
-
-        return 0;
     }
 
 
@@ -323,19 +339,77 @@ public class OrderDetailActivity extends BaseActivity {
                 pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", "","true"));
             }
 
-            mAdapter = new ArrayAdapter<Account>(this, android.R.layout.simple_spinner_item, pohybys);
-            mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnPay.setAdapter(mAdapter);
-            //if(_inputPoh.getText().toString().equals("")) { _inputPoh.setText(pohyby.get(0).getAccnumber()); }
-            //if(_inputPoh.getText().toString().equals("0")) { _inputPoh.setText(pohyby.get(0).getAccnumber()); }
+            mPayAdapter = new ArrayAdapter<Account>(this, android.R.layout.simple_spinner_item, pohybys);
+            mPayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnPay.setAdapter(mPayAdapter);
             spinnPay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view,
                                            int position, long id) {
                     // Here you get the current item (a User object) that is selected by its position
-                    Account account = mAdapter.getItem(position);
-                    //_inputPoh.setText(account.getAccnumber());
+                    Account account = mPayAdapter.getItem(position);
+                    xpay = Integer.valueOf(account.getAccnumber());
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapter) {  }
+            });
+
+        }
+
+    }
+
+    private void setTransSpinner(@NonNull final List<Account> pohyby) {
+
+        if (pohyby.size() > 0) {
+
+            ArrayList<Account> pohybys = new ArrayList<>();
+
+            for (int i = 0; i < pohyby.size(); i++) {
+                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", "","true"));
+            }
+
+            mTransAdapter = new ArrayAdapter<Account>(this, android.R.layout.simple_spinner_item, pohybys);
+            mTransAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnTrans.setAdapter(mTransAdapter);
+            spinnTrans.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view,
+                                           int position, long id) {
+                    // Here you get the current item (a User object) that is selected by its position
+                    Account account = mTransAdapter.getItem(position);
+                    xtrans = Integer.valueOf(account.getAccnumber());
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapter) {  }
+            });
+
+        }
+
+    }
+
+    private void setOstateSpinner(@NonNull final List<Account> pohyby) {
+
+        if (pohyby.size() > 0) {
+
+            ArrayList<Account> pohybys = new ArrayList<>();
+
+            for (int i = 0; i < pohyby.size(); i++) {
+                pohybys.add(new Account(pohyby.get(i).getAccname(), pohyby.get(i).getAccnumber(), "", "", "", "","true"));
+            }
+
+            mOstateAdapter = new ArrayAdapter<Account>(this, android.R.layout.simple_spinner_item, pohybys);
+            mOstateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnState.setAdapter(mOstateAdapter);
+            spinnState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view,
+                                           int position, long id) {
+                    // Here you get the current item (a User object) that is selected by its position
+                    Account account = mOstateAdapter.getItem(position);
+                    xstate = Integer.valueOf(account.getAccnumber());
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> adapter) {  }

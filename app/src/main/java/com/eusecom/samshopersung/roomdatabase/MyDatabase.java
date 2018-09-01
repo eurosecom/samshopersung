@@ -6,16 +6,19 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.arch.persistence.room.migration.Migration;
 
+import com.eusecom.samshopersung.models.Orderstate;
 import com.eusecom.samshopersung.models.Payment;
 import com.eusecom.samshopersung.models.Pet;
 import com.eusecom.samshopersung.models.Product;
+import com.eusecom.samshopersung.models.Transport;
 
 
 /**
- * Created by gonzalo on 7/14/17
+ * Created by eurosecom
  */
 
-@Database(entities = {Product.class, Pet.class, Payment.class}, version = 3)
+
+@Database(entities = {Product.class, Pet.class, Payment.class, Orderstate.class, Transport.class }, version = 3)
 @TypeConverters({DateTypeConverter.class})
 public abstract class MyDatabase extends RoomDatabase {
     public abstract ProductDao productDao();

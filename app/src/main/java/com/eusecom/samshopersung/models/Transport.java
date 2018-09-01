@@ -9,32 +9,32 @@ import android.arch.persistence.room.PrimaryKey;
  */
 
 @Entity
-public class Payment {
+public class Transport {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "pay")
-    private int pay;
+    @ColumnInfo(name = "trans")
+    private int trans;
 
-    @ColumnInfo(name = "nap")
-    private String nap;
+    @ColumnInfo(name = "nat")
+    private String nat;
 
     @ColumnInfo(name = "prm1")
     private int prm1;
 
-    public int getPay() {
-        return pay;
+    public int getTrans() {
+        return trans;
     }
 
-    public void setPay(int pay) {
-        this.pay = pay;
+    public void setTrans(int trans) {
+        this.trans = trans;
     }
 
-    public String getNap() {
-        return nap;
+    public String getNat() {
+        return nat;
     }
 
-    public void setNap(String nap) {
-        this.nap = nap;
+    public void setNat(String nat) {
+        this.nat = nat;
     }
 
     public int getPrm1() {

@@ -5,8 +5,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
- * Created by gonzalo on 7/14/17
+ * Created by eurosecom
  */
+
 
 @Entity
 public class Product {

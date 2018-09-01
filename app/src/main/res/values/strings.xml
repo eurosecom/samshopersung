@@ -261,7 +261,24 @@
     <string name="transport">Transport</string>
     <string name="select_transport">Select Transport</string>
     <string name="deliverydate">Delivery Date</string>
-    <string name="ordersave">Order %s save</string>
+    <string name="ordersave">Save Order %s</string>
     <string name="datedialogpos">Set date</string>
+    <string-array name="payment">
+        <item>Bankový prevod</item>
+        <item>Hotovosť/dobierka</item>
+        <item>Platba kartou</item>
+        <item>Dodací list</item>
+    </string-array>
+    <string-array name="transport">
+        <item>Doprava plánovaný rozvoz</item>
+        <item>Kuriér GLS</item>
+        <item>Kuriér Toptrans</item>
+        <item>Osobný odber</item>
+    </string-array>
+    <string-array name="orderstate">
+        <item>Zaplatené</item>
+        <item>Čakáme na úhradu</item>
+        <item>Platba pri dovoze </item>
+    </string-array>
 
 </resources>
