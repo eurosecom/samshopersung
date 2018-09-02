@@ -729,6 +729,7 @@ class OfferKtActivity : AppCompatActivity() {
             val re = scanResult.contents
             //andrejko inputEan?.setText(re)
             toast( getString(R.string.popisean) + " " + re )
+            querystring = re
         }
 
     }
