@@ -157,11 +157,11 @@ class MainShopperActivity : AppCompatActivity() {
 
             }
             divider {}
-            primaryItem("Primary item") {
+            primaryItem(getString(R.string.offer)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    //navigateToAccountReportsKt()
+                    navigateToOfferKt()
                     false
                 }
 
@@ -169,13 +169,26 @@ class MainShopperActivity : AppCompatActivity() {
 
 
             divider {}
-            secondaryItem("Secondary item") {
+            secondaryItem(getString(R.string.orders)) {
 
                 onClick { _ ->
-                    //Log.d("DRAWER", "Click.")
-                    //navigateToSaldoCustomerKt()
+                    navigateToOrder()
                     false
                 }
+            }
+
+            if (BuildConfig.DEBUG) {
+
+                divider {}
+                secondaryItem("Scan EAN DEMO ") {
+
+                    onClick { _ ->
+                        navigateToScanEanDemo()
+                        false
+                    }
+                }
+            }else {
+
             }
 
             if (BuildConfig.DEBUG) {
@@ -332,6 +345,12 @@ class MainShopperActivity : AppCompatActivity() {
         val servx = prefs.getString("servername", "")
         toast("servername " + servx)
         val `is` = Intent(this, RoomDemoActivity::class.java)
+        startActivity(`is`)
+    }
+
+    fun navigateToScanEanDemo() {
+
+        val `is` = Intent(this, ScanEanKtActivity::class.java)
         startActivity(`is`)
     }
 

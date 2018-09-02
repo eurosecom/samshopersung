@@ -48,6 +48,7 @@
     <string name="basket">Basket</string>
     <string name="reports">Reports</string>
     <string name="offer">Offer</string>
+    <string name="mixed">Mixed</string>
 
 
     //firebase auth
@@ -281,5 +282,19 @@
         <item>Čakáme na úhradu</item>
         <item>Platba pri dovoze </item>
     </string-array>
+
+    //scaneanactivity
+    <string name="popisean">EAN</string>
+    <string name="popisfak">Invoice number</string>
+    <string name="popiscis">Number</string>
+    <string name="popishod">Value</string>
+    <string name="popiseditname">Name</string>
+    <string name="popiseditprice">Price</string>
+    <string name="popiseditmnoz">Quantity</string>
+    <string name="popiseditmj">unit</string>
+    <string name="scan">Scan</string>
+    <string name="popiseditsave">Save</string>
+    <string name="popisbtnpoznamka">Note</string>
+    <string name="popisbtnfakturuj">Invoice</string>
 
 </resources>

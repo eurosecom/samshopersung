@@ -48,6 +48,7 @@
     <string name="basket">Košík</string>
     <string name="reports">Zostavy</string>
     <string name="offer">Ponuka</string>
+    <string name="mixed">Rôzne</string>
 
 
     //firebase auth

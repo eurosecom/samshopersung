@@ -55,4 +55,9 @@
     <dimen name="detail_image">300dp</dimen>
     <dimen name="detail2_image">500dp</dimen>
 
+    <!-- Scan demo -->
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
 </resources>

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!-- The ACCESS_COARSE/FINE_LOCATION permissions are not required to use Google Maps Android API v2, but you must specify either coarse or fine location permissions for the 'MyLocation' functionality. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name="SamshopperApp"
@@ -38,6 +39,8 @@
         <activity android:name=".NewIdcActivity"/>
         <activity android:name=".OrderDetailActivity"/>
 
+        <activity android:name=".ScanEanActivity"/>
+        <activity android:name=".ScanEanKtActivity"/>
         <activity android:name=".MapsActivity"/>
         <activity android:name=".MapActivity"/>
         <activity android:name=".RoomDemoActivity"/>
