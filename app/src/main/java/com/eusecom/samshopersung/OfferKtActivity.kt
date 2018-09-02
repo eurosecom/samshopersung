@@ -1,15 +1,20 @@
 package com.eusecom.samshopersung
 
+import android.Manifest
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Rect
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.*
 import android.support.v7.widget.SearchView
@@ -27,6 +32,7 @@ import co.zsmb.materialdrawerkt.draweritems.sectionHeader
 import com.bumptech.glide.Glide
 import com.eusecom.samshopersung.di.ShopperScope
 import com.eusecom.samshopersung.rxbus.RxBus
+import com.google.zxing.integration.android.IntentIntegrator
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
@@ -71,6 +77,7 @@ class OfferKtActivity : AppCompatActivity() {
     private var productList: MutableList<ProductKt>? = null
     private var offersubtitle: TextView? = null
 
+
     //searchview
     private var searchView: SearchView? = null
     private var menuItem: MenuItem? = null
@@ -101,6 +108,8 @@ class OfferKtActivity : AppCompatActivity() {
     private var mcount: String = "0"
     protected var isCollapsed: Boolean = true
 
+    private val PERMISSION_REQUEST_CODE = 1000
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AndroidInjection.inject(this);
@@ -118,6 +127,11 @@ class OfferKtActivity : AppCompatActivity() {
         recyclerView = findViewById<View>(R.id.recycler_view) as RecyclerView
         mProgressBar = findViewById<View>(R.id.progress_bar) as ProgressBar
         offersubtitle = findViewById<View>(R.id.offersubtitle) as TextView
+
+        fab.setOnClickListener {
+            val integrator = IntentIntegrator(this@OfferKtActivity)
+            integrator.initiateScan()
+        }
 
         _disposables = CompositeDisposable()
 
@@ -231,6 +245,18 @@ class OfferKtActivity : AppCompatActivity() {
         } else {
             emitMyQueryProductsFromSqlServer(querystring)
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(checkPermission()){
+
+            }else{
+                requestPermission()
+            }
+        }else{
+
+        }
+
+
     }
 
     private fun bind() {
@@ -694,5 +720,41 @@ class OfferKtActivity : AppCompatActivity() {
                 .filter { query -> query.length >= 3 || query.equals("")}.debounce(400, TimeUnit.MILLISECONDS)  // add this line
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+        val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (scanResult != null) {
+            val re = scanResult.contents
+            //andrejko inputEan?.setText(re)
+            toast( getString(R.string.popisean) + " " + re )
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+                //permission is OK
+
+            }
+        }
+    }
+
+    private fun checkPermission(): Boolean {
+        val result = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION)
+        val result1 = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.CAMERA)
+
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermission() {
+
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_REQUEST_CODE)
+
+    }
 
 }
