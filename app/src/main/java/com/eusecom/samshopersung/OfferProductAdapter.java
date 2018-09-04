@@ -75,7 +75,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
         holder.count.setText(prod.getCed() + " €");
         holder.count1.setText(prod.getCed1() + " €");
 
-        String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
+        String imageurl = Constants.IMAGE_URL + prod.getCis();
         // loading prod cover using Glide library
         //Glide.with(mContext).load(imageurl).into(holder.thumbnail);
 

@@ -33,7 +33,7 @@ class BasketKtAdapter(var myAndroidOSList: MutableList<BasketKt>, val listener: 
             itemView.count.text = myAndroidOS.xmno + " x "
             itemView.count1.text = myAndroidOS.xced + " €"
 
-            val imageurl = "https://picsum.photos/500/500?image=" + myAndroidOS.xcis
+            val imageurl = Constants.IMAGE_URL + myAndroidOS.xcis
             // loading prod cover using Glide library
             Glide.with(itemView.context).load(imageurl).into(itemView.thumbnail)
 

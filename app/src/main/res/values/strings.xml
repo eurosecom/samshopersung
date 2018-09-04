@@ -147,6 +147,8 @@
     <string name="newdok_title">0=no, 1=yes</string>
     <string name="edidok_summary">Number of edited documet, IDC, product 0=no edited item</string>
     <string name="edidok_title">Edit document, IDC, product.</string>
+    <string name="storimg_summary">0=demo resource, 1=images on storage server</string>
+    <string name="storimg_title">Resource for storage images.</string>
 
     //choosecompanyactivity
     <string name="choosecompany">Choose eShop</string>
@@ -296,5 +298,11 @@
     <string name="popiseditsave">Save</string>
     <string name="popisbtnpoznamka">Note</string>
     <string name="popisbtnfakturuj">Invoice</string>
+
+    //accountreportsactivity
+    <string name="storelist">Storage card</string>
+    <string name="newstorageitem">New storage item</string>
+    <string name="setimage">Set storage image</string>
+    <string name="setean">Set storage EAN</string>
 
 </resources>

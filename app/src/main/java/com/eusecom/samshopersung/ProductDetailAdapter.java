@@ -76,7 +76,7 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
         holder.desc1.setText(prod.getDesc());
         holder.ean.setText("EAN " + prod.getEan());
 
-        String imageurl = "https://picsum.photos/500/500?image=" + prod.getCis();
+        String imageurl = Constants.IMAGE_URL + prod.getCis();
         // loading prod cover using Glide library
         //Glide.with(mContext).load(imageurl).into(holder.thumbnail);
 

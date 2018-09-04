@@ -38,6 +38,7 @@
         <activity android:name=".ProductDetailActivity"/>
         <activity android:name=".NewIdcActivity"/>
         <activity android:name=".OrderDetailActivity"/>
+        <activity android:name=".AccountReportsActivity"/>
 
         <activity android:name=".ScanEanActivity"/>
         <activity android:name=".ScanEanKtActivity"/>

@@ -87,7 +87,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         button5.setOnClickListener {
-            _ -> //navigateToGeneralList()
+            _ -> navigateToAccountReportsKt()
         }
 
         buttonFir.setOnClickListener {
@@ -95,8 +95,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         imageView.setOnClickListener {
-            //_ -> navigateToAccountReportsKtnocontrol()
-            _ -> //navigateToAccountReportsKt()
+            _ -> navigateToBasketKt()
         }
 
         //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
@@ -459,6 +458,30 @@ class MainShopperActivity : AppCompatActivity() {
 
                 val `is` = Intent(this, NewIdcActivity::class.java)
                 startActivity(`is`)
+            }
+
+        }
+
+    }
+
+    fun navigateToAccountReportsKt(){
+
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotcompanyAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, AccountReportsActivity::class.java)
+                val extras = Bundle()
+                extras.putString("reports", "0")
+                `is`.putExtras(extras)
+                startActivity(`is`)
+                //startActivity<AccountReportsActivity>()
             }
 
         }

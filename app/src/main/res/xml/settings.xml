@@ -220,4 +220,11 @@
         android:summary="@string/mfirnaz_summary"
         android:title="@string/mfirnaz_title" />
 
+    <EditTextPreference
+        android:key="wimage"
+        android:defaultValue="0"
+        android:enabled="true"
+        android:summary="@string/storimg_summary"
+        android:title="@string/storimg_title" />
+
 </PreferenceScreen>
