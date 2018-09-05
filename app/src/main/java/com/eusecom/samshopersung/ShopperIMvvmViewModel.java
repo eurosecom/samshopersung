@@ -207,4 +207,16 @@ public interface ShopperIMvvmViewModel {
     public Completable deleteRxProductById(final int prodId);
 
 
+    //methods for SetImageActivity
+
+    @NonNull
+    public void emitUploadImageToServer(String prodx);
+
+    @NonNull
+    public Observable<SetImageServerResponse> getUploadImageToServer();
+
+    @NonNull
+    public void clearUploadImageToServe();
+
+
 }

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import io.reactivex.Flowable;
 import io.realm.Realm;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
@@ -16,6 +18,7 @@ import com.eusecom.samshopersung.IdCompanyKt;
 import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.R;
+import com.eusecom.samshopersung.SetImageServerResponse;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
@@ -494,5 +497,12 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     }
 
+    //methods for SetImageActivity
+    @NonNull
+    public Observable<SetImageServerResponse> uploadImageToServer(String servername, MultipartBody.Part file, RequestBody name){
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.uploadImageFile(file, name);
+    }
 
 }

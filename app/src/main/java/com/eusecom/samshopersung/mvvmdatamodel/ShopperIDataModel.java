@@ -9,6 +9,7 @@ import com.eusecom.samshopersung.CompanyKt;
 import com.eusecom.samshopersung.IdCompanyKt;
 import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.ProductKt;
+import com.eusecom.samshopersung.SetImageServerResponse;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
@@ -20,6 +21,8 @@ import com.eusecom.samshopersung.realm.RealmInvoice;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 
 public interface ShopperIDataModel {
@@ -106,5 +109,11 @@ public interface ShopperIDataModel {
 
     @NonNull
     public void deleteRxProductByIdData(int prodId);
+
+
+    //methods for SetImageActivity
+
+    @NonNull
+    public Observable<SetImageServerResponse> uploadImageToServer(String servername, MultipartBody.Part file, RequestBody name);
 
 }

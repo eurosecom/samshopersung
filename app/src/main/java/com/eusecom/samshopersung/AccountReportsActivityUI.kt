@@ -49,7 +49,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                     id = R.id.rep02
                     textResource = R.string.setimage
                     onClick {
-
+                        startActivity<SetImageActivity>()
                     }
                 }.lparams {
                     width = matchParent

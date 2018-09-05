@@ -17,12 +17,16 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
@@ -1139,6 +1143,82 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             mDataModel.deleteRxProductByIdData(prodId);
         });
     }
+
+    //end methods for RoomDemocActivity
+
+
+    //methods for SetImageActivity
+
+    //upload image to server
+    public void emitUploadImageToServer(String mediaPath) {
+
+        mObservableUploadImageToServer.onNext(mediaPath);
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableUploadImageToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<SetImageServerResponse> getUploadImageToServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted3=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableUploadImageToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(mediaPath -> mDataModel.uploadImageToServer(serverx, getFileToUpload(mediaPath), getFileName(mediaPath)));
+    }
+
+    private MultipartBody.Part getFileToUpload(String mediaPath) {
+        // Map is used to multipart the file using okhttp3.RequestBody
+        File file = new File(mediaPath);
+        // Parsing any Media type file
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        return fileToUpload;
+    }
+
+    private RequestBody getFileName(String mediaPath) {
+        // Map is used to multipart the file using okhttp3.RequestBody
+        File file = new File(mediaPath);
+        // Parsing any Media type file
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        return filename;
+    }
+
+    public void clearUploadImageToServe() {
+
+        mObservableUploadImageToServer = BehaviorSubject.create();
+
+    }
+    //end upload image to server
+
+    //end methods for SetImageActivity
 
 
 }
