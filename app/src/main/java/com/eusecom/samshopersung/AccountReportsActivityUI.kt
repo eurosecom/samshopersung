@@ -21,7 +21,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
 
             button() {
                 id = R.id.rep00
-                textResource = R.string.storelist
+                textResource = R.string.choosestorageitem
                 onClick {
                     //startActivity<ChooseMonthActivity>()
                 }
@@ -35,7 +35,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
 
                 button() {
                     id = R.id.rep01
-                    textResource = R.string.newstorageitem
+                    textResource = R.string.storelist
                     onClick {
 
                     }
@@ -69,6 +69,17 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                     below(R.id.rep02)
                 }
 
+                button() {
+                    id = R.id.rep04
+                    textResource = R.string.newstorageitem
+                    onClick {
+
+                    }
+                }.lparams {
+                    width = matchParent
+                    height = wrapContent
+                    below(R.id.rep03)
+                }
 
 
             }//report 0

@@ -14,20 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-import java.io.File;
-import java.util.List;
-
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
@@ -68,7 +58,6 @@ public class SetImageActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //uploadFile();
                 rxUploadFile();
             }
         });
@@ -114,45 +103,7 @@ public class SetImageActivity extends AppCompatActivity {
 
     }
 
-    
 
-    // Uploading Image/Video
-    private void uploadFile() {
-        progressDialog.show();
-
-        // Map is used to multipart the file using okhttp3.RequestBody
-        File file = new File(mediaPath);
-
-        // Parsing any Media type file
-        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-
-        SetImageApiService getResponse = SetImageApiClient.getClient().create(SetImageApiService.class);
-        Call<SetImageServerResponse> call = getResponse.uploadFile(fileToUpload, filename);
-        call.enqueue(new Callback<SetImageServerResponse>() {
-            @Override
-            public void onResponse(Call<SetImageServerResponse> call, Response<SetImageServerResponse> response) {
-                SetImageServerResponse serverResponse = response.body();
-                if (serverResponse != null) {
-                    if (serverResponse.getSuccess()) {
-                        Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    assert serverResponse != null;
-                    Log.v("Response", serverResponse.toString());
-                }
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<SetImageServerResponse> call, Throwable t) {
-
-            }
-        });
-    }
 
     @Override
     public void onDestroy() {

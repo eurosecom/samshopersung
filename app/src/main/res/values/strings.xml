@@ -301,8 +301,13 @@
 
     //accountreportsactivity
     <string name="storelist">Storage card</string>
+    <string name="choosestorageitem">Choose storage item</string>
     <string name="newstorageitem">New storage item</string>
     <string name="setimage">Set storage image</string>
     <string name="setean">Set storage EAN</string>
+    <string name="imagegallery">Pick Image from Gallery</string>
+    <string name="imagetoserver">Upload Image to Server</string>
+
+
 
 </resources>

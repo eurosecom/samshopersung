@@ -15,17 +15,17 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
-        android:background="@android:color/holo_green_light"/>
+        android:background="@color/grey_100"/>
 
     <Button
         android:id="@+id/pick_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pick Image" />
+        android:text="@string/imagegallery" />
 
     <Button
         android:id="@+id/upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload" />
+        android:text="@string/imagetoserver" />
 </LinearLayout>
