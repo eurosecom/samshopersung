@@ -11,7 +11,7 @@ import dagger.Provides;
 public class ProductDetailKtFragmentModule {
 
     @Provides
-    public ProductDetail2Adapter providesProductDetailAdapter(ProductDetailActivity activity,
+    public ProductDetail2Adapter providesProductDetail2Adapter(ProductDetailActivity activity,
                                                               RxBus rxbus, Picasso picasso) {
         return new ProductDetail2Adapter(activity, rxbus, picasso);
     }
