@@ -74,7 +74,7 @@ public abstract class ActivityBuilder {
     abstract OrderListActivity bindOrderListActivity();
 
     @ShopperScope
-    @ContributesAndroidInjector(modules = {FlombulatorModule.class })
+    @ContributesAndroidInjector(modules = {FlombulatorModule.class})
     abstract FlombulatorActivity bindFlombulatorActivity();
 
     @ShopperScope
@@ -83,18 +83,18 @@ public abstract class ActivityBuilder {
     abstract ProductDetailActivity bindProductDetailActivity();
 
     @ShopperScope
-    @ContributesAndroidInjector(modules = {NewIdcActivityModule.class })
+    @ContributesAndroidInjector(modules = {NewIdcActivityModule.class})
     abstract NewIdcActivity bindNewIdcActivity();
 
     @ShopperScope
-    @ContributesAndroidInjector(modules = {NewIdcActivityModule.class })
+    @ContributesAndroidInjector(modules = {NewIdcActivityModule.class})
     abstract OrderDetailActivity bindOrderDetailActivity();
 
     @ShopperScope
-    @ContributesAndroidInjector(modules = {RoomDemoActivityModule.class })
+    @ContributesAndroidInjector(modules = {RoomDemoActivityModule.class})
     abstract RoomDemoActivity bindRoomDemoActivity();
 
     @ShopperScope
-    @ContributesAndroidInjector(modules = {RoomDemoActivityModule.class })
+    @ContributesAndroidInjector(modules = {RoomDemoActivityModule.class})
     abstract SetImageActivity bindSetImageActivity();
 }

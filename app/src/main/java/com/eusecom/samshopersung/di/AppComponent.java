@@ -20,8 +20,8 @@ public interface AppComponent {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance Builder application(Application application);
-        AppComponent build();
+        @BindsInstance Builder app2lication(Application application); //app2lication is builder name in SamshopperApp.java
+        AppComponent build(); //AppComponent is DaggerAppComponent in SamshopperApp.java
     }
 
     void inject(SamshopperApp app);

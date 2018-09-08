@@ -74,7 +74,7 @@ public class SamshopperApp extends MultiDexApplication implements HasActivityInj
         //dagger 2.11
         DaggerAppComponent
                 .builder()
-                .application(this)
+                .app2lication(this)
                 .build()
                 .inject(this);
 
