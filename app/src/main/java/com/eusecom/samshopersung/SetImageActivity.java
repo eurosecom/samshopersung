@@ -14,6 +14,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.eusecom.samshopersung.models.Product;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import rx.schedulers.Schedulers;
@@ -31,6 +37,9 @@ public class SetImageActivity extends AppCompatActivity {
 
     @Inject
     ShopperIMvvmViewModel mViewModel;
+
+    @Inject
+    SetImageAdapter mAdapter;
 
     Button btnUpload, btnPickImage;
     String mediaPath;
@@ -70,6 +79,13 @@ public class SetImageActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, 0);
             }
         });
+
+        List<Product> prods = new ArrayList<Product>();
+        Product prod = new Product();
+        prod.setUid(1);
+        prod.setName("name 1");
+        prods.add(prod);
+        mAdapter.setDataToAdapter(prods);
 
     }
 

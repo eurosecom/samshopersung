@@ -95,6 +95,6 @@ public abstract class ActivityBuilder {
     abstract RoomDemoActivity bindRoomDemoActivity();
 
     @ShopperScope
-    @ContributesAndroidInjector(modules = {RoomDemoActivityModule.class})
+    @ContributesAndroidInjector(modules = {SetImageActivityModule.class})
     abstract SetImageActivity bindSetImageActivity();
 }
