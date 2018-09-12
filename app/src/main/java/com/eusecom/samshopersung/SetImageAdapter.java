@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetImageViewHolder> {
 
-    private List<Product> mList;
+    private List<ProductKt> mList;
     @Inject
     public RxBus mRxBus;
     @Inject
@@ -31,7 +31,7 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
 
     @Override
     public SetImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_category,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chosenitem,parent,false);
 
         return new SetImageViewHolder(view);
     }
@@ -39,23 +39,22 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
     @Override
     public void onBindViewHolder(SetImageViewHolder holder, int position) {
 
-        holder.invoice_name.setText(mList.get(position).getName() + " " + mList.get(position).getPrice());
+        holder.invoice_name.setText(mList.get(position).getNat());
 
-        String imageurl = mList.get(position).getImageUrl();
-        //Log.d("SetImageActivityLog", "" + Picasso.with(holder.mContext).toString());
+        String imageurl = Constants.IMAGE_URL + mList.get(position).getCis();
         mPicasso.with(holder.mContext).load(imageurl).resize(250, 250).into(holder.invoice_photo);
 
-        holder.docx.setText(mList.get(position).getUid() + " ");
+        holder.docx.setText(mList.get(position).getCis() + " ");
 
         holder.setClickListener(new SetImageAdapter.SetImageViewHolder.ClickListener() {
             public void onClick(View v, int pos, boolean isLongClick) {
                 if (isLongClick) {
 
-                    Log.d("SetImageActivityLog", mList.get(pos).getName());
+                    Log.d("SetImageActivityLog", mList.get(pos).getNat());
 
                 } else {
 
-                    Log.d("SetImageActivityLog", mList.get(pos).getName());
+                    Log.d("SetImageActivityLog", mList.get(pos).getNat());
                     mRxBus.send(mList.get(pos));
                 }
             }
@@ -74,7 +73,7 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
         notifyItemRemoved(position);
     }
 
-    public void setDataToAdapter(List<Product> listabsserver) {
+    public void setDataToAdapter(List<ProductKt> listabsserver) {
         mList = listabsserver;
         notifyDataSetChanged();
     }

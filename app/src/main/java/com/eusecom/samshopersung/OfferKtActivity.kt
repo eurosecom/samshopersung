@@ -560,11 +560,20 @@ class OfferKtActivity : AppCompatActivity() {
     }
 
     fun goToDetail(cis: String){
-        val intent = Intent(this, ProductDetailActivity::class.java)
+
+        val edidokprev = prefs.getString("edidok", "0")
+
         val editor = prefs.edit()
         editor.putString("edidok", cis).apply();
         editor.commit();
-        startActivity(intent)
+
+        if(!edidokprev.equals("FINDITEM")){
+            val intent = Intent(this, ProductDetailActivity::class.java)
+            startActivity(intent)
+        }else{
+            finish()
+        }
+
     }
 
     fun goToBasket(view: View){

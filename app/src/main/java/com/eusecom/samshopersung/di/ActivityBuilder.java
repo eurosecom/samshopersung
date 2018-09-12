@@ -2,6 +2,7 @@ package com.eusecom.samshopersung.di;
 
 import android.app.Activity;
 
+import com.eusecom.samshopersung.AccountReportsActivity;
 import com.eusecom.samshopersung.BasketKtActivity;
 import com.eusecom.samshopersung.ChooseCompanyActivity;
 import com.eusecom.samshopersung.DomainsViewModelActivity;
@@ -97,4 +98,8 @@ public abstract class ActivityBuilder {
     @ShopperScope
     @ContributesAndroidInjector(modules = {SetImageActivityModule.class})
     abstract SetImageActivity bindSetImageActivity();
+
+    @ShopperScope
+    @ContributesAndroidInjector(modules = {SetImageActivityModule.class})
+    abstract AccountReportsActivity bindAccountReportsActivity();
 }

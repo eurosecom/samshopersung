@@ -1,12 +1,9 @@
 package com.eusecom.samshopersung
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.os.Bundle
+
 import android.view.View
 import org.jetbrains.anko.*
-import org.jetbrains.anko.design.bottomNavigationView
+import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk25.listeners.onClick
 
 
@@ -19,16 +16,27 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
             padding = dip(10)
             lparams (width = matchParent, height = matchParent)
 
-            button() {
-                id = R.id.rep00
-                textResource = R.string.choosestorageitem
+            recyclerView() {
+                id = R.id.recycler_view
                 onClick {
-                    //startActivity<ChooseMonthActivity>()
+
                 }
             }.lparams {
                 width = matchParent
                 height = wrapContent
                 top
+            }
+
+            button() {
+                id = R.id.rep00
+                textResource = R.string.choosestorageitem
+                onClick {
+                    ui.owner.chooseItem()
+                }
+            }.lparams {
+                width = matchParent
+                height = wrapContent
+                below(R.id.recycler_view)
             }
 
             if( mReport.equals("0")) {

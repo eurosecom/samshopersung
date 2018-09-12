@@ -385,6 +385,10 @@ class MainShopperActivity : AppCompatActivity() {
                 showDonotcompanyAlert()
             }else {
 
+                val editor = prefs.edit()
+                editor.putString("edidok", "0").apply();
+                editor.commit();
+
                 val `is` = Intent(this, OfferKtActivity::class.java)
                 startActivity(`is`)
             }
@@ -476,6 +480,9 @@ class MainShopperActivity : AppCompatActivity() {
                 showDonotcompanyAlert()
             }else {
 
+                val editor = prefs.edit()
+                editor.putString("edidok", "FINDITEM").apply();
+                editor.commit();
                 val `is` = Intent(this, AccountReportsActivity::class.java)
                 val extras = Bundle()
                 extras.putString("reports", "0")
