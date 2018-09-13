@@ -18,7 +18,9 @@ import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
@@ -116,4 +118,7 @@ public interface ShopperIDataModel {
     @NonNull
     public Observable<SetImageServerResponse> uploadImageToServer(String servername, MultipartBody.Part file, RequestBody name);
 
+    @NonNull
+    public Observable<SetImageServerResponse> uploadImageWithMapToServer(String servername, MultipartBody.Part file
+            , Map<String, RequestBody> partMap);
 }

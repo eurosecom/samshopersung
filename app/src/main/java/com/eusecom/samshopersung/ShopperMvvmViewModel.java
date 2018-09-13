@@ -19,7 +19,9 @@ import com.eusecom.samshopersung.realm.RealmInvoice;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import io.reactivex.Completable;
@@ -1184,14 +1186,21 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String umex = "";
         String serverx = mSharedPreferences.getString("servername", "");
 
+        Map<String, RequestBody> params = new HashMap<>();
+        params.put("title1", RequestBody.create(MediaType.parse("text/plain"), "1"));
+        params.put("title2", RequestBody.create(MediaType.parse("text/plain"), "2"));
+        params.put("title3", RequestBody.create(MediaType.parse("text/plain"), "3"));
+
         return mObservableUploadImageToServer
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(mediaPath -> mDataModel.uploadImageToServer(serverx, getFileToUpload(mediaPath), getFileName(mediaPath)));
+                //.flatMap(mediaPath -> mDataModel.uploadImageToServer(serverx, getFileToUpload(mediaPath), getFileName(mediaPath)));
+                .flatMap(mediaPath -> mDataModel.uploadImageWithMapToServer(serverx, getFileToUpload(mediaPath), params));
     }
 
     private MultipartBody.Part getFileToUpload(String mediaPath) {
         // Map is used to multipart the file using okhttp3.RequestBody
         File file = new File(mediaPath);
+
         // Parsing any Media type file
         RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
@@ -1199,6 +1208,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         return fileToUpload;
     }
+
 
     private RequestBody getFileName(String mediaPath) {
         // Map is used to multipart the file using okhttp3.RequestBody

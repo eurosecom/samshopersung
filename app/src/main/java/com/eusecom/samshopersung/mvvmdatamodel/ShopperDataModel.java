@@ -5,7 +5,10 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import io.reactivex.Flowable;
 import io.realm.Realm;
 import okhttp3.MultipartBody;
@@ -503,6 +506,14 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         setRetrofit(servername);
         return mShopperRetrofitService.uploadImageFile(file, name);
+    }
+
+    @NonNull
+    public Observable<SetImageServerResponse> uploadImageWithMapToServer(String servername, MultipartBody.Part file
+            , Map<String, RequestBody> partMap){
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.uploadImageFileWithMap(file, partMap);
     }
 
 }

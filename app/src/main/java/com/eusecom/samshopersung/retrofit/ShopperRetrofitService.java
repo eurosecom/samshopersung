@@ -12,6 +12,7 @@ import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.InvoiceList;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -20,6 +21,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -79,5 +81,10 @@ public interface ShopperRetrofitService {
     @Multipart
     @POST("/androidshopper/uploadimage.php")
     Observable<SetImageServerResponse> uploadImageFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+
+    @Multipart
+    @POST("/androidshopper/uploadimage.php")
+    Observable<SetImageServerResponse> uploadImageFileWithMap(@Part MultipartBody.Part file,
+                                                             @PartMap() Map<String, RequestBody> partMap);
 
 }
