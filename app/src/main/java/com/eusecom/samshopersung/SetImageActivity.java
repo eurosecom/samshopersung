@@ -17,14 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
-import com.eusecom.samshopersung.models.Product;
-import com.eusecom.samshopersung.models.ShopperModelsFactory;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import rx.schedulers.Schedulers;
@@ -222,8 +216,13 @@ public class SetImageActivity extends AppCompatActivity {
 
     private void rxUploadFile() {
 
+        String edidok=mSharedPreferences.getString("edidok", "");
+        ProductKt prod = mModelsFactory.getProductKt();
+        prod.setCis(edidok);
+        prod.setPrm1(mediaPath);
+
         progressDialog.show();
-        mViewModel.emitUploadImageToServer(mediaPath);
+        mViewModel.emitUploadImageToServer(prod);
     }
 
 }

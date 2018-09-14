@@ -116,7 +116,7 @@ public interface ShopperIDataModel {
     //methods for SetImageActivity
 
     @NonNull
-    public Observable<SetImageServerResponse> uploadImageToServer(String servername, MultipartBody.Part file, RequestBody name);
+    public Observable<SetImageServerResponse> uploadImageToServer(String servername, MultipartBody.Part file, RequestBody desc);
 
     @NonNull
     public Observable<SetImageServerResponse> uploadImageWithMapToServer(String servername, MultipartBody.Part file

@@ -80,7 +80,7 @@ public interface ShopperRetrofitService {
     //setimageactivity
     @Multipart
     @POST("/androidshopper/uploadimage.php")
-    Observable<SetImageServerResponse> uploadImageFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+    Observable<SetImageServerResponse> uploadImageFile(@Part MultipartBody.Part file, @Part("desc") RequestBody desc);
 
     @Multipart
     @POST("/androidshopper/uploadimage.php")

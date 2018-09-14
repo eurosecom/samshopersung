@@ -23,6 +23,8 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
     public RxBus mRxBus;
     @Inject
     public Picasso mPicasso;
+    @Inject
+    public ImageUrl mImageUrl;
 
     @Inject
     public SetImageAdapter(){
@@ -39,10 +41,12 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
     @Override
     public void onBindViewHolder(SetImageViewHolder holder, int position) {
 
-        holder.invoice_name.setText(mList.get(position).getNat());
+        holder.prod_name.setText(mList.get(position).getNat());
+        holder.prod_ean.setText("EAN " + mList.get(position).getEan());
 
-        String imageurl = Constants.IMAGE_URL + mList.get(position).getCis();
-        mPicasso.with(holder.mContext).load(imageurl).resize(250, 250).into(holder.invoice_photo);
+        String imageurl = mImageUrl.getUrl(mList.get(position).getCis());
+        Log.d("imageurl ", imageurl);
+        mPicasso.with(holder.mContext).load(imageurl).resize(250, 250).into(holder.prod_photo);
 
         holder.docx.setText(mList.get(position).getCis() + " ");
 
@@ -81,8 +85,8 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
 
     public static class SetImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
-        public TextView invoice_name;
-        public ImageView invoice_photo;
+        public TextView prod_name, prod_ean;
+        public ImageView prod_photo;
         public TextView docx;
         private ClickListener clickListener;
         Context mContext;
@@ -90,8 +94,9 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
         public SetImageViewHolder(View itemView) {
             super(itemView);
 
-            invoice_name = (TextView) itemView.findViewById(R.id.invoice_name);
-            invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
+            prod_name = (TextView) itemView.findViewById(R.id.prod_name);
+            prod_ean = (TextView) itemView.findViewById(R.id.prod_ean);
+            prod_photo = (ImageView) itemView.findViewById(R.id.prod_photo);
             docx = (TextView) itemView.findViewById(R.id.docx);
             mContext = itemView.getContext();
             itemView.setOnClickListener(this);

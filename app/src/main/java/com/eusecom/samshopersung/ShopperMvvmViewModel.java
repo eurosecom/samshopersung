@@ -1152,13 +1152,13 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //methods for SetImageActivity
 
     //upload image to server
-    public void emitUploadImageToServer(String mediaPath) {
+    public void emitUploadImageToServer(ProductKt prodx) {
 
-        mObservableUploadImageToServer.onNext(mediaPath);
+        mObservableUploadImageToServer.onNext(prodx);
     }
 
     @NonNull
-    private BehaviorSubject<String> mObservableUploadImageToServer = BehaviorSubject.create();
+    private BehaviorSubject<ProductKt> mObservableUploadImageToServer = BehaviorSubject.create();
 
     @NonNull
     public Observable<SetImageServerResponse> getUploadImageToServer() {
@@ -1193,8 +1193,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         return mObservableUploadImageToServer
                 .observeOn(mSchedulerProvider.computation())
-                //.flatMap(mediaPath -> mDataModel.uploadImageToServer(serverx, getFileToUpload(mediaPath), getFileName(mediaPath)));
-                .flatMap(mediaPath -> mDataModel.uploadImageWithMapToServer(serverx, getFileToUpload(mediaPath), params));
+                .flatMap(prodx -> mDataModel.uploadImageToServer(serverx, getFileToUpload(prodx.getPrm1()), getDesc(prodx.getCis())));
+                //to solve php .flatMap(mediaPath -> mDataModel.uploadImageWithMapToServer(serverx, getFileToUpload(mediaPath), params));
     }
 
     private MultipartBody.Part getFileToUpload(String mediaPath) {
@@ -1204,21 +1204,16 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         // Parsing any Media type file
         RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
         return fileToUpload;
     }
 
 
-    private RequestBody getFileName(String mediaPath) {
-        // Map is used to multipart the file using okhttp3.RequestBody
-        File file = new File(mediaPath);
-        // Parsing any Media type file
-        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+    private RequestBody getDesc(String cis) {
 
-        return filename;
+        RequestBody desc = RequestBody.create(MediaType.parse("text/plain"), cis);
+
+        return desc;
     }
 
     public void clearUploadImageToServe() {

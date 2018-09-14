@@ -146,7 +146,7 @@
     <string name="newdok_title">0=nie, 1=áno</string>
     <string name="edidok_summary">Číslo editovaného dokladu, IČO, tovaru 0=žiadna editovaná položka</string>
     <string name="edidok_title">Editovaný doklad, IČO, tovar.</string>
-    <string name="storimg_summary">0=demo obrázky, 1=obrázky zo skladového servera</string>
+    <string name="storimg_summary">0=obrázky zo skladového servera, 1=demo obrázky</string>
     <string name="storimg_title">Zdroj obrázkov skladových položiek.</string>
 
     //choosecompanyactivity

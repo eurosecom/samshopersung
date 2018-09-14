@@ -502,10 +502,10 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     //methods for SetImageActivity
     @NonNull
-    public Observable<SetImageServerResponse> uploadImageToServer(String servername, MultipartBody.Part file, RequestBody name){
+    public Observable<SetImageServerResponse> uploadImageToServer(String servername, MultipartBody.Part file, RequestBody desc){
 
         setRetrofit(servername);
-        return mShopperRetrofitService.uploadImageFile(file, name);
+        return mShopperRetrofitService.uploadImageFile(file, desc);
     }
 
     @NonNull

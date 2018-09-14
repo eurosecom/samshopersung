@@ -210,7 +210,7 @@ public interface ShopperIMvvmViewModel {
     //methods for SetImageActivity
 
     @NonNull
-    public void emitUploadImageToServer(String prodx);
+    public void emitUploadImageToServer(ProductKt prodx);
 
     @NonNull
     public Observable<SetImageServerResponse> getUploadImageToServer();

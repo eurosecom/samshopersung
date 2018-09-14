@@ -142,6 +142,13 @@ class AccountReportsActivity : AppCompatActivity() {
         startActivity<OfferKtActivity>()
     }
 
+    fun  chosenItem():Boolean {
+
+        val edidok = prefs.getString("edidok", "")
+        return edidok != "0" && edidok != "" && edidok != "FINDITEM"
+
+    }
+
 
 
 }
