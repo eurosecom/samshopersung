@@ -2,7 +2,6 @@ package com.eusecom.samshopersung.di;
 
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
-import com.eusecom.samshopersung.SetImageAdapter;
 import com.eusecom.samshopersung.ShopperIMvvmViewModel;
 import com.eusecom.samshopersung.ShopperMvvmViewModel;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
@@ -14,7 +13,6 @@ import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
 
 @Module
 public class SetImageActivityModule {

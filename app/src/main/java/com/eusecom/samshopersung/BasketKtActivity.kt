@@ -47,6 +47,9 @@ class BasketKtActivity : AppCompatActivity() {
     @Inject
     lateinit var mModelsFactory: IShopperModelsFactory
 
+    @Inject
+    lateinit var mImageUrl: ImageUrl
+
     private lateinit var recyclerView: RecyclerView
 
     var mSubscription: CompositeSubscription = CompositeSubscription()
@@ -222,7 +225,7 @@ class BasketKtActivity : AppCompatActivity() {
         totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
 
         mybasket = sumbasket.basketitems.toMutableList()
-        recyclerView.adapter = BasketKtAdapter(mybasket){it: BasketKt, posx: Int, type: Int ->
+        recyclerView.adapter = BasketKtAdapter(mImageUrl, mybasket){it: BasketKt, posx: Int, type: Int ->
 
             //classic instance of factory
             // var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
