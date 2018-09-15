@@ -47,6 +47,8 @@ public class ProductDetailFragment extends Fragment {
     IShopperModelsFactory mModelsFactory;
     @Inject
     ProductDetailAdapter mAdapter;
+    @Inject
+    ImageUrl mImageUrl;
 
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;

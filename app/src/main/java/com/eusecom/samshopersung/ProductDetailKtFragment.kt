@@ -28,6 +28,8 @@ class ProductDetailKtFragment : Fragment() {
     lateinit var mSharedPreferences: SharedPreferences
     @Inject
     lateinit var mAdapter: ProductDetail2Adapter
+    @Inject
+    lateinit var mImageUrl: ImageUrl
 
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null

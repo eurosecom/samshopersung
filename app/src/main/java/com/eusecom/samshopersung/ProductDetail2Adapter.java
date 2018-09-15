@@ -17,6 +17,7 @@ public class ProductDetail2Adapter extends RecyclerView.Adapter<ProductDetail2Ad
     private List<ProductKt> productList;
     private RxBus mRxBus;
     private Picasso mPicasso;
+    private ImageUrl mImageUrl;
  
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
@@ -30,10 +31,11 @@ public class ProductDetail2Adapter extends RecyclerView.Adapter<ProductDetail2Ad
     }
  
  
-    public ProductDetail2Adapter(Context context, RxBus rxbus, Picasso picasso) {
+    public ProductDetail2Adapter(Context context, RxBus rxbus, Picasso picasso, ImageUrl imageurl) {
         this.mContext = context;
         this.mRxBus = rxbus;
         this.mPicasso = picasso;
+        this.mImageUrl = imageurl;
     }
 
     public void setProductItems(List<ProductKt> products) {
@@ -54,7 +56,8 @@ public class ProductDetail2Adapter extends RecyclerView.Adapter<ProductDetail2Ad
         ProductKt prod = productList.get(position);
         holder.title.setText(prod.getCis() + " - " + prod.getNat());
 
-        String imageurl = Constants.IMAGE_URL + prod.getCis();
+        //String imageurl = Constants.IMAGE_URL + prod.getCis();
+        String imageurl = mImageUrl.getUrlJpg(prod.getCis());
         mPicasso.load(imageurl).resize(120, 120).into(holder.thumbnail);
 
         holder.title.setOnClickListener(new View.OnClickListener() {

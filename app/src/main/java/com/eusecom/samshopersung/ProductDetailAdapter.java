@@ -22,6 +22,7 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
     private List<ProductKt> productList;
     private RxBus mRxBus;
     private Picasso mPicasso;
+    private ImageUrl mImageUrl;
  
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count, count1, desc1, ean;
@@ -40,10 +41,11 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
     }
  
  
-    public ProductDetailAdapter(Context context, RxBus rxbus, Picasso picasso) {
+    public ProductDetailAdapter(Context context, RxBus rxbus, Picasso picasso, ImageUrl imageurl) {
         this.mContext = context;
         this.mRxBus = rxbus;
         this.mPicasso = picasso;
+        this.mImageUrl = imageurl;
     }
 
     public void setProductItems(List<ProductKt> products) {
@@ -76,12 +78,8 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
         holder.desc1.setText(prod.getDesc());
         holder.ean.setText("EAN " + prod.getEan());
 
-        String imageurl = Constants.IMAGE_URL + prod.getCis();
-        // loading prod cover using Glide library
-        //Glide.with(mContext).load(imageurl).into(holder.thumbnail);
-
-        // loading album cover using Dagger2 and Picasso library
-        //Picasso.with(mContext).load(imageurl).resize(120, 120).into(holder.thumbnail);
+        //String imageurl = Constants.IMAGE_URL + prod.getCis();
+        String imageurl = mImageUrl.getUrlJpg(prod.getCis());
         mPicasso.load(imageurl).resize(120, 120).into(holder.thumbnail);
 
         holder.title.setOnClickListener(new View.OnClickListener() {
