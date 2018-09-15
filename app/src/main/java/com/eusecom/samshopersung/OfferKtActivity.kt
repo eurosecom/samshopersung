@@ -102,6 +102,9 @@ class OfferKtActivity : AppCompatActivity() {
     @Inject
     lateinit var mPicasso: Picasso
 
+    @Inject
+    lateinit var mImageUrl: ImageUrl
+
     var mSubscription: CompositeSubscription = CompositeSubscription()
     private var _disposables = CompositeDisposable()
     private var mProgressBar: ProgressBar? = null
@@ -178,7 +181,7 @@ class OfferKtActivity : AppCompatActivity() {
         _disposables.add(tapEventEmitter.connect())
 
         productList = ArrayList<ProductKt>().toMutableList()
-        adapter = OfferProductAdapter(this, productList, _rxBus, mPicasso )
+        adapter = OfferProductAdapter(this, productList, _rxBus, mPicasso, mImageUrl )
 
         val mLayoutManager = GridLayoutManager(this, 2)
         recyclerView?.setLayoutManager(mLayoutManager)

@@ -24,6 +24,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     private List<ProductKt> productList;
     private RxBus mRxBus;
     private Picasso mPicasso;
+    private ImageUrl mImageUrl;
  
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count, count1;
@@ -40,11 +41,13 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
     }
  
  
-    public OfferProductAdapter(Context context, List<ProductKt> productList, RxBus rxbus, Picasso picasso) {
+    public OfferProductAdapter(Context context, List<ProductKt> productList, RxBus rxbus
+            , Picasso picasso, ImageUrl imageurl) {
         this.mContext = context;
         this.productList = productList;
         this.mRxBus = rxbus;
         this.mPicasso = picasso;
+        this.mImageUrl = imageurl;
     }
 
     public void setProductItems(List<ProductKt> products) {
@@ -75,12 +78,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<OfferProductAdapte
         holder.count.setText(prod.getCed() + " €");
         holder.count1.setText(prod.getCed1() + " €");
 
-        String imageurl = Constants.IMAGE_URL + prod.getCis();
-        // loading prod cover using Glide library
-        //Glide.with(mContext).load(imageurl).into(holder.thumbnail);
-
-        // loading album cover using Dagger2 and Picasso library
-        //Picasso.with(mContext).load(imageurl).resize(120, 120).into(holder.thumbnail);
+        //String imageurl = Constants.IMAGE_URL + prod.getCis();
+        String imageurl = mImageUrl.getUrlJpg(prod.getCis());
         mPicasso.load(imageurl).resize(120, 120).into(holder.thumbnail);
 
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
