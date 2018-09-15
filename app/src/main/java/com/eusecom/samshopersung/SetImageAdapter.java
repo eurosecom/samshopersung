@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.eusecom.samshopersung.rxbus.RxBus;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -45,8 +46,8 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
 
         String imageurl = mImageUrl.getUrlJpg(mList.get(position).getCis());
         //Log.d("imageurl ", imageurl);
+        //mPicasso.with(holder.mContext).load(imageurl).networkPolicy(NetworkPolicy.NO_CACHE).resize(250, 250).into(holder.prod_photo);
         mPicasso.with(holder.mContext).load(imageurl).resize(250, 250).into(holder.prod_photo);
-
         holder.docx.setText(mList.get(position).getCis() + " ");
 
         holder.setClickListener(new SetImageAdapter.SetImageViewHolder.ClickListener() {

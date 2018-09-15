@@ -18,6 +18,12 @@
         app:spanCount="2"
         tools:listitem="@layout/roomdemo_list_item" />
 
+    <Button
+        android:id="@+id/pick_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/imagegallery" />
+
     <ImageView
         android:id="@+id/preview"
         android:layout_width="match_parent"
@@ -26,14 +32,15 @@
         android:background="@color/grey_100"/>
 
     <Button
-        android:id="@+id/pick_img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/imagegallery" />
-
-    <Button
         android:id="@+id/upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/imagetoserver" />
+
+    <Button
+        android:id="@+id/clearcache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/clearcache" />
+
 </LinearLayout>

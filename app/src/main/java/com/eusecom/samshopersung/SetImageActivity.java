@@ -1,12 +1,14 @@
 package com.eusecom.samshopersung;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import javax.inject.Inject;
 import dagger.android.AndroidInjection;
@@ -46,7 +53,10 @@ public class SetImageActivity extends AppCompatActivity {
     @Inject
     IShopperModelsFactory mModelsFactory;
 
-    Button btnUpload, btnPickImage;
+    @Inject
+    Picasso mPicasso;
+
+    Button btnUpload, btnPickImage, btnClearCache;
     String mediaPath;
     ImageView imgView;
     String[] mediaColumns = { MediaStore.Video.Media._ID };
@@ -69,12 +79,20 @@ public class SetImageActivity extends AppCompatActivity {
 
         btnUpload = (Button) findViewById(R.id.upload);
         btnPickImage = (Button) findViewById(R.id.pick_img);
+        btnClearCache = (Button) findViewById(R.id.clearcache);
         imgView = (ImageView) findViewById(R.id.preview);
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rxUploadFile();
+            }
+        });
+
+        btnClearCache.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteCache(SetImageActivity.this);
             }
         });
 
@@ -203,6 +221,10 @@ public class SetImageActivity extends AppCompatActivity {
         if (serverResponse != null) {
             if (serverResponse.getSuccess()) {
                 Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                //mPicasso.invalidate("http://www.eshoptest.sk/dokumenty/FIR403/amaterial/d1.jpg");
+                //Uri uri = Uri.parse("http://www.eshoptest.sk/dokumenty/FIR403/amaterial/d1.jpg");
+                //mPicasso.invalidate(uri);
+                //deleteCache(this);
                 emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
             } else {
                 Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
@@ -224,6 +246,34 @@ public class SetImageActivity extends AppCompatActivity {
 
         progressDialog.show();
         mViewModel.emitUploadImageToServer(prod);
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            //File dir = new File(Environment.getDownloadCacheDirectory(), "/picasso-cache/");
+            Log.d("SetImageActivityLog ", dir.toString());
+            deleteDir(dir);
+        } catch (Exception e) { e.printStackTrace();}
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                Log.d("SetImageActivityLog ", children[i].toString());
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 
 }
