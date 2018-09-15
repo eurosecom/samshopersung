@@ -203,6 +203,7 @@ public class SetImageActivity extends AppCompatActivity {
         if (serverResponse != null) {
             if (serverResponse.getSuccess()) {
                 Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
             } else {
                 Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
             }

@@ -44,8 +44,8 @@ public class SetImageAdapter extends RecyclerView.Adapter<SetImageAdapter.SetIma
         holder.prod_name.setText(mList.get(position).getNat());
         holder.prod_ean.setText("EAN " + mList.get(position).getEan());
 
-        String imageurl = mImageUrl.getUrl(mList.get(position).getCis());
-        Log.d("imageurl ", imageurl);
+        String imageurl = mImageUrl.getUrlJpg(mList.get(position).getCis());
+        //Log.d("imageurl ", imageurl);
         mPicasso.with(holder.mContext).load(imageurl).resize(250, 250).into(holder.prod_photo);
 
         holder.docx.setText(mList.get(position).getCis() + " ");
