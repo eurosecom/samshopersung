@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
@@ -46,7 +47,7 @@ import static rx.Observable.empty;
  */
 
 
-public class SetImageActivity extends AppCompatActivity {
+public class SetImageActivity extends BaseActivity {
 
     @Inject
     ShopperIMvvmViewModel mViewModel;
@@ -70,7 +71,6 @@ public class SetImageActivity extends AppCompatActivity {
     String mediaPath;
     ImageView imgView;
     String[] mediaColumns = {MediaStore.Video.Media._ID};
-    ProgressDialog progressDialog;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
@@ -84,8 +84,7 @@ public class SetImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setimage_activity);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Uploading...");
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         btnUpload = (Button) findViewById(R.id.upload);
         btnPickImage = (Button) findViewById(R.id.pick_img);
@@ -155,10 +154,10 @@ public class SetImageActivity extends AppCompatActivity {
 
 
             } else {
-                Toast.makeText(this, "You haven't picked Image/Video", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.pickednot), Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.somewrong), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -197,7 +196,7 @@ public class SetImageActivity extends AppCompatActivity {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> {
                     Log.e(TAG, "Error SetImageActivity " + throwable.getMessage());
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
@@ -208,7 +207,7 @@ public class SetImageActivity extends AppCompatActivity {
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> {
                     Log.e(TAG, "Error SetImageActivity " + throwable.getMessage());
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
@@ -217,6 +216,7 @@ public class SetImageActivity extends AppCompatActivity {
         String edidok = mSharedPreferences.getString("edidok", "");
         Log.d("SetImageActivityLog ", edidok);
         if (!edidok.equals("0") && !edidok.equals("") && !edidok.equals("FINDITEM")) {
+            showProgressBar();
             emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
         }
 
@@ -225,17 +225,18 @@ public class SetImageActivity extends AppCompatActivity {
     private void setServerProducts(List<ProductKt> products) {
 
         mAdapter.setDataToAdapter(products);
-        //hideProgressBar();
+        hideProgressBar();
         //Log.d("SetImageActivityLog ", products.get(0).getNat());
     }
 
     private void emitMyQueryProductsFromSqlServer(String query) {
-        //showProgressBar();
+        showProgressBar();
         mViewModel.emitMyQueryProductsFromSqlServer(query);
     }
 
     private void imageUploaded(@NonNull final SetImageServerResponse serverResponse) {
 
+        hideProgressBar();
         if (serverResponse != null) {
             if (serverResponse.getSuccess()) {
                 Toast.makeText(getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -248,7 +249,7 @@ public class SetImageActivity extends AppCompatActivity {
             Log.v("Response", serverResponse.toString());
         }
 
-        progressDialog.dismiss();
+
     }
 
     private void imageSize(String mediaPath) {
@@ -268,13 +269,19 @@ public class SetImageActivity extends AppCompatActivity {
 
     private void rxUploadFile() {
 
+        if( mediaPath != null){
+
         String edidok = mSharedPreferences.getString("edidok", "");
         ProductKt prod = mModelsFactory.getProductKt();
         prod.setCis(edidok);
         prod.setPrm1(mediaPath);
 
-        progressDialog.show();
+        showProgressBar();
         mViewModel.emitUploadImageToServer(prod);
+
+        }else{
+            Toast.makeText(this, getString(R.string.imagegallery), Toast.LENGTH_LONG).show();
+        }
     }
 
     public static void deleteCache(Context context) {
