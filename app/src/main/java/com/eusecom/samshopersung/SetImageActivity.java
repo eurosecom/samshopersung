@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,17 +21,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import dagger.android.AndroidInjection;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
@@ -56,10 +63,13 @@ public class SetImageActivity extends AppCompatActivity {
     @Inject
     Picasso mPicasso;
 
+    @Inject
+    public ImageUrl mImageUrl;
+
     Button btnUpload, btnPickImage, btnClearCache;
     String mediaPath;
     ImageView imgView;
-    String[] mediaColumns = { MediaStore.Video.Media._ID };
+    String[] mediaColumns = {MediaStore.Video.Media._ID};
     ProgressDialog progressDialog;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
@@ -82,6 +92,8 @@ public class SetImageActivity extends AppCompatActivity {
         btnClearCache = (Button) findViewById(R.id.clearcache);
         imgView = (ImageView) findViewById(R.id.preview);
 
+        String imgsize = "";
+        btnUpload.setText(getString(R.string.imagetoserver, imgsize));
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,16 +136,23 @@ public class SetImageActivity extends AppCompatActivity {
                 // Get the Image from data
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
                 Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 assert cursor != null;
                 cursor.moveToFirst();
-
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
+                Log.v("SetImageActivityLog", "mediaPath " + mediaPath);
+
+                imageSize(mediaPath);
+
                 // Set the Image in ImageView for Previewing the Media
-                imgView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                Bitmap bitmapImage = BitmapFactory.decodeFile(mediaPath);
+                imgView.setImageBitmap(bitmapImage);
                 cursor.close();
+                int width = imgView.getWidth();
+                int height = imgView.getHeight();
+                Log.v("SetImageActivityLog ", "width x height " + width + "x" + height);
+
 
             } else {
                 Toast.makeText(this, "You haven't picked Image/Video", Toast.LENGTH_LONG).show();
@@ -143,7 +162,6 @@ public class SetImageActivity extends AppCompatActivity {
         }
 
     }
-
 
 
     @Override
@@ -196,9 +214,9 @@ public class SetImageActivity extends AppCompatActivity {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setServerProducts));
 
-        String edidok=mSharedPreferences.getString("edidok", "");
+        String edidok = mSharedPreferences.getString("edidok", "");
         Log.d("SetImageActivityLog ", edidok);
-        if(!edidok.equals("0") && !edidok.equals("") && !edidok.equals("FINDITEM")) {
+        if (!edidok.equals("0") && !edidok.equals("") && !edidok.equals("FINDITEM")) {
             emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
         }
 
@@ -220,14 +238,10 @@ public class SetImageActivity extends AppCompatActivity {
 
         if (serverResponse != null) {
             if (serverResponse.getSuccess()) {
-                Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
-                //mPicasso.invalidate("http://www.eshoptest.sk/dokumenty/FIR403/amaterial/d1.jpg");
-                //Uri uri = Uri.parse("http://www.eshoptest.sk/dokumenty/FIR403/amaterial/d1.jpg");
-                //mPicasso.invalidate(uri);
-                //deleteCache(this);
+                Toast.makeText(getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
             } else {
-                Toast.makeText(getApplicationContext(), serverResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
             }
         } else {
             assert serverResponse != null;
@@ -237,9 +251,24 @@ public class SetImageActivity extends AppCompatActivity {
         progressDialog.dismiss();
     }
 
+    private void imageSize(String mediaPath) {
+
+        File f = null;
+        String path = mediaPath;
+        try {
+            f = new File(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("SetImageActivityLog File size in bytes "+f.length());
+        double imgsd = f.length() / 1000;
+        String imgsize = String.valueOf(imgsd) + " kB";
+        btnUpload.setText(getString(R.string.imagetoserver, imgsize));
+    }
+
     private void rxUploadFile() {
 
-        String edidok=mSharedPreferences.getString("edidok", "");
+        String edidok = mSharedPreferences.getString("edidok", "");
         ProductKt prod = mModelsFactory.getProductKt();
         prod.setCis(edidok);
         prod.setPrm1(mediaPath);
@@ -251,10 +280,11 @@ public class SetImageActivity extends AppCompatActivity {
     public static void deleteCache(Context context) {
         try {
             File dir = context.getCacheDir();
-            //File dir = new File(Environment.getDownloadCacheDirectory(), "/picasso-cache/");
             Log.d("SetImageActivityLog ", dir.toString());
             deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean deleteDir(File dir) {
@@ -269,11 +299,38 @@ public class SetImageActivity extends AppCompatActivity {
                 }
             }
             return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
+        } else if (dir != null && dir.isFile()) {
             return dir.delete();
         } else {
             return false;
         }
     }
+
+    public void compresBitmap() {
+
+        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String fileName = "/eusecom/qrcode.jpg";
+        File myFile = new File(baseDir + File.separator + fileName);
+
+        FileOutputStream out = null;
+        Bitmap bitmap = null;
+        try {
+            out = new FileOutputStream(myFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
 }

@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.eusecom.samshopersung.rxbus.RxBus;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import java.util.List;
-
 import javax.inject.Inject;
 
 
