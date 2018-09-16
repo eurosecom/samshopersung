@@ -41,6 +41,7 @@ class AccountReportsActivity : AppCompatActivity() {
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
     private var mSubscription: CompositeSubscription? = null
+    private var mProgressBar: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
@@ -53,6 +54,7 @@ class AccountReportsActivity : AppCompatActivity() {
 
         AccountReportsActivityUI(reports, "0").setContentView(this)
 
+        mProgressBar = findViewById<View>(R.id.progress_bar) as ProgressBar
         mManager = LinearLayoutManager(this)
         mManager?.setReverseLayout(true)
         mManager?.setStackFromEnd(true)
@@ -106,6 +108,7 @@ class AccountReportsActivity : AppCompatActivity() {
         val edidok = prefs.getString("edidok", "")
         Log.d("SetImageActivityLog ", edidok)
         if (edidok != "0" && edidok != "" && edidok != "FINDITEM") {
+            showProgressBar()
             emitMyQueryProductsFromSqlServer("GetDetail" + prefs.getString("edidok", "")!!)
         }
 
@@ -114,7 +117,7 @@ class AccountReportsActivity : AppCompatActivity() {
     private fun setServerProducts(products: List<ProductKt>) {
 
         mAdapter.setDataToAdapter(products)
-        //hideProgressBar()
+        hideProgressBar()
     }
 
     private fun getMyQueryProductsFromSqlServer(): Observable<List<ProductKt>> {
@@ -122,7 +125,7 @@ class AccountReportsActivity : AppCompatActivity() {
     }
 
     private fun emitMyQueryProductsFromSqlServer(query: String) {
-        //showProgressBar()
+        showProgressBar()
         mViewModel.emitMyQueryProductsFromSqlServer(query)
     }
 
@@ -130,7 +133,7 @@ class AccountReportsActivity : AppCompatActivity() {
 
         mSubscription?.unsubscribe()
         mSubscription?.clear()
-        //hideProgressBar()
+        hideProgressBar()
 
     }
 
@@ -147,6 +150,24 @@ class AccountReportsActivity : AppCompatActivity() {
         val edidok = prefs.getString("edidok", "")
         return edidok != "0" && edidok != "" && edidok != "FINDITEM"
 
+    }
+
+    fun chooseActivity(whatactivity: Int) {
+
+    val `is` = Intent(this, SetImageActivity::class.java)
+    val extras = Bundle()
+    extras.putInt("whatactivity", whatactivity)
+    `is`.putExtras(extras)
+    startActivity(`is`)
+
+    }
+
+    private fun showProgressBar() {
+        mProgressBar?.setVisibility(View.VISIBLE)
+    }
+
+    private fun hideProgressBar() {
+        mProgressBar?.setVisibility(View.GONE)
     }
 
 

@@ -27,6 +27,15 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                 top
             }
 
+            progressBar() {
+                id = R.id.progress_bar
+                visibility = View.GONE
+            }.lparams {
+                width = wrapContent
+                height = wrapContent
+                below(R.id.recycler_view)
+            }
+
             button() {
                 id = R.id.rep00
                 textResource = R.string.choosestorageitem
@@ -36,7 +45,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
             }.lparams {
                 width = matchParent
                 height = wrapContent
-                below(R.id.recycler_view)
+                below(R.id.progress_bar)
             }
 
             if( mReport.equals("0")) {
@@ -58,7 +67,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                     textResource = R.string.setimage
                     onClick {
                         if(ui.owner.chosenItem()){
-                            startActivity<SetImageActivity>()
+                            ui.owner.chooseActivity(0)
                         }else{
                             ui.owner.chooseItem()
                         }
@@ -74,7 +83,11 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                     id = R.id.rep03
                     textResource = R.string.setean
                     onClick {
-
+                        if(ui.owner.chosenItem()){
+                            ui.owner.chooseActivity(1)
+                        }else{
+                            ui.owner.chooseItem()
+                        }
                     }
                 }.lparams {
                     width = matchParent
