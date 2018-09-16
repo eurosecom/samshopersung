@@ -6,6 +6,7 @@ import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
+import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 
@@ -217,6 +218,9 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearUploadImageToServe();
+
+    public boolean callCommandExecutorProxy(CommandExecutorProxyImpl.PermType perm , CommandExecutorProxyImpl.ReportTypes reportType
+            , CommandExecutorProxyImpl.ReportName tableName);
 
 
 }

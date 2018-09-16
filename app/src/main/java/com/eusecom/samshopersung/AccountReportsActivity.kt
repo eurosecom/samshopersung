@@ -9,9 +9,9 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl
 import dagger.android.AndroidInjection
 import org.jetbrains.anko.*
-import org.jetbrains.anko.support.v4.toast
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -98,12 +98,23 @@ class AccountReportsActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("ProductDetailKtFragment", "Error Throwable " + throwable.message)
+                    Log.e("AccountReportsActivity", "Error Throwable " + throwable.message)
                     //hideProgressBar()
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerProducts(it) })
+
+        mSubscription?.add(mViewModel.getObservableException()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("AccountReportsActivity", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setProxyException(it) })
 
         val edidok = prefs.getString("edidok", "")
         Log.d("SetImageActivityLog ", edidok)
@@ -111,6 +122,27 @@ class AccountReportsActivity : AppCompatActivity() {
             showProgressBar()
             emitMyQueryProductsFromSqlServer("GetDetail" + prefs.getString("edidok", "")!!)
         }
+
+    }
+
+    fun setProxyException(excp: String) {
+        //toast("Permission " + excp + " not alowed.")
+        hideProgressBar()
+        if(excp.equals("LGN")) {
+            //showDonotloginAlert()
+            toast(getString(R.string.didnotlogin))
+            println("LGN not approved.")
+            }
+        if(excp.equals("ADM")) {
+            //showDonotAdminAlert()
+            toast(getString(R.string.didnotadmin))
+            println("ADM not approved.")
+            }
+        if(excp.equals("CMP")) {
+            //showDonotcompanyAlert()
+            toast(getString(R.string.didnotcompany))
+            println("CMP not approved.")
+            }
 
     }
 
@@ -131,6 +163,8 @@ class AccountReportsActivity : AppCompatActivity() {
 
     private fun unBind() {
 
+        mViewModel.clearObservableException()
+        mViewModel.clearMyQueryProductsFromSqlServe()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         hideProgressBar()
@@ -154,13 +188,18 @@ class AccountReportsActivity : AppCompatActivity() {
 
     fun chooseActivity(whatactivity: Int) {
 
-    val `is` = Intent(this, SetImageActivity::class.java)
-    val extras = Bundle()
-    extras.putInt("whatactivity", whatactivity)
-    `is`.putExtras(extras)
-    startActivity(`is`)
+        if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
+            println("command approved.")
+            val `is` = Intent(this, SetImageActivity::class.java)
+            val extras = Bundle()
+            extras.putInt("whatactivity", whatactivity)
+            `is`.putExtras(extras)
+            startActivity(`is`)
+        }
 
     }
+
+
 
     private fun showProgressBar() {
         mProgressBar?.setVisibility(View.VISIBLE)

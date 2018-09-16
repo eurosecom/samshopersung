@@ -14,7 +14,7 @@ public class CommandExecutorProxyImpl implements CommandExecutorProxy {
     }
 
     public enum ReportName {
-        ORDER, INVOICE;
+        ORDER, INVOICE, SETITEM;
     }
 
     public CommandExecutorProxyImpl() {
@@ -27,6 +27,7 @@ public class CommandExecutorProxyImpl implements CommandExecutorProxy {
         if (usuid.equals("")) isLogin = false;
         if (!fir.equals("")) isCompany = true;
         if (fir.equals("0")) isCompany = false;
+        //isAdmin = false; //remove lthis line to control permission
     }
     @Override
     public boolean approveCommand(PermType perm, ReportTypes reportType,
