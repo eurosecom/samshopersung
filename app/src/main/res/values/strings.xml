@@ -308,11 +308,16 @@
 
     //setimageactivity
     <string name="imagegallery">Pick Image from Gallery</string>
+    <string name="eanscan">Scan EAN with camera</string>
     <string name="imagetoserver">Upload Image %s to Server</string>
+    <string name="eantoserver">Upload EAN to Server</string>
     <string name="clearcache">Clear image cache</string>
     <string name="item">Item</string>
     <string name="pickednot">You have not picked Image</string>
     <string name="somewrong">Something went wrong</string>
+    <string name="cachecleared">Cache cleared.</string>
+    <string name="ean">EAN</string>
+    <string name="eansaved">EAN saved</string>
 
 
 

@@ -40,6 +40,30 @@
         android:scaleType="centerCrop"
         android:background="@color/grey_100"/>
 
+    <LinearLayout
+        android:id="@+id/eanlay"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/eant"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ean" />
+
+        <EditText
+            android:id="@+id/eanx"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:inputType="number" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/upload"
         android:layout_width="match_parent"
@@ -51,6 +75,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/clearcache" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_scanner_black_24dp" />
 
 
 </LinearLayout>

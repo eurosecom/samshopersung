@@ -1223,6 +1223,51 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end upload image to server
 
+
+    //save ean to server
+    public void emitSaveEanToServer(String eancis) { mObservableSaveEanToServer.onNext(eancis); }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableSaveEanToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<ProductKt>> getObservableSaveEanToServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted3=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableSaveEanToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(drhx -> mDataModel.getProductsFromMysqlServer(serverx, encrypted3, ds, firx, rokx, drhx, dodx, umex, "2"));
+    }
+
+    public void clearSaveEanToServer() {
+
+        mObservableSaveEanToServer = BehaviorSubject.create();
+
+    }
+    //end save ean to server
+
     //end methods for SetImageActivity
 
 

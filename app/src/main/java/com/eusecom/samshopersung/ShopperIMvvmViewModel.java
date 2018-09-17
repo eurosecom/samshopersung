@@ -219,6 +219,15 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearUploadImageToServe();
 
+    @NonNull
+    public void emitSaveEanToServer(String eancis);
+
+    @NonNull
+    public Observable<List<ProductKt>> getObservableSaveEanToServer();
+
+    @NonNull
+    public void clearSaveEanToServer();
+
     public boolean callCommandExecutorProxy(CommandExecutorProxyImpl.PermType perm , CommandExecutorProxyImpl.ReportTypes reportType
             , CommandExecutorProxyImpl.ReportName tableName);
 
