@@ -1,11 +1,14 @@
 package com.eusecom.samshopersung;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,8 +32,12 @@ import com.google.zxing.integration.android.IntentResult;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -80,6 +87,7 @@ public class SetImageActivity extends BaseActivity {
     private CompositeSubscription mSubscription;
 
     int whatactivity = 0;
+    private static final int CAMERA_REQUEST = 1888;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +110,7 @@ public class SetImageActivity extends BaseActivity {
         eanlay = (LinearLayout) findViewById(R.id.eanlay);
         eanx = (EditText) findViewById(R.id.eanx);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab_camera = (FloatingActionButton) findViewById(R.id.fab_camera);
 
         if (whatactivity == 0) {
             eanlay.setVisibility(View.GONE);
@@ -109,11 +118,20 @@ public class SetImageActivity extends BaseActivity {
             btnUpload.setText(getString(R.string.imagetoserver, imgsize));
             btnPickImage.setText(getString(R.string.imagegallery));
             fab.setVisibility(View.GONE);
+            fab_camera.setOnClickListener(v -> {
+
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+
+                    }
+            );
         } else {
             imgView.setVisibility(View.GONE);
             btnUpload.setText(getString(R.string.eantoserver));
             btnPickImage.setText(getString(R.string.eanscan));
             btnClearCache.setVisibility(View.GONE);
+            fab_camera.setVisibility(View.GONE);
             fab.setOnClickListener(v -> {
 
                         IntentIntegrator integrator = new IntentIntegrator(SetImageActivity.this);
@@ -203,7 +221,20 @@ public class SetImageActivity extends BaseActivity {
 
 
                 } else {
-                    Toast.makeText(this, getString(R.string.pickednot), Toast.LENGTH_LONG).show();
+
+                    if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+                        Bitmap photo = (Bitmap) data.getExtras().get("data");
+                        imgView.setImageBitmap(photo);
+                        String partFilename = currentDateFormat();
+                        storeCameraPhotoInSDCard(photo, partFilename);
+                        //image go automaticly to gallery after to save to internal storage
+                        //have to refresh gallery
+                        mediaPath = Environment.getExternalStorageDirectory() + "/" + "photo_" + partFilename + ".jpg";
+                        //saveImageTogallery(path,path,"",0,0,null);
+                    }else{
+                        Toast.makeText(this, getString(R.string.pickednot), Toast.LENGTH_LONG).show();
+                    }
+
                 }
             } catch (Exception e) {
                 Toast.makeText(this, getString(R.string.somewrong), Toast.LENGTH_LONG).show();
@@ -426,6 +457,77 @@ public class SetImageActivity extends BaseActivity {
         }
 
     }
+
+
+    public Uri saveImageTogallery(String imagePath,String title,String description,long dateTaken,int orientation,Location loc) {
+
+        ContentValues v = new ContentValues();
+        v.put(MediaStore.Images.Media.TITLE, title);
+        v.put(MediaStore.Images.Media.DISPLAY_NAME, "displayName");
+        v.put(MediaStore.Images.Media.DESCRIPTION, description);
+        v.put(MediaStore.Images.Media.DATE_ADDED, dateTaken);
+        v.put(MediaStore.Images.Media.DATE_TAKEN, dateTaken);
+        v.put(MediaStore.Images.Media.DATE_MODIFIED, dateTaken) ;
+        v.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        v.put(MediaStore.Images.Media.ORIENTATION, orientation);
+        File f = new File(imagePath) ;
+        File parent = f.getParentFile() ;
+        String path = parent.toString().toLowerCase() ;
+        String name = parent.getName().toLowerCase() ;
+        v.put(MediaStore.Images.ImageColumns.BUCKET_ID, path.hashCode());
+        v.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, name);
+        v.put(MediaStore.Images.Media.SIZE,f.length()) ;
+        f = null ;
+        if( loc != null ) {
+
+            v.put(MediaStore.Images.Media.LATITUDE, loc.getLatitude());
+            v.put(MediaStore.Images.Media.LONGITUDE, loc.getLongitude());
+
+        }
+
+        v.put("_data",imagePath) ;
+
+        ContentResolver c = getContentResolver() ;
+        return c.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, v);
+
+
+    }
+
+    private String currentDateFormat(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
+        String  currentTimeStamp = dateFormat.format(new Date());
+        return currentTimeStamp;
+    }
+
+    private void storeCameraPhotoInSDCard(Bitmap bitmap, String currentDate){
+        String path = Environment.getExternalStorageDirectory() + "/" + "photo_" + currentDate + ".jpg";
+        Log.d("SetImageActivityLog ", path);
+        File outputFile = new File(Environment.getExternalStorageDirectory(), "photo_" + currentDate + ".jpg");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Bitmap getImageFileFromSDCard(String filename){
+        Bitmap bitmap = null;
+        File imageFile = new File(Environment.getExternalStorageDirectory() + filename);
+        try {
+            FileInputStream fis = new FileInputStream(imageFile);
+            bitmap = BitmapFactory.decodeStream(fis);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+
 
 
 }
