@@ -188,13 +188,25 @@ class AccountReportsActivity : AppCompatActivity() {
 
     fun chooseActivity(whatactivity: Int) {
 
-        if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
-            println("command approved.")
-            val `is` = Intent(this, SetImageActivity::class.java)
-            val extras = Bundle()
-            extras.putInt("whatactivity", whatactivity)
-            `is`.putExtras(extras)
-            startActivity(`is`)
+        if( whatactivity == 0 || whatactivity == 1 ) {
+            if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
+                println("command approved.")
+                val `is` = Intent(this, SetImageActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("whatactivity", whatactivity)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
+
+        }else{
+            if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
+                println("command approved.")
+                val `is` = Intent(this, SetProductActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("whatactivity", whatactivity)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
         }
 
     }

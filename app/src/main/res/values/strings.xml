@@ -302,7 +302,7 @@
     //accountreportsactivity
     <string name="storelist">Storage card</string>
     <string name="choosestorageitem">Choose storage item</string>
-    <string name="newstorageitem">New storage item</string>
+    <string name="newstorageitem">New and Edit storage item</string>
     <string name="setimage">Set storage image</string>
     <string name="setean">Set storage EAN</string>
 
@@ -318,6 +318,14 @@
     <string name="cachecleared">Cache cleared.</string>
     <string name="ean">EAN</string>
     <string name="eansaved">EAN saved</string>
+
+    //setproductactivity
+    <string name="itemtoserver">Save Item to Server</string>
+    <string name="name">Name</string>
+    <string name="ced">Price</string>
+    <string name="dph">VAT</string>
+    <string name="cat">Category</string>
+    <string name="mer">Unit</string>
 
 
 

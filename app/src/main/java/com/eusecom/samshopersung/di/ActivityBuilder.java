@@ -17,6 +17,7 @@ import com.eusecom.samshopersung.OrderListActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
 import com.eusecom.samshopersung.RoomDemoActivity;
 import com.eusecom.samshopersung.SetImageActivity;
+import com.eusecom.samshopersung.SetProductActivity;
 
 import dagger.Binds;
 import dagger.Module;
@@ -98,6 +99,10 @@ public abstract class ActivityBuilder {
     @ShopperScope
     @ContributesAndroidInjector(modules = {SetImageActivityModule.class})
     abstract SetImageActivity bindSetImageActivity();
+
+    @ShopperScope
+    @ContributesAndroidInjector(modules = {SetImageActivityModule.class})
+    abstract SetProductActivity bindSetProductActivity();
 
     @ShopperScope
     @ContributesAndroidInjector(modules = {SetImageActivityModule.class})

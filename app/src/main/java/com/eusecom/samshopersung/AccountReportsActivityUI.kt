@@ -99,7 +99,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                     id = R.id.rep04
                     textResource = R.string.newstorageitem
                     onClick {
-
+                        ui.owner.chooseActivity(2)
                     }
                 }.lparams {
                     width = matchParent
