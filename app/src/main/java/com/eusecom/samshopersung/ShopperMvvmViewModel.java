@@ -8,8 +8,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
+import com.eusecom.samshopersung.models.ShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
@@ -1267,6 +1269,53 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
     //end save ean to server
+
+    //save item to server
+    public void emitSaveItemToServer(ProductKt prod) {
+
+        mObservableSaveItemToServer.onNext(prod);
+    }
+
+    @NonNull
+    private BehaviorSubject<ProductKt> mObservableSaveItemToServer = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<ProductKt>> getObservableSaveItemToServer() {
+
+        Random r = new Random();
+        double d = 10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted3=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mObservableSaveItemToServer
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(prodx -> mDataModel.getProductsFromMysqlServer(serverx, encrypted3, ds, firx, rokx, JsonFromProduct(prodx), dodx, umex, "3"));
+    }
+
+    public void clearSaveItemToServer() {
+
+        mObservableSaveItemToServer = BehaviorSubject.create();
+
+    }
+    //end save item to server
 
     //end methods for SetImageActivity
 

@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
+import com.eusecom.samshopersung.models.ShopperModelsFactory;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.squareup.picasso.Picasso;
@@ -77,14 +78,11 @@ public class SetProductActivity extends BaseActivity {
 
     Button btnUpload;
     LinearLayout itemlay;
-    EditText itemx;
+    EditText itemx, namex, dphx, merx, cedx, catx;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-
     private CompositeSubscription mSubscription;
-
     int whatactivity = 0;
-    private static final int CAMERA_REQUEST = 1888;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +93,6 @@ public class SetProductActivity extends BaseActivity {
         setContentView(R.layout.setproduct_activity);
 
         Intent i = getIntent();
-        //0=set image, 1=set EAN
         Bundle extras = i.getExtras();
         whatactivity = extras.getInt("whatactivity");
 
@@ -103,12 +100,34 @@ public class SetProductActivity extends BaseActivity {
         btnUpload = (Button) findViewById(R.id.upload);
         itemlay = (LinearLayout) findViewById(R.id.itemlay);
         itemx = (EditText) findViewById(R.id.itemx);
+        namex = (EditText) findViewById(R.id.namex);
+        dphx = (EditText) findViewById(R.id.dphx);
+        catx = (EditText) findViewById(R.id.catx);
+        merx = (EditText) findViewById(R.id.merx);
+        cedx = (EditText) findViewById(R.id.cedx);
+
+        String edidok = mSharedPreferences.getString("edidok", "");
+        if (!edidok.equals("0") && !edidok.equals("") && !edidok.equals("FINDITEM")) {
+
+            itemx.setEnabled(false);
+            itemx.setFocusable(false);
+            itemx.setFocusableInTouchMode(false);
+        }
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //mViewModel.emitSaveEanToServer(itemx.getText().toString();
+                showProgressBar();
+                ProductKt prod = mModelsFactory.getProductKt();
+                prod.setCis(itemx.getText().toString());
+                prod.setNat(namex.getText().toString());
+                prod.setDph(dphx.getText().toString());
+                prod.setCat(catx.getText().toString());
+                prod.setMer(merx.getText().toString());
+                prod.setCed(cedx.getText().toString());
+                prod.setPrm2(mSharedPreferences.getString("edidok", ""));
+                mViewModel.emitSaveItemToServer(prod);
             }
 
         });
@@ -144,6 +163,7 @@ public class SetProductActivity extends BaseActivity {
     private void unBind() {
 
         mViewModel.clearSaveEanToServer();
+        mViewModel.clearSaveItemToServer();
         mSubscription.clear();
     }
 
@@ -173,6 +193,17 @@ public class SetProductActivity extends BaseActivity {
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setSavedEan));
 
+        mSubscription.add(mViewModel.getObservableSaveItemToServer()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> {
+                    Log.e(TAG, "Error SetImageActivity " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setSavedItem));
+
         String edidok = mSharedPreferences.getString("edidok", "");
         Log.d("SetImageActivityLog ", edidok);
         if (!edidok.equals("0") && !edidok.equals("") && !edidok.equals("FINDITEM")) {
@@ -180,6 +211,19 @@ public class SetProductActivity extends BaseActivity {
             emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
         }
 
+    }
+
+    private void setSavedItem(List<ProductKt> products) {
+
+        //mAdapter.setDataToAdapter(products);
+        hideProgressBar();
+        Toast.makeText(getApplicationContext(), getString(R.string.itemsaved), Toast.LENGTH_SHORT).show();
+        String edidok = mSharedPreferences.getString("edidok", "");
+        Log.d("SetImageActivityLog ", "saved " + products.get(0).getNat());
+        if (!edidok.equals("0") && !edidok.equals("") && !edidok.equals("FINDITEM")) {
+            showProgressBar();
+            emitMyQueryProductsFromSqlServer("GetDetail" + mSharedPreferences.getString("edidok", ""));
+        }
     }
 
     private void setSavedEan(List<ProductKt> products) {
@@ -199,6 +243,13 @@ public class SetProductActivity extends BaseActivity {
 
         mAdapter.setDataToAdapter(products);
         hideProgressBar();
+        itemx.setText(products.get(0).getCis());
+        namex.setText(products.get(0).getNat());
+        merx.setText(products.get(0).getMer());
+        dphx.setText(products.get(0).getDph());
+        cedx.setText(products.get(0).getCed());
+        catx.setText(products.get(0).getCat());
+
         //Log.d("SetImageActivityLog ", products.get(0).getNat());
     }
 

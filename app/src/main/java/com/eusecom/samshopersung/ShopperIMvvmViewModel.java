@@ -231,5 +231,14 @@ public interface ShopperIMvvmViewModel {
     public boolean callCommandExecutorProxy(CommandExecutorProxyImpl.PermType perm , CommandExecutorProxyImpl.ReportTypes reportType
             , CommandExecutorProxyImpl.ReportName tableName);
 
+    @NonNull
+    public void emitSaveItemToServer(ProductKt prod);
+
+    @NonNull
+    public Observable<List<ProductKt>> getObservableSaveItemToServer();
+
+    @NonNull
+    public void clearSaveItemToServer();
+
 
 }
