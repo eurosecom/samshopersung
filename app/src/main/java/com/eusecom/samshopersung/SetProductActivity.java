@@ -112,6 +112,13 @@ public class SetProductActivity extends BaseActivity {
             itemx.setEnabled(false);
             itemx.setFocusable(false);
             itemx.setFocusableInTouchMode(false);
+        }else{
+
+            itemx.setText("0");
+            itemx.setEnabled(false);
+            itemx.setFocusable(false);
+            itemx.setFocusableInTouchMode(false);
+
         }
 
         btnUpload.setOnClickListener(new View.OnClickListener() {
