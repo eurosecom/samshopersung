@@ -1,44 +1,25 @@
 package com.eusecom.samshopersung;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
-import com.eusecom.samshopersung.models.ShopperModelsFactory;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,10 +32,8 @@ import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
 /**
- * Created by Shaon on 12/3/2016.
- * by http://shaoniiuc.com/android/image-upload-retrofit-library/
+ * Created by eurosecom.
  */
-
 
 public class SetProductActivity extends BaseActivity {
 
@@ -79,6 +58,9 @@ public class SetProductActivity extends BaseActivity {
     Button btnUpload;
     LinearLayout itemlay;
     EditText itemx, namex, dphx, merx, cedx, catx;
+    Spinner catSpinner, dphSpinner;
+    private ArrayAdapter<CategoryKt> mSpinAdapter, mVatSpinAdapter;
+    ArrayList<CategoryKt> categories;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
     private CompositeSubscription mSubscription;
@@ -105,6 +87,10 @@ public class SetProductActivity extends BaseActivity {
         catx = (EditText) findViewById(R.id.catx);
         merx = (EditText) findViewById(R.id.merx);
         cedx = (EditText) findViewById(R.id.cedx);
+        catSpinner = (Spinner) findViewById(R.id.catSpinner);
+        dphSpinner = (Spinner) findViewById(R.id.dphSpinner);
+
+        categories = new ArrayList<>();
 
         String edidok = mSharedPreferences.getString("edidok", "");
         if (!edidok.equals("0") && !edidok.equals("") && !edidok.equals("FINDITEM")) {
@@ -112,7 +98,7 @@ public class SetProductActivity extends BaseActivity {
             itemx.setEnabled(false);
             itemx.setFocusable(false);
             itemx.setFocusableInTouchMode(false);
-        }else{
+        } else {
 
             itemx.setText("0");
             itemx.setEnabled(false);
@@ -147,6 +133,35 @@ public class SetProductActivity extends BaseActivity {
         mRecycler.setLayoutManager(mManager);
         mRecycler.setAdapter(mAdapter);
 
+        ArrayList<CategoryKt> vats = new ArrayList<>();
+        vats.add(new CategoryKt(mSharedPreferences.getString("firdph2", ""), "", ""));
+        vats.add(new CategoryKt(mSharedPreferences.getString("firdph1", ""), "", ""));
+        vats.add(new CategoryKt("0", "", ""));
+        mVatSpinAdapter = new ArrayAdapter<CategoryKt>(this, android.R.layout.simple_spinner_item, vats);
+        mVatSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dphSpinner.setAdapter(mVatSpinAdapter);
+        if (dphx.getText().toString().equals("")) {
+            dphx.setText(mSharedPreferences.getString("firdph2", ""));
+        }
+        if (dphx.getText().toString().equals("0")) {
+            dphx.setText(mSharedPreferences.getString("firdph2", ""));
+        }
+        dphSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                // Here you get the current item (a User object) that is selected by its position
+                CategoryKt dph = mVatSpinAdapter.getItem(position);
+                dphx.setText(dph.getCat());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapter) {
+            }
+        });
+
+
     }
 
     @Override
@@ -178,11 +193,23 @@ public class SetProductActivity extends BaseActivity {
 
         mSubscription = new CompositeSubscription();
 
+        showProgressBar();
+        mSubscription.add(mViewModel.getMyCatsFromSqlServer("1")
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> {
+                    Log.e(TAG, "Error SetProductActivity " + throwable.getMessage());
+                    hideProgressBar();
+                    Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setServerCategories));
+
         mSubscription.add(mViewModel.getMyQueryProductsFromSqlServer()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> {
-                    Log.e(TAG, "Error SetImageActivity " + throwable.getMessage());
+                    Log.e(TAG, "Error SetProductActivity " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
@@ -193,7 +220,7 @@ public class SetProductActivity extends BaseActivity {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> {
-                    Log.e(TAG, "Error SetImageActivity " + throwable.getMessage());
+                    Log.e(TAG, "Error SetProductActivity " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
@@ -204,12 +231,13 @@ public class SetProductActivity extends BaseActivity {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError(throwable -> {
-                    Log.e(TAG, "Error SetImageActivity " + throwable.getMessage());
+                    Log.e(TAG, "Error SetProductActivity " + throwable.getMessage());
                     hideProgressBar();
                     Toast.makeText(this, "Server not connected", Toast.LENGTH_SHORT).show();
                 })
                 .onErrorResumeNext(throwable -> empty())
                 .subscribe(this::setSavedItem));
+
 
         String edidok = mSharedPreferences.getString("edidok", "");
         Log.d("SetImageActivityLog ", edidok);
@@ -219,6 +247,58 @@ public class SetProductActivity extends BaseActivity {
         }
 
     }
+
+    private void setServerCategories(List<CategoryKt> pohyby) {
+
+        if (pohyby.size() > 0) {
+
+            for (int i = 0; i < pohyby.size(); i++) {
+                categories.add(new CategoryKt(pohyby.get(i).getCat(), pohyby.get(i).getNac(), ""));
+            }
+
+            mSpinAdapter = new ArrayAdapter<CategoryKt>(this, android.R.layout.simple_spinner_item, categories);
+            mSpinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            catSpinner.setAdapter(mSpinAdapter);
+            if (catx.getText().toString().equals("")) {
+                catx.setText(pohyby.get(0).getCat());
+            }
+            if (catx.getText().toString().equals("0")) {
+                catx.setText(pohyby.get(0).getCat());
+            }
+            catSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view,
+                                           int position, long id) {
+                    // Here you get the current item (a User object) that is selected by its position
+                    CategoryKt cat = mSpinAdapter.getItem(position);
+                    catx.setText(cat.getCat());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapter) {
+                }
+            });
+
+        }
+
+        hideProgressBar();
+    }
+
+    private CategoryKt searchModel(String query, List<CategoryKt> cats) {
+        query = query.toLowerCase();
+        CategoryKt resultAs = null;
+        //Log.d("SetProductActivityLog", cats.get(0).getCat().toLowerCase() + " - 1.query " + query);
+        for (int i = 0; i < cats.size(); i++) {
+            //Log.d("SetProductActivityLog", cats.get(i).getCat().toLowerCase() + " - 2.query " + query);
+            if (cats.get(i).getCat().toLowerCase().contains(query)) {
+                //Log.d("SetProductActivityLog", cats.get(i).getCat().toLowerCase() + " - 3.query " + query);
+                resultAs = cats.get(i);
+            }
+        }
+        return resultAs;
+    }
+
 
     private void setSavedItem(List<ProductKt> products) {
 
@@ -257,6 +337,18 @@ public class SetProductActivity extends BaseActivity {
         cedx.setText(products.get(0).getCed());
         catx.setText(products.get(0).getCat());
 
+        CategoryKt vatcompare = new CategoryKt(products.get(0).getDph(), "", "");
+        int spinnerPosition = mVatSpinAdapter.getPosition(vatcompare);
+        dphSpinner.setSelection(spinnerPosition);
+
+        //andrejko to solve categories later initialize as products
+            try {
+            int spinnerPosition2 = mSpinAdapter.getPosition(searchModel(catx.getText().toString(), categories));
+            catSpinner.setSelection(spinnerPosition2);
+            } catch (NullPointerException e) {
+
+            }
+
         //Log.d("SetImageActivityLog ", products.get(0).getNat());
     }
 
@@ -264,8 +356,6 @@ public class SetProductActivity extends BaseActivity {
         showProgressBar();
         mViewModel.emitMyQueryProductsFromSqlServer(query);
     }
-
-
 
 
 }

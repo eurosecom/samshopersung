@@ -327,6 +327,8 @@
     <string name="cat">Category</string>
     <string name="mer">Unit</string>
     <string name="itemsaved">Item saved</string>
+    <string name="select_cat">Select category</string>
+    <string name="select_dph">Select VAT rate</string>
 
 
 

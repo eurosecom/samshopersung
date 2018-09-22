@@ -137,14 +137,30 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="15dp"
             android:text="@string/dph" />
 
-        <EditText
-            android:id="@+id/dphx"
+        <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:inputType="number" />
+            android:id="@+id/dphSpinner"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginBottom="1dp"
+            android:drawSelectorOnTop="true"
+            android:spinnerMode="dialog"
+            android:prompt="@string/select_dph">
+        </Spinner>
+
+        <EditText android:id="@+id/dphx"
+            android:inputType="number"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="15dp"/>
 
     </LinearLayout>
 
@@ -162,14 +178,30 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="15dp"
             android:text="@string/cat" />
 
-        <EditText
-            android:id="@+id/catx"
+        <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:inputType="number" />
+            android:id="@+id/catSpinner"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginBottom="1dp"
+            android:drawSelectorOnTop="true"
+            android:spinnerMode="dialog"
+            android:prompt="@string/select_cat">
+        </Spinner>
+
+        <EditText android:id="@+id/catx"
+            android:inputType="number"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="15dp"/>
 
     </LinearLayout>
 
@@ -177,7 +209,8 @@
         android:id="@+id/upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/itemtoserver" />
+        android:text="@string/itemtoserver"
+        android:layout_marginTop="15dp"/>
 
 
 </LinearLayout>
