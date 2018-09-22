@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
@@ -867,12 +868,20 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 ", \"ced1\":" + "\"" + invx.getCed1() + "\"" +
                 ", \"prm1\":" + "\"" + invx.getPrm1() + "\"" +
                 ", \"prm2\":" + "\"" + invx.getPrm2() + "\"" +
-                ", \"desc\":" + "\"" + invx.getDesc() + "\"" +
+                ", \"desc\":" + "\"" + EncodeDesc(invx.getDesc()) + "\"" +
                 " }";
 
         return jsonstring;
     }
     //end JSON from Product
+
+    public String EncodeDesc(String desc) {
+
+        String encode = desc.replace("\n", "$$$$");
+        encode = encode.replace("\r", "%%%%");
+
+        return encode;
+    }
 
     //JSON from Invoice
     public String JsonFromInvoice(Invoice invx) {
