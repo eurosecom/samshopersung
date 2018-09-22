@@ -15,19 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import dagger.android.AndroidInjection;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
@@ -57,7 +52,7 @@ public class SetProductActivity extends BaseActivity {
 
     Button btnUpload;
     LinearLayout itemlay;
-    EditText itemx, namex, dphx, merx, cedx, catx;
+    EditText itemx, namex, dphx, merx, cedx, ced1x, catx, descx;
     Spinner catSpinner, dphSpinner;
     private ArrayAdapter<CategoryKt> mSpinAdapter, mVatSpinAdapter;
     ArrayList<CategoryKt> categories;
@@ -87,6 +82,8 @@ public class SetProductActivity extends BaseActivity {
         catx = (EditText) findViewById(R.id.catx);
         merx = (EditText) findViewById(R.id.merx);
         cedx = (EditText) findViewById(R.id.cedx);
+        ced1x = (EditText) findViewById(R.id.ced1x);
+        descx = (EditText) findViewById(R.id.descx);
         catSpinner = (Spinner) findViewById(R.id.catSpinner);
         dphSpinner = (Spinner) findViewById(R.id.dphSpinner);
 
@@ -100,7 +97,9 @@ public class SetProductActivity extends BaseActivity {
             itemx.setFocusableInTouchMode(false);
         } else {
 
-            itemx.setText("0");
+            if(itemx.getText().toString().equals("")){
+                itemx.setText("0");
+            }
             itemx.setEnabled(false);
             itemx.setFocusable(false);
             itemx.setFocusableInTouchMode(false);
@@ -119,6 +118,8 @@ public class SetProductActivity extends BaseActivity {
                 prod.setCat(catx.getText().toString());
                 prod.setMer(merx.getText().toString());
                 prod.setCed(cedx.getText().toString());
+                prod.setCed1(ced1x.getText().toString());
+                prod.setDesc(descx.getText().toString());
                 prod.setPrm2(mSharedPreferences.getString("edidok", ""));
                 mViewModel.emitSaveItemToServer(prod);
             }
@@ -302,7 +303,8 @@ public class SetProductActivity extends BaseActivity {
 
     private void setSavedItem(List<ProductKt> products) {
 
-        //mAdapter.setDataToAdapter(products);
+        mSharedPreferences.edit().putString("edidok", products.get(0).getCis()).commit();
+
         hideProgressBar();
         Toast.makeText(getApplicationContext(), getString(R.string.itemsaved), Toast.LENGTH_SHORT).show();
         String edidok = mSharedPreferences.getString("edidok", "");
@@ -335,6 +337,8 @@ public class SetProductActivity extends BaseActivity {
         merx.setText(products.get(0).getMer());
         dphx.setText(products.get(0).getDph());
         cedx.setText(products.get(0).getCed());
+        ced1x.setText(products.get(0).getCed1());
+        descx.setText(products.get(0).getDesc());
         catx.setText(products.get(0).getCat());
 
         CategoryKt vatcompare = new CategoryKt(products.get(0).getDph(), "", "");

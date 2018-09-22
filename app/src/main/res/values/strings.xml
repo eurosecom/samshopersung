@@ -322,13 +322,15 @@
     //setproductactivity
     <string name="itemtoserver">Save Item to Server</string>
     <string name="name">Name</string>
-    <string name="ced">Price</string>
+    <string name="ced">VatPrice</string>
+    <string name="ced1">ActionPrice</string>
     <string name="dph">VAT</string>
     <string name="cat">Category</string>
     <string name="mer">Unit</string>
     <string name="itemsaved">Item saved</string>
     <string name="select_cat">Select category</string>
     <string name="select_dph">Select VAT rate</string>
+    <string name="desc">Desc</string>
 
 
 
