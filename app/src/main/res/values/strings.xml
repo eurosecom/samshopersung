@@ -212,7 +212,8 @@
     <string name="pdfdoc">PDF document</string>
     <string name="getinvoice">Get invoice</string>
     <string name="getinvoicefrom">Get invoice from order</string>
-
+    <string name="getekassa">Get eKassa </string>
+    <string name="getekassafrom">Get eKassa from order</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

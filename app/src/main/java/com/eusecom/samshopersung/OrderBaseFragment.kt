@@ -282,11 +282,25 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
     }
 
+    fun showGetEkassaDialog(order: Invoice) {
+
+        alert("", getString(R.string.getekassafrom) + " " + order.dok) {
+            yesButton { navigateToGetEkassa(order) }
+            noButton {}
+        }.show()
+
+    }
+
     fun navigateToGetInvoice(order: Invoice){
         showProgressBar()
         mViewModel.emitOrderToInv(order)
 
     }
 
+    fun navigateToGetEkassa(order: Invoice){
+        //showProgressBar()
+        //mViewModel.emitOrderToEkassa(order)
+
+    }
 
 }

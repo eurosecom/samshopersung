@@ -210,6 +210,8 @@
     <string name="pdfdoc">PDF doklad</string>
     <string name="getinvoice">Urobiť faktúru</string>
     <string name="getinvoicefrom">Urobiť faktúru z objednávky</string>
+    <string name="getekassa">Uhradiť cez eKassa</string>
+    <string name="getekassafrom">eKassa úhrada objednávky</string>
 
     //room demo
     <string name="price_format">$%1$s</string>
