@@ -29,6 +29,7 @@ import dagger.Provides;
 import io.realm.Realm;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -123,11 +124,20 @@ public class AppModule {
         return gsonBuilder.create();
     }
 
+    @Provides
+    @Singleton
+    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor interceptorLogging = new HttpLoggingInterceptor();
+        interceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return interceptorLogging;
+    }
+
     @Provides @Named("cached")
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache, ExampleInterceptor interceptor) {
+    OkHttpClient provideOkHttpClient(Cache cache, ExampleInterceptor interceptor, HttpLoggingInterceptor interceptorLogging) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addInterceptor(interceptorLogging)
                 .cache(cache)
                 .build();
         return okHttpClient;
@@ -135,9 +145,10 @@ public class AppModule {
 
     @Provides @Named("non_cached")
     @Singleton
-    OkHttpClient provideOkHttpClientNonCached(ExampleInterceptor interceptor) {
+    OkHttpClient provideOkHttpClientNonCached(ExampleInterceptor interceptor, HttpLoggingInterceptor interceptorLogging) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addInterceptor(interceptorLogging)
                 .build();
         return okHttpClient;
     }
