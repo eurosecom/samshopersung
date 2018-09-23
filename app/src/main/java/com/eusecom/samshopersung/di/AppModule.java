@@ -22,6 +22,12 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.convert.AnnotationStrategy;
+import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.strategy.Strategy;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -33,6 +39,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 
 /**
@@ -143,6 +150,18 @@ public class AppModule {
         return okHttpClient;
     }
 
+    @Provides
+    @Singleton
+    Strategy provideStrategy() {
+        return new AnnotationStrategy();
+    }
+
+    @Provides
+    @Singleton
+    Serializer provideSerializer(Strategy strategy) {
+        return new Persister(strategy);
+    }
+
     @Provides @Named("non_cached")
     @Singleton
     OkHttpClient provideOkHttpClientNonCached(ExampleInterceptor interceptor, HttpLoggingInterceptor interceptorLogging) {
@@ -155,10 +174,11 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, @Named("cached") OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(Gson gson, @Named("cached") OkHttpClient okHttpClient, Serializer serializer) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(SimpleXmlConverterFactory.create(serializer))
                 .baseUrl(mBaseUrl)
                 .client(okHttpClient)
                 .build();
