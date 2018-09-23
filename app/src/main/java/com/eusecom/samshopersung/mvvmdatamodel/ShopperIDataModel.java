@@ -17,6 +17,8 @@ import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
+import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
+import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 
 import java.util.HashMap;
 import java.util.List;
@@ -121,4 +123,9 @@ public interface ShopperIDataModel {
     @NonNull
     public Observable<SetImageServerResponse> uploadImageWithMapToServer(String servername, MultipartBody.Part file
             , Map<String, RequestBody> partMap);
+
+    //test soap hello
+    @NonNull
+    public Observable<HelloResponseEnvelope> getSoapHello(HelloRequestEnvelope requestEnvelope);
+
 }

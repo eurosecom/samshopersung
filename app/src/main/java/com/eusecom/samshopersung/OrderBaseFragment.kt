@@ -11,8 +11,13 @@ import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
+import com.eusecom.samshopersung.soap.soaphello.HelloRequestBody
+import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope
+import com.eusecom.samshopersung.soap.soaphello.HelloRequestModel
+import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -168,6 +173,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerOrderToInv(it) })
 
+        mSubscription?.add(mViewModel.getObservableSoapHello()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setSoapResponse(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
@@ -175,6 +191,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
         mViewModel.clearObservableDeleteOrder()
         mViewModel.clearObservableOrderToInv()
+        mViewModel.clearObservableSoapHello()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -182,6 +199,16 @@ abstract class OrderBaseFragment : BaseKtFragment() {
             mDisposable?.dispose()
         }
         hideProgressBar()
+
+    }
+
+    private fun setSoapResponse(responseEnvelop: HelloResponseEnvelope) {
+
+        if (responseEnvelop != null) {
+            val helloresult = responseEnvelop.body.getHelloResponse.result
+            Log.d("Soap Hello result", helloresult)
+            Toast.makeText(activity, helloresult, Toast.LENGTH_LONG).show()
+        }
 
     }
 
@@ -298,8 +325,18 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     }
 
     fun navigateToGetEkassa(order: Invoice){
+
         //showProgressBar()
         //mViewModel.emitOrderToEkassa(order)
+
+        //test soap hello
+        val requestEnvelop = HelloRequestEnvelope()
+        val requestBody = HelloRequestBody()
+        val requestModel = HelloRequestModel()
+        requestModel.setHelloAttribute = "http://Wsdl2CodeTestService/"
+        requestBody.getHelloString = requestModel
+        requestEnvelop.body = requestBody
+        mViewModel.emitSoapHello(requestEnvelop)
 
     }
 

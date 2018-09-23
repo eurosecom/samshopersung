@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import io.reactivex.Flowable;
 import io.realm.Realm;
 import okhttp3.MultipartBody;
@@ -35,6 +34,8 @@ import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
+import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
+import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.google.firebase.database.DatabaseReference;
 
 public class ShopperDataModel implements ShopperIDataModel {
@@ -514,6 +515,14 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         setRetrofit(servername);
         return mShopperRetrofitService.uploadImageFileWithMap(file, partMap);
+    }
+
+    //test soap hello
+    @NonNull
+    public Observable<HelloResponseEnvelope> getSoapHello(HelloRequestEnvelope requestEnvelope){
+
+        setRetrofit("www.wsdl2code.com/");
+        return mShopperRetrofitService.getHelloFromSoap(requestEnvelope);
     }
 
 }

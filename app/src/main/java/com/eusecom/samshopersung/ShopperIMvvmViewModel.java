@@ -9,6 +9,8 @@ import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
+import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
+import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 
 import java.util.List;
 
@@ -239,6 +241,18 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearSaveItemToServer();
+
+
+    //test soap hello
+
+    @NonNull
+    public void emitSoapHello(HelloRequestEnvelope requestEnvelope);
+
+    @NonNull
+    public Observable<HelloResponseEnvelope> getObservableSoapHello();
+
+    @NonNull
+    public void clearObservableSoapHello();
 
 
 }

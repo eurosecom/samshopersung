@@ -19,6 +19,8 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
+import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
+import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1327,6 +1329,61 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end save item to server
 
     //end methods for SetImageActivity
+
+
+    //test SOAP hello
+    //get Hello from SOAP
+    public void emitSoapHello(HelloRequestEnvelope requestEnvelope) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+            mObservableSoapHello.onNext(requestEnvelope);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<HelloRequestEnvelope> mObservableSoapHello = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<HelloResponseEnvelope> getObservableSoapHello() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
+
+        return mObservableSoapHello
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(envelop ->
+                        mDataModel.getSoapHello(envelop));
+    }
+
+    public void clearObservableSoapHello() {
+
+        mObservableSoapHello = BehaviorSubject.create();
+
+    }
+    //end get Hello from SOAP
+    //end test SOAP hello
 
 
 }
