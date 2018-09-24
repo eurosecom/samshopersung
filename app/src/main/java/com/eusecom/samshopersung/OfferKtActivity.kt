@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.MenuItemCompat
@@ -49,8 +48,6 @@ import io.reactivex.functions.Function
 import kotlinx.android.synthetic.main.mainshopper_activity.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
-import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
 import rx.Observable
@@ -744,7 +741,9 @@ class OfferKtActivity : AppCompatActivity() {
             re?.let {
                 toast( getString(R.string.popisean) + " " + re )
                 querystring = re
+                emitMyQueryProductsFromSqlServer(querystring)
             }
+
         }
 
     }
