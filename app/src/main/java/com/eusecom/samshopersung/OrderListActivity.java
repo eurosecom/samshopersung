@@ -31,7 +31,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-
 /**
  * Show List of all suppliers documents
  *

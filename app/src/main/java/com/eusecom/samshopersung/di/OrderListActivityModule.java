@@ -11,6 +11,7 @@ import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
+import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.google.firebase.database.DatabaseReference;
 import dagger.Module;
 import dagger.Provides;
@@ -21,13 +22,11 @@ public class OrderListActivityModule {
 
     @Provides
     @ShopperScope
-    public ShopperIDataModel providesShopperIDataModel(DatabaseReference databasereference,
-                                                       ShopperRetrofitService shopperretrofitservice,
-                                                       Resources resources, Realm realm,
+    public ShopperIDataModel providesShopperIDataModel(ShopperRetrofitService shopperretrofitservice,
                                                        ExampleInterceptor interceptor,
-                                                       IRealmController realmcontroller) {
-        return new ShopperDataModel(databasereference, shopperretrofitservice
-                , resources, realm, interceptor, realmcontroller);
+                                                       ShopperXmlRetrofitService shopperxmlretrofitservice) {
+        return new ShopperDataModel(shopperretrofitservice
+                , interceptor, shopperxmlretrofitservice);
     }
 
 

@@ -1,6 +1,5 @@
 package com.eusecom.samshopersung.retrofit;
 
-
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
@@ -10,15 +9,11 @@ import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SetImageServerResponse;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.InvoiceList;
-import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
-import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import java.util.List;
 import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -88,9 +83,5 @@ public interface ShopperRetrofitService {
     Observable<SetImageServerResponse> uploadImageFileWithMap(@Part MultipartBody.Part file,
                                                              @PartMap() Map<String, RequestBody> partMap);
 
-
-    @Headers({"Content-Type: text/xml; charset=UTF-8", "SOAPAction: http://Wsdl2CodeTestService/HelloWorld"})
-    @POST("SampleService.asmx")
-    Observable<HelloResponseEnvelope> getHelloFromSoap(@Body HelloRequestEnvelope requestEnvelope);
 
 }

@@ -15,6 +15,7 @@ import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.RealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
+import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
@@ -172,13 +173,24 @@ public class AppModule {
         return okHttpClient;
     }
 
-    @Provides
+    @Provides @Named("gson")
     @Singleton
-    Retrofit provideRetrofit(Gson gson, @Named("cached") OkHttpClient okHttpClient, Serializer serializer) {
+    Retrofit provideRetrofit(Gson gson, @Named("cached") OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(mBaseUrl)
+                .client(okHttpClient)
+                .build();
+        return retrofit;
+    }
+
+    @Provides @Named("simplexml")
+    @Singleton
+    Retrofit provideXmlRetrofit(@Named("cached") OkHttpClient okHttpClient, Serializer serializer) {
+        Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(SimpleXmlConverterFactory.create(serializer))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(mBaseUrl)
                 .client(okHttpClient)
                 .build();
@@ -187,8 +199,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public ShopperRetrofitService providesShopperRetrofitService(Retrofit retrofit) {
+    public ShopperRetrofitService providesShopperRetrofitService(@Named("gson") Retrofit retrofit) {
         return retrofit.create(ShopperRetrofitService.class);
+    }
+
+    @Provides
+    @Singleton
+    public ShopperXmlRetrofitService providesShopperXmlRetrofitService(@Named("simplexml") Retrofit retrofit) {
+        return retrofit.create(ShopperXmlRetrofitService.class);
     }
 
     @Provides

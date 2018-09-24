@@ -33,6 +33,7 @@ import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
+import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
@@ -42,6 +43,7 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     DatabaseReference mFirebaseDatabase;
     ShopperRetrofitService mShopperRetrofitService;
+    ShopperXmlRetrofitService mShopperXmlRetrofitService;
     Resources mResources;
     Realm mRealm;
     ExampleInterceptor mInterceptor;
@@ -86,6 +88,14 @@ public class ShopperDataModel implements ShopperIDataModel {
         mInterceptor = interceptor;
         mRoomDatabase = roomDatabase;
         mModelsFactory = modelsFactory;
+    }
+
+    public ShopperDataModel(@NonNull final ShopperRetrofitService shopperRetrofitService,
+                            @NonNull final ExampleInterceptor interceptor,
+                            @NonNull final ShopperXmlRetrofitService shopperXmlRetrofitService) {
+        mShopperRetrofitService = shopperRetrofitService;
+        mInterceptor = interceptor;
+        mShopperXmlRetrofitService = shopperXmlRetrofitService;
     }
 
     //methods for ChooseCompanyActivity
@@ -522,7 +532,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     public Observable<HelloResponseEnvelope> getSoapHello(HelloRequestEnvelope requestEnvelope){
 
         setRetrofit("www.wsdl2code.com/");
-        return mShopperRetrofitService.getHelloFromSoap(requestEnvelope);
+        return mShopperXmlRetrofitService.getHelloFromSoap(requestEnvelope);
     }
 
 }
