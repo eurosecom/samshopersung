@@ -246,13 +246,13 @@ public interface ShopperIMvvmViewModel {
     //test soap hello
 
     @NonNull
-    public void emitSoapHello(HelloRequestEnvelope requestEnvelope);
+    public void emitSoapHello(Invoice order);
 
     @NonNull
-    public Observable<HelloResponseEnvelope> getObservableSoapHello();
+    public Observable<HelloResponseEnvelope> getObservableHelloSoapResponse();
 
     @NonNull
-    public void clearObservableSoapHello();
+    public void clearObservableSoapResponse();
 
 
 }

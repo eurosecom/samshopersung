@@ -173,7 +173,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerOrderToInv(it) })
 
-        mSubscription?.add(mViewModel.getObservableSoapHello()
+        mSubscription?.add(mViewModel.getObservableHelloSoapResponse()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -191,7 +191,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
         mViewModel.clearObservableDeleteOrder()
         mViewModel.clearObservableOrderToInv()
-        mViewModel.clearObservableSoapHello()
+        mViewModel.clearObservableSoapResponse()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -204,6 +204,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
     private fun setSoapResponse(responseEnvelop: HelloResponseEnvelope) {
 
+        hideProgressBar()
         if (responseEnvelop != null) {
             val helloresult = responseEnvelop.body.getHelloResponse.result
             Log.d("Soap Hello result", helloresult)
@@ -326,17 +327,8 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
     fun navigateToGetEkassa(order: Invoice){
 
-        //showProgressBar()
-        //mViewModel.emitOrderToEkassa(order)
-
-        //test soap hello
-        val requestEnvelop = HelloRequestEnvelope()
-        val requestBody = HelloRequestBody()
-        val requestModel = HelloRequestModel()
-        requestModel.setHelloAttribute = "http://Wsdl2CodeTestService/"
-        requestBody.getHelloString = requestModel
-        requestEnvelop.body = requestBody
-        mViewModel.emitSoapHello(requestEnvelop)
+        showProgressBar()
+        mViewModel.emitSoapHello(order)
 
     }
 

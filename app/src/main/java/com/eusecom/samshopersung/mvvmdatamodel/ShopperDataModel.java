@@ -529,7 +529,7 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     //test soap hello
     @NonNull
-    public Observable<HelloResponseEnvelope> getSoapHello(HelloRequestEnvelope requestEnvelope){
+    public Observable<HelloResponseEnvelope> getHelloSoapResponse(HelloRequestEnvelope requestEnvelope){
 
         setRetrofit("www.wsdl2code.com/");
         return mShopperXmlRetrofitService.getHelloFromSoap(requestEnvelope);

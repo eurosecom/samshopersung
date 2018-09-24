@@ -6,7 +6,7 @@ import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Root;
 
 /**
- * Request Envelope
+ * Hello Request Envelope
  * created by eurosecom
  */
 @Root(name = "soap:Envelope")

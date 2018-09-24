@@ -126,6 +126,6 @@ public interface ShopperIDataModel {
 
     //test soap hello
     @NonNull
-    public Observable<HelloResponseEnvelope> getSoapHello(HelloRequestEnvelope requestEnvelope);
+    public Observable<HelloResponseEnvelope> getHelloSoapResponse(HelloRequestEnvelope requestEnvelope);
 
 }

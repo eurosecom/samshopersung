@@ -18,6 +18,8 @@ import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
+import com.eusecom.samshopersung.soap.ISoapRequestFactory;
+import com.eusecom.samshopersung.soap.SoapRequestFactory;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -235,6 +237,12 @@ public class AppModule {
     @Singleton
     public MyDatabase providesMyDatabase(Application application) {
         return ((SamshopperApp) application).get().getDB();
+    }
+
+    @Provides
+    @Singleton
+    public ISoapRequestFactory provideSoapRequestFactory() {
+        return new SoapRequestFactory();
     }
 
 

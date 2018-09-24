@@ -1,34 +1,31 @@
 package com.eusecom.samshopersung;
 
-
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.Employee;
-import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
-import com.eusecom.samshopersung.models.ShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
+import com.eusecom.samshopersung.soap.ISoapRequestFactory;
+import com.eusecom.samshopersung.soap.SoapRequestFactory;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
+import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import okhttp3.MediaType;
@@ -48,12 +45,14 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     // If i provide dependency DgAllEmpsAbsMvvmViewModel in DgFirebaseSubModule then i have got in DgAllEmpsAbsMvvmViewMode only dependencies in constructor
     ShopperIDataModel mDataModel;
 
-    //@Inject only by Base constructor injection
+    //@Inject only by Base constructor injection to activity
     ISchedulerProvider mSchedulerProvider;
 
-    //@Inject only by Base constructor injection
+    //@Inject only by Base constructor injection to activity
     SharedPreferences mSharedPreferences;
 
+    //@Inject only by Base constructor injection to activity for example adapter to activity
+    ISoapRequestFactory mSoapRequestFactory;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -69,6 +68,18 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
         mConnectivityManager = connectivityManager;
+    }
+
+    public ShopperMvvmViewModel(@NonNull final ShopperIDataModel dataModel,
+                                @NonNull final ISchedulerProvider schedulerProvider,
+                                @NonNull final SharedPreferences sharedPreferences,
+                                @NonNull final ConnectivityManager connectivityManager,
+                                @NonNull ISoapRequestFactory soapRequestFactory) {
+        mDataModel = dataModel;
+        mSchedulerProvider = schedulerProvider;
+        mSharedPreferences = sharedPreferences;
+        mConnectivityManager = connectivityManager;
+        mSoapRequestFactory = soapRequestFactory;
     }
 
 
@@ -1333,53 +1344,33 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     //test SOAP hello
     //get Hello from SOAP
-    public void emitSoapHello(HelloRequestEnvelope requestEnvelope) {
+    public void emitSoapHello(Invoice order) {
         if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
-            mObservableSoapHello.onNext(requestEnvelope);
+
+            //ISoapRequestFactory isoapfactory = new SoapRequestFactory();
+            HelloRequestEnvelope requestEnvelop = mSoapRequestFactory.getHelloRequestEnvelop(order);
+
+            mObservableSoapResponse.onNext(requestEnvelop);
         }
     }
 
     @NonNull
-    private BehaviorSubject<HelloRequestEnvelope> mObservableSoapHello = BehaviorSubject.create();
+    private BehaviorSubject<HelloRequestEnvelope> mObservableSoapResponse = BehaviorSubject.create();
 
     @NonNull
-    public Observable<HelloResponseEnvelope> getObservableSoapHello() {
+    public Observable<HelloResponseEnvelope> getObservableHelloSoapResponse() {
 
-        Random r = new Random();
-        double d = -10.0 + r.nextDouble() * 20.0;
-        String ds = String.valueOf(d);
-
-        String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
-
-        MCrypt mcrypt = new MCrypt();
-        String encrypted = "";
-        try {
-            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
-        } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        String encrypted2=encrypted;
-
-        String firx = mSharedPreferences.getString("fir", "");
-        String rokx = mSharedPreferences.getString("rok", "");
-        String dodx = "1";
-        String umex = mSharedPreferences.getString("ume", "");
-        String serverx = mSharedPreferences.getString("servername", "");
-        String ustp = mSharedPreferences.getString("ustype", "");
-
-        return mObservableSoapHello
+        return mObservableSoapResponse
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(envelop ->
-                        mDataModel.getSoapHello(envelop));
+                        mDataModel.getHelloSoapResponse(envelop));
     }
 
-    public void clearObservableSoapHello() {
+    public void clearObservableSoapResponse() {
 
-        mObservableSoapHello = BehaviorSubject.create();
+        mObservableSoapResponse = BehaviorSubject.create();
 
     }
     //end get Hello from SOAP
