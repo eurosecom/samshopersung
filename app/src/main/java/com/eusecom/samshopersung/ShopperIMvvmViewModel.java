@@ -244,7 +244,6 @@ public interface ShopperIMvvmViewModel {
 
 
     //test soap hello
-
     @NonNull
     public void emitSoapHello(Invoice order);
 
@@ -253,6 +252,16 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearObservableSoapResponse();
+
+    //soap Ekassa
+    @NonNull
+    public void emitSoapEkassa(Invoice order);
+
+    @NonNull
+    public Observable<HelloResponseEnvelope> getObservableSoapEkassaResponse();
+
+    @NonNull
+    public void clearObservableSoapEkassaResponse();
 
 
 }

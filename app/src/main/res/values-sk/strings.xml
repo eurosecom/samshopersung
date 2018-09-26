@@ -212,6 +212,8 @@
     <string name="getinvoicefrom">Urobiť faktúru z objednávky</string>
     <string name="getekassa">Uhradiť cez eKassa</string>
     <string name="getekassafrom">eKassa úhrada objednávky</string>
+    <string name="getsoaphello">Načítať Soap Hello </string>
+    <string name="getsoaphellofrom">daj Hello z objednávky</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

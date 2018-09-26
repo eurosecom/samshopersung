@@ -531,8 +531,42 @@ public class ShopperDataModel implements ShopperIDataModel {
     @NonNull
     public Observable<HelloResponseEnvelope> getHelloSoapResponse(HelloRequestEnvelope requestEnvelope){
 
+        SoapEnvelopeWrapper<HelloRequestEnvelope> helloWrapper = new SoapEnvelopeWrapper<>(requestEnvelope);
+        helloWrapper.print();
         setRetrofit("www.wsdl2code.com/");
         return mShopperXmlRetrofitService.getHelloFromSoap(requestEnvelope);
+    }
+
+    //test method soap generic
+    //try to create generic retrofit interface
+    //it does not work by exception Error Throwable Parameter type must not include a type variable or wildcard
+    public <EnvelopeType> Observable<HelloResponseEnvelope> getSoapResponse(EnvelopeType envelope){
+
+        setRetrofit("www.wsdl2code.com/");
+        return mShopperXmlRetrofitService.getResponseFromSoap(envelope);
+    }
+
+    //test class soap generic
+    public class SoapEnvelopeWrapper<EnvelopeType> {
+
+        private EnvelopeType envelope;
+
+        public void print() {
+            Log.d("EnvelopeString", envelope.toString());
+        }
+
+        public SoapEnvelopeWrapper() {
+        }
+
+        public SoapEnvelopeWrapper(EnvelopeType envelope) {
+            this.envelope = envelope;
+        }
+
+        public void setEnvelope(EnvelopeType envelope) {
+            this.envelope = envelope;
+        }
+
+
     }
 
 }

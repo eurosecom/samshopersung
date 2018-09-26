@@ -184,6 +184,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setSoapResponse(it) })
 
+        mSubscription?.add(mViewModel.getObservableSoapEkassaResponse()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setSoapResponse(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
@@ -192,6 +203,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         mViewModel.clearObservableDeleteOrder()
         mViewModel.clearObservableOrderToInv()
         mViewModel.clearObservableSoapResponse()
+        mViewModel.clearObservableSoapEkassaResponse()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -319,6 +331,15 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
     }
 
+    fun showGetSoapHelloDialog(order: Invoice) {
+
+        alert("", getString(R.string.getsoaphellofrom) + " " + order.dok) {
+            yesButton { navigateToGetSoapHello(order) }
+            noButton {}
+        }.show()
+
+    }
+
     fun navigateToGetInvoice(order: Invoice){
         showProgressBar()
         mViewModel.emitOrderToInv(order)
@@ -326,6 +347,13 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     }
 
     fun navigateToGetEkassa(order: Invoice){
+
+        showProgressBar()
+        mViewModel.emitSoapEkassa(order)
+
+    }
+
+    fun navigateToGetSoapHello(order: Invoice){
 
         showProgressBar()
         mViewModel.emitSoapHello(order)

@@ -214,6 +214,8 @@
     <string name="getinvoicefrom">Get invoice from order</string>
     <string name="getekassa">Get eKassa </string>
     <string name="getekassafrom">Get eKassa from order</string>
+    <string name="getsoaphello">Get Soap Hello </string>
+    <string name="getsoaphellofrom">Get Hello from order</string>
 
     //room demo
     <string name="price_format">$%1$s</string>

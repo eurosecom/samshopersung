@@ -1366,6 +1366,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(envelop ->
                         mDataModel.getHelloSoapResponse(envelop));
+                        //mDataModel.getSoapResponse(envelop)); try to create generic retrofit interface
+                        //it does not work by exception Error Throwable Parameter type must not include a type variable or wildcard
     }
 
     public void clearObservableSoapResponse() {
@@ -1375,6 +1377,40 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end get Hello from SOAP
     //end test SOAP hello
+
+    //SOAP eKassa
+    //get eEkassa from SOAP
+    public void emitSoapEkassa(Invoice order) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+
+            //ISoapRequestFactory isoapfactory = new SoapRequestFactory();
+            HelloRequestEnvelope requestEnvelop = mSoapRequestFactory.getHelloRequestEnvelop(order);
+
+            mObservableSoapEkassaResponse.onNext(requestEnvelop);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<HelloRequestEnvelope> mObservableSoapEkassaResponse = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<HelloResponseEnvelope> getObservableSoapEkassaResponse() {
+
+        return mObservableSoapEkassaResponse
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(envelop ->
+                        mDataModel.getHelloSoapResponse(envelop));
+    }
+
+    public void clearObservableSoapEkassaResponse() {
+
+        mObservableSoapEkassaResponse = BehaviorSubject.create();
+
+    }
+    //end get Hello from SOAP
+    //end SOAP eKassa
 
 
 }
