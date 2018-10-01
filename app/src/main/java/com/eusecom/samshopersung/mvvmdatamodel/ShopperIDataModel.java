@@ -128,6 +128,9 @@ public interface ShopperIDataModel {
     @NonNull
     public Observable<HelloResponseEnvelope> getHelloSoapResponse(HelloRequestEnvelope requestEnvelope);
 
+    @NonNull
+    public Observable<HelloResponseEnvelope> getEkassaSoapResponse(HelloRequestEnvelope requestEnvelope);
+
     public <EnvelopeType> Observable<HelloResponseEnvelope> getSoapResponse(EnvelopeType envelope);
 
 }

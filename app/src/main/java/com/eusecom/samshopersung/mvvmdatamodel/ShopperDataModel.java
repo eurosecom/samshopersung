@@ -537,6 +537,13 @@ public class ShopperDataModel implements ShopperIDataModel {
         return mShopperXmlRetrofitService.getHelloFromSoap(requestEnvelope);
     }
 
+    @NonNull
+    public Observable<HelloResponseEnvelope> getEkassaSoapResponse(HelloRequestEnvelope requestEnvelope){
+
+        setRetrofit("www.wsdl2code.com/");
+        return mShopperXmlRetrofitService.getEkassaFromSoap(requestEnvelope);
+    }
+
     //test method soap generic
     //try to create generic retrofit interface
     //it does not work by exception Error Throwable Parameter type must not include a type variable or wildcard

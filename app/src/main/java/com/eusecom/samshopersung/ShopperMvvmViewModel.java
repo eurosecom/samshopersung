@@ -16,16 +16,17 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.soap.ISoapRequestFactory;
-import com.eusecom.samshopersung.soap.SoapRequestFactory;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
+import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
+import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
+import com.eusecom.samshopersung.soap.soappayment.PaymentTerminalImp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import javax.inject.Inject;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import okhttp3.MediaType;
@@ -52,7 +53,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     SharedPreferences mSharedPreferences;
 
     //@Inject only by Base constructor injection to activity for example adapter to activity
-    ISoapRequestFactory mSoapRequestFactory;
+    ISoapRequestFactory mHelloRequestFactory;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -79,7 +80,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
         mConnectivityManager = connectivityManager;
-        mSoapRequestFactory = soapRequestFactory;
+        mHelloRequestFactory = soapRequestFactory;
     }
 
 
@@ -1349,8 +1350,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
 
-            //ISoapRequestFactory isoapfactory = new SoapRequestFactory();
-            HelloRequestEnvelope requestEnvelop = mSoapRequestFactory.getHelloRequestEnvelop(order);
+            HelloRequestEnvelope requestEnvelop = mHelloRequestFactory.getHelloRequestEnvelop(order);
 
             mObservableSoapResponse.onNext(requestEnvelop);
         }
@@ -1385,9 +1385,9 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
 
-            //ISoapRequestFactory isoapfactory = new SoapRequestFactory();
-            HelloRequestEnvelope requestEnvelop = mSoapRequestFactory.getHelloRequestEnvelop(order);
-
+            PaymentTerminal terminal = new PaymentTerminalImp();
+            terminal.setOrder(order);
+            HelloRequestEnvelope requestEnvelop = terminal.pay(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
             mObservableSoapEkassaResponse.onNext(requestEnvelop);
         }
     }
@@ -1401,7 +1401,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mObservableSoapEkassaResponse
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(envelop ->
-                        mDataModel.getHelloSoapResponse(envelop));
+                        mDataModel.getEkassaSoapResponse(envelop));
     }
 
     public void clearObservableSoapEkassaResponse() {

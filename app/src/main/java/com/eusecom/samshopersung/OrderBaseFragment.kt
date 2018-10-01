@@ -182,7 +182,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setSoapResponse(it) })
+                .subscribe { it -> setHelloSoapResponse(it) })
 
         mSubscription?.add(mViewModel.getObservableSoapEkassaResponse()
                 .subscribeOn(Schedulers.computation())
@@ -219,6 +219,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         hideProgressBar()
         if (responseEnvelop != null) {
             val helloresult = responseEnvelop.body.getHelloResponse.result
+            Log.d("Soap Hello result", helloresult)
+            Toast.makeText(activity, helloresult, Toast.LENGTH_LONG).show()
+        }
+
+    }
+
+    private fun setHelloSoapResponse(responseEnvelop: HelloResponseEnvelope) {
+
+        hideProgressBar()
+        if (responseEnvelop != null) {
+            val helloresult = "hello soap " + responseEnvelop.body.getHelloResponse.result
             Log.d("Soap Hello result", helloresult)
             Toast.makeText(activity, helloresult, Toast.LENGTH_LONG).show()
         }
