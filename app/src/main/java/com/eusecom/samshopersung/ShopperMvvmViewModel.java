@@ -15,7 +15,7 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
-import com.eusecom.samshopersung.soap.ISoapRequestFactory;
+import com.eusecom.samshopersung.soap.IHelloRequestFactory;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
@@ -53,7 +53,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     SharedPreferences mSharedPreferences;
 
     //@Inject only by Base constructor injection to activity for example adapter to activity
-    ISoapRequestFactory mHelloRequestFactory;
+    IHelloRequestFactory mHelloRequestFactory;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -75,7 +75,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                                 @NonNull final ISchedulerProvider schedulerProvider,
                                 @NonNull final SharedPreferences sharedPreferences,
                                 @NonNull final ConnectivityManager connectivityManager,
-                                @NonNull ISoapRequestFactory soapRequestFactory) {
+                                @NonNull IHelloRequestFactory soapRequestFactory) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;

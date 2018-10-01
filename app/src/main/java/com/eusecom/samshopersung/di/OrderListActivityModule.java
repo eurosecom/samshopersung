@@ -10,7 +10,8 @@ import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
-import com.eusecom.samshopersung.soap.ISoapRequestFactory;
+import com.eusecom.samshopersung.soap.IHelloRequestFactory;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -32,7 +33,7 @@ public class OrderListActivityModule {
     public ShopperIMvvmViewModel providesShopperIMvvmViewModel(ShopperIDataModel dataModel
             , ISchedulerProvider schedulerProvider, SharedPreferences sharedPreferences
             , ConnectivityManager connectivityManager
-            , ISoapRequestFactory soapRequestFactory) {
+            , IHelloRequestFactory soapRequestFactory) {
         return new ShopperMvvmViewModel(dataModel, schedulerProvider
                 , sharedPreferences, connectivityManager, soapRequestFactory);
     }

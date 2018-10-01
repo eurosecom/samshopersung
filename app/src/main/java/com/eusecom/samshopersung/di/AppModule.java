@@ -19,18 +19,16 @@ import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.eusecom.samshopersung.soap.HelloRequestFactory;
-import com.eusecom.samshopersung.soap.ISoapRequestFactory;
+import com.eusecom.samshopersung.soap.IHelloRequestFactory;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
-
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.AnnotationStrategy;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.strategy.Strategy;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
@@ -241,7 +239,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public ISoapRequestFactory provideSoapRequestFactory() {
+    public IHelloRequestFactory provideSoapRequestFactory() {
         return new HelloRequestFactory();
     }
 

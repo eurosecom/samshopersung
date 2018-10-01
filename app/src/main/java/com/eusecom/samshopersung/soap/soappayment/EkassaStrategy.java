@@ -2,7 +2,7 @@ package com.eusecom.samshopersung.soap.soappayment;
 
 import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.soap.EkassaRequestFactory;
-import com.eusecom.samshopersung.soap.ISoapRequestFactory;
+import com.eusecom.samshopersung.soap.IPaymentRequestFactory;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 
 public class EkassaStrategy implements PaymentStrategy {
@@ -24,7 +24,7 @@ public class EkassaStrategy implements PaymentStrategy {
     public HelloRequestEnvelope payEnvelop(Invoice order) {
 
         System.out.println(order.getHod() + " paid Envelop using Ekassa.");
-        ISoapRequestFactory factory = new EkassaRequestFactory();
+        IPaymentRequestFactory factory = new EkassaRequestFactory();
         return factory.getHelloRequestEnvelop(order);
     }
 

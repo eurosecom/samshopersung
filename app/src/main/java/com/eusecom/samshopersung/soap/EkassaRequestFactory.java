@@ -6,7 +6,7 @@ import com.eusecom.samshopersung.soap.soaphello.HelloRequestBody;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestModel;
 
-public class EkassaRequestFactory implements ISoapRequestFactory {
+public class EkassaRequestFactory implements IPaymentRequestFactory {
 
     @NonNull
     public HelloRequestEnvelope getHelloRequestEnvelop(Invoice order) {
