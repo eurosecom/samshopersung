@@ -6,4 +6,6 @@ public interface PaymentStrategy {
 
 	public <SoapEnvelop> SoapEnvelop payEnvelop(Invoice order);
 
+	public <SoapEnvelop> SoapEnvelop registerReceiptEnvelop(Invoice order);
+
 }

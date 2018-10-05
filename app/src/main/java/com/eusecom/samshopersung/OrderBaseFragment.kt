@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestBody
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestModel
@@ -195,6 +196,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setSoapResponse(it) })
 
+        mSubscription?.add(mViewModel.getObservableRegisterReceiptEkassaResponse()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setEkassaRegisterReceiptResponse(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
@@ -204,6 +216,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         mViewModel.clearObservableOrderToInv()
         mViewModel.clearObservableSoapResponse()
         mViewModel.clearObservableSoapEkassaResponse()
+        mViewModel.clearObservableRegisterReceiptEkassaResponse()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -211,6 +224,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
             mDisposable?.dispose()
         }
         hideProgressBar()
+
+    }
+
+    private fun setEkassaRegisterReceiptResponse(responseEnvelop: EkassaRegisterReceiptResponseEnvelope) {
+
+        hideProgressBar()
+        if (responseEnvelop != null) {
+            val helloresult = responseEnvelop.body.getHelloResponse.result
+            Log.d("Reg. receipt result", helloresult)
+            Toast.makeText(activity, helloresult, Toast.LENGTH_LONG).show()
+        }
 
     }
 
@@ -342,6 +366,15 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
     }
 
+    fun showGetEkassaHelloDialog(order: Invoice) {
+
+        alert("", getString(R.string.getekassahellofrom) + " " + order.dok) {
+            yesButton { navigateToGetEkassaHello(order) }
+            noButton {}
+        }.show()
+
+    }
+
     fun showGetSoapHelloDialog(order: Invoice) {
 
         alert("", getString(R.string.getsoaphellofrom) + " " + order.dok) {
@@ -358,6 +391,13 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     }
 
     fun navigateToGetEkassa(order: Invoice){
+
+        showProgressBar()
+        mViewModel.emitRegisterReceiptEkassa(order)
+
+    }
+
+    fun navigateToGetEkassaHello(order: Invoice){
 
         showProgressBar()
         mViewModel.emitSoapEkassa(order)

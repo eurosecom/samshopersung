@@ -3,6 +3,7 @@ package com.eusecom.samshopersung.soap.soappayment;
 import com.eusecom.samshopersung.Invoice;
 import com.eusecom.samshopersung.soap.EkassaRequestFactory;
 import com.eusecom.samshopersung.soap.IPaymentRequestFactory;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 
 public class EkassaStrategy implements PaymentStrategy {
@@ -26,6 +27,14 @@ public class EkassaStrategy implements PaymentStrategy {
         System.out.println(order.getHod() + " paid Envelop using Ekassa.");
         IPaymentRequestFactory factory = new EkassaRequestFactory();
         return factory.getHelloRequestEnvelop(order);
+    }
+
+    @Override
+    public EkassaRegisterReceiptRequestEnvelope registerReceiptEnvelop(Invoice order) {
+
+        System.out.println(order.getHod() + " register Receipt Envelop using Ekassa.");
+        IPaymentRequestFactory factory = new EkassaRequestFactory();
+        return factory.getEkassaRegisterReceiptRequestEnvelop(order);
     }
 
 }

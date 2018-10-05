@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import io.reactivex.Flowable;
@@ -35,6 +34,8 @@ import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptRequestEnvelope;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.google.firebase.database.DatabaseReference;
@@ -542,6 +543,13 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         setRetrofit("www.wsdl2code.com/");
         return mShopperXmlRetrofitService.getEkassaFromSoap(requestEnvelope);
+    }
+
+    @NonNull
+    public Observable<EkassaRegisterReceiptResponseEnvelope> getEkassaRegisterReceiptResponse(EkassaRegisterReceiptRequestEnvelope requestEnvelope){
+
+        setRetrofit("www.wsdl2code.com/");
+        return mShopperXmlRetrofitService.getRegisterReceiptEkassaFromSoap(requestEnvelope);
     }
 
     //test method soap generic

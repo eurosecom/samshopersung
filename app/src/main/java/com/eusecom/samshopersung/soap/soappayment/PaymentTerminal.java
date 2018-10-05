@@ -8,4 +8,6 @@ public interface PaymentTerminal {
 
 	public <SoapEnvelop> SoapEnvelop pay(PaymentStrategy paymentMethod);
 
+	public <SoapEnvelop> SoapEnvelop registerReceipt(PaymentStrategy paymentMethod);
+
 }

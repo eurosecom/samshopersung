@@ -16,6 +16,8 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.soap.IHelloRequestFactory;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptRequestEnvelope;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
@@ -1379,7 +1381,39 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end test SOAP hello
 
     //SOAP eKassa
-    //get eEkassa from SOAP
+    //get Ekassa Register Receipt from SOAP
+    public void emitRegisterReceiptEkassa(Invoice order) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+
+            PaymentTerminal terminal = new PaymentTerminalImp();
+            terminal.setOrder(order);
+            EkassaRegisterReceiptRequestEnvelope requestEnvelop = terminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            mObservableRegisterReceiptEkassaResponse.onNext(requestEnvelop);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<EkassaRegisterReceiptRequestEnvelope> mObservableRegisterReceiptEkassaResponse = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<EkassaRegisterReceiptResponseEnvelope> getObservableRegisterReceiptEkassaResponse() {
+
+        return mObservableRegisterReceiptEkassaResponse
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(envelop ->
+                        mDataModel.getEkassaRegisterReceiptResponse(envelop));
+    }
+
+    public void clearObservableRegisterReceiptEkassaResponse() {
+
+        mObservableRegisterReceiptEkassaResponse = BehaviorSubject.create();
+
+    }
+    //end get Ekassa Register Receipt from SOAP
+
+    //get Ekassa Hello from SOAP
     public void emitSoapEkassa(Invoice order) {
         if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
@@ -1409,7 +1443,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         mObservableSoapEkassaResponse = BehaviorSubject.create();
 
     }
-    //end get Hello from SOAP
+    //end get Ekassa Hello from SOAP
     //end SOAP eKassa
 
 

@@ -6,22 +6,26 @@ import com.eusecom.samshopersung.models.ShopperModelsFactory;
 
 public class PaymentTerminalImp implements PaymentTerminal {
 
-	Invoice order;
-	IShopperModelsFactory modelsfactory;
-
-	
-	public PaymentTerminalImp(){
-
-		this.modelsfactory = new ShopperModelsFactory();
-		this.order = modelsfactory.getInvoice();
-	}
+    Invoice order;
+    IShopperModelsFactory modelsfactory;
 
 
-	public void setOrder(Invoice order){
-		this.order=order;
-	}
+    public PaymentTerminalImp() {
 
-	public <SoapEnvelop> SoapEnvelop pay(PaymentStrategy paymentMethod){
-		return paymentMethod.payEnvelop(order);
-	}
+        this.modelsfactory = new ShopperModelsFactory();
+        this.order = modelsfactory.getInvoice();
+    }
+
+
+    public void setOrder(Invoice order) {
+        this.order = order;
+    }
+
+    public <SoapEnvelop> SoapEnvelop pay(PaymentStrategy paymentMethod) {
+        return paymentMethod.payEnvelop(order);
+    }
+
+    public <SoapEnvelop> SoapEnvelop registerReceipt(PaymentStrategy paymentMethod) {
+        return paymentMethod.registerReceiptEnvelop(order);
+    }
 }
