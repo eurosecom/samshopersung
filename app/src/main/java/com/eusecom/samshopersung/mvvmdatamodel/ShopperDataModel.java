@@ -530,15 +530,6 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     //test soap hello
     @NonNull
-    public Observable<HelloResponseEnvelope> getHelloSoapResponse(HelloRequestEnvelope requestEnvelope){
-
-        SoapEnvelopeWrapper<HelloRequestEnvelope> helloWrapper = new SoapEnvelopeWrapper<>(requestEnvelope);
-        helloWrapper.print();
-        setRetrofit("www.wsdl2code.com/");
-        return mShopperXmlRetrofitService.getHelloFromSoap(requestEnvelope);
-    }
-
-    @NonNull
     public Observable<HelloResponseEnvelope> getEkassaSoapResponse(HelloRequestEnvelope requestEnvelope){
 
         setRetrofit("www.wsdl2code.com/");

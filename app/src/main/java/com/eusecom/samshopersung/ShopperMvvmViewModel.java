@@ -15,14 +15,12 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
-import com.eusecom.samshopersung.soap.IHelloRequestFactory;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
-import com.eusecom.samshopersung.soap.soappayment.PaymentTerminalImp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +53,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     SharedPreferences mSharedPreferences;
 
     //@Inject only by Base constructor injection to activity for example adapter to activity
-    IHelloRequestFactory mHelloRequestFactory;
+    PaymentTerminal mPaymentTerminal;
 
     @NonNull
     private CompositeSubscription mSubscription;
@@ -77,12 +75,12 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                                 @NonNull final ISchedulerProvider schedulerProvider,
                                 @NonNull final SharedPreferences sharedPreferences,
                                 @NonNull final ConnectivityManager connectivityManager,
-                                @NonNull IHelloRequestFactory soapRequestFactory) {
+                                @NonNull PaymentTerminal paymentTerminal) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
         mConnectivityManager = connectivityManager;
-        mHelloRequestFactory = soapRequestFactory;
+        mPaymentTerminal = paymentTerminal;
     }
 
 
@@ -1344,42 +1342,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     //end methods for SetImageActivity
 
-
-    //test SOAP hello
-    //get Hello from SOAP
-    public void emitSoapHello(Invoice order) {
-        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
-                , CommandExecutorProxyImpl.ReportName.ORDER)) {
-            System.out.println("command approved.");
-
-            HelloRequestEnvelope requestEnvelop = mHelloRequestFactory.getHelloRequestEnvelop(order);
-
-            mObservableSoapResponse.onNext(requestEnvelop);
-        }
-    }
-
-    @NonNull
-    private BehaviorSubject<HelloRequestEnvelope> mObservableSoapResponse = BehaviorSubject.create();
-
-    @NonNull
-    public Observable<HelloResponseEnvelope> getObservableHelloSoapResponse() {
-
-        return mObservableSoapResponse
-                .observeOn(mSchedulerProvider.computation())
-                .flatMap(envelop ->
-                        mDataModel.getHelloSoapResponse(envelop));
-                        //mDataModel.getSoapResponse(envelop)); try to create generic retrofit interface
-                        //it does not work by exception Error Throwable Parameter type must not include a type variable or wildcard
-    }
-
-    public void clearObservableSoapResponse() {
-
-        mObservableSoapResponse = BehaviorSubject.create();
-
-    }
-    //end get Hello from SOAP
-    //end test SOAP hello
-
     //SOAP eKassa
     //get Ekassa Register Receipt from SOAP
     public void emitRegisterReceiptEkassa(Invoice order) {
@@ -1387,9 +1349,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
 
-            PaymentTerminal terminal = new PaymentTerminalImp();
-            terminal.setOrder(order);
-            EkassaRegisterReceiptRequestEnvelope requestEnvelop = terminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            mPaymentTerminal.setOrder(order);
+            EkassaRegisterReceiptRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
             mObservableRegisterReceiptEkassaResponse.onNext(requestEnvelop);
         }
     }
@@ -1419,9 +1380,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
 
-            PaymentTerminal terminal = new PaymentTerminalImp();
-            terminal.setOrder(order);
-            HelloRequestEnvelope requestEnvelop = terminal.pay(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            mPaymentTerminal.setOrder(order);
+            HelloRequestEnvelope requestEnvelop = mPaymentTerminal.pay(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
             mObservableSoapEkassaResponse.onNext(requestEnvelop);
         }
     }

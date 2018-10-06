@@ -13,10 +13,6 @@ public interface ShopperXmlRetrofitService {
 
     @Headers({"Content-Type: text/xml; charset=UTF-8", "SOAPAction: http://Wsdl2CodeTestService/HelloWorld"})
     @POST("SampleService.asmx")
-    Observable<HelloResponseEnvelope> getHelloFromSoap(@Body HelloRequestEnvelope requestEnvelope);
-
-    @Headers({"Content-Type: text/xml; charset=UTF-8", "SOAPAction: http://Wsdl2CodeTestService/HelloWorld"})
-    @POST("SampleService.asmx")
     Observable<HelloResponseEnvelope> getEkassaFromSoap(@Body HelloRequestEnvelope requestEnvelope);
 
     @Headers({"Content-Type: text/xml; charset=UTF-8", "SOAPAction: http://Wsdl2CodeTestService/HelloWorld"})

@@ -243,17 +243,6 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearSaveItemToServer();
 
-
-    //test soap hello
-    @NonNull
-    public void emitSoapHello(Invoice order);
-
-    @NonNull
-    public Observable<HelloResponseEnvelope> getObservableHelloSoapResponse();
-
-    @NonNull
-    public void clearObservableSoapResponse();
-
     //soap Ekassa
     @NonNull
     public void emitSoapEkassa(Invoice order);

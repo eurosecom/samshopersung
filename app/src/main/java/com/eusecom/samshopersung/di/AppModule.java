@@ -18,8 +18,8 @@ import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
-import com.eusecom.samshopersung.soap.HelloRequestFactory;
-import com.eusecom.samshopersung.soap.IHelloRequestFactory;
+import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
+import com.eusecom.samshopersung.soap.soappayment.PaymentTerminalImp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -239,8 +239,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public IHelloRequestFactory provideSoapRequestFactory() {
-        return new HelloRequestFactory();
+    public PaymentTerminal providePaymentTerminal() {
+        return new PaymentTerminalImp();
     }
 
 

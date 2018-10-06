@@ -126,10 +126,7 @@ public interface ShopperIDataModel {
     public Observable<SetImageServerResponse> uploadImageWithMapToServer(String servername, MultipartBody.Part file
             , Map<String, RequestBody> partMap);
 
-    //test soap hello
-    @NonNull
-    public Observable<HelloResponseEnvelope> getHelloSoapResponse(HelloRequestEnvelope requestEnvelope);
-
+    //soap
     @NonNull
     public Observable<HelloResponseEnvelope> getEkassaSoapResponse(HelloRequestEnvelope requestEnvelope);
 
