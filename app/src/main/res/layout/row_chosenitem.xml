@@ -47,7 +47,7 @@
             android:id="@+id/prod_ean"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/docx"
+            android:layout_below="@+id/prod_name"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/prod_photo"
