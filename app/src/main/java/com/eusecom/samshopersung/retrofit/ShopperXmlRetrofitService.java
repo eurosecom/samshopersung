@@ -15,8 +15,8 @@ public interface ShopperXmlRetrofitService {
     @POST("SampleService.asmx")
     Observable<HelloResponseEnvelope> getEkassaFromSoap(@Body HelloRequestEnvelope requestEnvelope);
 
-    @Headers({"Content-Type: text/xml; charset=UTF-8", "SOAPAction: http://Wsdl2CodeTestService/HelloWorld"})
-    @POST("SampleService.asmx")
+    @Headers({"Content-Type: text/xml; charset=UTF-8"})
+    @POST("androidshopper/soaphelloresponse.php")
     Observable<EkassaRegisterReceiptResponseEnvelope> getRegisterReceiptEkassaFromSoap(@Body EkassaRegisterReceiptRequestEnvelope requestEnvelope);
 
     //try to create generic retrofit interface

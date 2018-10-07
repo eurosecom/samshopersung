@@ -539,7 +539,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     @NonNull
     public Observable<EkassaRegisterReceiptResponseEnvelope> getEkassaRegisterReceiptResponse(EkassaRegisterReceiptRequestEnvelope requestEnvelope){
 
-        setRetrofit("www.wsdl2code.com/");
+        setRetrofit("www.eshoptest.sk/");
         return mShopperXmlRetrofitService.getRegisterReceiptEkassaFromSoap(requestEnvelope);
     }
 
