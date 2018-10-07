@@ -15,8 +15,8 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
-import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
@@ -1350,13 +1350,13 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             System.out.println("command approved.");
 
             mPaymentTerminal.setOrder(order);
-            EkassaRegisterReceiptRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
             mObservableRegisterReceiptEkassaResponse.onNext(requestEnvelop);
         }
     }
 
     @NonNull
-    private BehaviorSubject<EkassaRegisterReceiptRequestEnvelope> mObservableRegisterReceiptEkassaResponse = BehaviorSubject.create();
+    private BehaviorSubject<EkassaRequestEnvelope> mObservableRegisterReceiptEkassaResponse = BehaviorSubject.create();
 
     @NonNull
     public Observable<EkassaRegisterReceiptResponseEnvelope> getObservableRegisterReceiptEkassaResponse() {

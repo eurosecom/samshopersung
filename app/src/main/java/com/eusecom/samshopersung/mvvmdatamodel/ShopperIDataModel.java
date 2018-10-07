@@ -17,8 +17,8 @@ import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
-import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 
@@ -131,7 +131,7 @@ public interface ShopperIDataModel {
     public Observable<HelloResponseEnvelope> getEkassaSoapResponse(HelloRequestEnvelope requestEnvelope);
 
     @NonNull
-    public Observable<EkassaRegisterReceiptResponseEnvelope> getEkassaRegisterReceiptResponse(EkassaRegisterReceiptRequestEnvelope requestEnvelope);
+    public Observable<EkassaRegisterReceiptResponseEnvelope> getEkassaRegisterReceiptResponse(EkassaRequestEnvelope requestEnvelope);
 
     public <EnvelopeType> Observable<HelloResponseEnvelope> getSoapResponse(EnvelopeType envelope);
 
