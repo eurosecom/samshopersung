@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope
+import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -193,6 +194,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setEkassaRegisterReceiptResponse(it) })
 
+        mSubscription?.add(mViewModel.getObservableRegisterReceiptEkassaResponseXml()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setEkassaRegisterReceiptResponseXml(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
@@ -202,6 +214,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         mViewModel.clearObservableOrderToInv()
         mViewModel.clearObservableSoapEkassaResponse()
         mViewModel.clearObservableRegisterReceiptEkassaResponse()
+        mViewModel.clearObservableRegisterReceiptEkassaResponseXml()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -209,6 +222,20 @@ abstract class OrderBaseFragment : BaseKtFragment() {
             mDisposable?.dispose()
         }
         hideProgressBar()
+
+    }
+
+    private fun setEkassaRegisterReceiptResponseXml(responseEnvelop: EkassaResponseEnvelope) {
+
+        hideProgressBar()
+        if (responseEnvelop != null) {
+            //val helloresult = responseEnvelop.body.setHeader.setProcessDate
+            //val helloresult = responseEnvelop.body.setReceiptData.setId
+            //val helloresult = responseEnvelop.body.setReceiptData.toString()
+            val helloresult = responseEnvelop.body.toString()
+            Log.d("Reg. receipt result", helloresult)
+            Toast.makeText(activity, helloresult, Toast.LENGTH_LONG).show()
+        }
 
     }
 
@@ -359,7 +386,8 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     fun navigateToGetEkassa(order: Invoice){
 
         showProgressBar()
-        mViewModel.emitRegisterReceiptEkassa(order)
+        //mViewModel.emitRegisterReceiptEkassa(order)
+        mViewModel.emitRegisterReceiptEkassaXml(order)
 
     }
 

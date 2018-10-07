@@ -10,6 +10,7 @@ import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 
@@ -252,6 +253,15 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearObservableSoapEkassaResponse();
+
+    @NonNull
+    public void emitRegisterReceiptEkassaXml(Invoice order);
+
+    @NonNull
+    public Observable<EkassaResponseEnvelope> getObservableRegisterReceiptEkassaResponseXml();
+
+    @NonNull
+    public void clearObservableRegisterReceiptEkassaResponseXml();
 
     @NonNull
     public void emitRegisterReceiptEkassa(Invoice order);

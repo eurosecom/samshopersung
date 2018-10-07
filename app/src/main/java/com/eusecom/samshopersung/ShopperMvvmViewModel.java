@@ -17,6 +17,7 @@ import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
+import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
@@ -1343,6 +1344,38 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end methods for SetImageActivity
 
     //SOAP eKassa
+    //get XML Ekassa Register Receipt from SOAP
+    public void emitRegisterReceiptEkassaXml(Invoice order) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+
+            mPaymentTerminal.setOrder(order);
+            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            mObservableRegisterReceiptEkassaResponseXml.onNext(requestEnvelop);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<EkassaRequestEnvelope> mObservableRegisterReceiptEkassaResponseXml = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<EkassaResponseEnvelope> getObservableRegisterReceiptEkassaResponseXml() {
+
+        return mObservableRegisterReceiptEkassaResponseXml
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(envelop ->
+                        mDataModel.getEkassaRegisterReceiptXmlResponse(envelop));
+    }
+
+    public void clearObservableRegisterReceiptEkassaResponseXml() {
+
+        mObservableRegisterReceiptEkassaResponseXml = BehaviorSubject.create();
+
+    }
+    //end get XML Ekassa Register Receipt from SOAP
+
+
     //get Ekassa Register Receipt from SOAP
     public void emitRegisterReceiptEkassa(Invoice order) {
         if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
