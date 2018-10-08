@@ -183,16 +183,6 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setSoapResponse(it) })
 
-        mSubscription?.add(mViewModel.getObservableRegisterReceiptEkassaResponse()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setEkassaRegisterReceiptResponse(it) })
 
         mSubscription?.add(mViewModel.getObservableRegisterReceiptEkassaResponseXml()
                 .subscribeOn(Schedulers.computation())
@@ -213,7 +203,6 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         mViewModel.clearObservableDeleteOrder()
         mViewModel.clearObservableOrderToInv()
         mViewModel.clearObservableSoapEkassaResponse()
-        mViewModel.clearObservableRegisterReceiptEkassaResponse()
         mViewModel.clearObservableRegisterReceiptEkassaResponseXml()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
@@ -229,26 +218,20 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
         hideProgressBar()
         if (responseEnvelop != null) {
-            //val helloresult = responseEnvelop.body.setHeader.setProcessDate
-            //val helloresult = responseEnvelop.body.setReceiptData.setId
-            //val helloresult = responseEnvelop.body.setReceiptData.toString()
-            val helloresult = responseEnvelop.body.toString()
-            Log.d("Reg. receipt result", helloresult)
-            Toast.makeText(activity, helloresult, Toast.LENGTH_LONG).show()
+            if (responseEnvelop.body.getRegisterReceiptResponse != null) {
+                val processdate = responseEnvelop.body.getRegisterReceiptResponse.getHeader.getProcessDate.toString()
+                val dokid = responseEnvelop.body.getRegisterReceiptResponse.getReceiptData.getId.toString()
+                Log.d("Reg. receipt result", processdate + " " + dokid)
+                Toast.makeText(activity, processdate + " " + dokid, Toast.LENGTH_LONG).show()
+            }else{
+                val errcode = responseEnvelop.body.getRegisterReceiptFault.getEkasaErrorCode
+                Toast.makeText(activity, "Error code " + errcode, Toast.LENGTH_LONG).show()
+            }
+
         }
 
     }
 
-    private fun setEkassaRegisterReceiptResponse(responseEnvelop: EkassaRegisterReceiptResponseEnvelope) {
-
-        hideProgressBar()
-        if (responseEnvelop != null) {
-            val helloresult = responseEnvelop.body.getHelloResponse.result
-            Log.d("Reg. receipt result", helloresult)
-            Toast.makeText(activity, helloresult, Toast.LENGTH_LONG).show()
-        }
-
-    }
 
     private fun setSoapResponse(responseEnvelop: HelloResponseEnvelope) {
 
