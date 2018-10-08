@@ -24,9 +24,12 @@ import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import io.reactivex.Completable;
@@ -1355,15 +1358,16 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
 
+            order.setDat(getEkassaRequestDate());
             mPaymentTerminal.setOrder(order);
             //EkassaStrategy ekassastrategy = new EkassaStrategy("","","","","","","");
-            mEkassaStrategy.setSwId("b61f1694810c3b35c6cf475785a8739110c3b35c");
+            mEkassaStrategy.setSwId(getEkassaSwId());
             mEkassaStrategy.setException("false");
-            mEkassaStrategy.setRequestDate("018-06-27T14:34:14+02:00");
+            mEkassaStrategy.setRequestDate(getEkassaRequestDate());
             mEkassaStrategy.setSendingCount("1");
-            mEkassaStrategy.setUuid("b05226a4-88b2-46e4-af45-0f28dcf3668f");
-            mEkassaStrategy.setPkp("Q2z+25bWv5Q0jNsqDPMY/6UiYpszbzdNP0/jisYeAc2PXtbyKp+BmN7yiPa+8g/FtjXUysHXVCLWtYE5rAM58wpAbpwyvInxpfTQN9La+/X6x+8JR6wgfPIJlaNrce8iL/ZIZwT9q/in/dTOFlOXqYhZ8MZxU6zpu1PxQupaMoqfj5lvpOQ82sDBvufjOkkAbiYjGXDNnl4EgiEd7apZh1pHDBbolvIBSTc7FhECsx5b6dd09WRn8ejwnxFx9YaOsZsyZJkJXg9N1mglmHI4vkD24ElpdeUX/yN0s2UR8QSbd51klqHgipdJjfFN86J6TPPMaslre/kQu1HZjGJ/CQ==");
-            mEkassaStrategy.setOkp("c44b3977-0e415cc6-ee663aa1-776c973a-A143b660");
+            mEkassaStrategy.setUuid(getEkassaUuid());
+            mEkassaStrategy.setPkp(getEkassaPkp());
+            mEkassaStrategy.setOkp(getEkassaOkp());
 
             EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(mEkassaStrategy);
             mObservableRegisterReceiptEkassaResponseXml.onNext(requestEnvelop);
@@ -1451,6 +1455,40 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
     //end get Ekassa Hello from SOAP
+
+    public String getEkassaRequestDate() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault());
+        String requestdate = sdf.format(new Date());
+        return requestdate;
+    }
+
+    public String getEkassaSwId() {
+
+        String swId = "b61f1694810c3b35c6cf475785a8739110c3b35c";
+        return swId;
+    }
+
+    public String getEkassaUuid() {
+
+        String uuid = "b05226a4-88b2-46e4-af45-0f28dcf3668f";
+        return uuid;
+    }
+
+    public String getEkassaPkp() {
+
+        String pkp = "Q2z+25bWv5Q0jNsqDPMY/6UiYpszbzdNP0/jisYeAc2PXtbyKp+BmN7yiPa+8g/FtjXUysHXVCLWtYE5rAM58wpAbpwyvInxpfTQN9La+/X6x+8JR6wgfPIJlaNrce8iL/ZIZwT9q/in/dTOFlOXqYhZ8MZxU6zpu1PxQupaMoqfj5lvpOQ82sDBvufjOkkAbiYjGXDNnl4EgiEd7apZh1pHDBbolvIBSTc7FhECsx5b6dd09WRn8ejwnxFx9YaOsZsyZJkJXg9N1mglmHI4vkD24ElpdeUX/yN0s2UR8QSbd51klqHgipdJjfFN86J6TPPMaslre/kQu1HZjGJ/CQ==";
+
+        return pkp;
+    }
+
+    public String getEkassaOkp() {
+
+        String okp = "c44b3977-0e415cc6-ee663aa1-776c973a-A143b660";
+        return okp;
+    }
+
+
     //end SOAP eKassa
 
 
