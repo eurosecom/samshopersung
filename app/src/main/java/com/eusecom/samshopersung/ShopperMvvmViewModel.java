@@ -21,6 +21,7 @@ import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
+import com.eusecom.samshopersung.soap.soappayment.PaymentStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
 import java.io.File;
 import java.util.ArrayList;
@@ -56,6 +57,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //@Inject only by Base constructor injection to activity for example adapter to activity
     PaymentTerminal mPaymentTerminal;
 
+    PaymentStrategy mEkassaStrategy;
+
     @NonNull
     private CompositeSubscription mSubscription;
     @NonNull
@@ -76,12 +79,14 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                                 @NonNull final ISchedulerProvider schedulerProvider,
                                 @NonNull final SharedPreferences sharedPreferences,
                                 @NonNull final ConnectivityManager connectivityManager,
-                                @NonNull PaymentTerminal paymentTerminal) {
+                                @NonNull PaymentTerminal paymentTerminal,
+                                @NonNull PaymentStrategy ekassastrategy) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
         mConnectivityManager = connectivityManager;
         mPaymentTerminal = paymentTerminal;
+        mEkassaStrategy = ekassastrategy;
     }
 
 
@@ -1351,7 +1356,16 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             System.out.println("command approved.");
 
             mPaymentTerminal.setOrder(order);
-            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            //EkassaStrategy ekassastrategy = new EkassaStrategy("","","","","","","");
+            mEkassaStrategy.setSwId("b61f1694810c3b35c6cf475785a8739110c3b35c");
+            mEkassaStrategy.setException("false");
+            mEkassaStrategy.setRequestDate("018-06-27T14:34:14+02:00");
+            mEkassaStrategy.setSendingCount("1");
+            mEkassaStrategy.setUuid("b05226a4-88b2-46e4-af45-0f28dcf3668f");
+            mEkassaStrategy.setPkp("Q2z+25bWv5Q0jNsqDPMY/6UiYpszbzdNP0/jisYeAc2PXtbyKp+BmN7yiPa+8g/FtjXUysHXVCLWtYE5rAM58wpAbpwyvInxpfTQN9La+/X6x+8JR6wgfPIJlaNrce8iL/ZIZwT9q/in/dTOFlOXqYhZ8MZxU6zpu1PxQupaMoqfj5lvpOQ82sDBvufjOkkAbiYjGXDNnl4EgiEd7apZh1pHDBbolvIBSTc7FhECsx5b6dd09WRn8ejwnxFx9YaOsZsyZJkJXg9N1mglmHI4vkD24ElpdeUX/yN0s2UR8QSbd51klqHgipdJjfFN86J6TPPMaslre/kQu1HZjGJ/CQ==");
+            mEkassaStrategy.setOkp("c44b3977-0e415cc6-ee663aa1-776c973a-A143b660");
+
+            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(mEkassaStrategy);
             mObservableRegisterReceiptEkassaResponseXml.onNext(requestEnvelop);
         }
     }
@@ -1383,7 +1397,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             System.out.println("command approved.");
 
             mPaymentTerminal.setOrder(order);
-            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("","","","","","",""));
             mObservableRegisterReceiptEkassaResponse.onNext(requestEnvelop);
         }
     }
@@ -1414,7 +1428,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             System.out.println("command approved.");
 
             mPaymentTerminal.setOrder(order);
-            HelloRequestEnvelope requestEnvelop = mPaymentTerminal.pay(new EkassaStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+            HelloRequestEnvelope requestEnvelop = mPaymentTerminal.pay(new EkassaStrategy("","","","","","",""));
             mObservableSoapEkassaResponse.onNext(requestEnvelop);
         }
     }

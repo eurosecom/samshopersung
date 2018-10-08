@@ -3,8 +3,12 @@ package com.eusecom.samshopersung.models;
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.Invoice;
+import com.eusecom.samshopersung.ProductItemKt;
 import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SumBasketKt;
+import com.eusecom.samshopersung.soap.soapekassa.Entry;
+
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -58,14 +62,22 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
     @NonNull
     public Invoice getInvoice(){
 
+        ArrayList<ProductItemKt> proditems = new ArrayList<>();
+
         return new Invoice("", "","","","","","","","","","","",""
-                ,"","","","","","",false,0l,"","","","");
+                ,"","","","","","",false,0l,"","","","", proditems);
     }
 
     @NonNull
     public Product getProductModel() {
 
         return new Product();
+    }
+
+    @NonNull
+    public ProductItemKt getProductItemKt(){
+
+        return new ProductItemKt("", "","","","","","","","","");
     }
 
 }

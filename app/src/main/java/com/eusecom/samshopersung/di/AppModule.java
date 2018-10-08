@@ -18,6 +18,8 @@ import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
+import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
+import com.eusecom.samshopersung.soap.soappayment.PaymentStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminalImp;
 import com.google.firebase.database.DatabaseReference;
@@ -241,6 +243,12 @@ public class AppModule {
     @Singleton
     public PaymentTerminal providePaymentTerminal() {
         return new PaymentTerminalImp();
+    }
+
+    @Provides
+    @Singleton
+    public PaymentStrategy provideEkassaStrategy() {
+        return new EkassaStrategy();
     }
 
 
