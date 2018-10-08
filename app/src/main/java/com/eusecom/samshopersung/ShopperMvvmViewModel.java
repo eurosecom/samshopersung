@@ -23,7 +23,10 @@ import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
+import com.eusecom.samshopersung.tools.AeSimpleSHA1;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1465,9 +1468,29 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     public String getEkassaSwId() {
 
+        String softtext = "Názov spoločnosti a.s.|Názov ORP softvéru|v1.2.33";
+        //softtext = "Hello World";
+        softtext = "Coex s.r.o.|EuroSecom|v1.01";
+
+
+        String softhash = "";
+        try
+        {
+            softhash = AeSimpleSHA1.SHA1(softtext);
+        }
+        catch( NoSuchAlgorithmException e )
+        {
+            e.printStackTrace();
+        }
+        catch( UnsupportedEncodingException e )
+        {
+            e.printStackTrace();
+        }
+
         String swId = "b61f1694810c3b35c6cf475785a8739110c3b35c";
-        return swId;
+        return softhash;
     }
+
 
     public String getEkassaUuid() {
 
