@@ -63,7 +63,7 @@ import org.apache.commons.io.FileUtils;
 //https://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
 //https://github.com/obaro/SimpleKeystoreApp
 
-public class KeyStoreActivity extends AppCompatActivity {
+public class KeyStore2Activity extends AppCompatActivity {
 
     static final String TAG = "SimpleKeystoreApp";
     static final String CIPHER_TYPE = "RSA/ECB/PKCS1Padding";
@@ -171,7 +171,7 @@ public class KeyStoreActivity extends AppCompatActivity {
                             keyStore.deleteEntry(alias);
                             refreshKeys();
                         } catch (KeyStoreException e) {
-                            Toast.makeText(KeyStoreActivity.this,
+                            Toast.makeText(KeyStore2Activity.this,
                                     "Exception " + e.getMessage() + " occured",
                                     Toast.LENGTH_LONG).show();
                             Log.e(TAG, Log.getStackTraceString(e));
@@ -583,9 +583,9 @@ public class KeyStoreActivity extends AppCompatActivity {
                 keyStore.load(null);
 
                 keyStore.setEntry(
-                        "key3",
+                        "key2",
                         new KeyStore.PrivateKeyEntry(privateKey, certChain),
-                        new KeyProtection.Builder(KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                        new KeyProtection.Builder(KeyProperties.PURPOSE_DECRYPT)
                                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
                                 .build());
 

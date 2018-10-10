@@ -340,7 +340,8 @@
 
     //keystoreactivity
     <string name="generate">Generate New Key</string>
-    <string name="delete">Delete key</string>
+    <string name="delete">DelKey</string>
+    <string name="importcrt">ImpCrt</string>
     <string name="encrypt">1EncPri</string>
     <string name="decrypt">1DecPub</string>
     <string name="encrypt2">2EncPub</string>
