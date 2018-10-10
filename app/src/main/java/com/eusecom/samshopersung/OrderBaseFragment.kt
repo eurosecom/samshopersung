@@ -14,7 +14,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.eusecom.samshopersung.models.InvoiceList
 import com.eusecom.samshopersung.rxbus.RxBus
-import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope
 import io.reactivex.android.schedulers.AndroidSchedulers
