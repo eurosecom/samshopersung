@@ -1363,8 +1363,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
             order.setDat(getEkassaRequestDate());
             mPaymentTerminal.setOrder(order);
-            //EkassaStrategy ekassastrategy = new EkassaStrategy("","","","","","","");
-            mEkassaStrategy.setSwId(getEkassaSwId());
+            mEkassaStrategy.setSwId(getEkassaSwId("Coex s.r.o.", "EuroSecom", "v1.01"));
             mEkassaStrategy.setException("false");
             mEkassaStrategy.setRequestDate(getEkassaRequestDate());
             mEkassaStrategy.setSendingCount("1");
@@ -1466,11 +1465,10 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return requestdate;
     }
 
-    public String getEkassaSwId() {
+    public String getEkassaSwId(String nazfir, String nazorp, String version) {
 
-        String softtext = "Názov spoločnosti a.s.|Názov ORP softvéru|v1.2.33";
-        //softtext = "Hello World";
-        softtext = "Coex s.r.o.|EuroSecom|v1.01";
+        //String softtext = "Názov spoločnosti a.s.|Názov ORP softvéru|v1.2.33";
+        String softtext = nazfir + "|" + nazorp + "|" + version;
 
 
         String softhash = "";
@@ -1487,7 +1485,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             e.printStackTrace();
         }
 
-        String swId = "b61f1694810c3b35c6cf475785a8739110c3b35c";
+        //String swId = "b61f1694810c3b35c6cf475785a8739110c3b35c";
         return softhash;
     }
 
@@ -1505,6 +1503,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String pkptext = "DIČ|Kód ORP|Poradové číslo dokladu|Dátum a čas vytvorenia dokladu v ORP|Celková suma dokladu";
         //pkp text from page 55 registerreceiptrequest in 2018.07.23_Integr_rozhranie.pdf
         pkptext = "2004567890|99920045678900001|1|2018-06-27T14:34:14+02:00|237.23";
+
 
         String pkp = "";
         //String pkp = "Q2z+25bWv5Q0jNsqDPMY/6UiYpszbzdNP0/jisYeAc2PXtbyKp+BmN7yiPa+8g/FtjXUysHXVCLWtYE5rAM58wpAbpwyvInxpfTQN9La+/X6x+8JR6wgfPIJlaNrce8iL/ZIZwT9q/in/dTOFlOXqYhZ8MZxU6zpu1PxQupaMoqfj5lvpOQ82sDBvufjOkkAbiYjGXDNnl4EgiEd7apZh1pHDBbolvIBSTc7FhECsx5b6dd09WRn8ejwnxFx9YaOsZsyZJkJXg9N1mglmHI4vkD24ElpdeUX/yN0s2UR8QSbd51klqHgipdJjfFN86J6TPPMaslre/kQu1HZjGJ/CQ==";
