@@ -21,7 +21,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.eusecom.samshopersung.soap.EncodeSignatureTools;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -49,15 +51,20 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
+
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 import javax.security.auth.x500.X500Principal;
+
 import org.apache.commons.io.FileUtils;
 
 //https://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
@@ -257,12 +264,16 @@ public class KeyStoreActivity extends AppCompatActivity {
     public byte[] signature;
 
     public void createSignatureWithPrivateKey(String alias) {
+        try {
+            byte[] vals = getSignature(startText.getText().toString(), getPrivateKeyFromKeyStore(alias));
 
-        byte[] vals = getSignature(startText.getText().toString(), getPrivateKeyFromKeyStore(alias));
-
-        signature = vals;
-        encryptedText.setText(Base64.encodeToString(vals, Base64.DEFAULT));
-        Log.d("signature ", Base64.encodeToString(vals, Base64.DEFAULT));
+            signature = vals;
+            encryptedText.setText(Base64.encodeToString(vals, Base64.DEFAULT));
+            Log.d("signature ", Base64.encodeToString(vals, Base64.DEFAULT));
+        } catch (Exception e) {
+            Toast.makeText(this, "Exception " + e.getMessage() + " occured", Toast.LENGTH_LONG).show();
+            Log.e(TAG, Log.getStackTraceString(e));
+        }
 
 
     }
@@ -502,11 +513,11 @@ public class KeyStoreActivity extends AppCompatActivity {
 
     public static boolean verifySignature(String textMessage, byte[] signature, RSAPublicKey publicKey) {
 
-        Log.d("signature ", Base64.encodeToString(signature, Base64.DEFAULT));
-
         boolean success = false;
 
         try {
+
+            Log.d("signature ", Base64.encodeToString(signature, Base64.DEFAULT));
 
             Signature s = Signature.getInstance("SHA256withRSA");
             s.initVerify(publicKey);
@@ -524,6 +535,8 @@ public class KeyStoreActivity extends AppCompatActivity {
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (SignatureException e) {
+            e.printStackTrace();
+        }catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -577,7 +590,7 @@ public class KeyStoreActivity extends AppCompatActivity {
 
                 //ByteArrayInputStream bais = getByteFromFile();
 
-                Certificate[] certChain = { certificateFactory.generateCertificate(getByteFromFile()) };
+                Certificate[] certChain = {certificateFactory.generateCertificate(getByteFromFile())};
 
                 KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
                 keyStore.load(null);
@@ -585,8 +598,10 @@ public class KeyStoreActivity extends AppCompatActivity {
                 keyStore.setEntry(
                         "key3",
                         new KeyStore.PrivateKeyEntry(privateKey, certChain),
-                        new KeyProtection.Builder(KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                        new KeyProtection.Builder(KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT
+                                | KeyProperties.PURPOSE_SIGN | KeyProperties.PURPOSE_VERIFY)
                                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                                .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA1, KeyProperties.DIGEST_SHA384, KeyProperties.DIGEST_SHA512)
                                 .build());
 
                 // Key pair imported

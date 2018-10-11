@@ -157,6 +157,8 @@ dependencies {
     testAnnotationProcessor "com.google.dagger:dagger-android-processor:$daggerVer"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVer"
 
+    compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
+
 }
 
 //unitTesting
