@@ -595,12 +595,18 @@ public class KeyStoreActivity extends AppCompatActivity {
                 KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
                 keyStore.load(null);
 
+                Calendar start = Calendar.getInstance();
+                Calendar end = Calendar.getInstance();
+                end.add(Calendar.YEAR, 25);
+
                 keyStore.setEntry(
                         "key3",
                         new KeyStore.PrivateKeyEntry(privateKey, certChain),
                         new KeyProtection.Builder(KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT
                                 | KeyProperties.PURPOSE_SIGN | KeyProperties.PURPOSE_VERIFY)
+                                .setUserAuthenticationRequired(false)
                                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                                .setRandomizedEncryptionRequired(false)
                                 .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA1, KeyProperties.DIGEST_SHA384, KeyProperties.DIGEST_SHA512)
                                 .build());
 
