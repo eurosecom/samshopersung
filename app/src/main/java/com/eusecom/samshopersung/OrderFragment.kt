@@ -1,14 +1,9 @@
 package com.eusecom.samshopersung
 
 import android.support.v7.app.AlertDialog
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import org.jetbrains.anko.support.v4.toast
-import rx.Observable
-import rx.schedulers.Schedulers
-
 
 /**
  * Kotlin fragment Recyclerview with classic XML itemlayout without Anko DSL
@@ -17,17 +12,7 @@ import rx.schedulers.Schedulers
 class OrderFragment : OrderBaseFragment() {
 
     override fun bindOrders() {
-
-        mSubscription?.add(mViewModel.getMyOrdersFromSqlServer("0")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerOrders(it) })
+        closedorders = "0"
     }
 
     override fun getTodoDialog(invoice: Invoice) {

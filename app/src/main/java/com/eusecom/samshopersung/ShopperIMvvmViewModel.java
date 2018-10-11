@@ -163,6 +163,15 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearObservableOrderToInv();
 
+    @NonNull
+    public void emitMoveOrderToEkassa(Invoice invx);
+
+    @NonNull
+    public Observable<InvoiceList> getObservableMoveOrderToEkassa();
+
+    @NonNull
+    public void clearObservableMoveOrderToEkassa();
+
     //methods for MapActivity
     @NonNull
     public Observable<List<Employee>> getMyObservableEmployeesFromList();

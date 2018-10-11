@@ -51,6 +51,8 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     @Inject
     lateinit var  _rxBus: RxBus
 
+    var closedorders = "0"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -104,13 +106,10 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                     }
                     if (event is Invoice) {
 
-                        Log.d("onShortClickListenerFrg", event.nai)
-                        if(!event.uce.equals(mSharedPreferences.getString("odbuce", ""))){
+                            Log.d("OrderFragment click", event.nai)
+                            if(!event.uce.equals(mSharedPreferences.getString("odbuce", ""))){
                                 getTodoDialog(event)
-
-                        }
-
-
+                            }
 
                     }
 
@@ -127,7 +126,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        bindOrders()
+
+        mSubscription?.add(mViewModel.getMyOrdersFromSqlServer(closedorders)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerOrders(it) })
 
         mSubscription?.add(mViewModel.getObservableDocPdf()
                 .subscribeOn(Schedulers.computation())
@@ -173,6 +182,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerOrderToInv(it) })
 
+        mSubscription?.add(mViewModel.getObservableMoveOrderToEkassa()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrderFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerOrderToEkassa(it) })
+
         mSubscription?.add(mViewModel.getObservableSoapEkassaResponse()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
@@ -192,7 +212,9 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
         mViewModel.clearObservableDeleteOrder()
         mViewModel.clearObservableOrderToInv()
+        mViewModel.clearObservableException()
         mViewModel.clearObservableSoapEkassaResponse()
+        mViewModel.clearObservableMoveOrderToEkassa()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -228,17 +250,15 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     fun setServerOrders(invoices: InvoiceList) {
 
         mAdapter?.setAbsserver(invoices.getInvoice())
-        balance?.setVisibility(View.VISIBLE)
-        balancetext?.setVisibility(View.VISIBLE)
-        balance?.setText(invoices.getBalance())
-        hideProgressBar()
-    }
+        if(closedorders.equals("0")){
+            balance?.setVisibility(View.VISIBLE)
+            balancetext?.setVisibility(View.VISIBLE)
+            balance?.setText(invoices.getBalance())
+        }else{
+            balance?.setVisibility(View.GONE)
+            balancetext?.setVisibility(View.GONE)
+        }
 
-    fun setServerOrdersNoBalance(invoices: InvoiceList) {
-
-        mAdapter?.setAbsserver(invoices.getInvoice())
-        balance?.setVisibility(View.GONE)
-        balancetext?.setVisibility(View.GONE)
         hideProgressBar()
     }
 
@@ -249,6 +269,20 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         hideProgressBar()
 
         val `is` = Intent(activity, OrderListActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 1)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        activity.finish()
+    }
+
+    private fun setServerOrderToEkassa(invoices: InvoiceList) {
+
+        mAdapter?.setAbsserver(invoices.getInvoice())
+        balance?.setText(invoices.getBalance())
+        hideProgressBar()
+
+        val `is` = Intent(activity, OrpListActivity::class.java)
         val extras = Bundle()
         extras.putInt("saltype", 1)
         `is`.putExtras(extras)
@@ -271,6 +305,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     override fun onResume() {
         super.onResume()
         Log.d("OrderFragment ", "onResume");
+        bindOrders()
         bind()
     }
 
@@ -349,8 +384,8 @@ abstract class OrderBaseFragment : BaseKtFragment() {
 
     fun navigateToMoveToEkassa(order: Invoice){
 
-        //showProgressBar()
-        //mViewModel.emitRegisterReceiptEkassaXml(order)
+        showProgressBar()
+        mViewModel.emitMoveOrderToEkassa(order)
 
     }
 

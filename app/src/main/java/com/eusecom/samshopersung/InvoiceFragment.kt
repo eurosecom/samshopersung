@@ -81,7 +81,7 @@ class InvoiceFragment : BaseKtFragment() {
 
     }
 
-    private fun bind() {
+    private fun bindinvoice() {
 
         _disposables = CompositeDisposable()
 
@@ -153,7 +153,7 @@ class InvoiceFragment : BaseKtFragment() {
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
-    private fun unBind() {
+    private fun unBindinvoice() {
 
         mViewModel.clearObservableDeleteInvoice()
         mSubscription?.unsubscribe()
@@ -190,20 +190,20 @@ class InvoiceFragment : BaseKtFragment() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("OrderFragment ", "onDestroy");
-        unBind()
+        unBindinvoice()
 
     }
 
     override fun onResume() {
         super.onResume()
         Log.d("OrderFragment ", "onResume");
-        bind()
+        bindinvoice()
     }
 
     override fun onPause() {
         super.onPause()
         Log.d("OrderFragment ", "onPause");
-        unBind()
+        unBindinvoice()
     }
 
     fun getTodoDialog(invoice: Invoice) {

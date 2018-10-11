@@ -17,17 +17,7 @@ import rx.schedulers.Schedulers
 class OrderClosedFragment : OrderBaseFragment() {
 
     override fun bindOrders() {
-
-        mSubscription?.add(mViewModel.getMyOrdersFromSqlServer("1")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("OrderClosedFragment", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerOrdersNoBalance(it) })
+        closedorders = "1"
     }
 
     override fun getTodoDialog(invoice: Invoice) {

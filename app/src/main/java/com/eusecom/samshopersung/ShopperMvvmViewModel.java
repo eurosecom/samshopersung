@@ -839,6 +839,58 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end Order to Invoice
 
+    //Move Order to eKassa
+    public void emitMoveOrderToEkassa(Invoice invx) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+            mObservableMoveOrderToEkassa.onNext(invx);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableMoveOrderToEkassa = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<InvoiceList> getObservableMoveOrderToEkassa() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("odbuce", "");
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
+
+        return mObservableMoveOrderToEkassa
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx ->
+                        mDataModel.getOrdersFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "7", dodx, umex, invx.getDok(), ustp));
+    }
+
+    public void clearObservableMoveOrderToEkassa() {
+
+        mObservableMoveOrderToEkassa = BehaviorSubject.create();
+
+    }
+    //end Move Order to eKassa
+
     /**
      * end methods for OrderListActivity
      */
