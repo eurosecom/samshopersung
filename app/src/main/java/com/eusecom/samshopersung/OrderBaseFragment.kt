@@ -40,6 +40,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
     private var balance: TextView? = null
+    private var balancetext: TextView? = null
     var mSubscription: CompositeSubscription? = null
     private var _disposables = CompositeDisposable()
     private var mDisposable: Disposable? = null
@@ -65,6 +66,7 @@ abstract class OrderBaseFragment : BaseKtFragment() {
         val rootView = inflater!!.inflate(R.layout.fragment_order, container, false)
 
         balance = rootView.findViewById<View>(R.id.balance) as TextView
+        balancetext = rootView.findViewById<View>(R.id.balancetext) as TextView
         mRecycler = rootView.findViewById<View>(R.id.list) as RecyclerView
         mRecycler?.setHasFixedSize(true)
         mProgressBar = rootView.findViewById<View>(R.id.progress_bar) as ProgressBar
@@ -256,7 +258,17 @@ abstract class OrderBaseFragment : BaseKtFragment() {
     fun setServerOrders(invoices: InvoiceList) {
 
         mAdapter?.setAbsserver(invoices.getInvoice())
+        balance?.setVisibility(View.VISIBLE)
+        balancetext?.setVisibility(View.VISIBLE)
         balance?.setText(invoices.getBalance())
+        hideProgressBar()
+    }
+
+    fun setServerOrdersNoBalance(invoices: InvoiceList) {
+
+        mAdapter?.setAbsserver(invoices.getInvoice())
+        balance?.setVisibility(View.GONE)
+        balancetext?.setVisibility(View.GONE)
         hideProgressBar()
     }
 

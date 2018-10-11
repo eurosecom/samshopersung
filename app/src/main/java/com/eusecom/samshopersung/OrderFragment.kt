@@ -44,8 +44,7 @@ class OrderFragment : OrderBaseFragment() {
             builder.setView(textenter).setTitle(getString(R.string.order) + " " + invoice.dok)
 
             builder.setItems(arrayOf<CharSequence>(getString(R.string.pdfdoc), getString(R.string.orderdetail)
-                    , getString(R.string.deletewholedoc), getString(R.string.getinvoice), getString(R.string.getekassa)
-                    , getString(R.string.getekassahello))
+                    , getString(R.string.deletewholedoc), getString(R.string.getinvoice), getString(R.string.getekassa))
             ) { dialog, which ->
                 // The 'which' argument contains the index position
                 // of the selected item
@@ -65,9 +64,7 @@ class OrderFragment : OrderBaseFragment() {
                     4 -> {
                         showGetEkassaDialog(invoice)
                     }
-                    5 -> {
-                        showGetEkassaHelloDialog(invoice)
-                    }
+
 
                 }
             }

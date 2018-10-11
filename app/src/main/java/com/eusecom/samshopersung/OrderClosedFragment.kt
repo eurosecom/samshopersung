@@ -27,7 +27,7 @@ class OrderClosedFragment : OrderBaseFragment() {
                     toast("Server not connected")
                 }
                 .onErrorResumeNext { throwable -> Observable.empty() }
-                .subscribe { it -> setServerOrders(it) })
+                .subscribe { it -> setServerOrdersNoBalance(it) })
     }
 
     override fun getTodoDialog(invoice: Invoice) {
