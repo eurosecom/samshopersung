@@ -156,11 +156,11 @@ class MainShopperActivity : AppCompatActivity() {
 
             }
             divider {}
-            primaryItem(getString(R.string.offer)) {
+            primaryItem(getString(R.string.orp)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    navigateToOfferKt()
+                    navigateToOrpKt()
                     false
                 }
 
@@ -324,6 +324,27 @@ class MainShopperActivity : AppCompatActivity() {
             }else {
 
                 val `is` = Intent(this, OrderListActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("saltype", 0)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
+
+        }
+    }
+
+    fun navigateToOrpKt() {
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, OrpListActivity::class.java)
                 val extras = Bundle()
                 extras.putInt("saltype", 0)
                 `is`.putExtras(extras)

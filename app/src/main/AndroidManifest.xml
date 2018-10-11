@@ -43,6 +43,7 @@
         <activity android:name=".AccountReportsActivity"/>
         <activity android:name=".SetImageActivity"/>
         <activity android:name=".SetProductActivity"/>
+        <activity android:name=".OrpListActivity"/>
 
         <activity android:name=".KeyStoreActivity"/>
         <activity android:name=".ScanEanActivity"/>

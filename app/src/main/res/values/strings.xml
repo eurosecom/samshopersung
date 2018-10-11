@@ -213,7 +213,9 @@
     <string name="getinvoice">Get invoice</string>
     <string name="getinvoicefrom">Get invoice from order</string>
     <string name="getekassa">Get eKassa </string>
-    <string name="getekassafrom">Get eKassa from order</string>
+    <string name="getekassafrom">Get eKassa from doc</string>
+    <string name="movetoekassafrom">Move to eKassa order</string>
+    <string name="movetoekassa">Move to eKassa</string>
     <string name="getekassahello">Get eKassa Hello</string>
     <string name="getekassahellofrom">Get eKassa Hello from order</string>
     <string name="getsoaphello">Get Soap Hello </string>
@@ -352,6 +354,11 @@
     <string name="initial_text">Initial Text</string>
     <string name="final_text">Encrypted Text</string>
     <string name="decrypt_result">Decrypted Text</string>
+
+
+    //orplistactivity
+    <string name="orp">ORP</string>
+    <string name="orpdoc">ORP document</string>
 
 
 

@@ -211,7 +211,9 @@
     <string name="getinvoice">Urobiť faktúru</string>
     <string name="getinvoicefrom">Urobiť faktúru z objednávky</string>
     <string name="getekassa">Uhradiť cez eKassa</string>
-    <string name="getekassafrom">eKassa úhrada objednávky</string>
+    <string name="movetoekassafrom">Presunúť do eKassa objednávku</string>
+    <string name="movetoekassa">Presunúť do eKassa</string>
+    <string name="getekassafrom">eKassa úhrada dokladu</string>
     <string name="getekassahello">Načítať eKassa Hello</string>
     <string name="getekassahellofrom">eKassa Hello objednávky</string>
     <string name="getsoaphello">Načítať Soap Hello </string>
