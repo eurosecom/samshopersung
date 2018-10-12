@@ -57,7 +57,7 @@ public class OrpAdapter extends RecyclerView.Adapter<OrpAdapter.OrpViewHolder> {
   @Override
   public void onBindViewHolder(OrpViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).getKto() + " - " + mListabsserver.get(position).getNai() + " ...");
+      holder.invoice_name.setText(mListabsserver.get(position).getIco() + " - " + mListabsserver.get(position).getNai() + " ...");
       Picasso.with(holder.mContext).load(R.drawable.ic_local_atm_blue_24dp).resize(120, 120).into(holder.invoice_photo);
 
       holder.docx.setText(mListabsserver.get(position).getDok());
@@ -65,6 +65,8 @@ public class OrpAdapter extends RecyclerView.Adapter<OrpAdapter.OrpViewHolder> {
       holder.datex.setText(mListabsserver.get(position).getDat());
 
       holder.valuex.setText(mListabsserver.get(position).getHod());
+
+      holder.invoicex.setText(mListabsserver.get(position).getFak());
 
       holder.setClickListener(new OrpAdapter.OrpViewHolder.ClickListener() {
           public void onClick(View v, int pos, boolean isLongClick) {

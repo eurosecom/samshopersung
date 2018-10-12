@@ -258,4 +258,11 @@
     <string name="popisSw1">Swift kód</string>
     <string name="save">Uložiť</string>
 
+
+    //orplistactivity
+    <string name="orp">ORP</string>
+    <string name="orpdoc">ORP doklad</string>
+    <string name="totalshort">Tot.</string>
+    <string name="ordershort">Obj.</string>
+
 </resources>

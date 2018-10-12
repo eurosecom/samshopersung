@@ -98,10 +98,7 @@ class OrpFragment : BaseKtFragment() {
                     if (event is Invoice) {
 
                         Log.d("onShortClickListenerFrg", event.nai)
-                        if(event.uce.equals(mSharedPreferences.getString("odbuce", ""))){
-                            getTodoDialog(event)
-                        }
-
+                        getTodoDialog(event)
 
 
                     }
@@ -119,7 +116,7 @@ class OrpFragment : BaseKtFragment() {
         mSubscription = CompositeSubscription()
 
         showProgressBar()
-        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("1")
+        mSubscription?.add(mViewModel.getMyInvoicesFromSqlServer("2")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->

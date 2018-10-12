@@ -70,7 +70,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/date" />
+                android:text="@string/dateshort" />
 
             <TextView
                 android:id="@+id/datex"
@@ -91,8 +91,8 @@
                 android:layout_toRightOf="@+id/datex"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:visibility="gone"
-                android:text="@string/fakshort" />
+                android:visibility="visible"
+                android:text="@string/ordershort" />
 
             <TextView
                 android:id="@+id/invoicex"
@@ -102,7 +102,7 @@
                 android:layout_toRightOf="@+id/invoice"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textStyle="bold"
                 />
 
@@ -114,7 +114,7 @@
                 android:layout_toLeftOf="@+id/valuex"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:text="@string/value" />
+                android:text="@string/totalshort" />
 
             <TextView
                 android:id="@+id/valuex"
