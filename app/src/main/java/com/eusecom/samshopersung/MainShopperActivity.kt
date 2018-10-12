@@ -156,7 +156,7 @@ class MainShopperActivity : AppCompatActivity() {
 
             }
             divider {}
-            primaryItem(getString(R.string.orp)) {
+            primaryItem(getString(R.string.orpekasa)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")

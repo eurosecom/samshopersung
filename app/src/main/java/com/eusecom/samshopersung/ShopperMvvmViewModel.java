@@ -1412,16 +1412,23 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
-
-            order.setDat(getEkassaRequestDate());
+            String daterequest=getEkassaRequestDate();
+            order.setDat(daterequest);
+            //receiptData.setParagonAttribute = "false";
+            order.setPoh("false");
+            //receiptData.setReceiptTypeAttribute = "PD";
+            order.setKto("PD");
             mPaymentTerminal.setOrder(order);
             mEkassaStrategy.setSwId(getEkassaSwId("Coex s.r.o.", "EuroSecom", "v1.01"));
             mEkassaStrategy.setException("false");
-            mEkassaStrategy.setRequestDate(getEkassaRequestDate());
+            mEkassaStrategy.setRequestDate(daterequest);
             mEkassaStrategy.setSendingCount("1");
             mEkassaStrategy.setUuid(getEkassaUuid());
-            mEkassaStrategy.setPkp(getEkassaPkp());
+            mEkassaStrategy.setPkp(getEkassaPkp(getEkassaPkpString("2004567892", "99920045678900002", order.getDok(), daterequest, order.getDok())));
             mEkassaStrategy.setOkp(getEkassaOkp());
+            mEkassaStrategy.setDic("2004567892");
+            mEkassaStrategy.setIcdph("SK2004567892");
+            mEkassaStrategy.setOrpid("99920045678900002");
 
             EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(mEkassaStrategy);
             mObservableRegisterReceiptEkassaResponseXml.onNext(requestEnvelop);
@@ -1548,20 +1555,22 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return uuid;
     }
 
-    private byte[] signature;
-
-    public String getEkassaPkp() {
+    public String getEkassaPkpString(String dic, String okp, String doc, String date, String total) {
 
         String pkptext = "DIČ|Kód ORP|Poradové číslo dokladu|Dátum a čas vytvorenia dokladu v ORP|Celková suma dokladu";
         //pkp text from page 55 registerreceiptrequest in 2018.07.23_Integr_rozhranie.pdf
-        pkptext = "2004567890|99920045678900001|1|2018-06-27T14:34:14+02:00|237.23";
+        //pkptext = "2004567890|99920045678900001|1|2018-06-27T14:34:14+02:00|237.23";
+        pkptext = dic + "|" + okp + "|" + doc + "|" + date + "|" + total;
 
+        return pkptext;
+    }
 
-        String pkp = "";
-        //String pkp = "Q2z+25bWv5Q0jNsqDPMY/6UiYpszbzdNP0/jisYeAc2PXtbyKp+BmN7yiPa+8g/FtjXUysHXVCLWtYE5rAM58wpAbpwyvInxpfTQN9La+/X6x+8JR6wgfPIJlaNrce8iL/ZIZwT9q/in/dTOFlOXqYhZ8MZxU6zpu1PxQupaMoqfj5lvpOQ82sDBvufjOkkAbiYjGXDNnl4EgiEd7apZh1pHDBbolvIBSTc7FhECsx5b6dd09WRn8ejwnxFx9YaOsZsyZJkJXg9N1mglmHI4vkD24ElpdeUX/yN0s2UR8QSbd51klqHgipdJjfFN86J6TPPMaslre/kQu1HZjGJ/CQ==";
+    private byte[] signature;
+
+    public String getEkassaPkp(String pkptext) {
 
         signature = EncodeSignatureTools.getSignature(pkptext, EncodeSignatureTools.getPrivateKeyFromKeyStore("andrej"));
-        pkp = EncodeSignatureTools.getEncode64(signature);
+        String pkp = EncodeSignatureTools.getEncode64(signature);
 
         return pkp;
     }
