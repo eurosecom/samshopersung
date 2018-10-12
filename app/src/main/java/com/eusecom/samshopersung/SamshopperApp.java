@@ -66,7 +66,7 @@ public class SamshopperApp extends MultiDexApplication implements HasActivityInj
 
         //Room
         database = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, DATABASE_NAME)
-                .addMigrations(MyDatabase.MIGRATION_2_3)
+                .addMigrations(MyDatabase.MIGRATION_4_5)
                 .build();
 
         INSTANCE = this;
