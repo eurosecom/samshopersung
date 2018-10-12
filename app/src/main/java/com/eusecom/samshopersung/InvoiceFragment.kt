@@ -89,7 +89,7 @@ class InvoiceFragment : BaseKtFragment() {
 
         _disposables
                 .add(tapEventEmitter.subscribe { event ->
-                    if (event is OrderBaseFragment.ClickFobEvent) {
+                    if (event is OrderFragment.ClickFobEvent) {
                         //andrejko showNewCashDocDialog()
 
                     }

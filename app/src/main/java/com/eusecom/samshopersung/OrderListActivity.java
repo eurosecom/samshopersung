@@ -70,13 +70,11 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
                         new OrderFragment(),
-                        new InvoiceFragment(),
-                        new OrderClosedFragment()
+                        new InvoiceFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
                         getString(R.string.myorders),
-                        getString(R.string.myinvoices),
-                        getString(R.string.myordersclosed)
+                        getString(R.string.myinvoices)
                 };
 
                 @Override
@@ -101,12 +99,10 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
                 private final Fragment[] mFragments = new Fragment[]{
                         new InvoiceFragment(),
-                        new OrderFragment(),
                         new OrderClosedFragment()
                 };
                 private final String[] mFragmentNames = new String[]{
                         getString(R.string.myinvoices),
-                        getString(R.string.myorders),
                         getString(R.string.myordersclosed)
                 };
 

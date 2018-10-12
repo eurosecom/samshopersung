@@ -7,6 +7,6 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class OrderClosedFragmentProvider {
 
-    @ContributesAndroidInjector(modules = OrderFragmentModule.class)
+    @ContributesAndroidInjector(modules = OrderClosedFragmentModule.class)
     abstract OrderClosedFragment provideOrderClosedFragmentFactory();
 }

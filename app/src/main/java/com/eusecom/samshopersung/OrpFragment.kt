@@ -91,7 +91,7 @@ class OrpFragment : BaseKtFragment() {
 
         _disposables
                 .add(tapEventEmitter.subscribe { event ->
-                    if (event is OrderBaseFragment.ClickFobEvent) {
+                    if (event is OrpFragment.ClickFobEvent) {
                         //andrejko showNewCashDocDialog()
 
                     }
