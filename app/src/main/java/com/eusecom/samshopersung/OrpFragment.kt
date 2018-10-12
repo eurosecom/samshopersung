@@ -207,6 +207,9 @@ class OrpFragment : BaseKtFragment() {
 
     private fun setServerInvoices(invoices: List<Invoice>) {
 
+        //var items: List<ProductItemKt> = invoices.get(0).items
+        //Log.d("items.get(0).nat", items.get(0).nat)
+        //Log.d("items.get(1).nat", items.get(1).nat)
         mAdapter?.setAbsserver(invoices)
         hideProgressBar()
     }
