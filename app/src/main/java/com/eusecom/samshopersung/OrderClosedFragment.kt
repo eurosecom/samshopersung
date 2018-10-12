@@ -37,7 +37,7 @@ import javax.inject.Inject
 
 class OrderClosedFragment : BaseKtFragment() {
 
-    private var mAdapter: OrderAdapter? = null
+    private var mAdapter: OrderClosedAdapter? = null
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
     private var balance: TextView? = null
@@ -81,7 +81,7 @@ class OrderClosedFragment : BaseKtFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mAdapter = OrderAdapter(_rxBus)
+        mAdapter = OrderClosedAdapter(_rxBus)
         mAdapter?.setAbsserver(emptyList())
         mManager = LinearLayoutManager(context)
         mManager?.setReverseLayout(true)
