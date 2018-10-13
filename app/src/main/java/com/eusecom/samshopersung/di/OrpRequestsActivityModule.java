@@ -1,34 +1,38 @@
 package com.eusecom.samshopersung.di;
 
+
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 
+import com.eusecom.samshopersung.OrpRequestsAdapter;
+import com.eusecom.samshopersung.RoomDemoAdapter;
 import com.eusecom.samshopersung.ShopperIMvvmViewModel;
 import com.eusecom.samshopersung.ShopperMvvmViewModel;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperDataModel;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
-import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
-import com.eusecom.samshopersung.soap.soappayment.PaymentStrategy;
-import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
+import com.eusecom.samshopersung.rxbus.RxBus;
+import com.squareup.picasso.Picasso;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 
 @Module
-public class OrderListActivityModule {
+public class OrpRequestsActivityModule {
+
 
     @Provides
     @ShopperScope
     public ShopperIDataModel providesShopperIDataModel(ShopperRetrofitService shopperretrofitservice,
                                                        ExampleInterceptor interceptor,
-                                                       @NonNull MyDatabase roomDatabase,
-                                                       ShopperXmlRetrofitService shopperxmlretrofitservice) {
-        return new ShopperDataModel(shopperretrofitservice
-                , interceptor, roomDatabase, shopperxmlretrofitservice);
+                                                       MyDatabase roomDatabase,
+                                                       IShopperModelsFactory modelsFactory) {
+        return new ShopperDataModel(shopperretrofitservice, interceptor, roomDatabase, modelsFactory);
     }
 
 
@@ -36,10 +40,15 @@ public class OrderListActivityModule {
     @ShopperScope
     public ShopperIMvvmViewModel providesShopperIMvvmViewModel(ShopperIDataModel dataModel
             , ISchedulerProvider schedulerProvider, SharedPreferences sharedPreferences
-            , ConnectivityManager connectivityManager
-            , PaymentTerminal paymentTerminal, PaymentStrategy ekassastrategy) {
+            , ConnectivityManager connectivityManager) {
         return new ShopperMvvmViewModel(dataModel, schedulerProvider
-                , sharedPreferences, connectivityManager, paymentTerminal, ekassastrategy);
+                , sharedPreferences, connectivityManager);
+    }
+
+    @Provides
+    @ShopperScope
+    public OrpRequestsAdapter providesOrpRequestsAdapter(@NonNull final RxBus rxbus, @NonNull final Picasso picasso) {
+        return new OrpRequestsAdapter(rxbus, picasso);
     }
 
 }

@@ -16,6 +16,7 @@ import com.eusecom.samshopersung.OrderDetailActivity;
 import com.eusecom.samshopersung.OrderListActivity;
 import com.eusecom.samshopersung.OrpListActivity;
 import com.eusecom.samshopersung.OrpListKtActivity;
+import com.eusecom.samshopersung.OrpRequestsActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
 import com.eusecom.samshopersung.RoomDemoActivity;
 import com.eusecom.samshopersung.SetImageActivity;
@@ -117,5 +118,9 @@ public abstract class ActivityBuilder {
     @ShopperScope
     @ContributesAndroidInjector(modules = {OrderListActivityModule.class, OrpFragmentProvider.class})
     abstract OrpListKtActivity bindOrpListKtActivity();
+
+    @ShopperScope
+    @ContributesAndroidInjector(modules = {OrpRequestsActivityModule.class})
+    abstract OrpRequestsActivity bindOrpRequestsActivity();
 
 }

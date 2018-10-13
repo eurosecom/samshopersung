@@ -12,6 +12,7 @@ import com.eusecom.samshopersung.ProductKt;
 import com.eusecom.samshopersung.SetImageServerResponse;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
+import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
@@ -22,11 +23,8 @@ import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -137,5 +135,8 @@ public interface ShopperIDataModel {
     public Observable<EkassaRegisterReceiptResponseEnvelope> getEkassaRegisterReceiptResponse(EkassaRequestEnvelope requestEnvelope);
 
     public <EnvelopeType> Observable<HelloResponseEnvelope> getSoapResponse(EnvelopeType envelope);
+
+    //methods for OrpListKtActivity
+    public Flowable<List<EkassaRequestBackup>> loadEkasaRequestsData();
 
 }

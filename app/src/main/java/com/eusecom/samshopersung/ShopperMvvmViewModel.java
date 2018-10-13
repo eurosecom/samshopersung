@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samshopersung.models.Album;
+import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
@@ -1666,9 +1667,16 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return okphash;
 
     }
-
-
     //end SOAP eKassa
+
+
+    //methods for OrpListKtActivity
+    //get requestss
+    public Flowable<List<EkassaRequestBackup>> loadEkasaRequests() {
+
+        return mDataModel.loadEkasaRequestsData();
+
+    }
 
 
 }

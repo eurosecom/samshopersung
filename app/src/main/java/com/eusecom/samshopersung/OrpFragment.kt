@@ -15,9 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.eusecom.samshopersung.rxbus.RxBus
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope
-import com.mikepenz.materialdrawer.AccountHeader
-import com.mikepenz.materialdrawer.Drawer
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

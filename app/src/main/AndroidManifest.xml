@@ -45,6 +45,7 @@
         <activity android:name=".SetProductActivity"/>
         <activity android:name=".OrpListActivity"/>
         <activity android:name=".OrpListKtActivity"/>
+        <activity android:name=".OrpRequestsActivity"/>
 
         <activity android:name=".KeyStoreActivity"/>
         <activity android:name=".ScanEanActivity"/>

@@ -155,12 +155,24 @@ class MainShopperActivity : AppCompatActivity() {
                 }
 
             }
+
             divider {}
-            primaryItem(getString(R.string.orpekasa)) {
+            primaryItem(getString(R.string.orpekasadocs)) {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    navigateToOrpKtnew()
+                    navigateToOrpKtdocs()
+                    false
+                }
+
+            }
+
+            divider {}
+            primaryItem(getString(R.string.orpekasareqs)) {
+
+                onClick { _ ->
+                    //Log.d("DRAWER", "Click.")
+                    navigateToOrpKtreqs()
                     false
                 }
 
@@ -354,7 +366,7 @@ class MainShopperActivity : AppCompatActivity() {
         }
     }
 
-    fun navigateToOrpKtnew() {
+    fun navigateToOrpKtdocs() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
@@ -366,6 +378,27 @@ class MainShopperActivity : AppCompatActivity() {
             }else {
 
                 val `is` = Intent(this, OrpListKtActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("saltype", 0)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
+
+        }
+    }
+
+    fun navigateToOrpKtreqs() {
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, OrpRequestsActivity::class.java)
                 val extras = Bundle()
                 extras.putInt("saltype", 0)
                 `is`.putExtras(extras)

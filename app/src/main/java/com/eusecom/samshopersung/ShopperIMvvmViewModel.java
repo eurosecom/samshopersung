@@ -3,6 +3,7 @@ package com.eusecom.samshopersung;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.models.Album;
+import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
@@ -280,6 +281,12 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearObservableRegisterReceiptEkassaResponse();
+
+    //methods for OrpListKtActivity
+
+    //get requestss
+    @NonNull
+    public Flowable<List<EkassaRequestBackup>> loadEkasaRequests();
 
 
 }

@@ -359,6 +359,8 @@
     //orplistactivity
     <string name="orp">ORP</string>
     <string name="orpekasa">ORP eCashbox</string>
+    <string name="orpekasadocs">ORP eCashbox documents</string>
+    <string name="orpekasareqs">ORP eCashbox requests</string>
     <string name="orpdoc">ORP document</string>
     <string name="orpdocs">ORP documents</string>
     <string name="totalshort">Tot.</string>

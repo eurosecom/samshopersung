@@ -22,6 +22,7 @@ import com.eusecom.samshopersung.R;
 import com.eusecom.samshopersung.SetImageServerResponse;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
+import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
@@ -94,9 +95,11 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     public ShopperDataModel(@NonNull final ShopperRetrofitService shopperRetrofitService,
                             @NonNull final ExampleInterceptor interceptor,
+                            @NonNull MyDatabase roomDatabase,
                             @NonNull final ShopperXmlRetrofitService shopperXmlRetrofitService) {
         mShopperRetrofitService = shopperRetrofitService;
         mInterceptor = interceptor;
+        mRoomDatabase = roomDatabase;
         mShopperXmlRetrofitService = shopperXmlRetrofitService;
     }
 
@@ -580,6 +583,14 @@ public class ShopperDataModel implements ShopperIDataModel {
             this.envelope = envelope;
         }
 
+
+    }
+
+    //methods for OrpListKtActivity
+    @Override
+    public Flowable<List<EkassaRequestBackup>> loadEkasaRequestsData() {
+
+        return mRoomDatabase.ekassaRequestBackupDao().getRxAllRequest();
 
     }
 
