@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.eusecom.samshopersung.models.Product;
+import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.OrpRequestsViewHolder> {
 
-    private List<Product> mList;
+    private List<EkassaRequestBackup> mList;
     private RxBus mRxBus;
     private Picasso mPicasso;
 
@@ -36,23 +36,19 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
     @Override
     public void onBindViewHolder(OrpRequestsViewHolder holder, int position) {
 
-        holder.invoice_name.setText(mList.get(position).getName() + " " + mList.get(position).getPrice());
+        holder.invoice_name.setText(mList.get(position).getRequestUuid());
 
-        String imageurl = mList.get(position).getImageUrl();
-        //Log.d("OrpRequestsActivityLog", "" + Picasso.with(holder.mContext).toString());
-        mPicasso.with(holder.mContext).load(imageurl).resize(250, 250).into(holder.invoice_photo);
-
-        holder.docx.setText(mList.get(position).getUid() + " ");
+        holder.docx.setText(mList.get(position).getId() + " ");
 
         holder.setClickListener(new OrpRequestsAdapter.OrpRequestsViewHolder.ClickListener() {
             public void onClick(View v, int pos, boolean isLongClick) {
                 if (isLongClick) {
 
-                    Log.d("OrpRequestsActivityLog", mList.get(pos).getName());
+                    Log.d("OrpRequestsActivityLog", mList.get(pos).getId() + "");
 
                 } else {
 
-                    Log.d("OrpRequestsActivityLog", mList.get(pos).getName());
+                    Log.d("OrpRequestsActivityLog", mList.get(pos).getId() + "");
                     mRxBus.send(mList.get(pos));
                 }
             }
@@ -71,7 +67,7 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
         notifyItemRemoved(position);
     }
 
-    public void setDataToAdapter(List<Product> listabsserver) {
+    public void setDataToAdapter(List<EkassaRequestBackup> listabsserver) {
         mList = listabsserver;
         notifyDataSetChanged();
     }

@@ -34,5 +34,8 @@ public interface IShopperModelsFactory {
     @NonNull
     public ProductItemKt getProductItemKt();
 
+    @NonNull
+    public EkassaRequestBackup getEkassaRequestBackup();
+
 
 }

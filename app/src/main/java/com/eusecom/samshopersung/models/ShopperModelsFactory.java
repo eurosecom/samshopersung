@@ -80,4 +80,10 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
         return new ProductItemKt("", "","","","","","","","","");
     }
 
+    @NonNull
+    public EkassaRequestBackup getEkassaRequestBackup(){
+
+        return new EkassaRequestBackup();
+    }
+
 }

@@ -1678,5 +1678,19 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
 
+    public Completable updateEkassaReqName(final String reqUuid) {
+        return Completable.fromAction(() -> {
+
+            mDataModel.insertOrUpdateEkassaReqData(reqUuid);
+        });
+    }
+
+    public Completable deleteRxEkassaReqById(final int reqId) {
+        return Completable.fromAction(() -> {
+
+            mDataModel.deleteRxEkassaReqByIdData(reqId);
+        });
+    }
+
 
 }

@@ -36,6 +36,10 @@ public class EkassaRequestBackup {
     @ColumnInfo(name = "receiptDataId")
     private String receiptDataId;
 
+    public EkassaRequestBackup() {
+        // Default constructor required for calls to DataSnapshot.getValue(Employee.class)
+    }
+
 
     public int getId() {
         return id;

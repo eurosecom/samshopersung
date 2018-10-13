@@ -288,5 +288,11 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Flowable<List<EkassaRequestBackup>> loadEkasaRequests();
 
+    @NonNull
+    public Completable updateEkassaReqName(final String reqUuid);
+
+    @NonNull
+    public Completable deleteRxEkassaReqById(final int reqId);
+
 
 }

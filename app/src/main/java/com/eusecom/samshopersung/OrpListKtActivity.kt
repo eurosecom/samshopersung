@@ -106,21 +106,22 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 divider = false
             }
 
+
             divider {}
-            primaryItem(getString(R.string.orpdocs)) {
+            primaryItem(getString(R.string.orpekasareqs)) {
 
                 onClick { _ ->
-                    navigateToDoc()
+                    navigateToRequests()
                     false
                 }
 
             }
 
             divider {}
-            primaryItem(getString(R.string.orprequests)) {
+            primaryItem(getString(R.string.orploc)) {
 
                 onClick { _ ->
-                    navigateToRequests()
+                    //navigateToRequests()
                     false
                 }
 
@@ -191,16 +192,12 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_doc -> consume { navigateToDoc() }
         R.id.action_request -> consume { navigateToRequests() }
         R.id.action_settings -> consume { navigateToSettings() }
 
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun navigateToOffer(){
-
-    }
 
     //consume oncreateoptionmenu
     inline fun consume(f: () -> Unit): Boolean {
@@ -217,13 +214,14 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
 
-
-    fun navigateToDoc() {
-
-
-    }
-
     fun navigateToRequests(){
+
+        val `is` = Intent(this, OrpRequestsActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 0)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        finish()
 
     }
 

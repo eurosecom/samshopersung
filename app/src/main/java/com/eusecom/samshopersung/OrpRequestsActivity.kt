@@ -1,5 +1,6 @@
 package com.eusecom.samshopersung
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
+import com.eusecom.samshopersung.models.EkassaRequestBackup
 import com.eusecom.samshopersung.models.Product
 import com.eusecom.samshopersung.rxbus.RxBus
 import dagger.android.AndroidInjection
@@ -41,7 +43,7 @@ class OrpRequestsActivity : AppCompatActivity() {
 
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_room)
+        setContentView(R.layout.activity_requests)
         setSupportActionBar(toolbar)
 
         mProgressBar = findViewById<View>(R.id.progress_bar) as? ProgressBar
@@ -56,10 +58,6 @@ class OrpRequestsActivity : AppCompatActivity() {
 
         Log.d("OrpRequestsActivityLog", "mViewModel " + mViewModel.toString())
 
-        fab.setOnClickListener { view ->
-
-        }
-
         setDisposable()
     }
 
@@ -71,7 +69,7 @@ class OrpRequestsActivity : AppCompatActivity() {
     private fun setDisposable() {
 
         showProgressBar()
-        mDisposable.add(loadProducts()
+        mDisposable.add(loadRequests()
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -84,12 +82,12 @@ class OrpRequestsActivity : AppCompatActivity() {
 
         mDisposable
                 .add(tapEventEmitter.subscribe { event ->
-                    if (event is Product) {
+                    if (event is EkassaRequestBackup) {
 
-                        val usnamex = event.name
+                        val usnamex = event.requestUuid
 
                         Log.d("OrpRequestsActivityLog ", "bus " + usnamex)
-                        showDeleteDialog(event.uid)
+                        showDeleteDialog(event.id)
 
                     }
 
@@ -106,7 +104,7 @@ class OrpRequestsActivity : AppCompatActivity() {
 
     }
 
-    private fun setProducts(prods: List<Product>) {
+    private fun setProducts(prods: List<EkassaRequestBackup>) {
         //Log.d("OrpRequestsActivityLog", "cat0 " + prods.get(0).name)
         mAdapter?.setDataToAdapter(prods)
         //Scroll item 2 to 20 pixels from the top
@@ -114,57 +112,58 @@ class OrpRequestsActivity : AppCompatActivity() {
         hideProgressBar()
     }
 
-    protected fun loadProducts(): Flowable<List<Product>> {
-        return mViewModel.loadProducts();
+    protected fun loadRequests(): Flowable<List<EkassaRequestBackup>> {
+        return mViewModel.loadEkasaRequests()
     }
 
-    fun showDeleteDialog(prodId: Int) {
+    fun showDeleteDialog(reqId: Int) {
 
-        alert("", getString(R.string.action_delroomitem) + " " + prodId) {
-            yesButton { navigateToRxDeleteById(prodId)  }
+        alert("", getString(R.string.orpdelreq) + " " + reqId) {
+            yesButton { navigateToRxDeleteById(reqId) }
             noButton {}
         }.show()
 
     }
 
-    fun navigateToRxDeleteById(prodId: Int){
+    fun navigateToRxDeleteById(reqId: Int) {
 
         showProgressBar()
-        mDisposable.add(mViewModel.deleteRxProductById(prodId)
+        mDisposable.add(mViewModel.deleteRxEkassaReqById(reqId)
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete({  -> Log.d("OrpRequestsActivityLog", " completed") })
+                .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
                 .doOnError { throwable ->
                     Log.e("OrpRequestsActivityLog", "Error Throwable " + throwable.message)
                 }
-                .subscribe({  -> Unit }))
+                .subscribe({ -> Unit }))
 
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_room, menu)
+        menuInflater.inflate(R.menu.menu_requests, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_settings -> consume {   }
-        R.id.action_addroomitem -> consume { navigateToUpdateRoomItem() }
+        R.id.action_settings -> consume { }
+        R.id.action_orploc -> consume { navigateToUpdateRoomItem() }
+        R.id.action_orpdocs -> consume { navigateToOrpKtdocs() }
 
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun navigateToUpdateRoomItem(){
+    fun navigateToUpdateRoomItem() {
 
         showProgressBar()
-        mDisposable.add(mViewModel.updateProductName("namename")
+        mDisposable.add(mViewModel.updateEkassaReqName("b05226a4-88b2-46e4-ad45-0f28jcf3668a")
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete({  -> Log.d("OrpRequestsActivityLog", " completed") })
+                .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
                 .doOnError { throwable ->
                     Log.e("OrpRequestsActivityLog", "Error Throwable " + throwable.message)
                 }
-                .subscribe({  -> Unit }))
+                .subscribe({ -> Unit }))
 
 
     }
@@ -182,6 +181,17 @@ class OrpRequestsActivity : AppCompatActivity() {
 
     private fun hideProgressBar() {
         mProgressBar?.setVisibility(View.GONE)
+    }
+
+    fun navigateToOrpKtdocs() {
+
+        val `is` = Intent(this, OrpListKtActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 0)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        finish()
+
     }
 
 }

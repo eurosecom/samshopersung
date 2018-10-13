@@ -593,5 +593,22 @@ public class ShopperDataModel implements ShopperIDataModel {
         return mRoomDatabase.ekassaRequestBackupDao().getRxAllRequest();
 
     }
+    private EkassaRequestBackup ekassareq;
+
+    @Override
+    public void insertOrUpdateEkassaReqData(String reqUuid) {
+
+        ekassareq = mModelsFactory.getEkassaRequestBackup();
+        ekassareq.setRequestUuid(reqUuid);
+
+        mRoomDatabase.ekassaRequestBackupDao().insertEkassaRequestBackup(ekassareq);
+    }
+
+    @Override
+    public void deleteRxEkassaReqByIdData(int reqId) {
+
+        mRoomDatabase.ekassaRequestBackupDao().deleteByUid(reqId);
+
+    }
 
 }

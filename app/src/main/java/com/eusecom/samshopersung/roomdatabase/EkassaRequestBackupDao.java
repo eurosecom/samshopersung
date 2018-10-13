@@ -32,7 +32,7 @@ public interface EkassaRequestBackupDao {
     void delete(EkassaRequestBackup ekassarequestbackup);
 
     @Query("DELETE FROM ekassarequestbackup WHERE id = :id")
-    void deleteByUid(String id);
+    void deleteByUid(int id);
 
     /**
      * Insert a ekassarequestbackup in the database. If the ekassarequestbackup already exists, replace it.

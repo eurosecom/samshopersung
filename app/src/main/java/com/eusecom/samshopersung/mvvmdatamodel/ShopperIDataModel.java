@@ -139,4 +139,10 @@ public interface ShopperIDataModel {
     //methods for OrpListKtActivity
     public Flowable<List<EkassaRequestBackup>> loadEkasaRequestsData();
 
+    @NonNull
+    public void insertOrUpdateEkassaReqData(String reqUuid);
+
+    @NonNull
+    public void deleteRxEkassaReqByIdData(int reqId);
+
 }
