@@ -1551,7 +1551,76 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     public String getEkassaUuid() {
 
+        //by 2018.07.23_Integr_rozhranie.pdf page 23
+        //Povolené hodnoty:
+        //[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}
         String uuid = "b05226a4-88b2-46e4-af45-0f28dcf3668f";
+        uuid="";
+
+        String SALTCHARS = "abcdef0123456789";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 8) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        uuid = uuid + salt.toString() + "-";
+
+        SALTCHARS = "abcdef0123456789";
+        salt = new StringBuilder();
+        rnd = new Random();
+        while (salt.length() < 4) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        uuid = uuid + salt.toString() + "-";
+
+        SALTCHARS = "12345";
+        salt = new StringBuilder();
+        rnd = new Random();
+        while (salt.length() < 1) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        uuid = uuid + salt.toString();
+
+        SALTCHARS = "abcdef0123456789";
+        salt = new StringBuilder();
+        rnd = new Random();
+        while (salt.length() < 3) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        uuid = uuid + salt.toString() + "-";
+
+        SALTCHARS = "89ab";
+        salt = new StringBuilder();
+        rnd = new Random();
+        while (salt.length() < 1) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        uuid = uuid + salt.toString();
+
+        SALTCHARS = "abcdef0123456789";
+        salt = new StringBuilder();
+        rnd = new Random();
+        while (salt.length() < 3) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        uuid = uuid + salt.toString() + "-";
+
+        SALTCHARS = "abcdef0123456789";
+        salt = new StringBuilder();
+        rnd = new Random();
+        while (salt.length() < 12) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        uuid = uuid + salt.toString();
+
+
         return uuid;
     }
 
