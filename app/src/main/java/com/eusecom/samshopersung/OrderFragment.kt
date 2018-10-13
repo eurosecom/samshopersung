@@ -282,7 +282,7 @@ class OrderFragment : BaseKtFragment() {
         balance?.setText(invoices.getBalance())
         hideProgressBar()
 
-        val `is` = Intent(activity, OrpListActivity::class.java)
+        val `is` = Intent(activity, OrpListKtActivity::class.java)
         val extras = Bundle()
         extras.putInt("saltype", 1)
         `is`.putExtras(extras)

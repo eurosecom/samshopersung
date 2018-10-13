@@ -57,7 +57,7 @@ public class  OrpListActivity extends AppCompatActivity implements HasSupportFra
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_suppliers);
+        setContentView(R.layout.orplist_activity);
 
         Intent i = getIntent();
         //0=ordders, 1=invoices
@@ -157,6 +157,8 @@ public class  OrpListActivity extends AppCompatActivity implements HasSupportFra
 
                 }
         );
+
+
 
     }
 

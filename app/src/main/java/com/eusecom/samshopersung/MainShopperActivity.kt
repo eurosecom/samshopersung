@@ -160,7 +160,7 @@ class MainShopperActivity : AppCompatActivity() {
 
                 onClick { _ ->
                     //Log.d("DRAWER", "Click.")
-                    navigateToOrpKt()
+                    navigateToOrpKtnew()
                     false
                 }
 
@@ -345,6 +345,27 @@ class MainShopperActivity : AppCompatActivity() {
             }else {
 
                 val `is` = Intent(this, OrpListActivity::class.java)
+                val extras = Bundle()
+                extras.putInt("saltype", 0)
+                `is`.putExtras(extras)
+                startActivity(`is`)
+            }
+
+        }
+    }
+
+    fun navigateToOrpKtnew() {
+        val usuid = prefs.getString("usuid", "")
+        if (usuid == "" || usuid == "0") {
+            showDonotloginAlert()
+        }else {
+
+            val usfir = prefs.getString("fir", "")
+            if ( usfir == "" || usfir == "0" ) {
+                showDonotcompanyAlert()
+            }else {
+
+                val `is` = Intent(this, OrpListKtActivity::class.java)
                 val extras = Bundle()
                 extras.putInt("saltype", 0)
                 `is`.putExtras(extras)
