@@ -212,12 +212,12 @@
     <string name="pdfdoc">PDF document</string>
     <string name="getinvoice">Get invoice</string>
     <string name="getinvoicefrom">Get invoice from order</string>
-    <string name="getekassa">Get eKassa </string>
-    <string name="getekassafrom">Get eKassa from doc</string>
-    <string name="movetoekassafrom">Move to eKassa order</string>
-    <string name="movetoekassa">Move to eKassa</string>
-    <string name="getekassahello">Get eKassa Hello</string>
-    <string name="getekassahellofrom">Get eKassa Hello from order</string>
+    <string name="getekassa">Get eCashbox </string>
+    <string name="getekassafrom">Get eCashbox from doc</string>
+    <string name="movetoekassafrom">Move to eCashbox order</string>
+    <string name="movetoekassa">Move to eCashbox</string>
+    <string name="getekassahello">Get eCashbox Hello</string>
+    <string name="getekassahellofrom">Get eCashbox Hello from order</string>
     <string name="getsoaphello">Get Soap Hello </string>
     <string name="getsoaphellofrom">Get Hello from order</string>
 
@@ -358,10 +358,13 @@
 
     //orplistactivity
     <string name="orp">ORP</string>
-    <string name="orpekasa">ORP eKasse</string>
+    <string name="orpekasa">ORP eCashbox</string>
     <string name="orpdoc">ORP document</string>
+    <string name="orpdocs">ORP documents</string>
     <string name="totalshort">Tot.</string>
     <string name="ordershort">Ord.</string>
+    <string name="orpsettings">eCashbox settings</string>
+    <string name="orprequests">eCashbox requests</string>
 
 
 

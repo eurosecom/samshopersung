@@ -4,7 +4,7 @@
     tools:context="com.eusecom.samfantozzi.OrpListKtActivity">
     
      <item
-        android:id="@+id/action_offer"
+        android:id="@+id/action_doc"
         android:orderInCategory="100"
         android:title="@string/offer"
         android:icon="@drawable/baseline_list_white_24dp"
@@ -13,19 +13,19 @@
         />
 
      <item
-         android:id="@+id/action_pay"
+         android:id="@+id/action_request"
          android:orderInCategory="100"
          android:title="@string/action_pay"
-         android:icon="@drawable/ic_check_circle_black_24dp"
+         android:icon="@drawable/ic_call_made_black_24dp"
          android:iconifiedByDefault="true"
          app:showAsAction="always"
          />
 
      <item
-         android:id="@+id/clear_basket"
+         android:id="@+id/action_settings"
          android:orderInCategory="100"
          android:title="@string/clear_basket"
-         android:icon="@drawable/baseline_delete_white_24dp"
+         android:icon="@drawable/baseline_settings_white_18dp"
          android:iconifiedByDefault="true"
          app:showAsAction="always"
          />

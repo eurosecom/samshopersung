@@ -14,6 +14,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
+import co.zsmb.materialdrawerkt.builders.accountHeader
+import co.zsmb.materialdrawerkt.builders.drawer
+import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
+import co.zsmb.materialdrawerkt.draweritems.divider
+import co.zsmb.materialdrawerkt.draweritems.sectionHeader
+import com.mikepenz.materialdrawer.AccountHeader
+import com.mikepenz.materialdrawer.Drawer
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import dagger.android.AndroidInjection
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
@@ -22,10 +30,14 @@ import javax.inject.Inject
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.basket_activity.*
+import kotlinx.android.synthetic.main.orplist_activity.*
 
 
 class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    private lateinit var result: Drawer
+    private lateinit var headerResult: AccountHeader
+    private lateinit var headerProfil: ProfileDrawerItem
 
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -75,6 +87,58 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
         viewPager = findViewById(R.id.viewPager)
         viewPager.setAdapter(mPagerAdapter)
 
+        //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
+        result = drawer {
+
+            toolbar = this@OrpListKtActivity.toolbar
+            hasStableIds = true
+            savedInstance = savedInstanceState
+            showOnFirstLaunch = false
+
+            headerResult = accountHeader {
+                background = R.drawable.pozadie
+                savedInstance = savedInstanceState
+                translucentStatusBar = true
+
+            }
+
+            sectionHeader(getString(R.string.orpekasa)) {
+                divider = false
+            }
+
+            divider {}
+            primaryItem(getString(R.string.orpdocs)) {
+
+                onClick { _ ->
+                    navigateToDoc()
+                    false
+                }
+
+            }
+
+            divider {}
+            primaryItem(getString(R.string.orprequests)) {
+
+                onClick { _ ->
+                    navigateToRequests()
+                    false
+                }
+
+            }
+
+            divider {}
+            primaryItem(getString(R.string.orpsettings)) {
+
+                onClick { _ ->
+                    navigateToSettings()
+                    false
+                }
+            }
+
+
+
+        }
+
     }
 
     /**
@@ -97,7 +161,7 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     scrollRange = appBarLayout.totalScrollRange
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.title = getString(R.string.mybasket)
+                    collapsingToolbar.title = getString(R.string.orpekasa)
                     isShow = true
                 } else if (isShow) {
                     collapsingToolbar.title = " "
@@ -127,9 +191,9 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_offer -> consume { navigateToOffer() }
-        R.id.clear_basket -> consume { showClearBasketDialog() }
-        R.id.action_pay -> consume { showOrderBasketDialog() }
+        R.id.action_doc -> consume { navigateToDoc() }
+        R.id.action_request -> consume { navigateToRequests() }
+        R.id.action_settings -> consume { navigateToSettings() }
 
         else -> super.onOptionsItemSelected(item)
     }
@@ -154,32 +218,16 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
 
 
-    fun showClearBasketDialog() {
-
-        alert("", getString(R.string.clear_basket)) {
-            yesButton { navigateToClearBasket() }
-            noButton {}
-        }.show()
-
-    }
-
-    fun navigateToClearBasket(){
-        showProgressBar()
+    fun navigateToDoc() {
 
 
     }
 
-    fun showOrderBasketDialog() {
-
-        alert("", getString(R.string.order_basket)) {
-            yesButton { navigateToOrderBasket() }
-            noButton {}
-        }.show()
+    fun navigateToRequests(){
 
     }
 
-    fun navigateToOrderBasket(){
-
+    fun navigateToSettings(){
 
     }
 
