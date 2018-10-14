@@ -1447,7 +1447,10 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mObservableRegisterReceiptEkassaResponseXml
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(envelop ->
-                        mDataModel.getEkassaRegisterReceiptXmlResponse(envelop));
+                        mDataModel.getEkassaRegisterReceiptXmlResponse(envelop))
+                        .flatMap(s -> Observable.just(s)
+                        .doOnNext(env -> updateEkassaResponseById(env))
+                );
     }
 
     public void clearObservableRegisterReceiptEkassaResponseXml() {
@@ -1722,6 +1725,21 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                     // handle error
                     Log.d("asave completed", "error");
                 }));
+
+    }
+
+    public void updateEkassaResponseById(final EkassaResponseEnvelope responseEnvelop) {
+
+
+            if (responseEnvelop.getBody().getGetRegisterReceiptResponse() != null) {
+
+                String dokid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetReceiptData().getGetId();
+                Log.d("Reg. receipt result", "dokid " + dokid);
+            } else {
+
+                String errid = responseEnvelop.getBody().getGetRegisterReceiptFault().getGetEkasaErrorCode();
+                Log.d("Reg. receipt result", "errid " + errid);
+            }
 
     }
 
