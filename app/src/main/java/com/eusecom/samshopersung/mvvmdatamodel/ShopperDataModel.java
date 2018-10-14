@@ -96,11 +96,13 @@ public class ShopperDataModel implements ShopperIDataModel {
     public ShopperDataModel(@NonNull final ShopperRetrofitService shopperRetrofitService,
                             @NonNull final ExampleInterceptor interceptor,
                             @NonNull MyDatabase roomDatabase,
-                            @NonNull final ShopperXmlRetrofitService shopperXmlRetrofitService) {
+                            @NonNull final ShopperXmlRetrofitService shopperXmlRetrofitService,
+                            @NonNull IShopperModelsFactory modelsFactory) {
         mShopperRetrofitService = shopperRetrofitService;
         mInterceptor = interceptor;
         mRoomDatabase = roomDatabase;
         mShopperXmlRetrofitService = shopperXmlRetrofitService;
+        mModelsFactory = modelsFactory;
     }
 
     //methods for ChooseCompanyActivity
@@ -600,6 +602,8 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         ekassareq = mModelsFactory.getEkassaRequestBackup();
         ekassareq.setRequestUuid(reqUuid);
+        ekassareq.setResponseUuid("");
+        Log.d("dsave requuid", reqUuid);
 
         mRoomDatabase.ekassaRequestBackupDao().insertEkassaRequestBackup(ekassareq);
     }

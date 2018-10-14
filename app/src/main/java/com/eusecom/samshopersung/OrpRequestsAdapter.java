@@ -28,7 +28,7 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
 
     @Override
     public OrpRequestsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_category,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_request,parent,false);
 
         return new OrpRequestsViewHolder(view);
     }
@@ -36,9 +36,12 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
     @Override
     public void onBindViewHolder(OrpRequestsViewHolder holder, int position) {
 
-        holder.invoice_name.setText(mList.get(position).getRequestUuid());
+        holder.idx.setText(mList.get(position).getId() + " ");
+        holder.reqUuid.setText("reqUuid " + mList.get(position).getRequestUuid());
+        holder.resUuid.setText("resUuid " + mList.get(position).getResponseUuid());
 
-        holder.docx.setText(mList.get(position).getId() + " ");
+        Picasso.with(holder.mContext).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(holder.reqimage);
+
 
         holder.setClickListener(new OrpRequestsAdapter.OrpRequestsViewHolder.ClickListener() {
             public void onClick(View v, int pos, boolean isLongClick) {
@@ -75,18 +78,20 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
 
     public static class OrpRequestsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
-        public TextView invoice_name;
-        public ImageView invoice_photo;
-        public TextView docx;
+        public TextView idx;
+        public TextView reqUuid;
+        public ImageView reqimage;
+        public TextView resUuid;
         private ClickListener clickListener;
         Context mContext;
 
         public OrpRequestsViewHolder(View itemView) {
             super(itemView);
 
-            invoice_name = (TextView) itemView.findViewById(R.id.invoice_name);
-            invoice_photo = (ImageView) itemView.findViewById(R.id.invoice_photo);
-            docx = (TextView) itemView.findViewById(R.id.docx);
+            idx = (TextView) itemView.findViewById(R.id.idx);
+            reqUuid = (TextView) itemView.findViewById(R.id.reqUuid);
+            reqimage = (ImageView) itemView.findViewById(R.id.reqimage);
+            resUuid = (TextView) itemView.findViewById(R.id.resUuid);
             mContext = itemView.getContext();
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

@@ -25,20 +25,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import javax.inject.Inject;
+
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Show List of all suppliers documents
- *
+ * <p>
  * template from DgAeaActivity.java
- *
  */
 
-public class  OrderListActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+public class OrderListActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
@@ -49,7 +53,11 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
     @Inject
     SharedPreferences mSharedPreferences;
 
-    int saltype  = 0;
+    @Inject
+    ShopperIMvvmViewModel mViewModel;
+
+    int saltype = 0;
+    private CompositeDisposable mDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +72,7 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
         Bundle extras = i.getExtras();
         saltype = extras.getInt("saltype");
 
-        if( saltype == 0 ){
+        if (saltype == 0) {
 
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -93,7 +101,7 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
                 }
             };
 
-        }else{
+        } else {
 
             // Create the adapter that will return a fragment for each section
             mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -130,15 +138,18 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
 
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageScrollStateChanged(int state) {}
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             public void onPageSelected(int position) {
                 // Check if this is the page you want.
-                if(position == 0){
+                if (position == 0) {
 
                 }
-                if(position == 1){
+                if (position == 1) {
 
                 }
 
@@ -152,12 +163,16 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
         String serverx = "From act " + mSharedPreferences.getString("servername", "");
         //Toast.makeText(this, serverx, Toast.LENGTH_SHORT).show();
 
+        mDisposable = new CompositeDisposable();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(v -> {
 
-            Intent is = new Intent(getApplicationContext(), OfferKtActivity.class);
-            startActivity(is);
-            finish();
+                    Intent is = new Intent(getApplicationContext(), OfferKtActivity.class);
+                    startActivity(is);
+                    finish();
+
+                    //navigateToUpdateRoomItem("b05336a4-88b2-46e4-ad45-0f28jcf3668a");
 
                 }
         );
@@ -168,8 +183,9 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mViewPager=null;
-        mPagerAdapter=null;
+        mViewPager = null;
+        mPagerAdapter = null;
+        mDisposable.clear();
 
     }
 
@@ -178,5 +194,28 @@ public class  OrderListActivity extends AppCompatActivity implements HasSupportF
         return fragmentDispatchingAndroidInjector;
     }
 
+    public void navigateToUpdateRoomItem(final String reqUuid) {
+
+        Log.d("asave requuid", reqUuid);
+        mDisposable.add(mViewModel.updateEkassaReqName(reqUuid)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(() -> {
+                    // handle error
+                    Log.d("asave completed", "complet");
+                })
+                .doOnError(throwable -> {
+                    // handle completion
+                    Log.d("asave completed", "Error Throwable " + throwable.getMessage());
+                })
+                .subscribe(() -> {
+                    // handle completion
+                    Log.d("asave completed", "complet");
+                }, throwable -> {
+                    // handle error
+                    Log.d("asave completed", "error");
+                }));
+
+    }
 
 }

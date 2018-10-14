@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.eusecom.samshopersung.ShopperIMvvmViewModel;
 import com.eusecom.samshopersung.ShopperMvvmViewModel;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperDataModel;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
@@ -26,9 +27,10 @@ public class OrderListActivityModule {
     public ShopperIDataModel providesShopperIDataModel(ShopperRetrofitService shopperretrofitservice,
                                                        ExampleInterceptor interceptor,
                                                        @NonNull MyDatabase roomDatabase,
-                                                       ShopperXmlRetrofitService shopperxmlretrofitservice) {
+                                                       ShopperXmlRetrofitService shopperxmlretrofitservice,
+                                                       IShopperModelsFactory modelsFactory) {
         return new ShopperDataModel(shopperretrofitservice
-                , interceptor, roomDatabase, shopperxmlretrofitservice);
+                , interceptor, roomDatabase, shopperxmlretrofitservice, modelsFactory);
     }
 
 

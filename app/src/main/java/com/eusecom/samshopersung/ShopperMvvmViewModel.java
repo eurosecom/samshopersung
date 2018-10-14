@@ -38,12 +38,13 @@ import java.util.Map;
 import java.util.Random;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * View model for the CompaniesMvvmActivity.
@@ -66,8 +67,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     PaymentStrategy mEkassaStrategy;
 
-    @NonNull
-    private CompositeSubscription mSubscription;
     @NonNull
     private ConnectivityManager mConnectivityManager;
 
@@ -1424,7 +1423,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             mEkassaStrategy.setException("false");
             mEkassaStrategy.setRequestDate(daterequest);
             mEkassaStrategy.setSendingCount("1");
-            mEkassaStrategy.setUuid(getEkassaUuid());
+            String uuid = getEkassaUuid();
+            mEkassaStrategy.setUuid(uuid);
             mEkassaStrategy.setPkp(getEkassaPkp(getEkassaPkpString("2004567892", "99920045678900002", order.getDok(), daterequest, order.getDok())));
             mEkassaStrategy.setOkp(getEkassaOkp());
             mEkassaStrategy.setDic("2004567892");
@@ -1432,6 +1432,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             mEkassaStrategy.setOrpid("99920045678900002");
 
             EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(mEkassaStrategy);
+            updateEkassaReqById(uuid);
             mObservableRegisterReceiptEkassaResponseXml.onNext(requestEnvelop);
         }
     }
@@ -1442,6 +1443,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     @NonNull
     public Observable<EkassaResponseEnvelope> getObservableRegisterReceiptEkassaResponseXml() {
 
+        //andrejko
         return mObservableRegisterReceiptEkassaResponseXml
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(envelop ->
@@ -1679,6 +1681,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
 
     public Completable updateEkassaReqName(final String reqUuid) {
+        Log.d("msave2 requuid", reqUuid);
         return Completable.fromAction(() -> {
 
             mDataModel.insertOrUpdateEkassaReqData(reqUuid);
@@ -1690,6 +1693,36 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
             mDataModel.deleteRxEkassaReqByIdData(reqId);
         });
+    }
+
+    private CompositeDisposable myDisposable;
+
+    public void updateEkassaReqById(final String reqUuid) {
+
+        myDisposable = new CompositeDisposable();
+
+        Log.d("msave requuid", reqUuid);
+        myDisposable.add(updateEkassaReqName(reqUuid)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(() -> {
+                    // handle error
+                    Log.d("asave completed", "complet");
+                    myDisposable.clear();
+                })
+                .doOnError(throwable -> {
+                    // handle completion
+                    Log.d("asave completed", "Error Throwable " + throwable.getMessage());
+                    myDisposable.clear();
+                })
+                .subscribe(() -> {
+                    // handle completion
+                    Log.d("asave completed", "complet");
+                }, throwable -> {
+                    // handle error
+                    Log.d("asave completed", "error");
+                }));
+
     }
 
 

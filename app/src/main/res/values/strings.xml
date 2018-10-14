@@ -369,6 +369,7 @@
     <string name="orprequests">eCashbox requests</string>
     <string name="orploc">ORP RegisterLocationRequest</string>
     <string name="orpdelreq">ORP delete request</string>
+    <string name="id">id</string>
 
 
 
