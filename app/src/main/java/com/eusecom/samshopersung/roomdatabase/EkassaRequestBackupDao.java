@@ -13,7 +13,7 @@ import io.reactivex.Flowable;
 @Dao
 public interface EkassaRequestBackupDao {
 
-    @Query("SELECT * FROM ekassarequestbackup ORDER BY requestUuid DESC")
+    @Query("SELECT * FROM ekassarequestbackup ORDER BY id DESC")
     Flowable<List<EkassaRequestBackup>> getRxAllRequest();
 
     @Query("SELECT * FROM ekassarequestbackup")

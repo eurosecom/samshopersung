@@ -1425,14 +1425,16 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             mEkassaStrategy.setSendingCount("1");
             String uuid = getEkassaUuid();
             mEkassaStrategy.setUuid(uuid);
-            mEkassaStrategy.setPkp(getEkassaPkp(getEkassaPkpString("2004567892", "99920045678900002", order.getDok(), daterequest, order.getDok())));
+            String pkpstring = getEkassaPkpString("2004567892", "99920045678900002", order.getDok()
+                    , daterequest, order.getHod());
+            mEkassaStrategy.setPkp(getEkassaPkp(pkpstring));
             mEkassaStrategy.setOkp(getEkassaOkp());
             mEkassaStrategy.setDic("2004567892");
             mEkassaStrategy.setIcdph("SK2004567892");
             mEkassaStrategy.setOrpid("99920045678900002");
 
             EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(mEkassaStrategy);
-            updateEkassaReqById(uuid);
+            updateEkassaReqById(uuid, daterequest, "1", order.getDok(), pkpstring);
             mObservableRegisterReceiptEkassaResponseXml.onNext(requestEnvelop);
         }
     }
@@ -1683,11 +1685,12 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
 
-    public Completable updateEkassaReqName(final String reqUuid) {
-        Log.d("msave2 requuid", reqUuid);
+    public Completable updateEkassaReqName(final String uuid, final String daterequest, final String count
+            , final String receipt, final String pkpstring) {
+        Log.d("msave2 requuid", uuid);
         return Completable.fromAction(() -> {
 
-            mDataModel.insertOrUpdateEkassaReqData(reqUuid);
+            mDataModel.insertOrUpdateEkassaReqData(uuid, daterequest, count, receipt, pkpstring);
         });
     }
 
@@ -1700,12 +1703,14 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     private CompositeDisposable myDisposable;
 
-    public void updateEkassaReqById(final String reqUuid) {
+
+    public void updateEkassaReqById(final String uuid, final String daterequest, final String count
+            , final String receipt, final String pkpstring) {
 
         myDisposable = new CompositeDisposable();
 
-        Log.d("msave requuid", reqUuid);
-        myDisposable.add(updateEkassaReqName(reqUuid)
+        Log.d("msave requuid", uuid);
+        myDisposable.add(updateEkassaReqName(uuid, daterequest, count, receipt, pkpstring)
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(() -> {
@@ -1735,6 +1740,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
                 String dokid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetReceiptData().getGetId();
                 Log.d("Reg. receipt result", "dokid " + dokid);
+                //updateEkassaReqById(uuid, daterequest, count, receipt, pkpstring);
             } else {
 
                 String errid = responseEnvelop.getBody().getGetRegisterReceiptFault().getGetEkasaErrorCode();

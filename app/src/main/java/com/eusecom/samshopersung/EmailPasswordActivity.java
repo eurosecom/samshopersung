@@ -373,10 +373,10 @@ public class EmailPasswordActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.email_create_account_button:
-                createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                createAccount(mEmailField.getText().toString().trim(), mPasswordField.getText().toString().trim());
                 break;
             case R.id.email_sign_in_button:
-                signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                signIn(mEmailField.getText().toString().trim(), mPasswordField.getText().toString().trim());
                 break;
             case R.id.sign_out_button:
                 signOut();

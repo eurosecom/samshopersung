@@ -197,7 +197,7 @@ public class OrderListActivity extends AppCompatActivity implements HasSupportFr
     public void navigateToUpdateRoomItem(final String reqUuid) {
 
         Log.d("asave requuid", reqUuid);
-        mDisposable.add(mViewModel.updateEkassaReqName(reqUuid)
+        mDisposable.add(mViewModel.updateEkassaReqName(reqUuid, "", "", "", "" )
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(() -> {

@@ -156,7 +156,7 @@ class OrpRequestsActivity : AppCompatActivity() {
     fun navigateToUpdateRoomItem() {
 
         showProgressBar()
-        mDisposable.add(mViewModel.updateEkassaReqName("b05226a4-88b2-46e4-ad45-0f28jcf3668a")
+        mDisposable.add(mViewModel.updateEkassaReqName("b05226a4-88b2-46e4-ad45-0f28jcf3668a", "", "", "", "" )
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })

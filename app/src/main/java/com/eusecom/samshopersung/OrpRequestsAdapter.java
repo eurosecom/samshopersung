@@ -38,10 +38,17 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
 
         holder.idx.setText(mList.get(position).getId() + " ");
         holder.reqUuid.setText("reqUuid " + mList.get(position).getRequestUuid());
+        holder.reqDate.setText("reqDate " + mList.get(position).getRequestDate());
+        holder.reqCount.setText("reqCount " + mList.get(position).getSendingCount());
+        holder.reqReceipt.setText("reqReceipt " + mList.get(position).getReceiptNumber());
+        holder.reqStr.setText("reqString " + mList.get(position).getRequestStr());
         holder.resUuid.setText("resUuid " + mList.get(position).getResponseUuid());
 
         Picasso.with(holder.mContext).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(holder.reqimage);
 
+        if(mList.get(position).getResponseUuid().equals("")){
+            Picasso.with(holder.mContext).load(R.drawable.ic_call_made_red_24dp).resize(120, 120).into(holder.reqimage);
+        }
 
         holder.setClickListener(new OrpRequestsAdapter.OrpRequestsViewHolder.ClickListener() {
             public void onClick(View v, int pos, boolean isLongClick) {
@@ -80,6 +87,10 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
 
         public TextView idx;
         public TextView reqUuid;
+        public TextView reqDate;
+        public TextView reqCount;
+        public TextView reqReceipt;
+        public TextView reqStr;
         public ImageView reqimage;
         public TextView resUuid;
         private ClickListener clickListener;
@@ -90,6 +101,10 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
 
             idx = (TextView) itemView.findViewById(R.id.idx);
             reqUuid = (TextView) itemView.findViewById(R.id.reqUuid);
+            reqDate = (TextView) itemView.findViewById(R.id.reqDate);
+            reqCount = (TextView) itemView.findViewById(R.id.reqCount);
+            reqReceipt = (TextView) itemView.findViewById(R.id.reqReceipt);
+            reqStr = (TextView) itemView.findViewById(R.id.reqStr);
             reqimage = (ImageView) itemView.findViewById(R.id.reqimage);
             resUuid = (TextView) itemView.findViewById(R.id.resUuid);
             mContext = itemView.getContext();

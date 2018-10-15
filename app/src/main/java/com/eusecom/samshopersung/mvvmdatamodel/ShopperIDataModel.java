@@ -140,9 +140,13 @@ public interface ShopperIDataModel {
     public Flowable<List<EkassaRequestBackup>> loadEkasaRequestsData();
 
     @NonNull
-    public void insertOrUpdateEkassaReqData(String reqUuid);
+    public void insertOrUpdateEkassaReqData(String uuid, String daterequest, String count
+            , String receipt, String pkpstring);
 
     @NonNull
     public void deleteRxEkassaReqByIdData(int reqId);
+
+    @NonNull
+    public void insertOrUpdateEkassaResponseData(String reqUuid, String resUuid, String procDate, String recid);
 
 }

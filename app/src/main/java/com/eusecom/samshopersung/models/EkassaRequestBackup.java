@@ -19,7 +19,10 @@ public class EkassaRequestBackup {
     private String requestUuid;
 
     @ColumnInfo(name = "requestDate")
-    private String requesDate;
+    private String requestDate;
+
+    @ColumnInfo(name = "requestStr")
+    private String requestStr;
 
     @ColumnInfo(name = "SendingCount")
     private int SendingCount;
@@ -57,12 +60,12 @@ public class EkassaRequestBackup {
         this.requestUuid = requestUuid;
     }
 
-    public String getRequesDate() {
-        return requesDate;
+    public String getRequestDate() {
+        return requestDate;
     }
 
-    public void setRequesDate(String requesDate) {
-        this.requesDate = requesDate;
+    public void setRequestDate(String requestDate) {
+        this.requestDate = requestDate;
     }
 
     public int getSendingCount() {
@@ -103,5 +106,13 @@ public class EkassaRequestBackup {
 
     public void setReceiptDataId(String receiptDataId) {
         this.receiptDataId = receiptDataId;
+    }
+
+    public String getRequestStr() {
+        return requestStr;
+    }
+
+    public void setRequestStr(String requestStr) {
+        this.requestStr = requestStr;
     }
 }

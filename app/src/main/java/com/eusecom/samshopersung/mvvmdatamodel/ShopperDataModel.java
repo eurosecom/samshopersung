@@ -598,11 +598,30 @@ public class ShopperDataModel implements ShopperIDataModel {
     private EkassaRequestBackup ekassareq;
 
     @Override
-    public void insertOrUpdateEkassaReqData(String reqUuid) {
+    public void insertOrUpdateEkassaReqData(String uuid, String daterequest, String count
+            , String receipt, String pkpstring) {
+
+        ekassareq = mModelsFactory.getEkassaRequestBackup();
+        ekassareq.setRequestUuid(uuid);
+        ekassareq.setRequestDate(daterequest);
+        ekassareq.setSendingCount(Integer.valueOf(count));
+        ekassareq.setReceiptNumber(receipt);
+        ekassareq.setRequestStr(pkpstring);
+        ekassareq.setResponseUuid("");
+        Log.d("dsave requuid", uuid);
+
+        mRoomDatabase.ekassaRequestBackupDao().insertEkassaRequestBackup(ekassareq);
+    }
+
+    @Override
+    public void insertOrUpdateEkassaResponseData(String reqUuid, String resUuid, String procDate
+            , String recid) {
 
         ekassareq = mModelsFactory.getEkassaRequestBackup();
         ekassareq.setRequestUuid(reqUuid);
-        ekassareq.setResponseUuid("");
+        ekassareq.setResponseUuid(resUuid);
+        ekassareq.setProcessDate(procDate);
+        ekassareq.setReceiptDataId(recid);
         Log.d("dsave requuid", reqUuid);
 
         mRoomDatabase.ekassaRequestBackupDao().insertEkassaRequestBackup(ekassareq);
