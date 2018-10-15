@@ -1738,15 +1738,55 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
             if (responseEnvelop.getBody().getGetRegisterReceiptResponse() != null) {
 
-                String dokid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetReceiptData().getGetId();
-                Log.d("Reg. receipt result", "dokid " + dokid);
-                //updateEkassaReqById(uuid, daterequest, count, receipt, pkpstring);
+
+                String reqUuid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetRequestUuid();
+                String resUuid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetUuid();
+                String procDate = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetProcessDate();
+                String recid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetReceiptData().getGetId();
+                Log.d("Reg. receipt result", "recid " + recid);
+                updateEkassaResponseById(reqUuid, resUuid, procDate, recid);
             } else {
 
                 String errid = responseEnvelop.getBody().getGetRegisterReceiptFault().getGetEkasaErrorCode();
                 Log.d("Reg. receipt result", "errid " + errid);
             }
 
+    }
+
+    public void updateEkassaResponseById(String reqUuid, String resUuid, String procDate, String recid) {
+
+        myDisposable = new CompositeDisposable();
+
+        Log.d("msave requuid", reqUuid);
+        myDisposable.add(updateEkassaResponseName(reqUuid, resUuid, procDate, recid)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(() -> {
+                    // handle error
+                    Log.d("asave completed", "complet");
+                    myDisposable.clear();
+                })
+                .doOnError(throwable -> {
+                    // handle completion
+                    Log.d("asave completed", "Error Throwable " + throwable.getMessage());
+                    myDisposable.clear();
+                })
+                .subscribe(() -> {
+                    // handle completion
+                    Log.d("asave completed", "complet");
+                }, throwable -> {
+                    // handle error
+                    Log.d("asave completed", "error");
+                }));
+
+    }
+
+    public Completable updateEkassaResponseName(String reqUuid, String resUuid, String procDate, String recid) {
+        Log.d("msave2 requuid", reqUuid);
+        return Completable.fromAction(() -> {
+
+            mDataModel.insertOrUpdateEkassaResponseData(reqUuid, resUuid, procDate, recid);
+        });
     }
 
 

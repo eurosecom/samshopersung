@@ -43,6 +43,7 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
         holder.reqReceipt.setText("reqReceipt " + mList.get(position).getReceiptNumber());
         holder.reqStr.setText("reqString " + mList.get(position).getRequestStr());
         holder.resUuid.setText("resUuid " + mList.get(position).getResponseUuid());
+        holder.resId.setText("resId " + mList.get(position).getReceiptDataId());
 
         Picasso.with(holder.mContext).load(R.drawable.ic_call_made_black_24dp).resize(120, 120).into(holder.reqimage);
 
@@ -93,6 +94,7 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
         public TextView reqStr;
         public ImageView reqimage;
         public TextView resUuid;
+        public TextView resId;
         private ClickListener clickListener;
         Context mContext;
 
@@ -107,6 +109,7 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
             reqStr = (TextView) itemView.findViewById(R.id.reqStr);
             reqimage = (ImageView) itemView.findViewById(R.id.reqimage);
             resUuid = (TextView) itemView.findViewById(R.id.resUuid);
+            resId = (TextView) itemView.findViewById(R.id.resId);
             mContext = itemView.getContext();
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

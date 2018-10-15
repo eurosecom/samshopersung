@@ -608,6 +608,7 @@ public class ShopperDataModel implements ShopperIDataModel {
         ekassareq.setReceiptNumber(receipt);
         ekassareq.setRequestStr(pkpstring);
         ekassareq.setResponseUuid("");
+        ekassareq.setReceiptDataId("");
         Log.d("dsave requuid", uuid);
 
         mRoomDatabase.ekassaRequestBackupDao().insertEkassaRequestBackup(ekassareq);
@@ -623,8 +624,14 @@ public class ShopperDataModel implements ShopperIDataModel {
         ekassareq.setProcessDate(procDate);
         ekassareq.setReceiptDataId(recid);
         Log.d("dsave requuid", reqUuid);
+        Log.d("dsave resuuid", resUuid);
+        Log.d("dsave procDate", procDate);
+        Log.d("dsave recid", recid);
 
-        mRoomDatabase.ekassaRequestBackupDao().insertEkassaRequestBackup(ekassareq);
+
+        //insert changes all column, i want to change onlz response i have to use update query
+        //mRoomDatabase.ekassaRequestBackupDao().insertEkassaRequestBackup(ekassareq);
+        mRoomDatabase.ekassaRequestBackupDao().updateEkassaRequestBackup(reqUuid, resUuid, procDate, recid);
     }
 
     @Override

@@ -34,11 +34,11 @@ public interface EkassaRequestBackupDao {
     @Query("DELETE FROM ekassarequestbackup WHERE id = :id")
     void deleteByUid(int id);
 
-    /**
-     * Insert a ekassarequestbackup in the database. If the ekassarequestbackup already exists, replace it.
-     * @param ekassarequestbackup the ekassarequestbackup to be inserted.
-     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertEkassaRequestBackup(EkassaRequestBackup ekassarequestbackup);
+
+    @Query("UPDATE ekassarequestbackup SET responseUuid = :resUuid, " +
+            " processDate = :procDate, receiptDataId = :recid WHERE requestUuid = :reqUuid ")
+    void updateEkassaRequestBackup(String reqUuid, String resUuid, String procDate, String recid);
 
 }
