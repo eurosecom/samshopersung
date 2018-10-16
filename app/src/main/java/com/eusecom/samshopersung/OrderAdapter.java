@@ -57,7 +57,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
   @Override
   public void onBindViewHolder(OrderViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).getKto() + " - " + mListabsserver.get(position).getNai() + " ...");
+      holder.invoice_name.setText(holder.mContext.getResources().getString(R.string.idc) + " "
+              + mListabsserver.get(position).getIco()  + " " + mListabsserver.get(position).getKto()
+              + " - " + mListabsserver.get(position).getNai() + " ...");
       Picasso.with(holder.mContext).load(R.drawable.baseline_list_black_24dp).resize(120, 120).into(holder.invoice_photo);
 
       holder.docx.setText(mListabsserver.get(position).getDok());

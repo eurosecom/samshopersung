@@ -370,7 +370,8 @@
     <string name="orploc">ORP RegisterLocationRequest</string>
     <string name="orpdelreq">ORP delete request</string>
     <string name="id">id</string>
-
+    <string name="idc">idc</string>
+    <string name="docregistered">Document is already registered in eCashbox</string>
 
 
 </resources>

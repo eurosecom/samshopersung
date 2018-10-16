@@ -19,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import org.jetbrains.anko.noButton
+import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.yesButton
@@ -306,10 +307,17 @@ class OrpFragment : BaseKtFragment() {
 
     fun showGetEkassaDialog(order: Invoice) {
 
-        alert("", getString(R.string.getekassafrom) + " " + order.dok) {
-            yesButton { navigateToGetEkassa(order) }
-            noButton {}
-        }.show()
+        if (order.ksy == "0") {
+            alert("", getString(R.string.getekassafrom) + " " + order.dok) {
+                yesButton { navigateToGetEkassa(order) }
+                noButton {}
+            }.show()
+        }else{
+            alert("", order.dok + " " + getString(R.string.docregistered)) {
+                okButton {  }
+            }.show()
+        }
+
 
     }
 

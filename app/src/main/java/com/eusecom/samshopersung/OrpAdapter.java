@@ -57,7 +57,7 @@ public class OrpAdapter extends RecyclerView.Adapter<OrpAdapter.OrpViewHolder> {
   @Override
   public void onBindViewHolder(OrpViewHolder holder, int position) {
 
-      holder.invoice_name.setText(mListabsserver.get(position).getIco() + " - " + mListabsserver.get(position).getNai() + " ...");
+      holder.invoice_name.setText(holder.mContext.getResources().getString(R.string.idc) + " " + mListabsserver.get(position).getIco() + " - " + mListabsserver.get(position).getNai() + " ...");
 
       holder.docx.setText(mListabsserver.get(position).getDok());
 
