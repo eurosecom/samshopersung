@@ -1875,4 +1875,56 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end set ekasa doc paid
 
+    //delete EkasaDoc
+    public void emitDeleteEkasaDoc(Invoice invx) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+            mObservableDelEkasaDoc.onNext(invx);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableDelEkasaDoc = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Invoice>> getObservableDeleteEkasaDoc() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("odbuce", "");
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
+
+        return mObservableDelEkasaDoc
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(invx ->
+                        mDataModel.getInvoicesFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "6", dodx, umex, invx.getDok(), ustp));
+    }
+
+    public void clearObservableDeleteEkasaDoc() {
+
+        mObservableDelEkasaDoc = BehaviorSubject.create();
+
+    }
+    //end delete EkasaDoc
+
 }

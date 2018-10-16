@@ -304,5 +304,14 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearObservableEkasaDocPaid();
 
+    @NonNull
+    public void emitDeleteEkasaDoc(Invoice invx);
+
+    @NonNull
+    public Observable<List<Invoice>> getObservableDeleteEkasaDoc();
+
+    @NonNull
+    public void clearObservableDeleteEkasaDoc();
+
 
 }

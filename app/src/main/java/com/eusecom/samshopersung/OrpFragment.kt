@@ -141,7 +141,7 @@ class OrpFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setUriPdf(it) })
 
-        mSubscription?.add(mViewModel.getObservableDeleteInvoice()
+        mSubscription?.add(mViewModel.getObservableDeleteEkasaDoc()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -301,7 +301,7 @@ class OrpFragment : BaseKtFragment() {
 
     fun navigateToDeleteInvoice(order: Invoice){
         showProgressBar()
-        mViewModel.emitDeleteInvoice(order);
+        mViewModel.emitDeleteEkasaDoc(order);
 
     }
 
