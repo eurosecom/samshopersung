@@ -50,6 +50,9 @@ public class OrpRequestsAdapter extends RecyclerView.Adapter<OrpRequestsAdapter.
         if(mList.get(position).getResponseUuid().equals("")){
             Picasso.with(holder.mContext).load(R.drawable.ic_call_made_red_24dp).resize(120, 120).into(holder.reqimage);
         }
+        if(mList.get(position).getResponseUuid().equals("Error")){
+            Picasso.with(holder.mContext).load(R.drawable.baseline_highlight_off_black_18dp).resize(120, 120).into(holder.reqimage);
+        }
 
         holder.setClickListener(new OrpRequestsAdapter.OrpRequestsViewHolder.ClickListener() {
             public void onClick(View v, int pos, boolean isLongClick) {

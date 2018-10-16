@@ -149,4 +149,7 @@ public interface ShopperIDataModel {
     @NonNull
     public void insertOrUpdateEkassaResponseData(String reqUuid, String resUuid, String procDate, String recid);
 
+    @NonNull
+    public void insertOrUpdateMaxIdEkassaResponseData(String resUuid, String procDate, String recid);
+
 }

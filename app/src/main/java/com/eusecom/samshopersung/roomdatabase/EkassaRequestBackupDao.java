@@ -41,4 +41,8 @@ public interface EkassaRequestBackupDao {
             " processDate = :procDate, receiptDataId = :recid WHERE requestUuid = :reqUuid ")
     void updateEkassaRequestBackup(String reqUuid, String resUuid, String procDate, String recid);
 
+    @Query("UPDATE ekassarequestbackup SET responseUuid = :resUuid, " +
+            " processDate = :procDate, receiptDataId = :recid WHERE responseUuid = '' AND id = (SELECT max(id) FROM ekassarequestbackup) ")
+    void updateMaxIdEkassaRequestBackup(String resUuid, String procDate, String recid);
+
 }

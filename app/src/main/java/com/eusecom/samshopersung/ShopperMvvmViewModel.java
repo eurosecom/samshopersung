@@ -1703,7 +1703,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     private CompositeDisposable myDisposable;
 
-
     public void updateEkassaReqById(final String uuid, final String daterequest, final String count
             , final String receipt, final String pkpstring) {
 
@@ -1749,6 +1748,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
                 String errid = responseEnvelop.getBody().getGetRegisterReceiptFault().getGetEkasaErrorCode();
                 Log.d("Reg. receipt result", "errid " + errid);
+                updateMaxIdEkassaResponse("Error", "", errid);
             }
 
     }
@@ -1789,5 +1789,90 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         });
     }
 
+    public void updateMaxIdEkassaResponse(String resUuid, String procDate, String recid) {
+
+        myDisposable = new CompositeDisposable();
+
+        myDisposable.add(updateEkassaResponseMaxId(resUuid, procDate, recid)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(() -> {
+                    // handle error
+                    Log.d("asave completed", "complet");
+                    myDisposable.clear();
+                })
+                .doOnError(throwable -> {
+                    // handle completion
+                    Log.d("asave completed", "Error Throwable " + throwable.getMessage());
+                    myDisposable.clear();
+                })
+                .subscribe(() -> {
+                    // handle completion
+                    Log.d("asave completed", "complet");
+                }, throwable -> {
+                    // handle error
+                    Log.d("asave completed", "error");
+                }));
+
+    }
+
+    public Completable updateEkassaResponseMaxId(String resUuid, String procDate, String recid) {
+        return Completable.fromAction(() -> {
+
+            mDataModel.insertOrUpdateMaxIdEkassaResponseData(resUuid, procDate, recid);
+        });
+    }
+
+    //set ekasa doc paid
+    public void emitEkasaDocPaid(String docx) {
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+            mObservableEkasaDocPaid.onNext(docx);
+        }
+    }
+
+    @NonNull
+    private BehaviorSubject<String> mObservableEkasaDocPaid = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<List<Invoice>> getObservableEkasaDocPaid() {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus =  ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        String encrypted2=encrypted;
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = mSharedPreferences.getString("odbuce", "");
+        String umex = mSharedPreferences.getString("ume", "");
+        String serverx = mSharedPreferences.getString("servername", "");
+        String ustp = mSharedPreferences.getString("ustype", "");
+
+        return mObservableEkasaDocPaid
+                .observeOn(mSchedulerProvider.computation())
+                .flatMap(docx ->
+                        mDataModel.getInvoicesFromMysqlServer(serverx, encrypted2, ds, firx, rokx, "5", dodx, umex, docx, ustp));
+    }
+
+    public void clearObservableEkasaDocPaid() {
+
+        mObservableEkasaDocPaid = BehaviorSubject.create();
+
+    }
+    //end set ekasa doc paid
 
 }

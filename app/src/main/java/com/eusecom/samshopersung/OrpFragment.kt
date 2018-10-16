@@ -48,6 +48,8 @@ class OrpFragment : BaseKtFragment() {
     @Inject
     lateinit var  _rxBus: RxBus
 
+    private var paydocx = "0";
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -160,6 +162,17 @@ class OrpFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setEkassaRegisterReceiptResponseXml(it) })
 
+        mSubscription?.add(mViewModel.getObservableEkasaDocPaid()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrpFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerInvoices(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
@@ -167,6 +180,7 @@ class OrpFragment : BaseKtFragment() {
 
         mViewModel.clearObservableDeleteInvoice()
         mViewModel.clearObservableRegisterReceiptEkassaResponseXml()
+        mViewModel.clearObservableEkasaDocPaid()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -185,6 +199,7 @@ class OrpFragment : BaseKtFragment() {
                 val processdate = responseEnvelop.body.getRegisterReceiptResponse.getHeader.getProcessDate.toString()
                 val dokid = responseEnvelop.body.getRegisterReceiptResponse.getReceiptData.getId.toString()
                 Log.d("Reg. receipt result", processdate + " " + dokid)
+                mViewModel.emitEkasaDocPaid(paydocx);
                 Toast.makeText(activity, processdate + " " + dokid, Toast.LENGTH_LONG).show()
             }else{
                 val errcode = responseEnvelop.body.getRegisterReceiptFault.getEkasaErrorCode
@@ -301,7 +316,7 @@ class OrpFragment : BaseKtFragment() {
     fun navigateToGetEkassa(order: Invoice){
 
         showProgressBar()
-        //mViewModel.emitRegisterReceiptEkassa(order)
+        paydocx=order.dok
         mViewModel.emitRegisterReceiptEkassaXml(order)
 
     }

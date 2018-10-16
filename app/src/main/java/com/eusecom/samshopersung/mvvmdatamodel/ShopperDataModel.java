@@ -635,6 +635,14 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
 
     @Override
+    public void insertOrUpdateMaxIdEkassaResponseData(String resUuid, String procDate
+            , String recid) {
+
+
+        mRoomDatabase.ekassaRequestBackupDao().updateMaxIdEkassaRequestBackup(resUuid, procDate, recid);
+    }
+
+    @Override
     public void deleteRxEkassaReqByIdData(int reqId) {
 
         mRoomDatabase.ekassaRequestBackupDao().deleteByUid(reqId);

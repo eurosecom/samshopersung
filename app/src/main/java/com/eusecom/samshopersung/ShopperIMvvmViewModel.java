@@ -295,5 +295,14 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public Completable deleteRxEkassaReqById(final int reqId);
 
+    @NonNull
+    public void emitEkasaDocPaid(String docx);
+
+    @NonNull
+    public Observable<List<Invoice>> getObservableEkasaDocPaid();
+
+    @NonNull
+    public void clearObservableEkasaDocPaid();
+
 
 }
