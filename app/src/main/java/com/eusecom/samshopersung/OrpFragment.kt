@@ -179,7 +179,7 @@ class OrpFragment : BaseKtFragment() {
 
     private fun unBind() {
 
-        mViewModel.clearObservableDeleteInvoice()
+        mViewModel.clearObservableDeleteEkasaDoc()
         mViewModel.clearObservableRegisterReceiptEkassaResponseXml()
         mViewModel.clearObservableEkasaDocPaid()
         mSubscription?.unsubscribe()
