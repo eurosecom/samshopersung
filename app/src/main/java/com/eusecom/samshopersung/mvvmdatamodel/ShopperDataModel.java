@@ -2,8 +2,11 @@ package com.eusecom.samshopersung.mvvmdatamodel;
 
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -646,6 +649,25 @@ public class ShopperDataModel implements ShopperIDataModel {
     public void deleteRxEkassaReqByIdData(int reqId) {
 
         mRoomDatabase.ekassaRequestBackupDao().deleteByUid(reqId);
+
+    }
+
+    @NonNull
+    @Override
+    public Observable<Uri> getObservableUriEkasaPdf(Invoice invx, @NonNull final String firx
+            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
+            , String encrypted, @NonNull final String umex) {
+
+
+        Log.d("DocPdf dokx ", invx.getDok());
+        Log.d("DocPdf drhx ", invx.getDrh());
+        Log.d("DocPdf ucex ", invx.getUce());
+        Log.d("DocPdf icox ", invx.getIco());
+        System.out.println("DocPdf userhash " + encrypted);
+
+        File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
+        Uri external = Uri.fromFile(externalFile);
+        return Observable.just(external);
 
     }
 

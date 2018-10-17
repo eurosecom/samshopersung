@@ -1971,7 +1971,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mObservableEkasaPDF
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx ->
-                        mDataModel.getObservableUriDocPdf(invx, firx, rokx, serverx, adresx, encrypted2, umex));
+                        mDataModel.getObservableUriEkasaPdf(invx, firx, rokx, serverx, adresx, encrypted2, umex));
     }
 
     public void clearObservableEkasaPDF() {

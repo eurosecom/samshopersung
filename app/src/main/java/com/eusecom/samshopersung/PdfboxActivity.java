@@ -115,11 +115,16 @@
 package com.eusecom.samshopersung;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -147,7 +152,6 @@ import com.tom_roush.pdfbox.text.PDFTextStripper;
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 
 import org.spongycastle.jce.provider.BouncyCastleProvider;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -181,6 +185,29 @@ public class PdfboxActivity extends Activity {
         return true;
     }
 
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_request) {
+
+            //Passing file:// URIs outside the package domain may leave the receiver with
+            // an unaccessible path. Therefore, attempts to pass a file:// URI trigger a FileUriExposedException.
+            // The recommended way to share the content of a private file is using the FileProvider.
+            File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
+            Uri external = Uri.fromFile(externalFile);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(external, "application/pdf");
+            startActivity(intent);
+            return true;
+
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * Initializes variables used for convenience
      */
@@ -193,6 +220,20 @@ public class PdfboxActivity extends Activity {
         tv = (TextView) findViewById(R.id.statusTextView);
     }
 
+    public void displayPdf(View v) {
+
+        File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
+        Uri external = FileProvider.getUriForFile(PdfboxActivity.this,
+                BuildConfig.APPLICATION_ID + ".provider",
+                externalFile);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(external, "application/pdf");
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+
+    }
     /**
      * Creates a new PDF from scratch and saves it to a file
      */

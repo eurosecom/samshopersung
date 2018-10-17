@@ -159,6 +159,9 @@ dependencies {
 
     compile group: 'commons-io', name: 'commons-io', version: '2.0.1'
 
+    //PdfBox
+    compile 'com.tom_roush:pdfbox-android:1.8.10.0'
+
 }
 
 //unitTesting

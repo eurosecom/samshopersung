@@ -215,8 +215,8 @@ class OrpFragment : BaseKtFragment() {
     private fun setUriPdf(uri: Uri) {
 
         mViewModel.clearObservableDocPDF()
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(uri, "application/pdf")
         startActivity(intent)
         //activity.finish()
 

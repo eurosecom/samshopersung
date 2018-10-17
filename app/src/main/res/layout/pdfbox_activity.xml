@@ -44,11 +44,20 @@
         android:layout_marginTop="10dp"
         android:onClick="stripText" />
 
+    <Button
+        android:id="@+id/displayPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="display Pdf"
+        android:layout_below="@+id/buttonStripText"
+        android:layout_marginTop="10dp"
+        android:onClick="displayPdf" />
+
     <TextView
         android:id="@+id/statusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonStripText"
+        android:layout_below="@+id/displayPdf"
         android:text="Hello World"
         android:background="#EEE"/>
 

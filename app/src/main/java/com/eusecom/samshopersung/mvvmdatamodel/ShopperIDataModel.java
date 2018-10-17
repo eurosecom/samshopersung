@@ -152,4 +152,9 @@ public interface ShopperIDataModel {
     @NonNull
     public void insertOrUpdateMaxIdEkassaResponseData(String resUuid, String procDate, String recid);
 
+    @NonNull
+    public Observable<Uri> getObservableUriEkasaPdf(Invoice invx, @NonNull final String firx
+            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
+            , String encrypted, @NonNull final String umex);
+
 }
