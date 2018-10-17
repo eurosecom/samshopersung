@@ -654,20 +654,16 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     @NonNull
     @Override
-    public Observable<Uri> getObservableUriEkasaPdf(Invoice invx, @NonNull final String firx
-            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
-            , String encrypted, @NonNull final String umex) {
+    public Observable<File> getObservableUriEkasaPdf(Invoice invx) {
 
 
         Log.d("DocPdf dokx ", invx.getDok());
         Log.d("DocPdf drhx ", invx.getDrh());
         Log.d("DocPdf ucex ", invx.getUce());
         Log.d("DocPdf icox ", invx.getIco());
-        System.out.println("DocPdf userhash " + encrypted);
 
         File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
-        Uri external = Uri.fromFile(externalFile);
-        return Observable.just(external);
+        return Observable.just(externalFile);
 
     }
 

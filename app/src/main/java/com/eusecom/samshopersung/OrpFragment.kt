@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -26,6 +27,7 @@ import org.jetbrains.anko.yesButton
 import rx.Observable
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -212,13 +214,17 @@ class OrpFragment : BaseKtFragment() {
 
     }
 
-    private fun setUriPdf(uri: Uri) {
+    private fun setUriPdf(file: File) {
 
-        mViewModel.clearObservableDocPDF()
+        mViewModel.clearObservableEkasaPDF()
+        val external = FileProvider.getUriForFile(activity,
+                BuildConfig.APPLICATION_ID + ".provider", file)
+
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(uri, "application/pdf")
+        intent.setDataAndType(external, "application/pdf")
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
         startActivity(intent)
-        //activity.finish()
 
     }
 

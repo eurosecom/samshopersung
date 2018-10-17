@@ -23,6 +23,8 @@ import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
+
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import io.reactivex.Flowable;
@@ -153,8 +155,6 @@ public interface ShopperIDataModel {
     public void insertOrUpdateMaxIdEkassaResponseData(String resUuid, String procDate, String recid);
 
     @NonNull
-    public Observable<Uri> getObservableUriEkasaPdf(Invoice invx, @NonNull final String firx
-            , @NonNull final String rokx, @NonNull final String serverx, @NonNull final String adresx
-            , String encrypted, @NonNull final String umex);
+    public Observable<File> getObservableUriEkasaPdf(Invoice invx);
 
 }

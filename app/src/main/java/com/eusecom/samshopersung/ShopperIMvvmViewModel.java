@@ -15,6 +15,7 @@ import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 
+import java.io.File;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -318,7 +319,7 @@ public interface ShopperIMvvmViewModel {
     public void emitEkasaPdf(Invoice order);
 
     @NonNull
-    public Observable<Uri> getObservableEkasaPdf();
+    public Observable<File> getObservableEkasaPdf();
 
     @NonNull
     public void clearObservableEkasaPDF();
