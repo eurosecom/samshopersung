@@ -130,7 +130,7 @@ class OrpFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerInvoices(it) })
 
-        mSubscription?.add(mViewModel.getObservableDocPdf()
+        mSubscription?.add(mViewModel.getObservableEkasaPdf()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -182,6 +182,7 @@ class OrpFragment : BaseKtFragment() {
         mViewModel.clearObservableDeleteEkasaDoc()
         mViewModel.clearObservableRegisterReceiptEkassaResponseXml()
         mViewModel.clearObservableEkasaDocPaid()
+        mViewModel.clearObservableEkasaPDF()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -271,7 +272,7 @@ class OrpFragment : BaseKtFragment() {
                     showGetEkassaDialog(invoice)
                 }
                 1 -> {
-                    navigateToGetPdf(invoice)
+                    navigateToGetEkasaPdf(invoice)
                 }
                 2 -> {
                     showDeleteInvoiceDialog(invoice)
@@ -284,9 +285,12 @@ class OrpFragment : BaseKtFragment() {
 
     }
 
-    fun navigateToGetPdf(order: Invoice){
+    fun navigateToGetEkasaPdf(order: Invoice){
         showProgressBar()
-        mViewModel.emitGetPdfInvoice(order)
+        order.uce="31100"
+        order.dok="730001"
+        order.drh="54"
+        mViewModel.emitEkasaPdf(order)
 
     }
 

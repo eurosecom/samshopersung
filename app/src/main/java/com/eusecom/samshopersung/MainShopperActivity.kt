@@ -191,6 +191,20 @@ class MainShopperActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
+                secondaryItem("PdfBox DEMO ") {
+
+                    onClick { _ ->
+                        navigateToPdfBoxDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
+
+            if (BuildConfig.DEBUG) {
+
+                divider {}
                 secondaryItem("KeyStore DEMO ") {
 
                     onClick { _ ->
@@ -427,6 +441,11 @@ class MainShopperActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    fun navigateToPdfBoxDemo() {
+        val `is` = Intent(this, PdfboxActivity::class.java)
+        startActivity(`is`)
     }
 
     fun navigateToKeyStoreDemo() {

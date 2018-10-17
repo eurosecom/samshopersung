@@ -47,6 +47,7 @@
         <activity android:name=".OrpListKtActivity"/>
         <activity android:name=".OrpRequestsActivity" android:label="@string/orprequests"/>
 
+        <activity android:name=".PdfboxActivity"/>
         <activity android:name=".KeyStoreActivity"/>
         <activity android:name=".ScanEanActivity"/>
         <activity android:name=".ScanEanKtActivity"/>

@@ -1927,4 +1927,58 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end delete EkasaDoc
 
+    //get PDF Uri document
+    public void emitEkasaPdf(Invoice invx) { mObservableEkasaPDF.onNext(invx); }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableEkasaPDF = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<Uri> getObservableEkasaPdf() {
+
+        String firx = mSharedPreferences.getString("fir", "");
+        //String rokx = "2014";
+        String rokx = mSharedPreferences.getString("rok", "");
+        //String serverx = "www.eshoptest.sk";
+        String serverx = mSharedPreferences.getString("servername", "");
+        //String adresx = "www.eshoptest.sk/androiducto";
+        String adresx = mSharedPreferences.getString("servername", "") + "/androiducto";
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+
+        String umex = mSharedPreferences.getString("ume", "");
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String userx = "Nick/test2345" + "/ID/1001" + "/PSW/cp41cs" + "/Doklad/" + ds;
+
+        String userxplus = userx + "/" + usuidx;
+        System.out.println("DocPdf userxplus " + userxplus);
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String encrypted2 = encrypted;
+
+        return mObservableEkasaPDF
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(invx ->
+                        mDataModel.getObservableUriDocPdf(invx, firx, rokx, serverx, adresx, encrypted2, umex));
+    }
+
+    public void clearObservableEkasaPDF() {
+
+        mObservableEkasaPDF = BehaviorSubject.create();
+
+    }
+    //end get Ekasa PDF
+
 }
