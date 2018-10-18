@@ -3,6 +3,7 @@ package com.eusecom.samshopersung.di;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
@@ -249,6 +250,12 @@ public class AppModule {
     @Singleton
     public PaymentStrategy provideEkassaStrategy() {
         return new EkassaStrategy();
+    }
+
+    @Provides
+    @Singleton
+    public AssetManager provideAssetManager(Application application) {
+        return application.getAssets();
     }
 
 

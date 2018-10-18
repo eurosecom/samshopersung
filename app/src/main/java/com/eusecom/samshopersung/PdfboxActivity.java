@@ -222,7 +222,7 @@ public class PdfboxActivity extends Activity {
 
     public void displayPdf(View v) {
 
-        File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
+        File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created3.pdf");
         Uri external = FileProvider.getUriForFile(PdfboxActivity.this,
                 BuildConfig.APPLICATION_ID + ".provider",
                 externalFile);

@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.eusecom.samshopersung.rxbus.RxBus
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope
+import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -216,7 +217,8 @@ class OrpFragment : BaseKtFragment() {
 
     private fun setUriPdf(file: File) {
 
-        mViewModel.clearObservableEkasaPDF()
+        file.absoluteFile.toString()
+        Log.d("file.absoluteFile ", file.absoluteFile.toString())
         val external = FileProvider.getUriForFile(activity,
                 BuildConfig.APPLICATION_ID + ".provider", file)
 
@@ -225,6 +227,7 @@ class OrpFragment : BaseKtFragment() {
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
         startActivity(intent)
+        mViewModel.clearObservableEkasaPDF()
 
     }
 
@@ -293,10 +296,11 @@ class OrpFragment : BaseKtFragment() {
 
     fun navigateToGetEkasaPdf(order: Invoice){
         showProgressBar()
-        order.uce="31100"
-        order.dok="730001"
-        order.drh="54"
-        mViewModel.emitEkasaPdf(order)
+        //order.uce="31100"
+        //order.dok="730001"
+        //order.drh="54"
+        PDFBoxResourceLoader.init(context)
+       mViewModel.emitEkasaPdf(order)
 
     }
 

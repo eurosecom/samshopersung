@@ -1,12 +1,17 @@
 package com.eusecom.samshopersung.mvvmdatamodel;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +49,15 @@ import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.google.firebase.database.DatabaseReference;
+import com.tom_roush.pdfbox.pdmodel.PDDocument;
+import com.tom_roush.pdfbox.pdmodel.PDPage;
+import com.tom_roush.pdfbox.pdmodel.PDPageContentStream;
+import com.tom_roush.pdfbox.pdmodel.font.PDFont;
+import com.tom_roush.pdfbox.pdmodel.font.PDType1Font;
+import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory;
+import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 
 public class ShopperDataModel implements ShopperIDataModel {
 
@@ -57,6 +71,7 @@ public class ShopperDataModel implements ShopperIDataModel {
     IdcController mIdcController;
     MyDatabase mRoomDatabase;
     IShopperModelsFactory mModelsFactory;
+    AssetManager mAssetManager;
 
     public ShopperDataModel(@NonNull final DatabaseReference databaseReference,
                              @NonNull final ShopperRetrofitService shopperRetrofitService,
@@ -100,12 +115,14 @@ public class ShopperDataModel implements ShopperIDataModel {
                             @NonNull final ExampleInterceptor interceptor,
                             @NonNull MyDatabase roomDatabase,
                             @NonNull final ShopperXmlRetrofitService shopperXmlRetrofitService,
-                            @NonNull IShopperModelsFactory modelsFactory) {
+                            @NonNull IShopperModelsFactory modelsFactory,
+                            @NonNull AssetManager assetManager) {
         mShopperRetrofitService = shopperRetrofitService;
         mInterceptor = interceptor;
         mRoomDatabase = roomDatabase;
         mShopperXmlRetrofitService = shopperXmlRetrofitService;
         mModelsFactory = modelsFactory;
+        mAssetManager = assetManager;
     }
 
     //methods for ChooseCompanyActivity
@@ -656,14 +673,82 @@ public class ShopperDataModel implements ShopperIDataModel {
     @Override
     public Observable<File> getObservableUriEkasaPdf(Invoice invx) {
 
-
         Log.d("DocPdf dokx ", invx.getDok());
         Log.d("DocPdf drhx ", invx.getDrh());
         Log.d("DocPdf ucex ", invx.getUce());
         Log.d("DocPdf icox ", invx.getIco());
 
-        File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
-        return Observable.just(externalFile);
+        //File externalFile = new File(Environment.getExternalStorageDirectory(), createEkasaPdf(invx));
+        //File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
+        return createEkasaPdf(invx);
+
+    }
+
+    private Observable<File> createEkasaPdf(Invoice invx) {
+
+        File root = android.os.Environment.getExternalStorageDirectory();
+
+        PDDocument document = new PDDocument();
+        PDPage page = new PDPage();
+        document.addPage(page);
+
+        // Create a new font object selecting one of the PDF base fonts
+        PDFont font = PDType1Font.HELVETICA;
+        // Or a custom font
+//		try {
+//			PDType0Font font = PDType0Font.load(document, assetManager.open("MyFontFile.TTF"));
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		}
+
+        PDPageContentStream contentStream;
+
+        try {
+            // Define a content stream for adding to the PDF
+            contentStream = new PDPageContentStream(document, page);
+
+            // Write Hello World in blue text
+            contentStream.beginText();
+            contentStream.setNonStrokingColor(15, 38, 192);
+            contentStream.setFont(font, 12);
+            contentStream.newLineAtOffset(100, 700);
+            contentStream.showText("Hello World");
+            contentStream.endText();
+
+            // Load in the images
+            InputStream in = mAssetManager.open("falcon.jpg");
+            InputStream alpha = mAssetManager.open("trans.png");
+
+            // Draw a green rectangle
+            contentStream.addRect(5, 500, 100, 100);
+            contentStream.setNonStrokingColor(0, 255, 125);
+            contentStream.fill();
+
+            // Draw the falcon base image
+            PDImageXObject ximage = JPEGFactory.createFromStream(document, in);
+            contentStream.drawImage(ximage, 20, 20);
+
+            // Draw the red overlay image
+            Bitmap alphaImage = BitmapFactory.decodeStream(alpha);
+            PDImageXObject alphaXimage = LosslessFactory.createFromImage(document, alphaImage);
+            contentStream.drawImage(alphaXimage, 20, 20);
+
+            // Make sure that the content stream is closed:
+            contentStream.close();
+
+            // Save the final pdf document to a file
+            String path = root.getAbsolutePath() + "/Download/ekasa" + invx.getDok() + ".pdf";
+            document.save(path);
+            document.close();
+            //tv.setText("Successfully wrote PDF to " + path);
+            File externalFile = new File(path);
+            return Observable.just(externalFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
 
     }
 

@@ -1,6 +1,7 @@
 package com.eusecom.samshopersung.di;
 
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 
@@ -28,9 +29,10 @@ public class OrderListActivityModule {
                                                        ExampleInterceptor interceptor,
                                                        @NonNull MyDatabase roomDatabase,
                                                        ShopperXmlRetrofitService shopperxmlretrofitservice,
-                                                       IShopperModelsFactory modelsFactory) {
-        return new ShopperDataModel(shopperretrofitservice
-                , interceptor, roomDatabase, shopperxmlretrofitservice, modelsFactory);
+                                                       IShopperModelsFactory modelsFactory,
+                                                       AssetManager assetManager) {
+        return new ShopperDataModel(shopperretrofitservice, interceptor, roomDatabase
+                , shopperxmlretrofitservice, modelsFactory, assetManager);
     }
 
 
