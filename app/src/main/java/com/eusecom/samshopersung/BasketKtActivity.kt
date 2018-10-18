@@ -25,9 +25,10 @@ import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 import android.widget.TextView
 import com.eusecom.samshopersung.models.IShopperModelsFactory
-import com.eusecom.samshopersung.models.ShopperModelsFactory
 import com.eusecom.samshopersung.realm.RealmInvoice
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.basket_activity.*
+
 
 
 /**
@@ -89,6 +90,16 @@ class BasketKtActivity : AppCompatActivity() {
 
         Log.d("ShopperMvvmViewModel", "instx " + mViewModel.toString())
         Log.d("SharedPreferences", "instx " + prefs.toString())
+
+        fab.setOnClickListener {
+            val editor = prefs.edit()
+            editor.putString("edidok", "0").apply();
+            editor.commit();
+
+            val `is` = Intent(this, OfferKtActivity::class.java)
+            startActivity(`is`)
+            finish()
+        }
 
     }
 
