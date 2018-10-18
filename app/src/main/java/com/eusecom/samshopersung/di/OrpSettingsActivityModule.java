@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.OrpRequestsAdapter;
+import com.eusecom.samshopersung.OrpSettingsAdapter;
 import com.eusecom.samshopersung.ShopperIMvvmViewModel;
 import com.eusecom.samshopersung.ShopperMvvmViewModel;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
@@ -21,7 +22,7 @@ import dagger.Provides;
 import io.realm.Realm;
 
 @Module
-public class OrpRequestsActivityModule {
+public class OrpSettingsActivityModule {
 
 
     @Provides
@@ -45,8 +46,8 @@ public class OrpRequestsActivityModule {
 
     @Provides
     @ShopperScope
-    public OrpRequestsAdapter providesOrpRequestsAdapter(@NonNull final RxBus rxbus, @NonNull final Picasso picasso) {
-        return new OrpRequestsAdapter(rxbus, picasso);
+    public OrpSettingsAdapter providesOrpSettingsAdapter(@NonNull final RxBus rxbus, @NonNull final Picasso picasso) {
+        return new OrpSettingsAdapter(rxbus, picasso);
     }
 
 }

@@ -24,14 +24,14 @@ import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
 import java.util.concurrent.TimeUnit
 
-class OrpRequestsActivity : AppCompatActivity() {
+class OrpSettingsActivity : AppCompatActivity() {
 
     @Inject
     lateinit var mViewModel: ShopperIMvvmViewModel
     @Inject
     lateinit var mRxBus: RxBus
     @Inject
-    lateinit var mAdapter: OrpRequestsAdapter
+    lateinit var mAdapter: OrpSettingsAdapter
 
     private var mRecycler: RecyclerView? = null
     private var mManager: LinearLayoutManager? = null
@@ -43,7 +43,7 @@ class OrpRequestsActivity : AppCompatActivity() {
 
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_requests)
+        setContentView(R.layout.activity_orpset)
         setSupportActionBar(toolbar)
 
         mProgressBar = findViewById<View>(R.id.progress_bar) as? ProgressBar
@@ -141,26 +141,16 @@ class OrpRequestsActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_requests, menu)
+        menuInflater.inflate(R.menu.menu_ekasaset, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_settings -> consume { navigateToSettings() }
+        R.id.action_settings -> consume { }
         R.id.action_orploc -> consume { navigateToUpdateRoomItem() }
         R.id.action_orpdocs -> consume { navigateToOrpKtdocs() }
 
         else -> super.onOptionsItemSelected(item)
-    }
-
-    fun navigateToSettings(){
-
-        val `is` = Intent(this, OrpSettingsActivity::class.java)
-        val extras = Bundle()
-        extras.putInt("saltype", 0)
-        `is`.putExtras(extras)
-        startActivity(`is`)
-        finish()
     }
 
     fun navigateToUpdateRoomItem() {

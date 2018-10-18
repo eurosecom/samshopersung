@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".OrpSettingsActivity">
+
+    <item
+        android:id="@+id/action_orpdocs"
+        android:orderInCategory="100"
+        android:title="@string/offer"
+        android:icon="@drawable/baseline_list_white_24dp"
+        android:iconifiedByDefault="true"
+        app:showAsAction="always"
+        />
+
+</menu>

@@ -227,6 +227,12 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     fun navigateToSettings(){
 
+        val `is` = Intent(this, OrpSettingsActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 0)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        finish()
     }
 
 }

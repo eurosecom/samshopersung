@@ -200,6 +200,7 @@ class OrpFragment : BaseKtFragment() {
         mManager?.setStackFromEnd(true)
         mRecycler?.setLayoutManager(mManager)
         mRecycler?.setAdapter(mAdapter)
+        PDFBoxResourceLoader.init(context)
 
     }
 
@@ -413,8 +414,7 @@ class OrpFragment : BaseKtFragment() {
         //order.uce="31100"
         //order.dok="730001"
         //order.drh="54"
-        PDFBoxResourceLoader.init(context)
-       mViewModel.emitEkasaPdf(order)
+        mViewModel.emitEkasaPdf(order)
 
     }
 

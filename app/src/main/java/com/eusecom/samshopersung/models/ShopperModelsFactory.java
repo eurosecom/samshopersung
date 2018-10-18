@@ -86,4 +86,10 @@ public class ShopperModelsFactory implements IShopperModelsFactory {
         return new EkassaRequestBackup();
     }
 
+    @NonNull
+    public EkassaSettings getEkassaSettings(){
+
+        return new EkassaSettings();
+    }
+
 }
