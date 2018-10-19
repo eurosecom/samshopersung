@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
+import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
@@ -1936,10 +1937,15 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     @NonNull
     public Observable<File> getObservableEkasaPdf() {
 
+        EkassaSettings ekasaset = new EkassaSettings();
+        ekasaset.setId(1);
+        ekasaset.setCompdic("9876543210");
+        //mRoomDatabase.ekassaSettingsDao().insertEkassaSettings(ekasaset);
+
         return mObservableEkasaPDF
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx ->
-                        mDataModel.getObservableUriEkasaPdf(invx));
+                        mDataModel.getObservableUriEkasaPdf(invx, ekasaset));
     }
 
     public void clearObservableEkasaPDF() {
@@ -1948,5 +1954,22 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
     //end get Ekasa PDF
+
+    //methods for OrpSettingsActivity
+    //get ekasa settings
+    public Flowable<List<EkassaSettings>> loadEkasaSettings() {
+
+        return mDataModel.loadEkasaSettings();
+
+    }
+
+    public Completable saveEkassaSettings(String id, String compico, String compname, String compdic
+            , String compicd) {
+        Log.d("msave2 settid", id);
+        return Completable.fromAction(() -> {
+
+            mDataModel.saveEkassaSetData(id, compico, compname, compdic, compicd);
+        });
+    }
 
 }

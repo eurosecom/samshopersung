@@ -143,6 +143,7 @@ import com.eusecom.samshopersung.SetImageServerResponse;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
+import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
@@ -784,17 +785,11 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     @NonNull
     @Override
-    public Observable<File> getObservableUriEkasaPdf(Invoice invx) {
-
-        Log.d("DocPdf dokx ", invx.getDok());
-        Log.d("DocPdf drhx ", invx.getDrh());
-        Log.d("DocPdf ucex ", invx.getUce());
-        Log.d("DocPdf icox ", invx.getIco());
-
+    public Observable<File> getObservableUriEkasaPdf(Invoice invx, EkassaSettings ekasaset) {
 
         //return createEkasaPdf(invx);
-        IEkasaPdfDoc ekasadoc = new EkasaPdfDoc();
-        return ekasadoc.getEkasaPdf(invx, mAssetManager);
+        IEkasaPdfDoc ekasapdfdoc = new EkasaPdfDoc(ekasaset, mAssetManager);
+        return ekasapdfdoc.getEkasaPdf(invx);
 
     }
 
@@ -864,6 +859,31 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         return null;
 
+    }
+
+    //methods for OrpSettingsActivity
+    //get ekasa settings
+    @Override
+    public Flowable<List<EkassaSettings>> loadEkasaSettings() {
+
+        return mRoomDatabase.ekassaSettingsDao().getRxAllSettings();
+
+    }
+
+    @Override
+    public void saveEkassaSetData(String id, String compico, String compname, String compdic
+            , String compicd) {
+
+        EkassaSettings ekassaset = mModelsFactory.getEkassaSettings();
+        ekassaset.setId(Integer.valueOf(id));
+        ekassaset.setCompidc(Integer.valueOf(compico));
+        ekassaset.setCompname(compname);
+        ekassaset.setCompdic(compdic);
+        ekassaset.setCompicd(compicd);
+
+        Log.d("dsave settid", id);
+
+        mRoomDatabase.ekassaSettingsDao().insertEkassaSettings(ekassaset);
     }
 
 }

@@ -13,6 +13,7 @@ import com.eusecom.samshopersung.SetImageServerResponse;
 import com.eusecom.samshopersung.SumBasketKt;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
+import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
@@ -155,6 +156,13 @@ public interface ShopperIDataModel {
     public void insertOrUpdateMaxIdEkassaResponseData(String resUuid, String procDate, String recid);
 
     @NonNull
-    public Observable<File> getObservableUriEkasaPdf(Invoice invx);
+    public Observable<File> getObservableUriEkasaPdf(Invoice invx, EkassaSettings ekasaset);
+
+    @NonNull
+    public Flowable<List<EkassaSettings>> loadEkasaSettings();
+
+    @NonNull
+    public void saveEkassaSetData(String id, String compico, String compname, String compdic
+            , String compicd);
 
 }

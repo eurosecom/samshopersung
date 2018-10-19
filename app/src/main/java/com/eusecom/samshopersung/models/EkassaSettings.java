@@ -53,7 +53,7 @@ public class EkassaSettings {
 
 
     public EkassaSettings() {
-        // Default constructor required for calls to DataSnapshot.getValue(Employee.class)
+
     }
 
     public int getId() {

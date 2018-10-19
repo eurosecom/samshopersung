@@ -11,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import com.eusecom.samshopersung.models.EkassaRequestBackup
-import com.eusecom.samshopersung.models.Product
+import com.eusecom.samshopersung.models.EkassaSettings
 import com.eusecom.samshopersung.rxbus.RxBus
 import dagger.android.AndroidInjection
 import io.reactivex.Flowable
@@ -78,6 +78,15 @@ class OrpSettingsActivity : AppCompatActivity() {
                 }
                 .subscribe({ it -> setProducts(it) }))
 
+        mDisposable.add(loadEkasaSettings()
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    hideProgressBar()
+                    Log.e("OrpSettingsActivityLog", "Error Throwable " + throwable.message)
+                }
+                .subscribe({ it -> setSettings(it) }))
+
         val tapEventEmitter = mRxBus.asFlowable().publish()
 
         mDisposable
@@ -106,14 +115,29 @@ class OrpSettingsActivity : AppCompatActivity() {
 
     private fun setProducts(prods: List<EkassaRequestBackup>) {
         //Log.d("OrpRequestsActivityLog", "cat0 " + prods.get(0).name)
-        mAdapter?.setDataToAdapter(prods)
+        //mAdapter?.setDataToAdapter(prods)
         //Scroll item 2 to 20 pixels from the top
+        //mManager?.scrollToPositionWithOffset(0, 0);
+        hideProgressBar()
+    }
+
+    private fun setSettings(sets: List<EkassaSettings>) {
+
+        Log.d("Set ", "Settings")
+        Log.d("OrpSettingsActivityLog", "set0 " + sets.get(0).id)
+        Log.d("OrpSettingsActivityLog", "set0 " + sets.get(0).compname)
+
+        mAdapter?.setDataToAdapter(sets)
         mManager?.scrollToPositionWithOffset(0, 0);
         hideProgressBar()
     }
 
     protected fun loadRequests(): Flowable<List<EkassaRequestBackup>> {
         return mViewModel.loadEkasaRequests()
+    }
+
+    protected fun loadEkasaSettings(): Flowable<List<EkassaSettings>> {
+        return mViewModel.loadEkasaSettings()
     }
 
     fun showDeleteDialog(reqId: Int) {
@@ -147,7 +171,7 @@ class OrpSettingsActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> consume { }
-        R.id.action_orploc -> consume { navigateToUpdateRoomItem() }
+        R.id.action_savesettings -> consume { navigateToSaveSettings() }
         R.id.action_orpdocs -> consume { navigateToOrpKtdocs() }
 
         else -> super.onOptionsItemSelected(item)
@@ -161,7 +185,22 @@ class OrpSettingsActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
                 .doOnError { throwable ->
-                    Log.e("OrpRequestsActivityLog", "Error Throwable " + throwable.message)
+                    Log.e("OrpSettingsActivityLog", "Error Throwable " + throwable.message)
+                }
+                .subscribe({ -> Unit }))
+
+
+    }
+
+    fun navigateToSaveSettings() {
+
+        showProgressBar()
+        mDisposable.add(mViewModel.saveEkassaSettings("1", "87654321", "PUCTO 403", "9876543210", "Sk9876543210" )
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
+                .doOnError { throwable ->
+                    Log.e("OrpSettingsActivityLog", "Error Throwable " + throwable.message)
                 }
                 .subscribe({ -> Unit }))
 

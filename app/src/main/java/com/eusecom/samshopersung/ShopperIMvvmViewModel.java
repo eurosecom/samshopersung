@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
+import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
@@ -323,6 +324,14 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearObservableEkasaPDF();
+
+    //get ekassa settings
+    @NonNull
+    public Flowable<List<EkassaSettings>> loadEkasaSettings();
+
+    @NonNull
+    public Completable saveEkassaSettings(String id, String compico, String compname, String compdic
+            , String compicd);
 
 
 }
