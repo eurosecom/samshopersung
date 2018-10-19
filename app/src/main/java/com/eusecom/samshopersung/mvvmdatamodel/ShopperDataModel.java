@@ -155,6 +155,8 @@ import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
 import com.eusecom.samshopersung.retrofit.ShopperRetrofitService;
 import com.eusecom.samshopersung.retrofit.ShopperXmlRetrofitService;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
+import com.eusecom.samshopersung.soap.EkasaPdfDoc;
+import com.eusecom.samshopersung.soap.IEkasaPdfDoc;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
@@ -789,9 +791,10 @@ public class ShopperDataModel implements ShopperIDataModel {
         Log.d("DocPdf ucex ", invx.getUce());
         Log.d("DocPdf icox ", invx.getIco());
 
-        //File externalFile = new File(Environment.getExternalStorageDirectory(), createEkasaPdf(invx));
-        //File externalFile = new File(Environment.getExternalStorageDirectory(), "/Download/Created.pdf");
-        return createEkasaPdf(invx);
+
+        //return createEkasaPdf(invx);
+        IEkasaPdfDoc ekasadoc = new EkasaPdfDoc();
+        return ekasadoc.getEkasaPdf(invx, mAssetManager);
 
     }
 
