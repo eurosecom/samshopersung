@@ -70,6 +70,12 @@ class MainShopperActivity : AppCompatActivity() {
 
         }
 
+        fabekasa.setOnClickListener {
+
+            _ -> navigateToOrpKtdocs()
+
+        }
+
         button1.setOnClickListener {
             _ -> navigateToBasketKt()
         }
