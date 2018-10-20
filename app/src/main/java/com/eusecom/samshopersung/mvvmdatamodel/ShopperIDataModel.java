@@ -163,6 +163,6 @@ public interface ShopperIDataModel {
 
     @NonNull
     public void saveEkassaSetData(String id, String compico, String compname, String compdic
-            , String compicd);
+            , String compicd, String headq, String dkp, String shop, String orsr, String pata1, String pata2);
 
 }

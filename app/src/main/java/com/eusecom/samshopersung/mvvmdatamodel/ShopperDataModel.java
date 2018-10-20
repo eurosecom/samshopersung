@@ -872,7 +872,7 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     @Override
     public void saveEkassaSetData(String id, String compico, String compname, String compdic
-            , String compicd) {
+            , String compicd, String headq, String dkp, String shop, String orsr, String pata1, String pata2) {
 
         EkassaSettings ekassaset = mModelsFactory.getEkassaSettings();
         ekassaset.setId(Integer.valueOf(id));
@@ -880,7 +880,12 @@ public class ShopperDataModel implements ShopperIDataModel {
         ekassaset.setCompname(compname);
         ekassaset.setCompdic(compdic);
         ekassaset.setCompicd(compicd);
-
+        ekassaset.setHeadquarters(headq);
+        ekassaset.setDkp(dkp);
+        ekassaset.setShopadress(shop);
+        ekassaset.setOrsr(orsr);
+        ekassaset.setPata1(pata1);
+        ekassaset.setPata2(pata2);
         Log.d("dsave settid", id);
 
         mRoomDatabase.ekassaSettingsDao().insertEkassaSettings(ekassaset);

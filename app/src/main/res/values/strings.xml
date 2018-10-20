@@ -373,6 +373,13 @@
     <string name="id">id</string>
     <string name="idc">idc</string>
     <string name="docregistered">Document is already registered in eCashbox</string>
+    <string name="popisNamecomp">Company name</string>
+    <string name="popisHeadq">Headquarters</string>
+    <string name="popisShop">Shop address</string>
+    <string name="popisOrsr">Company register</string>
+    <string name="popisDkp">ORP number</string>
+    <string name="popisPat1">Bottom text 1</string>
+    <string name="popisPat2">Bottom text 2</string>
 
 
 </resources>

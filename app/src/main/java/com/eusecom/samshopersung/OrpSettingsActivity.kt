@@ -3,12 +3,12 @@ package com.eusecom.samshopersung
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ProgressBar
 import com.eusecom.samshopersung.models.EkassaRequestBackup
 import com.eusecom.samshopersung.models.EkassaSettings
@@ -19,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import io.reactivex.disposables.CompositeDisposable
+import org.jetbrains.anko.toast
 import java.util.concurrent.TimeUnit
 
 class OrpSettingsActivity : AppCompatActivity() {
@@ -27,14 +28,21 @@ class OrpSettingsActivity : AppCompatActivity() {
     lateinit var mViewModel: ShopperIMvvmViewModel
     @Inject
     lateinit var mRxBus: RxBus
-    @Inject
-    lateinit var mAdapter: OrpSettingsAdapter
-
-    private var mRecycler: RecyclerView? = null
-    private var mManager: LinearLayoutManager? = null
 
     private val mDisposable = CompositeDisposable()
     private var mProgressBar: ProgressBar? = null
+
+    var inputName: EditText? = null
+    var inputHeadq: EditText? = null
+    var inputIco: EditText? = null
+    var inputDic: EditText? = null
+    var inputIcd: EditText? = null
+    var inputDkp: EditText? = null
+    var inputShop: EditText? = null
+    var inputOrsr: EditText? = null
+    var inputPat1: EditText? = null
+    var inputPat2: EditText? = null
+    var btnSave: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -44,17 +52,23 @@ class OrpSettingsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         mProgressBar = findViewById<View>(R.id.progress_bar) as? ProgressBar
-
-        mRecycler = findViewById<View>(R.id.list) as RecyclerView
-        mRecycler?.setHasFixedSize(true)
-        mManager = LinearLayoutManager(this)
-        mManager?.setReverseLayout(false)
-        mManager?.setStackFromEnd(true)
-        mRecycler?.setLayoutManager(mManager)
-        mRecycler?.setAdapter(mAdapter)
+        inputName = findViewById<View>(R.id.inputName) as? EditText
+        inputHeadq = findViewById<View>(R.id.inputHeadq) as? EditText
+        inputIco = findViewById<View>(R.id.inputIco) as? EditText
+        inputDic = findViewById<View>(R.id.inputDic) as? EditText
+        inputIcd = findViewById<View>(R.id.inputIcd) as? EditText
+        inputDkp = findViewById<View>(R.id.inputDkp) as? EditText
+        inputShop = findViewById<View>(R.id.inputShop) as? EditText
+        inputOrsr = findViewById<View>(R.id.inputOrsr) as? EditText
+        inputPat1 = findViewById<View>(R.id.inputPat1) as? EditText
+        inputPat2 = findViewById<View>(R.id.inputPat2) as? EditText
+        btnSave = findViewById<View>(R.id.btnSave) as? Button
 
         Log.d("OrpRequestsActivityLog", "mViewModel " + mViewModel.toString())
 
+        btnSave?.setOnClickListener {
+            _ -> navigateToSaveSettings()
+        }
         setDisposable()
     }
 
@@ -109,8 +123,16 @@ class OrpSettingsActivity : AppCompatActivity() {
         Log.d("OrpSettingsActivityLog", "set0 " + sets.get(0).id)
         Log.d("OrpSettingsActivityLog", "set0 " + sets.get(0).compname)
 
-        mAdapter?.setDataToAdapter(sets)
-        mManager?.scrollToPositionWithOffset(0, 0);
+        inputName?.setText(sets.get(0).compname)
+        inputHeadq?.setText(sets.get(0).headquarters)
+        inputIco?.setText(sets.get(0).compidc.toString())
+        inputDic?.setText(sets.get(0).compdic)
+        inputIcd?.setText(sets.get(0).compicd)
+        inputDkp?.setText(sets.get(0).dkp)
+        inputShop?.setText(sets.get(0).shopadress)
+        inputOrsr?.setText(sets.get(0).orsr)
+        inputPat1?.setText(sets.get(0).pata1)
+        inputPat2?.setText(sets.get(0).pata2)
         hideProgressBar()
     }
 
@@ -135,11 +157,20 @@ class OrpSettingsActivity : AppCompatActivity() {
 
     fun navigateToSaveSettings() {
 
+        //, String headq, String dkp, String shop, String orsr, String pata1, String pata2
+
         showProgressBar()
-        mDisposable.add(mViewModel.saveEkassaSettings("1", "87654321", "PUCTO 403", "9876543210", "Sk9876543210")
+        mDisposable.add(mViewModel.saveEkassaSettings("1", inputIco?.text.toString(), inputName?.text.toString()
+                , inputDic?.text.toString(), inputIcd?.text.toString()
+                , inputHeadq?.text.toString(), inputDkp?.text.toString()
+                , inputShop?.text.toString(), inputOrsr?.text.toString()
+                , inputPat1?.text.toString(), inputPat2?.text.toString())
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
+                .doOnComplete({ ->
+                    Log.d("OrpRequestsActivityLog", " completed")
+                    toast("Saved settings of eCashBox")
+                })
                 .doOnError { throwable ->
                     Log.e("OrpSettingsActivityLog", "Error Throwable " + throwable.message)
                 }

@@ -1964,11 +1964,12 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
 
     public Completable saveEkassaSettings(String id, String compico, String compname, String compdic
-            , String compicd) {
+            , String compicd, String headq, String dkp, String shop, String orsr, String pata1, String pata2) {
         Log.d("msave2 settid", id);
         return Completable.fromAction(() -> {
 
-            mDataModel.saveEkassaSetData(id, compico, compname, compdic, compicd);
+            mDataModel.saveEkassaSetData(id, compico, compname, compdic, compicd, headq, dkp, shop, orsr, pata1, pata2);
+
         });
     }
 
