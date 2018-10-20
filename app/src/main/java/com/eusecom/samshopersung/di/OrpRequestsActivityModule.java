@@ -1,6 +1,5 @@
 package com.eusecom.samshopersung.di;
 
-
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
@@ -18,7 +17,6 @@ import com.eusecom.samshopersung.rxbus.RxBus;
 import com.squareup.picasso.Picasso;
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
 
 @Module
 public class OrpRequestsActivityModule {

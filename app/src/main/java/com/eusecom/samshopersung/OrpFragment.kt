@@ -234,6 +234,8 @@ class OrpFragment : BaseKtFragment() {
 
         _disposables.add(tapEventEmitter.connect())
 
+        mViewModel.loadEkasaSettingsToMvvm()
+
         mSubscription = CompositeSubscription()
 
         showProgressBar()

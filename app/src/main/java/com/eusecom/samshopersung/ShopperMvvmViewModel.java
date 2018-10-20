@@ -5,6 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.models.EkassaSettings;
@@ -37,15 +39,23 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+
+import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
+import rx.subscriptions.CompositeSubscription;
+
+import static android.content.ContentValues.TAG;
+import static rx.Observable.empty;
 
 /**
  * View model for the CompaniesMvvmActivity.
@@ -1941,11 +1951,12 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         ekasaset.setId(1);
         ekasaset.setCompdic("9876543210");
         //mRoomDatabase.ekassaSettingsDao().insertEkassaSettings(ekasaset);
+        //Log.d("MVVM name", mEkassaSettings.getCompname());
 
         return mObservableEkasaPDF
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx ->
-                        mDataModel.getObservableUriEkasaPdf(invx, ekasaset));
+                        mDataModel.getObservableUriEkasaPdf(invx, mEkassaSettings));
     }
 
     public void clearObservableEkasaPDF() {
@@ -1972,5 +1983,39 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         });
     }
+
+    private CompositeSubscription mSubscription;
+    private EkassaSettings mEkassaSettings;
+
+    public void loadEkasaSettingsToMvvm() {
+
+        mSubscription = new CompositeSubscription();
+
+        mSubscription.add(loadEkasaSettingsObservable()
+                .subscribeOn(rx.schedulers.Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError(throwable -> { Log.e(TAG, "Error MVVM " + throwable.getMessage());
+
+                })
+                .onErrorResumeNext(throwable -> empty())
+                .subscribe(this::setSettings));
+
+
+    }
+
+    private void setSettings(List<EkassaSettings> sets) {
+
+        mEkassaSettings=sets.get(0);
+        mSubscription.clear();
+        //Log.d("MVVM name", mEkassaSettings.getCompname());
+    }
+
+    public Observable<List<EkassaSettings>> loadEkasaSettingsObservable() {
+
+        return RxJavaInterop.toV1Observable(mDataModel.loadEkasaSettings());
+
+    }
+
+
 
 }

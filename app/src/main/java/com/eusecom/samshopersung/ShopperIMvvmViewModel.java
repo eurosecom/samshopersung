@@ -333,5 +333,7 @@ public interface ShopperIMvvmViewModel {
     public Completable saveEkassaSettings(String id, String compico, String compname, String compdic
             , String compicd, String headq, String dkp, String shop, String orsr, String pata1, String pata2);
 
+    public void loadEkasaSettingsToMvvm();
+
 
 }
