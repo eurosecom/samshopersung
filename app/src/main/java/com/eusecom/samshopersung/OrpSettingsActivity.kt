@@ -19,9 +19,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import io.reactivex.disposables.CompositeDisposable
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.yesButton
 import java.util.concurrent.TimeUnit
 
 class OrpSettingsActivity : AppCompatActivity() {
@@ -69,14 +66,6 @@ class OrpSettingsActivity : AppCompatActivity() {
     private fun setDisposable() {
 
         showProgressBar()
-        mDisposable.add(loadRequests()
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    hideProgressBar()
-                    Log.e("OrpRequestsActivityLog", "Error Throwable " + throwable.message)
-                }
-                .subscribe({ it -> setProducts(it) }))
 
         mDisposable.add(loadEkasaSettings()
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
@@ -96,7 +85,7 @@ class OrpSettingsActivity : AppCompatActivity() {
                         val usnamex = event.requestUuid
 
                         Log.d("OrpRequestsActivityLog ", "bus " + usnamex)
-                        showDeleteDialog(event.id)
+                        //showDeleteDialog(event.id)
 
                     }
 
@@ -113,13 +102,6 @@ class OrpSettingsActivity : AppCompatActivity() {
 
     }
 
-    private fun setProducts(prods: List<EkassaRequestBackup>) {
-        //Log.d("OrpRequestsActivityLog", "cat0 " + prods.get(0).name)
-        //mAdapter?.setDataToAdapter(prods)
-        //Scroll item 2 to 20 pixels from the top
-        //mManager?.scrollToPositionWithOffset(0, 0);
-        hideProgressBar()
-    }
 
     private fun setSettings(sets: List<EkassaSettings>) {
 
@@ -132,35 +114,9 @@ class OrpSettingsActivity : AppCompatActivity() {
         hideProgressBar()
     }
 
-    protected fun loadRequests(): Flowable<List<EkassaRequestBackup>> {
-        return mViewModel.loadEkasaRequests()
-    }
 
     protected fun loadEkasaSettings(): Flowable<List<EkassaSettings>> {
         return mViewModel.loadEkasaSettings()
-    }
-
-    fun showDeleteDialog(reqId: Int) {
-
-        alert("", getString(R.string.orpdelreq) + " " + reqId) {
-            yesButton { navigateToRxDeleteById(reqId) }
-            noButton {}
-        }.show()
-
-    }
-
-    fun navigateToRxDeleteById(reqId: Int) {
-
-        showProgressBar()
-        mDisposable.add(mViewModel.deleteRxEkassaReqById(reqId)
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
-                .doOnError { throwable ->
-                    Log.e("OrpRequestsActivityLog", "Error Throwable " + throwable.message)
-                }
-                .subscribe({ -> Unit }))
-
     }
 
 
@@ -170,32 +126,17 @@ class OrpSettingsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_settings -> consume { }
-        R.id.action_savesettings -> consume { navigateToSaveSettings() }
+        R.id.action_request -> consume { navigateToOrpKtreqs() }
         R.id.action_orpdocs -> consume { navigateToOrpKtdocs() }
 
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun navigateToUpdateRoomItem() {
-
-        showProgressBar()
-        mDisposable.add(mViewModel.updateEkassaReqName("b05226a4-88b2-46e4-ad45-0f28jcf3668a", "", "", "", "" )
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
-                .doOnError { throwable ->
-                    Log.e("OrpSettingsActivityLog", "Error Throwable " + throwable.message)
-                }
-                .subscribe({ -> Unit }))
-
-
-    }
 
     fun navigateToSaveSettings() {
 
         showProgressBar()
-        mDisposable.add(mViewModel.saveEkassaSettings("1", "87654321", "PUCTO 403", "9876543210", "Sk9876543210" )
+        mDisposable.add(mViewModel.saveEkassaSettings("1", "87654321", "PUCTO 403", "9876543210", "Sk9876543210")
                 .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
@@ -206,7 +147,6 @@ class OrpSettingsActivity : AppCompatActivity() {
 
 
     }
-
 
     //consume oncreateoptionmenu
     inline fun consume(f: () -> Unit): Boolean {
@@ -231,6 +171,16 @@ class OrpSettingsActivity : AppCompatActivity() {
         startActivity(`is`)
         finish()
 
+    }
+
+    fun navigateToOrpKtreqs() {
+
+        val `is` = Intent(this, OrpRequestsActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 0)
+        `is`.putExtras(extras)
+        startActivity(`is`)
+        finish()
     }
 
 }

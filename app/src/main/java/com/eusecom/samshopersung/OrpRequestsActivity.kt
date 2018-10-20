@@ -147,7 +147,6 @@ class OrpRequestsActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> consume { navigateToSettings() }
-        R.id.action_orploc -> consume { navigateToUpdateRoomItem() }
         R.id.action_orpdocs -> consume { navigateToOrpKtdocs() }
 
         else -> super.onOptionsItemSelected(item)
@@ -161,21 +160,6 @@ class OrpRequestsActivity : AppCompatActivity() {
         `is`.putExtras(extras)
         startActivity(`is`)
         finish()
-    }
-
-    fun navigateToUpdateRoomItem() {
-
-        showProgressBar()
-        mDisposable.add(mViewModel.updateEkassaReqName("b05226a4-88b2-46e4-ad45-0f28jcf3668a", "", "", "", "" )
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete({ -> Log.d("OrpRequestsActivityLog", " completed") })
-                .doOnError { throwable ->
-                    Log.e("OrpRequestsActivityLog", "Error Throwable " + throwable.message)
-                }
-                .subscribe({ -> Unit }))
-
-
     }
 
 

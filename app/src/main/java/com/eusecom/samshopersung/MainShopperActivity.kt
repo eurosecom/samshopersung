@@ -173,17 +173,6 @@ class MainShopperActivity : AppCompatActivity() {
 
             }
 
-            divider {}
-            primaryItem(getString(R.string.orpekasareqs)) {
-
-                onClick { _ ->
-                    //Log.d("DRAWER", "Click.")
-                    navigateToOrpKtreqs()
-                    false
-                }
-
-            }
-
 
             divider {}
             secondaryItem(getString(R.string.orders)) {
