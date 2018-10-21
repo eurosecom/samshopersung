@@ -159,10 +159,16 @@ public interface ShopperIDataModel {
     public Observable<File> getObservableUriEkasaPdf(Invoice invx, EkassaSettings ekasaset);
 
     @NonNull
+    public File getFileEkasaPdf(Invoice invx, EkassaSettings ekasaset);
+
+    @NonNull
     public Flowable<List<EkassaSettings>> loadEkasaSettings();
 
     @NonNull
     public void saveEkassaSetData(String id, String compico, String compname, String compdic
             , String compicd, String headq, String dkp, String shop, String orsr, String pata1, String pata2);
+
+    @NonNull
+    public Flowable<EkassaRequestBackup> loadEkasaRequestForDok(String dokx);
 
 }

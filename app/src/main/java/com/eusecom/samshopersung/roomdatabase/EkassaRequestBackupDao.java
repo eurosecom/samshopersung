@@ -22,6 +22,9 @@ public interface EkassaRequestBackupDao {
     @Query("SELECT * FROM ekassarequestbackup WHERE requestUuid LIKE :requestUuid LIMIT 1")
     EkassaRequestBackup findByRequestUuid(String requestUuid);
 
+    @Query("SELECT * FROM ekassarequestbackup WHERE receiptNumber LIKE :dok LIMIT 1")
+    Flowable<EkassaRequestBackup> findRequestByDok(String dok);
+
     @Insert
     void insertAll(List<EkassaRequestBackup> ekassarequestbackups);
 

@@ -793,6 +793,16 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     }
 
+    @NonNull
+    @Override
+    public File getFileEkasaPdf(Invoice invx, EkassaSettings ekasaset) {
+
+        //return createEkasaPdf(invx);
+        IEkasaPdfDoc ekasapdfdoc = new EkasaPdfDoc(ekasaset, mAssetManager);
+        return ekasapdfdoc.getFileEkasaPdf(invx);
+
+    }
+
     private Observable<File> createEkasaPdf(Invoice invx) {
 
         File root = android.os.Environment.getExternalStorageDirectory();
@@ -889,6 +899,14 @@ public class ShopperDataModel implements ShopperIDataModel {
         Log.d("dsave settid", id);
 
         mRoomDatabase.ekassaSettingsDao().insertEkassaSettings(ekassaset);
+    }
+
+    //get request by Dok
+    @Override
+    public Flowable<EkassaRequestBackup> loadEkasaRequestForDok(String dokx) {
+
+        return mRoomDatabase.ekassaRequestBackupDao().findRequestByDok(dokx);
+
     }
 
 }

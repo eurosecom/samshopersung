@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
@@ -13,6 +12,7 @@ import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
+import com.eusecom.samshopersung.models.ZipObject;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
@@ -28,6 +28,7 @@ import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -45,12 +46,11 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
+import rx.functions.Func2;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
 
@@ -60,7 +60,7 @@ import static rx.Observable.empty;
 /**
  * View model for the CompaniesMvvmActivity.
  */
-public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
+public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
 
     //@Inject only by Base constructor injection, then i have got all provided dependencies in module DgFirebaseSubModule
     // injected in class DgAllEmpsAbsListFragment where i inject DgAllEmpsAbsMvvmViewModel
@@ -83,9 +83,9 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     //@Inject only by Base constructor injection
     public ShopperMvvmViewModel(@NonNull final ShopperIDataModel dataModel,
-                                     @NonNull final ISchedulerProvider schedulerProvider,
-                                     @NonNull final SharedPreferences sharedPreferences,
-                                     @NonNull final ConnectivityManager connectivityManager) {
+                                @NonNull final ISchedulerProvider schedulerProvider,
+                                @NonNull final SharedPreferences sharedPreferences,
+                                @NonNull final ConnectivityManager connectivityManager) {
         mDataModel = dataModel;
         mSchedulerProvider = schedulerProvider;
         mSharedPreferences = sharedPreferences;
@@ -119,7 +119,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -131,7 +131,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         }
 
         //Log.d("userxplus ", encrypted + " " + ds);
-        	/* Decrypt */
+            /* Decrypt */
         //String decrypted = new String( mMcrypt.decrypt( encrypted ) );
         String serverx = mSharedPreferences.getString("servername", "");
 
@@ -157,7 +157,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         return mObservableSaveDomainToRealm
                 .observeOn(mSchedulerProvider.ui())
-                .flatMap(domx -> mDataModel.saveDomainToRealm(domx ));
+                .flatMap(domx -> mDataModel.saveDomainToRealm(domx));
 
     }
 
@@ -185,7 +185,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -214,7 +214,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -254,7 +254,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -264,7 +264,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -302,7 +302,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -312,7 +312,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -356,7 +356,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -366,7 +366,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted3=encrypted;
+        String encrypted3 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -404,7 +404,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -414,7 +414,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted3=encrypted;
+        String encrypted3 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -438,8 +438,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     public List<ProductKt> getQueryListProduct(String query) {
 
         List<ProductKt> listprod = new ArrayList<>();
-        ProductKt prod = new ProductKt("999","Nat 999","", "","","","",""
-                ,"","","4","","","");
+        ProductKt prod = new ProductKt("999", "Nat 999", "", "", "", "", "", ""
+                , "", "", "4", "", "", "");
         listprod.add(prod);
 
 
@@ -464,7 +464,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -495,7 +495,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -536,7 +536,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -566,7 +566,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -608,7 +608,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -618,7 +618,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -660,7 +660,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -670,7 +670,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -712,7 +712,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -722,7 +722,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -765,7 +765,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -775,7 +775,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -818,7 +818,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -828,7 +828,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -870,7 +870,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -880,7 +880,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -905,7 +905,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     /**
      * end methods for OrderListActivity
      */
-
 
 
     /**
@@ -994,8 +993,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //get PDF invoice
     public void emitGetPdfInvoice(Invoice order) {
 
-        if(callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
-                , CommandExecutorProxyImpl.ReportName.INVOICE)){
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.INVOICE)) {
             System.out.println("command approved.");
 
             order.setDrh("54");
@@ -1008,8 +1007,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //get PDF order
     public void emitGetPdfOrder(Invoice order) {
 
-        if(callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
-                , CommandExecutorProxyImpl.ReportName.ORDER)){
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
 
             order.setDrh("53");
@@ -1021,7 +1020,9 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end get PDF order
 
     //get PDF Uri document
-    public void emitDocumentPdfUri(Invoice invx) { mObservableDocPDF.onNext(invx); }
+    public void emitDocumentPdfUri(Invoice invx) {
+        mObservableDocPDF.onNext(invx);
+    }
 
     @NonNull
     private BehaviorSubject<Invoice> mObservableDocPDF = BehaviorSubject.create();
@@ -1074,7 +1075,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
     //end get PDF Uri document
 
-    public boolean callCommandExecutorProxy(CommandExecutorProxyImpl.PermType perm , CommandExecutorProxyImpl.ReportTypes reportType
+    public boolean callCommandExecutorProxy(CommandExecutorProxyImpl.PermType perm, CommandExecutorProxyImpl.ReportTypes reportType
             , CommandExecutorProxyImpl.ReportName tableName) {
 
         boolean approved = false;
@@ -1086,17 +1087,17 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
                 , mSharedPreferences.getString("ustype", "0"));
         try {
             approved = executor.approveCommand(perm, reportType, tableName);
-        } catch (Exception e ) {
+        } catch (Exception e) {
             Log.d("Exc Message approved:", e.getMessage());
-            if(e.getMessage().equals("ADM")) {
+            if (e.getMessage().equals("ADM")) {
                 emitProxyException("ADM");
                 System.out.println("'" + perm + "' command not approved.");
             }
-            if(e.getMessage().equals("LGN")) {
+            if (e.getMessage().equals("LGN")) {
                 emitProxyException("LGN");
                 System.out.println("'" + perm + "' command not approved.");
             }
-            if(e.getMessage().equals("CMP")) {
+            if (e.getMessage().equals("CMP")) {
                 emitProxyException("CMP");
                 System.out.println("'" + perm + "' command not approved.");
             }
@@ -1106,7 +1107,9 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     }
 
     //get exception
-    public void emitProxyException(String excp) { mObservableException.onNext(excp); }
+    public void emitProxyException(String excp) {
+        mObservableException.onNext(excp);
+    }
 
     @NonNull
     private BehaviorSubject<String> mObservableException = BehaviorSubject.create();
@@ -1145,7 +1148,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -1167,7 +1170,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
         return mObservableIdModelCompany
                 .observeOn(mSchedulerProvider.computation())
-                .flatMap(queryx -> mDataModel.getObservableIdModelCompany(serverx, encrypted2, ds, firx, rokx, drh, queryx ));
+                .flatMap(queryx -> mDataModel.getObservableIdModelCompany(serverx, encrypted2, ds, firx, rokx, drh, queryx));
     }
 
     public void clearObservableIdModelCompany() {
@@ -1224,6 +1227,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     /**
      * Insert product.
+     *
      * @param prodName the new product name
      * @return a {@link Completable} that completes when the user name is updated
      */
@@ -1236,6 +1240,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     /**
      * Delete product by Uid.
+     *
      * @param prodId the uid of deleted product
      * @return a {@link Completable} that completes when the user name is updated
      */
@@ -1268,7 +1273,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -1278,7 +1283,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted3=encrypted;
+        String encrypted3 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -1294,7 +1299,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         return mObservableUploadImageToServer
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(prodx -> mDataModel.uploadImageToServer(serverx, getFileToUpload(prodx.getPrm1()), getDesc(prodx.getCis())));
-                //to solve php .flatMap(mediaPath -> mDataModel.uploadImageWithMapToServer(serverx, getFileToUpload(mediaPath), params));
+        //to solve php .flatMap(mediaPath -> mDataModel.uploadImageWithMapToServer(serverx, getFileToUpload(mediaPath), params));
     }
 
     private MultipartBody.Part getFileToUpload(String mediaPath) {
@@ -1325,7 +1330,9 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
 
     //save ean to server
-    public void emitSaveEanToServer(String eancis) { mObservableSaveEanToServer.onNext(eancis); }
+    public void emitSaveEanToServer(String eancis) {
+        mObservableSaveEanToServer.onNext(eancis);
+    }
 
     @NonNull
     private BehaviorSubject<String> mObservableSaveEanToServer = BehaviorSubject.create();
@@ -1338,7 +1345,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -1348,7 +1355,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted3=encrypted;
+        String encrypted3 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -1385,7 +1392,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -1395,7 +1402,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted3=encrypted;
+        String encrypted3 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -1423,7 +1430,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF
                 , CommandExecutorProxyImpl.ReportName.ORDER)) {
             System.out.println("command approved.");
-            String daterequest=getEkassaRequestDate();
+            String daterequest = getEkassaRequestDate();
             order.setDat(daterequest);
             //receiptData.setParagonAttribute = "false";
             order.setPoh("false");
@@ -1456,12 +1463,11 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     @NonNull
     public Observable<EkassaResponseEnvelope> getObservableRegisterReceiptEkassaResponseXml() {
 
-        //andrejko
         return mObservableRegisterReceiptEkassaResponseXml
                 .observeOn(mSchedulerProvider.computation())
                 .flatMap(envelop ->
                         mDataModel.getEkassaRegisterReceiptXmlResponse(envelop))
-                        .flatMap(s -> Observable.just(s)
+                .flatMap(s -> Observable.just(s)
                         .doOnNext(env -> updateEkassaResponseById(env))
                 );
     }
@@ -1481,7 +1487,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             System.out.println("command approved.");
 
             mPaymentTerminal.setOrder(order);
-            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("","","","","","",""));
+            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("", "", "", "", "", "", ""));
             mObservableRegisterReceiptEkassaResponse.onNext(requestEnvelop);
         }
     }
@@ -1512,7 +1518,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             System.out.println("command approved.");
 
             mPaymentTerminal.setOrder(order);
-            HelloRequestEnvelope requestEnvelop = mPaymentTerminal.pay(new EkassaStrategy("","","","","","",""));
+            HelloRequestEnvelope requestEnvelop = mPaymentTerminal.pay(new EkassaStrategy("", "", "", "", "", "", ""));
             mObservableSoapEkassaResponse.onNext(requestEnvelop);
         }
     }
@@ -1550,16 +1556,11 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
 
         String softhash = "";
-        try
-        {
+        try {
             softhash = EncodeSignatureTools.getSha1(softtext);
-        }
-        catch( NoSuchAlgorithmException e )
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
-        catch( UnsupportedEncodingException e )
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
@@ -1574,7 +1575,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         //Povolené hodnoty:
         //[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}
         String uuid = "b05226a4-88b2-46e4-af45-0f28dcf3668f";
-        uuid="";
+        uuid = "";
 
         String SALTCHARS = "abcdef0123456789";
         StringBuilder salt = new StringBuilder();
@@ -1668,16 +1669,11 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String okp = "c44b3977-0e415cc6-ee663aa1-776c973a-A143b660";
 
         String okphash = "";
-        try
-        {
+        try {
             okphash = EncodeSignatureTools.getSha1(signature.toString());
-        }
-        catch( NoSuchAlgorithmException e )
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
-        catch( UnsupportedEncodingException e )
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
@@ -1746,21 +1742,21 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     public void updateEkassaResponseById(final EkassaResponseEnvelope responseEnvelop) {
 
 
-            if (responseEnvelop.getBody().getGetRegisterReceiptResponse() != null) {
+        if (responseEnvelop.getBody().getGetRegisterReceiptResponse() != null) {
 
 
-                String reqUuid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetRequestUuid();
-                String resUuid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetUuid();
-                String procDate = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetProcessDate();
-                String recid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetReceiptData().getGetId();
-                Log.d("Reg. receipt result", "recid " + recid);
-                updateEkassaResponseById(reqUuid, resUuid, procDate, recid);
-            } else {
+            String reqUuid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetRequestUuid();
+            String resUuid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetUuid();
+            String procDate = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetHeader().getGetProcessDate();
+            String recid = responseEnvelop.getBody().getGetRegisterReceiptResponse().getGetReceiptData().getGetId();
+            Log.d("Reg. receipt result", "recid " + recid);
+            updateEkassaResponseById(reqUuid, resUuid, procDate, recid);
+        } else {
 
-                String errid = responseEnvelop.getBody().getGetRegisterReceiptFault().getGetEkasaErrorCode();
-                Log.d("Reg. receipt result", "errid " + errid);
-                updateMaxIdEkassaResponse("Error", "", errid);
-            }
+            String errid = responseEnvelop.getBody().getGetRegisterReceiptFault().getGetEkasaErrorCode();
+            Log.d("Reg. receipt result", "errid " + errid);
+            updateMaxIdEkassaResponse("Error", "", errid);
+        }
 
     }
 
@@ -1854,7 +1850,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -1864,7 +1860,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -1906,7 +1902,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         String ds = String.valueOf(d);
 
         String usuidx = mSharedPreferences.getString("usuid", "");
-        String userxplus =  ds + "/" + usuidx + "/" + ds;
+        String userxplus = ds + "/" + usuidx + "/" + ds;
 
         MCrypt mcrypt = new MCrypt();
         String encrypted = "";
@@ -1916,7 +1912,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        String encrypted2=encrypted;
+        String encrypted2 = encrypted;
 
         String firx = mSharedPreferences.getString("fir", "");
         String rokx = mSharedPreferences.getString("rok", "");
@@ -1939,19 +1935,15 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
     //end delete EkasaDoc
 
     //get PDF Uri document
-    public void emitEkasaPdf(Invoice invx) { mObservableEkasaPDF.onNext(invx); }
+    public void emitEkasaPdf(Invoice invx) {
+        mObservableEkasaPDF.onNext(invx);
+    }
 
     @NonNull
     private BehaviorSubject<Invoice> mObservableEkasaPDF = BehaviorSubject.create();
 
     @NonNull
     public Observable<File> getObservableEkasaPdf() {
-
-        EkassaSettings ekasaset = new EkassaSettings();
-        ekasaset.setId(1);
-        ekasaset.setCompdic("9876543210");
-        //mRoomDatabase.ekassaSettingsDao().insertEkassaSettings(ekasaset);
-        //Log.d("MVVM name", mEkassaSettings.getCompname());
 
         return mObservableEkasaPDF
                 .observeOn(mSchedulerProvider.ui())
@@ -1965,6 +1957,44 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
     //end get Ekasa PDF
+
+    //get PDF Uri document
+    public void emitEkasaPdfZip(Invoice invx) {
+        mObservableEkasaPDFZip.onNext(invx);
+    }
+
+    @NonNull
+    private BehaviorSubject<Invoice> mObservableEkasaPDFZip = BehaviorSubject.create();
+
+    @NonNull
+    public Observable<File> getObservableEkasaPdfZip() {
+
+        //andrejko
+        return mObservableEkasaPDFZip
+                .observeOn(mSchedulerProvider.ui())
+                .flatMap(invx ->
+
+                        Observable.zip(Observable.just(invx), getEkasaRequestForDokObservable(invx.getDok()),
+                                //Function that define how to zip outputs of both the stream into single object.
+                                new Func2<Invoice, EkassaRequestBackup, File>() {
+                                    @Override
+                                    public File call(Invoice inv, EkassaRequestBackup req) {
+
+                                        inv.setPoh(req.getRequestUuid());
+                                        return mDataModel.getFileEkasaPdf(inv, mEkassaSettings);
+                                    }
+                                })
+
+                );
+
+    }
+
+    public void clearObservableEkasaPDFZip() {
+
+        mObservableEkasaPDFZip = BehaviorSubject.create();
+
+    }
+    //end get Ekasa PDF ZIP
 
     //methods for OrpSettingsActivity
     //get ekasa settings
@@ -1994,7 +2024,8 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
         mSubscription.add(loadEkasaSettingsObservable()
                 .subscribeOn(rx.schedulers.Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError(throwable -> { Log.e(TAG, "Error MVVM " + throwable.getMessage());
+                .doOnError(throwable -> {
+                    Log.e(TAG, "Error MVVM " + throwable.getMessage());
 
                 })
                 .onErrorResumeNext(throwable -> empty())
@@ -2005,7 +2036,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     private void setSettings(List<EkassaSettings> sets) {
 
-        mEkassaSettings=sets.get(0);
+        mEkassaSettings = sets.get(0);
         mSubscription.clear();
         //Log.d("MVVM name", mEkassaSettings.getCompname());
     }
@@ -2016,6 +2047,11 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel{
 
     }
 
+    public Observable<EkassaRequestBackup> getEkasaRequestForDokObservable(String dokx) {
+
+        return RxJavaInterop.toV1Observable(mDataModel.loadEkasaRequestForDok(dokx));
+
+    }
 
 
 }

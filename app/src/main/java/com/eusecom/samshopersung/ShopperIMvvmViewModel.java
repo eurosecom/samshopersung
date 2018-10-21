@@ -8,6 +8,7 @@ import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
+import com.eusecom.samshopersung.models.ZipObject;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
@@ -324,6 +325,16 @@ public interface ShopperIMvvmViewModel {
 
     @NonNull
     public void clearObservableEkasaPDF();
+
+    //pdf ekasa ZIP
+    @NonNull
+    public void emitEkasaPdfZip(Invoice order);
+
+    @NonNull
+    public Observable<File> getObservableEkasaPdfZip();
+
+    @NonNull
+    public void clearObservableEkasaPDFZip();
 
     //get ekassa settings
     @NonNull

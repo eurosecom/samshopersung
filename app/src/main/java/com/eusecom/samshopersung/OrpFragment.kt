@@ -128,6 +128,7 @@ import android.view.*
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.eusecom.samshopersung.models.ZipObject
 import com.eusecom.samshopersung.rxbus.RxBus
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
@@ -250,7 +251,7 @@ class OrpFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerInvoices(it) })
 
-        mSubscription?.add(mViewModel.getObservableEkasaPdf()
+        mSubscription?.add(mViewModel.getObservableEkasaPdfZip()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
@@ -302,7 +303,7 @@ class OrpFragment : BaseKtFragment() {
         mViewModel.clearObservableDeleteEkasaDoc()
         mViewModel.clearObservableRegisterReceiptEkassaResponseXml()
         mViewModel.clearObservableEkasaDocPaid()
-        mViewModel.clearObservableEkasaPDF()
+        mViewModel.clearObservableEkasaPDFZip()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -344,9 +345,10 @@ class OrpFragment : BaseKtFragment() {
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
         startActivity(intent)
-        mViewModel.clearObservableEkasaPDF()
+        mViewModel.clearObservableEkasaPDFZip()
 
     }
+
 
     private fun setServerInvoices(invoices: List<Invoice>) {
 
@@ -416,7 +418,8 @@ class OrpFragment : BaseKtFragment() {
         //order.uce="31100"
         //order.dok="730001"
         //order.drh="54"
-        mViewModel.emitEkasaPdf(order)
+        mViewModel.emitEkasaPdfZip(order)
+        //mViewModel.emitEkasaPdf(order)
 
     }
 
