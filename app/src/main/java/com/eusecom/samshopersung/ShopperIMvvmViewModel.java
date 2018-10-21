@@ -8,13 +8,11 @@ import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
-import com.eusecom.samshopersung.models.ZipObject;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl;
 import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
-import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 
 import java.io.File;

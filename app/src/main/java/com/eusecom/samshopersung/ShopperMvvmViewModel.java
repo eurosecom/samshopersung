@@ -5,14 +5,12 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
-import com.eusecom.samshopersung.models.ZipObject;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
 import com.eusecom.samshopersung.proxy.CommandExecutorProxy;
@@ -28,7 +26,6 @@ import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentStrategy;
 import com.eusecom.samshopersung.soap.soappayment.PaymentTerminal;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -40,7 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -53,7 +49,6 @@ import rx.Observable;
 import rx.functions.Func2;
 import rx.subjects.BehaviorSubject;
 import rx.subscriptions.CompositeSubscription;
-
 import static android.content.ContentValues.TAG;
 import static rx.Observable.empty;
 
