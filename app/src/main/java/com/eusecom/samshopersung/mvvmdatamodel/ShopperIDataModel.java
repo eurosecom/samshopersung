@@ -2,7 +2,6 @@ package com.eusecom.samshopersung.mvvmdatamodel;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
-
 import com.eusecom.samshopersung.BasketKt;
 import com.eusecom.samshopersung.CategoryKt;
 import com.eusecom.samshopersung.CompanyKt;
@@ -24,7 +23,6 @@ import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
-
 import java.io.File;
 import java.util.List;
 import java.util.Map;
