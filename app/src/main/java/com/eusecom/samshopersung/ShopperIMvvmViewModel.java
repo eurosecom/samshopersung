@@ -14,10 +14,8 @@ import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
-
 import java.io.File;
 import java.util.List;
-
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import rx.Observable;
