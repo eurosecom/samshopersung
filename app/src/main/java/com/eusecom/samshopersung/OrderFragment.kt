@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import org.jetbrains.anko.noButton
+import org.jetbrains.anko.okButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.yesButton
@@ -346,7 +347,18 @@ class OrderFragment : BaseKtFragment() {
                         showGetInvoiceDialog(invoice)
                     }
                     4 -> {
-                        showMoveToEkassaDialog(invoice)
+
+                        val ajorp = mSharedPreferences.getString("orp", "0")
+                        if ( ajorp == "" || ajorp == "0" ) {
+
+                            alert("", getString(R.string.havetosupportekasa)) {
+                                okButton {}
+                            }.show()
+
+                        }else{
+                            showMoveToEkassaDialog(invoice)
+                        }
+
                     }
 
 

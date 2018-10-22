@@ -134,6 +134,7 @@ class ChooseCompanyActivity : AppCompatActivity() {
             editor.putString("doddok", it.doddok).apply();
             editor.putString("genuce", it.genuce).apply();
             editor.putString("gendok", it.gendok).apply();
+            editor.putString("orp", it.orp).apply();
 
             editor.commit();
             val i = intent

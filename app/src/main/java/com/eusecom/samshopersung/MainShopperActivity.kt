@@ -8,6 +8,7 @@ import android.view.MenuItem
 import dagger.android.AndroidInjection
 import android.net.ConnectivityManager
 import android.util.Log
+import android.view.View
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
@@ -25,6 +26,9 @@ import kotlinx.android.synthetic.main.mainshopper_content.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.listeners.onClick
 import javax.inject.Inject
+import android.support.design.widget.NavigationView
+
+
 
 
 /**
@@ -56,6 +60,7 @@ class MainShopperActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(false)
+
 
         constlay.onClick { view ->
 
@@ -162,15 +167,35 @@ class MainShopperActivity : AppCompatActivity() {
 
             }
 
-            divider {}
-            primaryItem(getString(R.string.orpekasadocs)) {
+            val ajorp = prefs.getString("orp", "0")
+            if ( ajorp == "" || ajorp == "0" ) {
 
-                onClick { _ ->
-                    //Log.d("DRAWER", "Click.")
-                    navigateToOrpKtdocs()
-                    false
+            }else{
+                divider {}
+                primaryItem(getString(R.string.orpekasadocs)) {
+
+                    onClick { _ ->
+                        //Log.d("DRAWER", "Click.")
+                        navigateToOrpKtdocs()
+                        false
+                    }
+
                 }
+            }
 
+            if ( ajorp == "" || ajorp == "0" ) {
+
+            }else{
+                divider {}
+                primaryItem(getString(R.string.orpsettings)) {
+
+                    onClick { _ ->
+                        //Log.d("DRAWER", "Click.")
+                        navigateToOrpSettings()
+                        false
+                    }
+
+                }
             }
 
 
@@ -331,6 +356,15 @@ class MainShopperActivity : AppCompatActivity() {
     fun navigateToPrivacyPolicy(){
 
 
+    }
+
+    fun navigateToOrpSettings(){
+
+        val `is` = Intent(this, OrpSettingsActivity::class.java)
+        val extras = Bundle()
+        extras.putInt("saltype", 0)
+        `is`.putExtras(extras)
+        startActivity(`is`)
     }
 
     fun navigateToOrder() {
@@ -682,6 +716,13 @@ class MainShopperActivity : AppCompatActivity() {
             headerProfil.withEmail(usermailx)
         }
 
+        val ajorp = prefs.getString("orp", "0")
+        if ( ajorp == "" || ajorp == "0" ) {
+            fabekasa.visibility= View.GONE
+
+        }else{
+            fabekasa.visibility= View.VISIBLE
+        }
     }
 
     //consume oncreateoptionmenu

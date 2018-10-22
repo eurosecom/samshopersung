@@ -380,6 +380,9 @@
     <string name="popisDkp">ORP number</string>
     <string name="popisPat1">Bottom text 1</string>
     <string name="popisPat2">Bottom text 2</string>
+    <string name="orp_title">ORP eCashBox.</string>
+    <string name="orp_summary">0=no, 1=yes</string>
+    <string name="havetosupportekasa">You have to support eCashBox - set your company</string>
 
 
 </resources>
