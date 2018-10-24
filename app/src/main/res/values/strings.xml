@@ -383,6 +383,8 @@
     <string name="orp_title">ORP eCashBox.</string>
     <string name="orp_summary">0=no, 1=yes</string>
     <string name="havetosupportekasa">You have to support eCashBox - set your company</string>
+    <string name="setidctoekasa">Set IDC to eCashBox document:</string>
+    <string name="setidc">Set ID Company</string>
 
 
 </resources>

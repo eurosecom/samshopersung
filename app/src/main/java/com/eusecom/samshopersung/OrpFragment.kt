@@ -391,7 +391,8 @@ class OrpFragment : BaseKtFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setView(textenter).setTitle(getString(R.string.orpdoc) + " " + invoice.dok)
 
-        builder.setItems(arrayOf<CharSequence>(getString(R.string.getekassa), getString(R.string.pdfdoc), getString(R.string.deletewholedoc))
+        builder.setItems(arrayOf<CharSequence>(getString(R.string.getekassa), getString(R.string.pdfdoc)
+                , getString(R.string.setidc), getString(R.string.deletewholedoc))
         ) { dialog, which ->
             // The 'which' argument contains the index position
             // of the selected item
@@ -403,6 +404,9 @@ class OrpFragment : BaseKtFragment() {
                     navigateToGetEkasaPdf(invoice)
                 }
                 2 -> {
+                    showSetIdcDialog(invoice)
+                }
+                3 -> {
                     showDeleteInvoiceDialog(invoice)
                 }
 
@@ -420,6 +424,21 @@ class OrpFragment : BaseKtFragment() {
         //order.drh="54"
         mViewModel.emitEkasaPdfZip(order)
         //mViewModel.emitEkasaPdf(order)
+
+    }
+
+    fun showSetIdcDialog(order: Invoice) {
+
+        if (order.ksy == "0") {
+            alert("", getString(R.string.setidctoekasa) + " " + order.dok) {
+                yesButton {   }
+                noButton {}
+            }.show()
+        }else{
+            alert("", order.dok + " " + getString(R.string.docregistered)) {
+                okButton {  }
+            }.show()
+        }
 
     }
 
