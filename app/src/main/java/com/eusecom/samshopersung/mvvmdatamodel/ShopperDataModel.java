@@ -903,7 +903,7 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     //get request by Dok
     @Override
-    public Flowable<EkassaRequestBackup> loadEkasaRequestForDok(String dokx) {
+    public Flowable<List<EkassaRequestBackup>> loadEkasaRequestForDok(String dokx) {
 
         return mRoomDatabase.ekassaRequestBackupDao().findRequestByDok(dokx);
 

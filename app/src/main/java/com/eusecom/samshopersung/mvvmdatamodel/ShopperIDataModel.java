@@ -167,6 +167,6 @@ public interface ShopperIDataModel {
             , String compicd, String headq, String dkp, String shop, String orsr, String pata1, String pata2);
 
     @NonNull
-    public Flowable<EkassaRequestBackup> loadEkasaRequestForDok(String dokx);
+    public Flowable<List<EkassaRequestBackup>> loadEkasaRequestForDok(String dokx);
 
 }

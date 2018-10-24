@@ -1971,11 +1971,16 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
 
                         Observable.zip(Observable.just(invx), getEkasaRequestForDokObservable(invx.getDok()),
                                 //Function that define how to zip outputs of both the stream into single object.
-                                new Func2<Invoice, EkassaRequestBackup, File>() {
+                                new Func2<Invoice, List<EkassaRequestBackup>, File>() {
                                     @Override
-                                    public File call(Invoice inv, EkassaRequestBackup req) {
+                                    public File call(Invoice inv, List<EkassaRequestBackup> req) {
 
-                                        inv.setPoh(req.getRequestUuid());
+                                        if(!req.isEmpty()){
+                                            inv.setPoh(req.get(0).getRequestUuid());
+                                        }else{
+                                            inv.setPoh("No request");
+                                        }
+
                                         return mDataModel.getFileEkasaPdf(inv, mEkassaSettings);
                                     }
                                 })
@@ -2042,7 +2047,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
 
     }
 
-    public Observable<EkassaRequestBackup> getEkasaRequestForDokObservable(String dokx) {
+    public Observable<List<EkassaRequestBackup>> getEkasaRequestForDokObservable(String dokx) {
 
         return RxJavaInterop.toV1Observable(mDataModel.loadEkasaRequestForDok(dokx));
 
