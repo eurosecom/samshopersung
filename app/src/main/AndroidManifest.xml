@@ -48,10 +48,7 @@
         <activity android:name=".OrpRequestsActivity" android:label="@string/orprequests"/>
         <activity android:name=".OrpSettingsActivity" android:label="@string/orpsettings"/>
 
-        <activity android:name=".PdfboxActivity"/>
         <activity android:name=".KeyStoreActivity"/>
-        <activity android:name=".ScanEanActivity"/>
-        <activity android:name=".ScanEanKtActivity"/>
         <activity android:name=".MapsActivity"/>
         <activity android:name=".MapActivity"/>
         <activity android:name=".RoomDemoActivity"/>

@@ -1,7 +1,6 @@
 package com.eusecom.samshopersung.di;
 
 import android.app.Activity;
-
 import com.eusecom.samshopersung.AccountReportsActivity;
 import com.eusecom.samshopersung.BasketKtActivity;
 import com.eusecom.samshopersung.ChooseCompanyActivity;
@@ -22,7 +21,6 @@ import com.eusecom.samshopersung.ProductDetailActivity;
 import com.eusecom.samshopersung.RoomDemoActivity;
 import com.eusecom.samshopersung.SetImageActivity;
 import com.eusecom.samshopersung.SetProductActivity;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;

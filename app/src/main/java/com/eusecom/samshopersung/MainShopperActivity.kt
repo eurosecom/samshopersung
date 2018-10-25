@@ -208,19 +208,6 @@ class MainShopperActivity : AppCompatActivity() {
                 }
             }
 
-            if (BuildConfig.DEBUG) {
-
-                divider {}
-                secondaryItem("PdfBox DEMO ") {
-
-                    onClick { _ ->
-                        navigateToPdfBoxDemo()
-                        false
-                    }
-                }
-            }else {
-
-            }
 
             if (BuildConfig.DEBUG) {
 
@@ -229,20 +216,6 @@ class MainShopperActivity : AppCompatActivity() {
 
                     onClick { _ ->
                         navigateToKeyStoreDemo()
-                        false
-                    }
-                }
-            }else {
-
-            }
-
-            if (BuildConfig.DEBUG) {
-
-                divider {}
-                secondaryItem("Scan EAN DEMO ") {
-
-                    onClick { _ ->
-                        navigateToScanEanDemo()
                         false
                     }
                 }
@@ -472,10 +445,6 @@ class MainShopperActivity : AppCompatActivity() {
         }
     }
 
-    fun navigateToPdfBoxDemo() {
-        val `is` = Intent(this, PdfboxActivity::class.java)
-        startActivity(`is`)
-    }
 
     fun navigateToKeyStoreDemo() {
         val `is` = Intent(this, KeyStoreActivity::class.java)
@@ -489,11 +458,6 @@ class MainShopperActivity : AppCompatActivity() {
         startActivity(`is`)
     }
 
-    fun navigateToScanEanDemo() {
-
-        val `is` = Intent(this, ScanEanKtActivity::class.java)
-        startActivity(`is`)
-    }
 
     fun navigateToFlumboratorDemo() {
 
