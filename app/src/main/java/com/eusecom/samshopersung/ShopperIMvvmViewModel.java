@@ -312,6 +312,15 @@ public interface ShopperIMvvmViewModel {
     @NonNull
     public void clearObservableDeleteEkasaDoc();
 
+    @NonNull
+    public void emitSetIdcToEkasa(Invoice invx);
+
+    @NonNull
+    public Observable<List<Invoice>> getObservableSetIdcToEkasa();
+
+    @NonNull
+    public void clearObservableSetIdcToEkasa();
+
     //pdf ekasa
     @NonNull
     public void emitEkasaPdf(Invoice order);

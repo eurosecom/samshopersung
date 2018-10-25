@@ -114,6 +114,7 @@
 
 package com.eusecom.samshopersung
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -125,6 +126,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -295,6 +297,17 @@ class OrpFragment : BaseKtFragment() {
                 .onErrorResumeNext { throwable -> Observable.empty() }
                 .subscribe { it -> setServerInvoices(it) })
 
+        mSubscription?.add(mViewModel.observableSetIdcToEkasa
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("OrpFragment", "Error Throwable " + throwable.message)
+                    hideProgressBar()
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setServerInvoices(it) })
+
         ActivityCompat.invalidateOptionsMenu(activity)
     }
 
@@ -304,6 +317,7 @@ class OrpFragment : BaseKtFragment() {
         mViewModel.clearObservableRegisterReceiptEkassaResponseXml()
         mViewModel.clearObservableEkasaDocPaid()
         mViewModel.clearObservableEkasaPDFZip()
+        mViewModel.clearObservableSetIdcToEkasa()
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         _disposables.dispose()
@@ -430,10 +444,7 @@ class OrpFragment : BaseKtFragment() {
     fun showSetIdcDialog(order: Invoice) {
 
         if (order.ksy == "0") {
-            alert("", getString(R.string.setidctoekasa) + " " + order.dok) {
-                yesButton {   }
-                noButton {}
-            }.show()
+            getSetIdcDialog(order)
         }else{
             alert("", order.dok + " " + getString(R.string.docregistered)) {
                 okButton {  }
@@ -486,6 +497,37 @@ class OrpFragment : BaseKtFragment() {
         mViewModel.emitRegisterReceiptEkassaXml(order)
 
     }
+
+
+    fun getSetIdcDialog(invx: Invoice) {
+
+        var inflater: LayoutInflater = LayoutInflater.from(context);
+        var textenter: View = inflater.inflate(R.layout.setidc_edit_dialog, null);
+        var idcx: EditText = textenter.findViewById<View>(R.id.idcx) as EditText
+        idcx.setText(invx.ico);
+
+        val builder = AlertDialog.Builder(context)
+        builder.setView(textenter).setTitle(getString(R.string.setidctoekasa) + " " + invx.dok);
+
+        builder.setNegativeButton(getString(R.string.cancel)){dialog,which ->
+            dialog.cancel();
+        }
+        builder.setPositiveButton(getString(R.string.save)){dialog, which ->
+
+            showProgressBar()
+            var idct: String = idcx.getText().toString()
+            invx.ico=idct
+            mViewModel.emitSetIdcToEkasa(invx);
+        }
+
+        val dialog = builder.create()
+        builder.show()
+
+    }
+
+
+
+
 
 
 

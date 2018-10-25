@@ -385,6 +385,10 @@
     <string name="havetosupportekasa">You have to support eCashBox - set your company</string>
     <string name="setidctoekasa">Set IDC to eCashBox document:</string>
     <string name="setidc">Set ID Company</string>
+    <string name="fullosc">employee Id</string>
+    <string name="fullfirma">company Id</string>
+    <string name="type">type</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>
