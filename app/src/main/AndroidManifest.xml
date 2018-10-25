@@ -51,8 +51,6 @@
         <activity android:name=".KeyStoreActivity"/>
         <activity android:name=".MapsActivity"/>
         <activity android:name=".MapActivity"/>
-        <activity android:name=".RoomDemoActivity"/>
-        <activity android:name=".FlombulatorActivity"/>
 
         <!-- for googlemaps -->
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_key"/>

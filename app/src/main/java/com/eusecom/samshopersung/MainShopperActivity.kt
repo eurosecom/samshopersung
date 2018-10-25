@@ -226,35 +226,6 @@ class MainShopperActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
-                secondaryItem("Flumborator dagger2 DEMO ") {
-
-                    onClick { _ ->
-                        navigateToFlumboratorDemo()
-                        false
-                    }
-                }
-            }else {
-
-            }
-
-
-            if (BuildConfig.DEBUG) {
-
-                divider {}
-                secondaryItem("Room DEMO ") {
-
-                    onClick { _ ->
-                        navigateToRoomDemo()
-                        false
-                    }
-                }
-            }else {
-
-            }
-
-            if (BuildConfig.DEBUG) {
-
-                divider {}
                 secondaryItem("Maps NEW DEMO ") {
 
                     onClick { _ ->
@@ -450,21 +421,6 @@ class MainShopperActivity : AppCompatActivity() {
         val `is` = Intent(this, KeyStoreActivity::class.java)
         startActivity(`is`)
     }
-
-    fun navigateToRoomDemo() {
-        val servx = prefs.getString("servername", "")
-        toast("servername " + servx)
-        val `is` = Intent(this, RoomDemoActivity::class.java)
-        startActivity(`is`)
-    }
-
-
-    fun navigateToFlumboratorDemo() {
-
-        val `is` = Intent(this, FlombulatorActivity::class.java)
-        startActivity(`is`)
-    }
-
 
     fun navigateToMapActivity() {
 

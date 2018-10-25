@@ -5,8 +5,6 @@ import com.eusecom.samshopersung.AccountReportsActivity;
 import com.eusecom.samshopersung.BasketKtActivity;
 import com.eusecom.samshopersung.ChooseCompanyActivity;
 import com.eusecom.samshopersung.DomainsViewModelActivity;
-import com.eusecom.samshopersung.FlombulatorActivity;
-import com.eusecom.samshopersung.MainActivity;
 import com.eusecom.samshopersung.MainShopperActivity;
 import com.eusecom.samshopersung.MapActivity;
 import com.eusecom.samshopersung.NewIdcActivity;
@@ -18,7 +16,6 @@ import com.eusecom.samshopersung.OrpListKtActivity;
 import com.eusecom.samshopersung.OrpRequestsActivity;
 import com.eusecom.samshopersung.OrpSettingsActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
-import com.eusecom.samshopersung.RoomDemoActivity;
 import com.eusecom.samshopersung.SetImageActivity;
 import com.eusecom.samshopersung.SetProductActivity;
 import dagger.Binds;
@@ -30,11 +27,6 @@ import dagger.multibindings.IntoMap;
 
 @Module
 public abstract class ActivityBuilder {
-
-    @Binds
-    @IntoMap
-    @ActivityKey(MainActivity.class)
-    abstract AndroidInjector.Factory<? extends Activity> bindMainActivity(MainActivityComponent.Builder builder);
 
     @Binds
     @IntoMap
@@ -78,10 +70,6 @@ public abstract class ActivityBuilder {
     abstract OrderListActivity bindOrderListActivity();
 
     @ShopperScope
-    @ContributesAndroidInjector(modules = {FlombulatorModule.class})
-    abstract FlombulatorActivity bindFlombulatorActivity();
-
-    @ShopperScope
     @ContributesAndroidInjector(modules = {ProductDetailActivityModule.class, ProductDetailFragmentProvider.class
             , ProductDetailKtFragmentProvider.class})
     abstract ProductDetailActivity bindProductDetailActivity();
@@ -93,10 +81,6 @@ public abstract class ActivityBuilder {
     @ShopperScope
     @ContributesAndroidInjector(modules = {NewIdcActivityModule.class})
     abstract OrderDetailActivity bindOrderDetailActivity();
-
-    @ShopperScope
-    @ContributesAndroidInjector(modules = {RoomDemoActivityModule.class})
-    abstract RoomDemoActivity bindRoomDemoActivity();
 
     @ShopperScope
     @ContributesAndroidInjector(modules = {SetImageActivityModule.class})

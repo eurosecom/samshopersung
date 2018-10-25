@@ -50,7 +50,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
  * SamShopper AppModule
  */
 @Module(subcomponents = {
-        MainActivityComponent.class, MainShopperActivityComponent.class
+        MainShopperActivityComponent.class
         , ChooseCompanyActivityComponent.class, DomainsActivityComponent.class
         , OfferKtActivityComponent.class, MapActivityComponent.class
         , BasketKtActivityComponent.class})
