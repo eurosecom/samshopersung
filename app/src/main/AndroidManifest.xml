@@ -51,6 +51,34 @@
         <activity android:name=".KeyStoreActivity"/>
         <activity android:name=".MapsActivity"/>
         <activity android:name=".MapActivity"/>
+        <activity
+            android:name=".launcherhelper.QuizActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan"
+            >
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.edcom.sk"
+                    android:pathPrefix="/quiz" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="www.edcom.sk"
+                    android:pathPrefix="/quiz" />
+            </intent-filter>
+        </activity>
 
         <!-- for googlemaps -->
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_key"/>

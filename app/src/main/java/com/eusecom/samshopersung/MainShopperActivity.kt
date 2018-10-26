@@ -27,8 +27,8 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.listeners.onClick
 import javax.inject.Inject
 import android.support.design.widget.NavigationView
-
-
+import com.eusecom.samshopersung.launcherhelper.ActivityLaunchHelper
+import com.eusecom.samshopersung.launcherhelper.QuizActivity
 
 
 /**
@@ -208,6 +208,19 @@ class MainShopperActivity : AppCompatActivity() {
                 }
             }
 
+            if (BuildConfig.DEBUG) {
+
+                divider {}
+                secondaryItem("DEMO QUIZ Activity ") {
+
+                    onClick { _ ->
+                        navigateToQuizDemo()
+                        false
+                    }
+                }
+            }else {
+
+            }
 
             if (BuildConfig.DEBUG) {
 
@@ -332,26 +345,6 @@ class MainShopperActivity : AppCompatActivity() {
         }
     }
 
-    fun navigateToOrpKt() {
-        val usuid = prefs.getString("usuid", "")
-        if (usuid == "" || usuid == "0") {
-            showDonotloginAlert()
-        }else {
-
-            val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
-                showDonotcompanyAlert()
-            }else {
-
-                val `is` = Intent(this, OrpListActivity::class.java)
-                val extras = Bundle()
-                extras.putInt("saltype", 0)
-                `is`.putExtras(extras)
-                startActivity(`is`)
-            }
-
-        }
-    }
 
     fun navigateToOrpKtdocs() {
         val usuid = prefs.getString("usuid", "")
@@ -374,26 +367,6 @@ class MainShopperActivity : AppCompatActivity() {
         }
     }
 
-    fun navigateToOrpKtreqs() {
-        val usuid = prefs.getString("usuid", "")
-        if (usuid == "" || usuid == "0") {
-            showDonotloginAlert()
-        }else {
-
-            val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
-                showDonotcompanyAlert()
-            }else {
-
-                val `is` = Intent(this, OrpRequestsActivity::class.java)
-                val extras = Bundle()
-                extras.putInt("saltype", 0)
-                `is`.putExtras(extras)
-                startActivity(`is`)
-            }
-
-        }
-    }
 
     fun navigateToInvoice() {
         val usuid = prefs.getString("usuid", "")
@@ -420,6 +393,14 @@ class MainShopperActivity : AppCompatActivity() {
     fun navigateToKeyStoreDemo() {
         val `is` = Intent(this, KeyStoreActivity::class.java)
         startActivity(`is`)
+    }
+
+    fun navigateToQuizDemo() {
+        //val `is` = Intent(this, QuizActivity::class.java)
+        //startActivity(`is`)
+
+        ActivityLaunchHelper.launchQuiz(this, true)
+
     }
 
     fun navigateToMapActivity() {
