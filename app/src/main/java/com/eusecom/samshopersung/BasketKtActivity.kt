@@ -2,6 +2,7 @@ package com.eusecom.samshopersung
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -99,6 +100,10 @@ class BasketKtActivity : AppCompatActivity() {
             val `is` = Intent(this, OfferKtActivity::class.java)
             startActivity(`is`)
             finish()
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fab.setTransitionName("buttontofab")
         }
 
     }

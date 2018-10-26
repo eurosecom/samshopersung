@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import dagger.android.AndroidInjection
 import android.net.ConnectivityManager
+import android.os.Build
 import android.util.Log
 import android.view.View
 import co.zsmb.materialdrawerkt.builders.accountHeader
@@ -26,9 +27,16 @@ import kotlinx.android.synthetic.main.mainshopper_content.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.listeners.onClick
 import javax.inject.Inject
-import android.support.design.widget.NavigationView
+import android.transition.TransitionInflater
 import com.eusecom.samshopersung.launcherhelper.ActivityLaunchHelper
 import com.eusecom.samshopersung.launcherhelper.QuizActivity
+import android.content.Intent
+import android.app.ActivityOptions
+import com.eusecom.samshopersung.R.id.textView
+import android.support.v4.view.ViewCompat.getTransitionName
+import com.eusecom.samshopersung.R.id.imageView
+
+
 
 
 /**
@@ -41,7 +49,6 @@ class MainShopperActivity : AppCompatActivity() {
     private lateinit var result: Drawer
     private lateinit var headerResult: AccountHeader
     private lateinit var headerProfil: ProfileDrawerItem
-    private lateinit var alert: AlertBuilder<DialogInterface>
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -71,42 +78,51 @@ class MainShopperActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
 
-            _ -> navigateToOfferKt()
+            _ ->
+            navigateToOfferKt()
 
         }
 
         fabekasa.setOnClickListener {
 
-            _ -> navigateToOrpKtdocs()
+            _ ->
+            navigateToOrpKtdocs()
 
         }
 
         button1.setOnClickListener {
-            _ -> navigateToBasketKt()
+            _ ->
+            navigateToBasketKt()
         }
 
         button2.setOnClickListener {
-            _ -> navigateToOfferKt()
+            _ ->
+            navigateToOfferKt()
         }
 
         button3.setOnClickListener {
-            _ -> navigateToOrder()
+            _ ->
+            navigateToOrder()
         }
 
         button4.setOnClickListener {
-            _ -> navigateToInvoice()
+            _ ->
+            navigateToInvoice()
         }
 
         button5.setOnClickListener {
-            _ -> navigateToAccountReportsKt()
+            _ ->
+            navigateToAccountReportsKt()
         }
 
         buttonFir.setOnClickListener {
-            _ -> navigateToGetCompany()
+            _ ->
+            navigateToGetCompany()
         }
 
         imageView.setOnClickListener {
-            _ -> navigateToBasketKt()
+            _ ->
+            navigateToBasketKt()
         }
 
         //kotlin drawer by https://github.com/zsmb13/MaterialDrawerKt
@@ -128,10 +144,7 @@ class MainShopperActivity : AppCompatActivity() {
                     iconUrl = "http://www.edcom.sk"
                     identifier = 100
                 }
-                //profile("EDcom", "andrejd@edcom.sk") {
-                //    iconUrl = "http://www.edcom.sk"
-                //    identifier = 101
-                //}
+
 
                 profileSetting(getString(R.string.addacount_title), getString(R.string.addacount_summary)) {
                     icon = R.drawable.ic_history_black_24dp
@@ -168,9 +181,9 @@ class MainShopperActivity : AppCompatActivity() {
             }
 
             val ajorp = prefs.getString("orp", "0")
-            if ( ajorp == "" || ajorp == "0" ) {
+            if (ajorp == "" || ajorp == "0") {
 
-            }else{
+            } else {
                 divider {}
                 primaryItem(getString(R.string.orpekasadocs)) {
 
@@ -183,9 +196,9 @@ class MainShopperActivity : AppCompatActivity() {
                 }
             }
 
-            if ( ajorp == "" || ajorp == "0" ) {
+            if (ajorp == "" || ajorp == "0") {
 
-            }else{
+            } else {
                 divider {}
                 primaryItem(getString(R.string.orpsettings)) {
 
@@ -218,7 +231,7 @@ class MainShopperActivity : AppCompatActivity() {
                         false
                     }
                 }
-            }else {
+            } else {
 
             }
 
@@ -232,7 +245,7 @@ class MainShopperActivity : AppCompatActivity() {
                         false
                     }
                 }
-            }else {
+            } else {
 
             }
 
@@ -246,7 +259,7 @@ class MainShopperActivity : AppCompatActivity() {
                         false
                     }
                 }
-            }else {
+            } else {
 
             }
 
@@ -260,7 +273,7 @@ class MainShopperActivity : AppCompatActivity() {
                         false
                     }
                 }
-            }else {
+            } else {
 
             }
 
@@ -310,12 +323,12 @@ class MainShopperActivity : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun navigateToPrivacyPolicy(){
+    fun navigateToPrivacyPolicy() {
 
 
     }
 
-    fun navigateToOrpSettings(){
+    fun navigateToOrpSettings() {
 
         val `is` = Intent(this, OrpSettingsActivity::class.java)
         val extras = Bundle()
@@ -328,12 +341,12 @@ class MainShopperActivity : AppCompatActivity() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
-        }else {
+        } else {
 
             val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
+            if (usfir == "" || usfir == "0") {
                 showDonotcompanyAlert()
-            }else {
+            } else {
 
                 val `is` = Intent(this, OrderListActivity::class.java)
                 val extras = Bundle()
@@ -350,12 +363,12 @@ class MainShopperActivity : AppCompatActivity() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
-        }else {
+        } else {
 
             val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
+            if (usfir == "" || usfir == "0") {
                 showDonotcompanyAlert()
-            }else {
+            } else {
 
                 val `is` = Intent(this, OrpListKtActivity::class.java)
                 val extras = Bundle()
@@ -372,12 +385,12 @@ class MainShopperActivity : AppCompatActivity() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
-        }else {
+        } else {
 
             val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
+            if (usfir == "" || usfir == "0") {
                 showDonotcompanyAlert()
-            }else {
+            } else {
 
                 val `is` = Intent(this, OrderListActivity::class.java)
                 val extras = Bundle()
@@ -391,15 +404,24 @@ class MainShopperActivity : AppCompatActivity() {
 
 
     fun navigateToKeyStoreDemo() {
-        val `is` = Intent(this, KeyStoreActivity::class.java)
-        startActivity(`is`)
+
+            val `is` = Intent(this, KeyStoreActivity::class.java)
+            startActivity(`is`)
+
     }
 
     fun navigateToQuizDemo() {
-        //val `is` = Intent(this, QuizActivity::class.java)
-        //startActivity(`is`)
 
-        ActivityLaunchHelper.launchQuiz(this, true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.exitTransition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.category_exit)
+            window.enterTransition = TransitionInflater.from(this)
+                    .inflateTransition(R.transition.category_enter)
+            ActivityLaunchHelper.launchQuiz(this, true)
+        } else {
+            val `is` = Intent(this, QuizActivity::class.java)
+            startActivity(`is`)
+        }
 
     }
 
@@ -421,12 +443,12 @@ class MainShopperActivity : AppCompatActivity() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
-        }else {
+        } else {
 
             val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
+            if (usfir == "" || usfir == "0") {
                 showDonotcompanyAlert()
-            }else {
+            } else {
 
                 val editor = prefs.edit()
                 editor.putString("edidok", "0").apply();
@@ -445,47 +467,56 @@ class MainShopperActivity : AppCompatActivity() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
-        }else {
+        } else {
 
             val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
+            if (usfir == "" || usfir == "0") {
                 showDonotcompanyAlert()
-            }else {
+            } else {
 
-                val `is` = Intent(this, BasketKtActivity::class.java)
-                startActivity(`is`)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    button1.setTransitionName("buttontofab");
+                    val options = ActivityOptions.makeSceneTransitionAnimation(this@MainShopperActivity, button1, "buttontofab")
+                    val intent = Intent(this@MainShopperActivity, BasketKtActivity::class.java)
+                    startActivity(intent, options.toBundle())
+                } else {
+                    val `is` = Intent(this, BasketKtActivity::class.java)
+                    startActivity(`is`)
+                }
+
+
             }
 
         }
 
     }
 
-    fun navigateToSettings(){
+    fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
 
-    fun navigateToLogin(){
+    fun navigateToLogin() {
         val intent = Intent(this, EmailPasswordActivity::class.java)
         startActivity(intent)
     }
 
-    fun navigateToGetCompany(){
+    fun navigateToGetCompany() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
-        }else {
+        } else {
             startActivityForResult(intentFor<ChooseCompanyActivity>(), 101)
         }
 
     }
 
-    fun navigateToSetDomain(){
+    fun navigateToSetDomain() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             val `is` = Intent(this, DomainsViewModelActivity::class.java)
             startActivity(`is`)
-        }else {
+        } else {
             showLoginAlert()
         }
 
@@ -496,12 +527,12 @@ class MainShopperActivity : AppCompatActivity() {
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotloginAlert()
-        }else {
+        } else {
 
             val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
+            if (usfir == "" || usfir == "0") {
                 showDonotcompanyAlert()
-            }else {
+            } else {
 
                 val `is` = Intent(this, NewIdcActivity::class.java)
                 startActivity(`is`)
@@ -511,17 +542,17 @@ class MainShopperActivity : AppCompatActivity() {
 
     }
 
-    fun navigateToAccountReportsKt(){
+    fun navigateToAccountReportsKt() {
 
         val usuid = prefs.getString("usuid", "")
         if (usuid == "" || usuid == "0") {
             showDonotcompanyAlert()
-        }else {
+        } else {
 
             val usfir = prefs.getString("fir", "")
-            if ( usfir == "" || usfir == "0" ) {
+            if (usfir == "" || usfir == "0") {
                 showDonotcompanyAlert()
-            }else {
+            } else {
 
                 val editor = prefs.edit()
                 editor.putString("edidok", "FINDITEM").apply();
@@ -556,8 +587,9 @@ class MainShopperActivity : AppCompatActivity() {
     fun showLoginAlert() {
 
         alert(getString(R.string.nologin), getString(R.string.action_nologin)) {
-            yesButton { navigateToLogin()
-                 }
+            yesButton {
+                navigateToLogin()
+            }
             noButton {}
         }.show()
 
@@ -567,8 +599,9 @@ class MainShopperActivity : AppCompatActivity() {
     fun showDonotloginAlert() {
 
         alert(getString(R.string.donotlogin), getString(R.string.action_login)) {
-            yesButton { navigateToLogin()
-                 }
+            yesButton {
+                navigateToLogin()
+            }
             noButton {}
         }.show()
 
@@ -578,28 +611,29 @@ class MainShopperActivity : AppCompatActivity() {
     fun showDonotcompanyAlert() {
 
         alert(getString(R.string.donotcompany), getString(R.string.getcompany)) {
-            yesButton { navigateToGetCompany()
-                 }
+            yesButton {
+                navigateToGetCompany()
+            }
             noButton {}
         }.show()
 
     }
 
-    fun updateUI(){
+    fun updateUI() {
 
-        if( isConnectedServer() ) {
+        if (isConnectedServer()) {
             imageView2.setImageResource(R.drawable.web2);
             Log.e("Trigger", " web")
-        }else{
+        } else {
             imageView2.setImageResource(R.drawable.sdkarta);
             Log.e("Trigger", " sdcard")
         }
 
         Log.d("updateUI ", "is going.")
         val usfir = prefs.getString("fir", "")
-        if ( usfir == "" || usfir == "0" ) {
+        if (usfir == "" || usfir == "0") {
             buttonFir.setText(R.string.choosecompany)
-        }else {
+        } else {
             buttonFir.setText(prefs.getString("fir", "") +
                     " " + prefs.getString("rok", "") +
                     " " + prefs.getString("firnaz", ""))
@@ -618,11 +652,11 @@ class MainShopperActivity : AppCompatActivity() {
         }
 
         val ajorp = prefs.getString("orp", "0")
-        if ( ajorp == "" || ajorp == "0" ) {
-            fabekasa.visibility= View.GONE
+        if (ajorp == "" || ajorp == "0") {
+            fabekasa.visibility = View.GONE
 
-        }else{
-            fabekasa.visibility= View.VISIBLE
+        } else {
+            fabekasa.visibility = View.VISIBLE
         }
     }
 
