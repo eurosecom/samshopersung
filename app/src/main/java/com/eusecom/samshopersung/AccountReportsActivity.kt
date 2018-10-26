@@ -2,12 +2,14 @@ package com.eusecom.samshopersung
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl
 import dagger.android.AndroidInjection
@@ -42,6 +44,7 @@ class AccountReportsActivity : AppCompatActivity() {
     private var mManager: LinearLayoutManager? = null
     private var mSubscription: CompositeSubscription? = null
     private var mProgressBar: ProgressBar? = null
+    private var mRep00: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
@@ -61,8 +64,11 @@ class AccountReportsActivity : AppCompatActivity() {
         mRecycler = findViewById<View>(R.id.recycler_view) as RecyclerView
         mRecycler?.setLayoutManager(mManager)
         mRecycler?.setAdapter(mAdapter)
+        mRep00 = findViewById<View>(R.id.rep00) as Button
 
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mRep00?.setTransitionName("buttontobutton")
+        }
 
     }
 

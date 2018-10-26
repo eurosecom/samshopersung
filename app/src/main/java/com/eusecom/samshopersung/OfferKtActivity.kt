@@ -256,6 +256,9 @@ class OfferKtActivity : AppCompatActivity() {
 
         }
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fab.setTransitionName("buttontofab")
+        }
 
     }
 

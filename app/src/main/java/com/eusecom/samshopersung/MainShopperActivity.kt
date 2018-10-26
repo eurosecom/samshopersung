@@ -173,7 +173,6 @@ class MainShopperActivity : AppCompatActivity() {
             primaryItem(getString(R.string.action_loginout)) {
 
                 onClick { _ ->
-                    //Log.d("DRAWER", "Click.")
                     navigateToLogin()
                     false
                 }
@@ -188,7 +187,6 @@ class MainShopperActivity : AppCompatActivity() {
                 primaryItem(getString(R.string.orpekasadocs)) {
 
                     onClick { _ ->
-                        //Log.d("DRAWER", "Click.")
                         navigateToOrpKtdocs()
                         false
                     }
@@ -203,7 +201,6 @@ class MainShopperActivity : AppCompatActivity() {
                 primaryItem(getString(R.string.orpsettings)) {
 
                     onClick { _ ->
-                        //Log.d("DRAWER", "Click.")
                         navigateToOrpSettings()
                         false
                     }
@@ -279,10 +276,7 @@ class MainShopperActivity : AppCompatActivity() {
 
 
         }
-
-        //headerResult.setBackground(getResources().getDrawable(R.drawable.cupcake))
-        //headerProfil.withName(R.string.october)
-        //headerProfil.withEmail(R.string.october)
+        
     }
 
     public override fun onResume() {
@@ -454,8 +448,16 @@ class MainShopperActivity : AppCompatActivity() {
                 editor.putString("edidok", "0").apply();
                 editor.commit();
 
-                val `is` = Intent(this, OfferKtActivity::class.java)
-                startActivity(`is`)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    button2.setTransitionName("buttontofab");
+                    val options = ActivityOptions.makeSceneTransitionAnimation(this@MainShopperActivity, button2, "buttontofab")
+                    val intent = Intent(this@MainShopperActivity, OfferKtActivity::class.java)
+                    startActivity(intent, options.toBundle())
+                } else {
+                    val `is` = Intent(this, OfferKtActivity::class.java)
+                    startActivity(`is`)
+                }
+
             }
 
         }
@@ -557,11 +559,24 @@ class MainShopperActivity : AppCompatActivity() {
                 val editor = prefs.edit()
                 editor.putString("edidok", "FINDITEM").apply();
                 editor.commit();
-                val `is` = Intent(this, AccountReportsActivity::class.java)
-                val extras = Bundle()
-                extras.putString("reports", "0")
-                `is`.putExtras(extras)
-                startActivity(`is`)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    button5.setTransitionName("buttontobutton");
+                    val options = ActivityOptions.makeSceneTransitionAnimation(this@MainShopperActivity, button5, "buttontobutton")
+                    val intent = Intent(this@MainShopperActivity, AccountReportsActivity::class.java)
+                    val extras = Bundle()
+                    extras.putString("reports", "0")
+                    intent.putExtras(extras)
+                    startActivity(intent, options.toBundle())
+                } else {
+                    val `is` = Intent(this, AccountReportsActivity::class.java)
+                    val extras = Bundle()
+                    extras.putString("reports", "0")
+                    `is`.putExtras(extras)
+                    startActivity(`is`)
+                }
+
+
                 //startActivity<AccountReportsActivity>()
             }
 
