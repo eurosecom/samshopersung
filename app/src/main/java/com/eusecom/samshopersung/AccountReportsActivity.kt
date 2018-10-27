@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.util.Pair
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,8 +13,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import com.eusecom.samshopersung.helper.TransitionHelper
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.mainshopper_content.*
 import org.jetbrains.anko.*
 import rx.Observable
 import rx.schedulers.Schedulers
@@ -44,8 +48,8 @@ class AccountReportsActivity : AppCompatActivity() {
     private var mManager: LinearLayoutManager? = null
     private var mSubscription: CompositeSubscription? = null
     private var mProgressBar: ProgressBar? = null
-    private var mRep00: Button? = null
-    private var mRep01: Button? = null
+    private lateinit var mRep00: Button
+    private lateinit var mRep01: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
@@ -68,9 +72,9 @@ class AccountReportsActivity : AppCompatActivity() {
         mRep00 = findViewById<View>(R.id.rep00) as Button
         mRep01 = findViewById<View>(R.id.rep01) as Button
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mRep00?.setTransitionName("buttonFirtobutton00")
-            mRep01?.setTransitionName("button5tobutton01")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mRep00.setTransitionName("buttonFirtobutton00")
+            mRep01.setTransitionName("button5tobutton01")
 
         }
 
@@ -81,10 +85,10 @@ class AccountReportsActivity : AppCompatActivity() {
         bind()
         val edidok = prefs.getString("edidok", "0")
         Log.d("edidok", edidok)
-        if(!edidok.equals("FINDITEM")){
+        if (!edidok.equals("FINDITEM")) {
 
 
-        }else{
+        } else {
 
         }
     }
@@ -138,21 +142,21 @@ class AccountReportsActivity : AppCompatActivity() {
     fun setProxyException(excp: String) {
         //toast("Permission " + excp + " not alowed.")
         hideProgressBar()
-        if(excp.equals("LGN")) {
+        if (excp.equals("LGN")) {
             //showDonotloginAlert()
             toast(getString(R.string.didnotlogin))
             println("LGN not approved.")
-            }
-        if(excp.equals("ADM")) {
+        }
+        if (excp.equals("ADM")) {
             //showDonotAdminAlert()
             toast(getString(R.string.didnotadmin))
             println("ADM not approved.")
-            }
-        if(excp.equals("CMP")) {
+        }
+        if (excp.equals("CMP")) {
             //showDonotcompanyAlert()
             toast(getString(R.string.didnotcompany))
             println("CMP not approved.")
-            }
+        }
 
     }
 
@@ -189,7 +193,7 @@ class AccountReportsActivity : AppCompatActivity() {
         startActivity<OfferKtActivity>()
     }
 
-    fun  chosenItem():Boolean {
+    fun chosenItem(): Boolean {
 
         val edidok = prefs.getString("edidok", "")
         return edidok != "0" && edidok != "" && edidok != "FINDITEM"
@@ -198,29 +202,71 @@ class AccountReportsActivity : AppCompatActivity() {
 
     fun chooseActivity(whatactivity: Int) {
 
-        if( whatactivity == 0 || whatactivity == 1 ) {
-            if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
-                println("command approved.")
-                val `is` = Intent(this, SetImageActivity::class.java)
-                val extras = Bundle()
-                extras.putInt("whatactivity", whatactivity)
-                `is`.putExtras(extras)
-                startActivity(`is`)
-            }
+        when (whatactivity) {
+            0 -> {
 
-        }else{
-            if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
-                println("command approved.")
-                val `is` = Intent(this, SetProductActivity::class.java)
-                val extras = Bundle()
-                extras.putInt("whatactivity", whatactivity)
-                `is`.putExtras(extras)
-                startActivity(`is`)
+                if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
+                    println("command approved.")
+                    val `is` = Intent(this, SetImageActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("whatactivity", whatactivity)
+                    `is`.putExtras(extras)
+                    startActivity(`is`)
+                }
+
+            }
+            1 -> {
+
+                if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
+                    println("command approved.")
+                    val `is` = Intent(this, SetImageActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("whatactivity", whatactivity)
+                    `is`.putExtras(extras)
+                    startActivity(`is`)
+                }
+
+            }
+            2 -> {
+
+                if (mViewModel.callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.ADM, CommandExecutorProxyImpl.ReportTypes.PDF, CommandExecutorProxyImpl.ReportName.SETITEM)) {
+                    println("command approved.")
+                    val `is` = Intent(this, SetProductActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("whatactivity", whatactivity)
+                    `is`.putExtras(extras)
+                    startActivity(`is`)
+                }
+
+            }
+            3 -> {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mRep01.setTransitionName("rep01tofab");
+
+                    //Create the transition participants required during a activity transition while
+                    //avoiding glitches with the system UI.
+                    val animationBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                            *TransitionHelper.createSafeTransitionParticipants(this,
+                                    false,
+                                    Pair(mRep01, "rep01tofab")))
+                            .toBundle()
+
+                    // Start the activity with the participants, animating from one to the other.
+                    val intent = Intent(this@AccountReportsActivity, StoreCardKtActivity::class.java)
+                    startActivity(intent, animationBundle)
+                } else {
+                    val `is` = Intent(this, StoreCardKtActivity::class.java)
+                    startActivity(`is`)
+                }
+
+
+            }
+            else -> {
             }
         }
 
     }
-
 
 
     private fun showProgressBar() {
@@ -230,7 +276,6 @@ class AccountReportsActivity : AppCompatActivity() {
     private fun hideProgressBar() {
         mProgressBar?.setVisibility(View.GONE)
     }
-
 
 
 }

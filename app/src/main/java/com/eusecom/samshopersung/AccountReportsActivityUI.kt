@@ -54,7 +54,11 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                     id = R.id.rep01
                     textResource = R.string.storelist
                     onClick {
-
+                        if(ui.owner.chosenItem()){
+                            ui.owner.chooseActivity(3)
+                        }else{
+                            ui.owner.chooseItem()
+                        }
                     }
                 }.lparams {
                     width = matchParent

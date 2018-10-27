@@ -18,6 +18,8 @@ import com.eusecom.samshopersung.OrpSettingsActivity;
 import com.eusecom.samshopersung.ProductDetailActivity;
 import com.eusecom.samshopersung.SetImageActivity;
 import com.eusecom.samshopersung.SetProductActivity;
+import com.eusecom.samshopersung.StoreCardKtActivity;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ActivityKey;
@@ -109,6 +111,10 @@ public abstract class ActivityBuilder {
     @ShopperScope
     @ContributesAndroidInjector(modules = {OrpSettingsActivityModule.class})
     abstract OrpSettingsActivity bindOrpSettingsActivity();
+
+    @ShopperScope
+    @ContributesAndroidInjector(modules = {MainShopperActivityModule.class})
+    abstract StoreCardKtActivity bindStoreCardKtActivity();
 
 
 }

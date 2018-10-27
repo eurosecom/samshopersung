@@ -47,6 +47,7 @@
         <activity android:name=".OrpListKtActivity"/>
         <activity android:name=".OrpRequestsActivity" android:label="@string/orprequests"/>
         <activity android:name=".OrpSettingsActivity" android:label="@string/orpsettings"/>
+        <activity android:name=".StoreCardKtActivity" android:label="@string/storelist"/>
 
         <activity android:name=".KeyStoreActivity"/>
         <activity android:name=".MapsActivity"/>
