@@ -45,6 +45,7 @@ class AccountReportsActivity : AppCompatActivity() {
     private var mSubscription: CompositeSubscription? = null
     private var mProgressBar: ProgressBar? = null
     private var mRep00: Button? = null
+    private var mRep01: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
@@ -65,9 +66,12 @@ class AccountReportsActivity : AppCompatActivity() {
         mRecycler?.setLayoutManager(mManager)
         mRecycler?.setAdapter(mAdapter)
         mRep00 = findViewById<View>(R.id.rep00) as Button
+        mRep01 = findViewById<View>(R.id.rep01) as Button
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mRep00?.setTransitionName("buttontobutton")
+            mRep00?.setTransitionName("buttonFirtobutton00")
+            mRep01?.setTransitionName("button5tobutton01")
+
         }
 
     }

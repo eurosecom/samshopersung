@@ -28,15 +28,13 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.listeners.onClick
 import javax.inject.Inject
 import android.transition.TransitionInflater
-import com.eusecom.samshopersung.launcherhelper.ActivityLaunchHelper
 import com.eusecom.samshopersung.launcherhelper.QuizActivity
 import android.content.Intent
 import android.app.ActivityOptions
-import com.eusecom.samshopersung.R.id.textView
-import android.support.v4.view.ViewCompat.getTransitionName
-import com.eusecom.samshopersung.R.id.imageView
-
-
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.util.Pair
+import com.eusecom.samshopersung.helper.ActivityLaunchHelper
+import com.eusecom.samshopersung.helper.TransitionHelper
 
 
 /**
@@ -276,7 +274,7 @@ class MainShopperActivity : AppCompatActivity() {
 
 
         }
-        
+
     }
 
     public override fun onResume() {
@@ -450,9 +448,18 @@ class MainShopperActivity : AppCompatActivity() {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     button2.setTransitionName("buttontofab");
-                    val options = ActivityOptions.makeSceneTransitionAnimation(this@MainShopperActivity, button2, "buttontofab")
+
+                    //Create the transition participants required during a activity transition while
+                    //avoiding glitches with the system UI.
+                    val animationBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                            *TransitionHelper.createSafeTransitionParticipants(this,
+                                    false,
+                                    Pair(button2, "buttontofab")))
+                            .toBundle()
+
+                    // Start the activity with the participants, animating from one to the other.
                     val intent = Intent(this@MainShopperActivity, OfferKtActivity::class.java)
-                    startActivity(intent, options.toBundle())
+                    startActivity(intent, animationBundle)
                 } else {
                     val `is` = Intent(this, OfferKtActivity::class.java)
                     startActivity(`is`)
@@ -478,9 +485,18 @@ class MainShopperActivity : AppCompatActivity() {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     button1.setTransitionName("buttontofab");
-                    val options = ActivityOptions.makeSceneTransitionAnimation(this@MainShopperActivity, button1, "buttontofab")
+
+                    //Create the transition participants required during a activity transition while
+                    //avoiding glitches with the system UI.
+                    val animationBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                            *TransitionHelper.createSafeTransitionParticipants(this,
+                                    false,
+                                    Pair(button1, "buttontofab")))
+                            .toBundle()
+
+                    // Start the activity with the participants, animating from one to the other.
                     val intent = Intent(this@MainShopperActivity, BasketKtActivity::class.java)
-                    startActivity(intent, options.toBundle())
+                    startActivity(intent, animationBundle)
                 } else {
                     val `is` = Intent(this, BasketKtActivity::class.java)
                     startActivity(`is`)
@@ -561,13 +577,24 @@ class MainShopperActivity : AppCompatActivity() {
                 editor.commit();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    button5.setTransitionName("buttontobutton");
-                    val options = ActivityOptions.makeSceneTransitionAnimation(this@MainShopperActivity, button5, "buttontobutton")
+                    button5.setTransitionName("button5tobutton01");
+                    buttonFir.setTransitionName("buttonFirtobutton00");
+
+                    //Create the transition participants required during a activity transition while
+                    //avoiding glitches with the system UI.
+                    val animationBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                            *TransitionHelper.createSafeTransitionParticipants(this,
+                                    false,
+                                    Pair(button5, "button5tobutton01"),
+                                    Pair(buttonFir, "buttonFirtobutton00")))
+                            .toBundle()
+
+                    // Start the activity with the participants, animating from one to the other.
                     val intent = Intent(this@MainShopperActivity, AccountReportsActivity::class.java)
                     val extras = Bundle()
                     extras.putString("reports", "0")
                     intent.putExtras(extras)
-                    startActivity(intent, options.toBundle())
+                    startActivity(intent, animationBundle)
                 } else {
                     val `is` = Intent(this, AccountReportsActivity::class.java)
                     val extras = Bundle()
