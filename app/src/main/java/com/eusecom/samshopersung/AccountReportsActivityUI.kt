@@ -27,14 +27,6 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
                 top
             }
 
-            progressBar() {
-                id = R.id.progress_bar
-                visibility = View.GONE
-            }.lparams {
-                width = wrapContent
-                height = wrapContent
-                below(R.id.recycler_view)
-            }
 
             button() {
                 id = R.id.rep00
@@ -45,7 +37,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
             }.lparams {
                 width = matchParent
                 height = wrapContent
-                below(R.id.progress_bar)
+                below(R.id.recycler_view)
             }
 
             if( mReport.equals("0")) {
@@ -114,6 +106,14 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
 
             }//report 0
 
+            progressBar() {
+                id = R.id.progress_bar
+                visibility = View.GONE
+            }.lparams {
+                width = wrapContent
+                height = wrapContent
+                below(R.id.rep04)
+            }
 
 
         }

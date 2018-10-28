@@ -61,14 +61,13 @@ class StoreCardKtActivity : AppCompatActivity() {
     var tothdd: String = "0.00"
     var totalbasket: TextView? = null
     var totalbasketeur: TextView? = null
-    var myfir: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.basket_activity)
+        setContentView(R.layout.storecard_activity)
         //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         initCollapsingToolbar()
@@ -77,7 +76,7 @@ class StoreCardKtActivity : AppCompatActivity() {
         totalbasket?.text = getString(R.string.totalbasket, totmno )
         totalbasketeur = findViewById<View>(R.id.totalbasketeur) as TextView
         totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
-        myfir = findViewById<View>(R.id.myfir) as TextView
+
 
         //Bind the recyclerview
         recyclerView = findViewById<RecyclerView>(R.id.rvAndroidVersions)
@@ -241,7 +240,7 @@ class StoreCardKtActivity : AppCompatActivity() {
         totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
 
         mybasket = sumbasket.basketitems.toMutableList()
-        recyclerView.adapter = BasketKtAdapter(mImageUrl, mybasket){it: BasketKt, posx: Int, type: Int ->
+        recyclerView.adapter = StoreCardKtAdapter(mImageUrl, mybasket){it: BasketKt, posx: Int, type: Int ->
 
             //classic instance of factory
             // var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
