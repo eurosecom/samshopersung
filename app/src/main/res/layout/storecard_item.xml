@@ -18,33 +18,23 @@
 
             <ImageView
                 android:id="@+id/thumbnail"
-                android:layout_width="@dimen/album_cover_height"
-                android:layout_height="@dimen/album_cover_height"
+                android:layout_width="@dimen/ic_album_fav_height"
+                android:layout_height="@dimen/ic_album_fav_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="fitXY" />
 
             <ImageView
-                android:id="@+id/delete"
+                android:id="@+id/pdfdoc"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/ic_album_fav_height"
-                android:layout_toRightOf="@+id/thumbnail"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
                 android:layout_marginLeft="@dimen/ic_album_overflow_margin_top"
                 android:paddingRight="@dimen/album_title_padding"
                 android:scaleType="centerCrop"
-                android:src="@drawable/baseline_delete_black_24dp" />
+                android:src="@drawable/ic_insert_drive_file_black_24dp" />
 
-            <ImageView
-                android:id="@+id/favic"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/ic_album_fav_height"
-                android:layout_toRightOf="@+id/delete"
-                android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
-                android:layout_marginLeft="@dimen/ic_album_overflow_margin_top"
-                android:paddingRight="@dimen/album_title_padding"
-                android:scaleType="centerCrop"
-                android:src="@drawable/baseline_favorite_black_24dp" />
 
             <TextView
                 android:id="@+id/title"

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import com.eusecom.samshopersung.helper.TransitionHelper
 import com.eusecom.samshopersung.proxy.CommandExecutorProxyImpl
@@ -50,6 +51,7 @@ class AccountReportsActivity : AppCompatActivity() {
     private var mProgressBar: ProgressBar? = null
     private lateinit var mRep00: Button
     private lateinit var mRep01: Button
+    private lateinit var imageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
@@ -71,10 +73,11 @@ class AccountReportsActivity : AppCompatActivity() {
         mRecycler?.setAdapter(mAdapter)
         mRep00 = findViewById<View>(R.id.rep00) as Button
         mRep01 = findViewById<View>(R.id.rep01) as Button
+        imageView = findViewById<View>(R.id.imageView) as ImageView
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mRep00.setTransitionName("buttonFirtobutton00")
-            mRep01.setTransitionName("button5tobutton01")
+            mRep00.setTransitionName("button5tobutton00")
+            imageView.setTransitionName("imageViewtoImageView")
 
         }
 
@@ -242,22 +245,28 @@ class AccountReportsActivity : AppCompatActivity() {
             3 -> {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mRep01.setTransitionName("rep01tofab");
+                    mRep01.setTransitionName("storerep01tofab");
 
                     //Create the transition participants required during a activity transition while
                     //avoiding glitches with the system UI.
                     val animationBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                             *TransitionHelper.createSafeTransitionParticipants(this,
                                     false,
-                                    Pair(mRep01, "rep01tofab")))
+                                    Pair(mRep01, "storerep01tofab")))
                             .toBundle()
 
                     // Start the activity with the participants, animating from one to the other.
                     val intent = Intent(this@AccountReportsActivity, StoreCardKtActivity::class.java)
+                    val extras = Bundle()
+                    extras.putInt("whatdoc", 0)
+                    intent.putExtras(extras)
                     startActivity(intent, animationBundle)
                 } else {
-                    val `is` = Intent(this, StoreCardKtActivity::class.java)
-                    startActivity(`is`)
+                    val intent2 = Intent(this, StoreCardKtActivity::class.java)
+                    val extras2 = Bundle()
+                    extras2.putInt("whatdoc", 0)
+                    intent2.putExtras(extras2)
+                    startActivity(intent2)
                 }
 
 

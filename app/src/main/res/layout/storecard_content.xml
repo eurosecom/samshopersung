@@ -9,7 +9,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".StoreCardKtActivity"
     tools:showIn="@layout/storecard_activity">
- 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAndroidVersions"
         android:layout_width="match_parent"
@@ -18,12 +18,12 @@
         android:scrollbars="vertical" />
 
     <ProgressBar
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
         android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:indeterminate="false"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
- 
+        android:visibility="gone" />
+
 </RelativeLayout>

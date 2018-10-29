@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.basket_item.view.*
+import kotlinx.android.synthetic.main.storecard_item.view.*
 
 class StoreCardKtAdapter(var mImageUrl: ImageUrl, var myAndroidOSList: MutableList<BasketKt>, val listener: (BasketKt, Int, Int) -> Unit) : RecyclerView.Adapter<StoreCardKtAdapter.ViewHolder>() {
 
@@ -33,14 +33,11 @@ class StoreCardKtAdapter(var mImageUrl: ImageUrl, var myAndroidOSList: MutableLi
             itemView.count.text = myAndroidOS.xmno + " x "
             itemView.count1.text = myAndroidOS.xced + " €"
 
-            //val imageurl = Constants.IMAGE_URL + myAndroidOS.xcis
-            val imageurl = mImageUrl.getUrlJpg(myAndroidOS.xcis)
             // loading prod cover using Glide library
-            Glide.with(itemView.context).load(imageurl).into(itemView.thumbnail)
+            Glide.with(itemView.context).load(R.drawable.ic_local_atm_blue_24dp).into(itemView.thumbnail)
 
-            itemView.delete.setOnClickListener{listener(myAndroidOS, myPos, 0)}
+            itemView.pdfdoc.setOnClickListener{listener(myAndroidOS, myPos, 0)}
 
-            itemView.favic.setOnClickListener{listener(myAndroidOS, myPos, 1)}
 
         }
     }

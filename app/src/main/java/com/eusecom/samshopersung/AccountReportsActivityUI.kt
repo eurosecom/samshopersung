@@ -2,6 +2,7 @@ package com.eusecom.samshopersung
 
 
 import android.view.View
+import android.widget.LinearLayout
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.sdk25.listeners.onClick
@@ -16,15 +17,35 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
             padding = dip(10)
             lparams (width = matchParent, height = matchParent)
 
-            recyclerView() {
-                id = R.id.recycler_view
-                onClick {
+            linearLayout {
+                id = R.id.linearlay
+                padding = dip(1)
+                lparams(width = matchParent, height = wrapContent)
+                orientation = LinearLayout.HORIZONTAL
 
+                recyclerView() {
+                    id = R.id.recycler_view
+                    onClick {
+
+                    }
+                }.lparams {
+                    width = 0
+                    height = wrapContent
+                    weight = 4.5f
                 }
+
+                progressBar() {
+                    id = R.id.progress_bar
+                    visibility = View.GONE
+                }.lparams {
+                    width = 0
+                    height = wrapContent
+                    weight = 0.5f
+                }
+
             }.lparams {
-                width = matchParent
+                width = wrapContent
                 height = wrapContent
-                top
             }
 
 
@@ -37,7 +58,7 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
             }.lparams {
                 width = matchParent
                 height = wrapContent
-                below(R.id.recycler_view)
+                below(R.id.linearlay)
             }
 
             if( mReport.equals("0")) {
@@ -106,12 +127,16 @@ class AccountReportsActivityUI (val mReport: String, val prm2: String): AnkoComp
 
             }//report 0
 
-            progressBar() {
-                id = R.id.progress_bar
-                visibility = View.GONE
+
+            imageView() {
+                id = R.id.imageView
+                setImageResource(R.drawable.shopper)
+
             }.lparams {
-                width = wrapContent
-                height = wrapContent
+                width = 300
+                height = 300
+                centerHorizontally()
+                centerVertically()
                 below(R.id.rep04)
             }
 

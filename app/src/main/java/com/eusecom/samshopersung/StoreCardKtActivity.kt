@@ -61,11 +61,16 @@ class StoreCardKtActivity : AppCompatActivity() {
     var tothdd: String = "0.00"
     var totalbasket: TextView? = null
     var totalbasketeur: TextView? = null
+    var whatdoc = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState)
+
+        val i = intent
+        val extras = i.extras
+        whatdoc = extras!!.getInt("whatdoc")
 
         setContentView(R.layout.storecard_activity)
         //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -96,13 +101,16 @@ class StoreCardKtActivity : AppCompatActivity() {
             editor.putString("edidok", "0").apply();
             editor.commit();
 
-            val `is` = Intent(this, OfferKtActivity::class.java)
-            startActivity(`is`)
+            val intent2 = Intent(this, StoreCardKtActivity::class.java)
+            val extras2 = Bundle()
+            extras2.putInt("whatdoc", 0)
+            intent2.putExtras(extras2)
+            startActivity(intent2)
             finish()
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fab.setTransitionName("rep01tofab")
+            fab.setTransitionName("storerep01tofab")
         }
 
     }
@@ -127,7 +135,7 @@ class StoreCardKtActivity : AppCompatActivity() {
                     scrollRange = appBarLayout.totalScrollRange
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.title = getString(R.string.mybasket)
+                    collapsingToolbar.title = getString(R.string.storelist)
                     isShow = true
                 } else if (isShow) {
                     collapsingToolbar.title = " "
@@ -150,83 +158,6 @@ class StoreCardKtActivity : AppCompatActivity() {
                 }
                 .onErrorResumeNext({ throwable -> Observable.empty() })
                 .subscribe({ it -> setSumBasket(it) }))
-
-        mSubscription.add(mViewModel.getMyObservableSaveSumBasketToServer()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setDeletedBasket(it) }))
-
-        mSubscription.add(mViewModel.getMyIdcData("3")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .doOnError { throwable ->
-                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
-                    hideProgressBar()
-                    toast("Server not connected")
-                }
-                .onErrorResumeNext({ throwable -> Observable.empty() })
-                .subscribe({ it -> setNoSavedDocs(it) }))
-
-    }
-
-    private fun setNoSavedDocs(idc: List<RealmInvoice>) {
-
-        //Toast.makeText(this, "Getting ID " + idc.get(0).getIco(), Toast.LENGTH_SHORT).show();
-
-        if (idc.size > 0) {
-
-            val myfirx: String = idc[0].ico + " - " + idc[0].kto
-            myfir?.text = getString(R.string.myidc, myfirx )
-
-
-        }
-
-    }
-
-    private fun setDeletedBasket(sumbasket: SumBasketKt) {
-
-        totmno = sumbasket.smno
-        tothdd = sumbasket.shdd
-        totalbasket?.text = getString(R.string.totalbasket, totmno )
-        totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
-
-        var basket: List<BasketKt> = sumbasket.basketitems
-
-        if (basket.get(0).xid == "4") {
-            toast(basket.get(0).xnat + " " + getString(R.string.deletedfrombasket))
-        }
-        if (basket.get(0).xid == "5") {
-            toast(getString(R.string.allitems) + " " + getString(R.string.deletedfrombasket))
-        }
-        if (basket.get(0).xid == "6") {
-            toast(basket.get(0).xnat + " " + getString(R.string.itemsordered))
-        }
-        if (basket.get(0).xid == "7") {
-            toast(basket.get(0).xnat + " " + getString(R.string.movedtofav))
-        }
-        //Log.d("savedBasket ", basket.get(0).xnat);
-        hideProgressBar()
-
-        var posd: Int = Integer.parseInt(basket.get(0).xdph);
-
-        if (basket.get(0).xid != "5" && basket.get(0).xid != "6") {
-            mybasket.removeAt(posd)
-            recyclerView?.adapter?.notifyItemRemoved(posd)
-        }else {
-            mybasket.clear()
-        }
-
-        recyclerView?.adapter?.notifyDataSetChanged()
-
-    }
-
-    private fun setBasket(basket: List<BasketKt>) {
 
 
     }
@@ -256,10 +187,10 @@ class StoreCardKtActivity : AppCompatActivity() {
 
             if( type == 0 ){
                 mprod.prm1 = "4"
-                showDeleteFromBasketDialog(mprod)
+                showPdfDialog(mprod)
             }else{
                 mprod.prm1 = "7"
-                showMoveToFavtDialog(mprod)
+                //showMoveToFavtDialog(mprod)
             }
 
 
@@ -274,28 +205,49 @@ class StoreCardKtActivity : AppCompatActivity() {
         mSubscription?.unsubscribe()
         mSubscription?.clear()
         hideProgressBar()
-        mViewModel.clearMyObservableSaveSumBasketToServer()
+        //mViewModel.clearMyObservableSaveSumBasketToServer()
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.basket_menu, menu)
+        menuInflater.inflate(R.menu.storecard_menu, menu)
 
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_offer -> consume { navigateToOffer() }
-        R.id.clear_basket -> consume { showClearBasketDialog() }
-        R.id.action_pay -> consume { showOrderBasketDialog() }
+        R.id.action_all -> consume { navigateToAllItems() }
+        R.id.action_plus -> consume { navigateToPlusItems() }
+        R.id.action_minus -> consume { navigateToMinusItems() }
 
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun navigateToOffer(){
-        val intent = Intent(this, OfferKtActivity::class.java)
-        startActivity(intent)
+    fun navigateToAllItems(){
+        val intent2 = Intent(this, StoreCardKtActivity::class.java)
+        val extras2 = Bundle()
+        extras2.putInt("whatdoc", 0)
+        intent2.putExtras(extras2)
+        startActivity(intent2)
+        finish()
+    }
+
+    fun navigateToPlusItems(){
+        val intent2 = Intent(this, StoreCardKtActivity::class.java)
+        val extras2 = Bundle()
+        extras2.putInt("whatdoc", 1)
+        intent2.putExtras(extras2)
+        startActivity(intent2)
+        finish()
+    }
+
+    fun navigateToMinusItems(){
+        val intent2 = Intent(this, StoreCardKtActivity::class.java)
+        val extras2 = Bundle()
+        extras2.putInt("whatdoc", 2)
+        intent2.putExtras(extras2)
+        startActivity(intent2)
         finish()
     }
 
@@ -313,33 +265,19 @@ class StoreCardKtActivity : AppCompatActivity() {
         mProgressBar?.setVisibility(View.GONE)
     }
 
-    fun showDeleteFromBasketDialog(product: ProductKt) {
 
-        alert("", getString(R.string.action_delete_item) + " " + product.nat) {
-            yesButton { navigateToDeleteFromBasket(product) }
+    fun showPdfDialog(product: ProductKt) {
+
+        alert("", getString(R.string.pdfdoc) + " " + product.nat) {
+            yesButton { navigateToPdfDoc(product) }
             noButton {}
         }.show()
 
     }
 
-    fun navigateToDeleteFromBasket(product: ProductKt){
-        showProgressBar()
-        mViewModel.emitMyObservableSaveSumBasketToServer(product)
-
-    }
-
-    fun showMoveToFavtDialog(product: ProductKt) {
-
-        alert("", getString(R.string.movetofav) + " " + product.nat) {
-            yesButton { navigateToMoveToFav(product) }
-            noButton {}
-        }.show()
-
-    }
-
-    fun navigateToMoveToFav(product: ProductKt){
-        showProgressBar()
-        mViewModel.emitMyObservableSaveSumBasketToServer(product)
+    fun navigateToPdfDoc(product: ProductKt){
+        //showProgressBar()
+        //mViewModel.emitMyObservableSaveSumBasketToServer(product)
 
     }
 

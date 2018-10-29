@@ -577,16 +577,16 @@ class MainShopperActivity : AppCompatActivity() {
                 editor.commit();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    button5.setTransitionName("button5tobutton01");
-                    buttonFir.setTransitionName("buttonFirtobutton00");
+                    button5.setTransitionName("button5tobutton00");
+                    imageView.setTransitionName("imageViewtoImageView");
 
                     //Create the transition participants required during a activity transition while
                     //avoiding glitches with the system UI.
                     val animationBundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                             *TransitionHelper.createSafeTransitionParticipants(this,
                                     false,
-                                    Pair(button5, "button5tobutton01"),
-                                    Pair(buttonFir, "buttonFirtobutton00")))
+                                    Pair(button5, "button5tobutton00"),
+                                    Pair(imageView, "imageViewtoImageView")))
                             .toBundle()
 
                     // Start the activity with the participants, animating from one to the other.

@@ -32,5 +32,6 @@
     <item name="rep23" type="id">64</item>
     <item name="rep24" type="id">65</item>
     <item name="botnav" type="id">66</item>
+    <item name="linearlay" type="id">67</item>
 
 </resources>

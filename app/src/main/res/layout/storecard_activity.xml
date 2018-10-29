@@ -68,6 +68,14 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/backdrop_subtitle" />
 
+                    <TextView
+                        android:id="@+id/totalbasketprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/storageitemprice"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/backdrop_subtitle" />
+
                 </LinearLayout>
 
             </RelativeLayout>

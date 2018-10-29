@@ -390,5 +390,10 @@
     <string name="type">type</string>
     <string name="cancel">Cancel</string>
 
+    //storecardactivity
+    <string name="storageitemprice">Average price %s Eur</string>
+    <string name="action_all">All items</string>
+    <string name="action_plus">Received items</string>
+    <string name="action_minus">Spend items</string>
 
 </resources>
