@@ -83,5 +83,11 @@ public interface ShopperRetrofitService {
     Observable<SetImageServerResponse> uploadImageFileWithMap(@Part MultipartBody.Part file,
                                                              @PartMap() Map<String, RequestBody> partMap);
 
+    @GET("/androidshopper/get_sumstorecard.php")
+    Observable<SumBasketKt> getStoreCardFromSqlServer(@Query("userhash") String userhash
+            , @Query("userid") String userid, @Query("fromfir") String fromfir
+            , @Query("vyb_rok") String vyb_rok, @Query("drh") String whatdoc
+            , @Query("uce") String uce, @Query("prodx") String prodx, @Query("cisx") String cisx);
+
 
 }

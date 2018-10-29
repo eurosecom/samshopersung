@@ -18,11 +18,22 @@
 
             <ImageView
                 android:id="@+id/thumbnail"
+                android:layout_alignParentTop="true"
                 android:layout_width="@dimen/ic_album_fav_height"
                 android:layout_height="@dimen/ic_album_fav_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:scaleType="fitXY" />
+                />
+
+            <TextView
+                android:id="@+id/docx"
+                android:layout_toRightOf="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textColor="@color/album_title"
+                android:textSize="@dimen/album_title" />
+
 
             <ImageView
                 android:id="@+id/pdfdoc"
@@ -30,9 +41,7 @@
                 android:layout_height="@dimen/ic_album_fav_height"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
-                android:layout_marginLeft="@dimen/ic_album_overflow_margin_top"
-                android:paddingRight="@dimen/album_title_padding"
-                android:scaleType="centerCrop"
+                android:padding="4dp"
                 android:src="@drawable/ic_insert_drive_file_black_24dp" />
 
 
@@ -41,9 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thumbnail"
-                android:paddingLeft="@dimen/album_title_padding"
-                android:paddingRight="@dimen/album_title_padding"
-                android:paddingTop="@dimen/album_title_padding"
+                android:padding="4dp"
                 android:textColor="@color/album_title"
                 android:textSize="@dimen/album_title" />
 
@@ -52,9 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:paddingBottom="@dimen/songs_count_padding_bottom"
-                android:paddingLeft="@dimen/album_title_padding"
-                android:paddingRight="@dimen/album_title_padding"
+                android:padding="4dp"
                 android:textSize="@dimen/songs_count"
                 android:text="@string/amount"/>
 
@@ -64,9 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_toRightOf="@+id/countlabel"
-                android:paddingBottom="@dimen/songs_count_padding_bottom"
-                android:paddingLeft="@dimen/album_title_padding"
-                android:paddingRight="@dimen/album_title_padding"
+                android:padding="4dp"
                 android:textSize="@dimen/songs_count" />
 
             <TextView
@@ -75,9 +78,27 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_toRightOf="@+id/count"
-                android:paddingBottom="@dimen/songs_count_padding_bottom"
-                android:paddingLeft="@dimen/album_title_padding"
-                android:paddingRight="@dimen/album_title_padding"
+                android:padding="4dp"
+                android:textSize="@dimen/songs_count" />
+
+
+            <TextView
+                android:id="@+id/icot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/countlabel"
+                android:layout_alignParentStart="true"
+                android:padding="4dp"
+                android:textSize="@dimen/songs_count"
+                android:text="@string/idc"/>
+
+            <TextView
+                android:id="@+id/icox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/countlabel"
+                android:layout_toRightOf="@+id/icot"
+                android:padding="4dp"
                 android:textSize="@dimen/songs_count" />
 
 

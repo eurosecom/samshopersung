@@ -2105,5 +2105,36 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
 
     }
 
+    //methods for StoreCardActivity
+
+    //get store card from MySql server
+    public Observable<SumBasketKt> getStoreCardFromSqlServer(String cisx, String whatdoc) {
+
+        Random r = new Random();
+        double d = -10.0 + r.nextDouble() * 20.0;
+        String ds = String.valueOf(d);
+
+        String usuidx = mSharedPreferences.getString("usuid", "");
+        String userxplus = ds + "/" + usuidx + "/" + ds;
+
+        MCrypt mcrypt = new MCrypt();
+        String encrypted = "";
+        try {
+            encrypted = mcrypt.bytesToHex(mcrypt.encrypt(userxplus));
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        String firx = mSharedPreferences.getString("fir", "");
+        String rokx = mSharedPreferences.getString("rok", "");
+        String dodx = "1";
+        String prodx = "";
+        String serverx = mSharedPreferences.getString("servername", "");
+
+        return mDataModel.getStoreCardFromMysqlServer(serverx, encrypted, ds, firx, rokx, whatdoc, dodx, prodx, cisx);
+    }
+    //end get store card from MySql server
+
 
 }

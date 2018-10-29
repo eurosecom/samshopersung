@@ -169,4 +169,11 @@ public interface ShopperIDataModel {
     @NonNull
     public Flowable<List<EkassaRequestBackup>> loadEkasaRequestForDok(String dokx);
 
+    //methods for StoreCardKtActivity
+
+    //get sumbasket from MySql
+    @NonNull
+    public Observable<SumBasketKt> getStoreCardFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String whatdoc, String ucex, String prodx, String cisx);
+
 }

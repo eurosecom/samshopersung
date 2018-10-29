@@ -909,4 +909,16 @@ public class ShopperDataModel implements ShopperIDataModel {
 
     }
 
+    //methods for StoreCardKtActivity
+
+    //get sumbasket from MySql
+    @Override
+    public Observable<SumBasketKt> getStoreCardFromMysqlServer(String servername, String userhash, String userid, String fromfir
+            , String vyb_rok, String whatdoc, String ucex, String prodx, String cisx) {
+
+        setRetrofit(servername);
+        return mShopperRetrofitService.getStoreCardFromSqlServer(userhash, userid, fromfir, vyb_rok, whatdoc, ucex, prodx, cisx);
+
+    }
+
 }

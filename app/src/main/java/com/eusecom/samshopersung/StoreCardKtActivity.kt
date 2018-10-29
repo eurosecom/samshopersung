@@ -58,10 +58,13 @@ class StoreCardKtActivity : AppCompatActivity() {
     private var mProgressBar: ProgressBar? = null
     private lateinit var mybasket: MutableList<BasketKt>
     var totmno: String = "0"
+    var tothdb: String = "0.00"
     var tothdd: String = "0.00"
     var totalbasket: TextView? = null
     var totalbasketeur: TextView? = null
+    var totalbasketprice: TextView? = null
     var whatdoc = 0
+    var whatcis = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -71,6 +74,7 @@ class StoreCardKtActivity : AppCompatActivity() {
         val i = intent
         val extras = i.extras
         whatdoc = extras!!.getInt("whatdoc")
+        whatcis = prefs.getString("edidok", "")
 
         setContentView(R.layout.storecard_activity)
         //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -81,6 +85,8 @@ class StoreCardKtActivity : AppCompatActivity() {
         totalbasket?.text = getString(R.string.totalbasket, totmno )
         totalbasketeur = findViewById<View>(R.id.totalbasketeur) as TextView
         totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
+        totalbasketprice = findViewById<View>(R.id.totalbasketprice) as TextView
+        totalbasketprice?.text = getString(R.string.storageitemprice, tothdb)
 
 
         //Bind the recyclerview
@@ -148,11 +154,11 @@ class StoreCardKtActivity : AppCompatActivity() {
     private fun bind() {
 
         showProgressBar()
-        mSubscription.add(mViewModel.getMySumBasketFromSqlServer()
+        mSubscription.add(mViewModel.getStoreCardFromSqlServer( whatcis, whatdoc.toString())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
                 .doOnError { throwable ->
-                    Log.e("BasketKtActivity", "Error Throwable " + throwable.message)
+                    Log.e("StoreCardKtActivity", "Error Throwable " + throwable.message)
                     hideProgressBar()
                     toast("Server not connected")
                 }
@@ -166,9 +172,11 @@ class StoreCardKtActivity : AppCompatActivity() {
 
         //Log.d("SumBasket0 ", sumbasket.basketitems.get(0).xnat);
         totmno = sumbasket.smno
-        tothdd = sumbasket.shdd
+        tothdd = sumbasket.shdb
+        tothdb = sumbasket.shdd
         totalbasket?.text = getString(R.string.totalbasket, totmno )
         totalbasketeur?.text = getString(R.string.totalbasketeur, tothdd)
+        totalbasketprice?.text = getString(R.string.storageitemprice, tothdb)
 
         mybasket = sumbasket.basketitems.toMutableList()
         recyclerView.adapter = StoreCardKtAdapter(mImageUrl, mybasket){it: BasketKt, posx: Int, type: Int ->
@@ -176,20 +184,13 @@ class StoreCardKtActivity : AppCompatActivity() {
             //classic instance of factory
             // var shoppermodelsfactory: IShopperModelsFactory = ShopperModelsFactory()
             //dagger2 instance
-            var mprod: ProductKt = mModelsFactory.productKt
-
-            mprod.cis = it.xcis
-            mprod.nat = it.xnat
-            mprod.dph = posx.toString()
-            mprod.zas = it.xcpl
-
-
+            var mprod: BasketKt = it
 
             if( type == 0 ){
-                mprod.prm1 = "4"
+                mprod.par1 = "4"
                 showPdfDialog(mprod)
             }else{
-                mprod.prm1 = "7"
+                mprod.par1 = "7"
                 //showMoveToFavtDialog(mprod)
             }
 
@@ -266,16 +267,16 @@ class StoreCardKtActivity : AppCompatActivity() {
     }
 
 
-    fun showPdfDialog(product: ProductKt) {
+    fun showPdfDialog(product: BasketKt) {
 
-        alert("", getString(R.string.pdfdoc) + " " + product.nat) {
+        alert("", getString(R.string.pdfdoc) + " " + product.xdok) {
             yesButton { navigateToPdfDoc(product) }
             noButton {}
         }.show()
 
     }
 
-    fun navigateToPdfDoc(product: ProductKt){
+    fun navigateToPdfDoc(product: BasketKt){
         //showProgressBar()
         //mViewModel.emitMyObservableSaveSumBasketToServer(product)
 

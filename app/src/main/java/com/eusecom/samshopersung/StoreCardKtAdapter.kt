@@ -28,13 +28,22 @@ class StoreCardKtAdapter(var mImageUrl: ImageUrl, var myAndroidOSList: MutableLi
 
         fun bindItems(mImageUrl: ImageUrl, myAndroidOS: BasketKt, myPos: Int, listener: (BasketKt, Int, Int) -> Unit) = with(itemView)  {
 
+            var mnoi: Int = Integer.valueOf(myAndroidOS.xmno)
+            itemView.docx.text = context.getString(R.string.docformat, myAndroidOS.xdok) + " - " + myAndroidOS.xdatm
             itemView.title.text = myAndroidOS.xcis + " " + myAndroidOS.xnat
 
             itemView.count.text = myAndroidOS.xmno + " x "
-            itemView.count1.text = myAndroidOS.xced + " €"
+            itemView.count1.text = myAndroidOS.xcep + " €"
+
+            itemView.icox.text = myAndroidOS.xice
 
             // loading prod cover using Glide library
-            Glide.with(itemView.context).load(R.drawable.ic_local_atm_blue_24dp).into(itemView.thumbnail)
+            if( mnoi >= 0 ) {
+                Glide.with(itemView.context).load(R.drawable.ic_local_atm_blue_24dp).into(itemView.thumbnail)
+            }else{
+                Glide.with(itemView.context).load(R.drawable.ic_local_atm_red_24dp).into(itemView.thumbnail)
+            }
+
 
             itemView.pdfdoc.setOnClickListener{listener(myAndroidOS, myPos, 0)}
 

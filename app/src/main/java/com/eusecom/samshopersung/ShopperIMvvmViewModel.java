@@ -351,5 +351,9 @@ public interface ShopperIMvvmViewModel {
 
     public void loadEkasaSettingsToMvvm();
 
+    //methods for StoreCardActivity
+    //get store card from MySql server
+    public Observable<SumBasketKt> getStoreCardFromSqlServer(String cisx, String whatdoc);
+
 
 }
