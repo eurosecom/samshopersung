@@ -233,20 +233,6 @@ class MainShopperActivity : AppCompatActivity() {
             if (BuildConfig.DEBUG) {
 
                 divider {}
-                secondaryItem("KeyStore DEMO ") {
-
-                    onClick { _ ->
-                        navigateToKeyStoreDemo()
-                        false
-                    }
-                }
-            } else {
-
-            }
-
-            if (BuildConfig.DEBUG) {
-
-                divider {}
                 secondaryItem("Maps NEW DEMO ") {
 
                     onClick { _ ->
@@ -394,13 +380,6 @@ class MainShopperActivity : AppCompatActivity() {
         }
     }
 
-
-    fun navigateToKeyStoreDemo() {
-
-            val `is` = Intent(this, KeyStoreActivity::class.java)
-            startActivity(`is`)
-
-    }
 
     fun navigateToQuizDemo() {
 

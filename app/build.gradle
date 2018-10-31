@@ -17,8 +17,8 @@ android {
         applicationId "com.eusecom.samshopersung"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 400
-        versionName "4.00"
+        versionCode 410
+        versionName "4.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         //because of realm added

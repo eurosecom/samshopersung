@@ -1653,7 +1653,7 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
 
     public String getEkassaPkp(String pkptext) {
 
-        signature = EncodeSignatureTools.getSignature(pkptext, EncodeSignatureTools.getPrivateKeyFromKeyStore("andrej"));
+        signature = EncodeSignatureTools.getSignature(pkptext, EncodeSignatureTools.getPrivateKeyFromKeyStore("ekasa"));
         String pkp = EncodeSignatureTools.getEncode64(signature);
 
         return pkp;
@@ -2016,7 +2016,6 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
     @NonNull
     public Observable<File> getObservableEkasaPdfZip() {
 
-        //andrejko
         return mObservableEkasaPDFZip
                 .observeOn(mSchedulerProvider.ui())
                 .flatMap(invx ->

@@ -138,6 +138,17 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
 
 
+                divider {}
+                primaryItem(getString(R.string.keystoreekassa)) {
+
+                    onClick { _ ->
+                        navigateToKeyStoreDemo()
+                        false
+                    }
+
+                }
+
+
         }
 
     }
@@ -231,6 +242,13 @@ class OrpListKtActivity : AppCompatActivity(), HasSupportFragmentInjector {
         val extras = Bundle()
         extras.putInt("saltype", 0)
         `is`.putExtras(extras)
+        startActivity(`is`)
+        finish()
+    }
+
+    fun navigateToKeyStoreDemo() {
+
+        val `is` = Intent(this, KeyStoreActivity::class.java)
         startActivity(`is`)
         finish()
     }

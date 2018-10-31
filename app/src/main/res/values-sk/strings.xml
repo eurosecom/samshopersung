@@ -3,7 +3,7 @@
     //mainshopperactivity
     <string name="app_name">Šoper</string>
     <string name="helloworld">Hello World!</string>
-    <string name="app_desc">SamShopper nákupný systém v.4.00</string>
+    <string name="app_desc">SamShopper nákupný systém v.4.10</string>
     <string name="privacy_policy">Ochrana osobných údajov</string>
     <string name="privacy_policy_file">privacy_policy_samfantozzi_sk</string>
     <string name="action_settings">Nastavenia</string>
@@ -219,10 +219,6 @@
     <string name="getsoaphello">Načítať Soap Hello </string>
     <string name="getsoaphellofrom">daj Hello z objednávky</string>
 
-    //room demo
-    <string name="price_format">$%1$s</string>
-    <string name="name_format">Product %1$s</string>
-
     //album demo
     <string name="backdrop_title">MUZIKA</string>
     <string name="backdrop_subtitle">Top 20 albumov</string>
@@ -258,11 +254,140 @@
     <string name="popisSw1">Swift kód</string>
     <string name="save">Uložiť</string>
 
+    //orderdetailactivity
+    <string name="ordereid">Order eID</string>
+    <string name="payment">Payment</string>
+    <string name="select_payment">Select Payment</string>
+    <string name="state">State of Order</string>
+    <string name="select_state">Select State</string>
+    <string name="transport">Transport</string>
+    <string name="select_transport">Select Transport</string>
+    <string name="deliverydate">Delivery Date</string>
+    <string name="ordersave">Save Order %s</string>
+    <string name="savedorderdetails">Saved Detail Order %s</string>
+    <string name="datedialogpos">Set date</string>
+    <string-array name="payment">
+        <item>Bankový prevod</item>
+        <item>Hotovosť/dobierka</item>
+        <item>Platba kartou</item>
+        <item>Dodací list</item>
+    </string-array>
+    <string-array name="transport">
+        <item>Doprava plánovaný rozvoz</item>
+        <item>Kuriér GLS</item>
+        <item>Kuriér Toptrans</item>
+        <item>Osobný odber</item>
+    </string-array>
+    <string-array name="orderstate">
+        <item>Zaplatené</item>
+        <item>Čakáme na úhradu</item>
+        <item>Platba pri dovoze </item>
+    </string-array>
+
+    //scaneanactivity
+    <string name="popisean">EAN</string>
+    <string name="popisfak">Invoice number</string>
+    <string name="popiscis">Number</string>
+    <string name="popishod">Value</string>
+    <string name="popiseditname">Name</string>
+    <string name="popiseditprice">Price</string>
+    <string name="popiseditmnoz">Quantity</string>
+    <string name="popiseditmj">unit</string>
+    <string name="scan">Scan</string>
+    <string name="popiseditsave">Save</string>
+    <string name="popisbtnpoznamka">Note</string>
+    <string name="popisbtnfakturuj">Invoice</string>
+
+    //accountreportsactivity
+    <string name="storelist">Storage card</string>
+    <string name="choosestorageitem">Choose storage item</string>
+    <string name="newstorageitem">New and Edit storage item</string>
+    <string name="setimage">Set storage image</string>
+    <string name="setean">Set storage EAN</string>
+
+    //setimageactivity
+    <string name="imagegallery">Pick Image from Gallery</string>
+    <string name="eanscan">Scan EAN with camera</string>
+    <string name="imagetoserver">Upload Image %s to Server</string>
+    <string name="eantoserver">Upload EAN to Server</string>
+    <string name="clearcache">Clear image cache</string>
+    <string name="item">Item</string>
+    <string name="pickednot">You have not picked Image</string>
+    <string name="somewrong">Something went wrong</string>
+    <string name="cachecleared">Cache cleared.</string>
+    <string name="ean">EAN</string>
+    <string name="eansaved">EAN saved</string>
+
+    //setproductactivity
+    <string name="itemtoserver">Save Item to Server</string>
+    <string name="name">Name</string>
+    <string name="ced">VatPrice</string>
+    <string name="ced1">ActionPrice</string>
+    <string name="dph">VAT</string>
+    <string name="cat">Category</string>
+    <string name="mer">Unit</string>
+    <string name="itemsaved">Item saved</string>
+    <string name="select_cat">Select category</string>
+    <string name="select_dph">Select VAT rate</string>
+    <string name="desc">Desc</string>
+
+
+    //keystoreactivity
+    <string name="generate">Generate New Key</string>
+    <string name="delete">DelKey</string>
+    <string name="importcrt">ImpCrt</string>
+    <string name="encrypt">1EncPri</string>
+    <string name="decrypt">1DecPub</string>
+    <string name="encrypt2">2EncPub</string>
+    <string name="decrypt2">2DecPri</string>
+    <string name="encrypt3">3SigPri</string>
+    <string name="decrypt3">3VerPub</string>
+    <string name="key_alias">Key Alias</string>
+    <string name="initial_text">Initial Text</string>
+    <string name="final_text">Encrypted Text</string>
+    <string name="decrypt_result">Decrypted Text</string>
+    <string name="keystoreekassa">KeyStore pre eKasu</string>
+
 
     //orplistactivity
     <string name="orp">ORP</string>
+    <string name="orpekasa">ORP eKasa</string>
+    <string name="orpekasadocs">ORP eKasa doklad</string>
+    <string name="orpekasareqs">ORP eKasa requests</string>
     <string name="orpdoc">ORP doklad</string>
+    <string name="orpdocs">ORP doklady</string>
     <string name="totalshort">Tot.</string>
     <string name="ordershort">Obj.</string>
+    <string name="orpsettings">ORP nastavenia</string>
+    <string name="orpsavesettings">Ulo6i+t nastavenie</string>
+    <string name="orprequests">eKasa requests</string>
+    <string name="orploc">ORP eKasa RegisterLocationRequest</string>
+    <string name="orpdelreq">ORP zmazať request</string>
+    <string name="id">id</string>
+    <string name="idc">ičo</string>
+    <string name="docregistered">Doklad je už registrovaný v eKasa</string>
+    <string name="popisNamecomp">Názov firmy</string>
+    <string name="popisHeadq">Sídlo</string>
+    <string name="popisShop">Prevádzka</string>
+    <string name="popisOrsr">Obch. register</string>
+    <string name="popisDkp">ORP číslo</string>
+    <string name="popisPat1">Päta text 1</string>
+    <string name="popisPat2">Päta text 2</string>
+    <string name="orp_title">ORP eKasa.</string>
+    <string name="orp_summary">0=nie, 1=áno</string>
+    <string name="havetosupportekasa">Musíte podporovať eKasu - nastavte firmu</string>
+    <string name="setidctoekasa">Nastaviť IČO pre eKasa dokladt:</string>
+    <string name="setidc">Nastaviť ičo</string>
+    <string name="fullosc">zamestnanec Id</string>
+    <string name="fullfirma">Firma Id</string>
+    <string name="type">typ</string>
+    <string name="cancel">Zrušiť</string>
+
+    //storecardactivity
+    <string name="storageitemprice">Priem.cena %s Eur</string>
+    <string name="action_all">Všetky položky</string>
+    <string name="action_plus">Príjmové položky</string>
+    <string name="action_minus">Výdajové položky</string>
+    <string name="docformat">Dok.: %s</string>
 
 </resources>
