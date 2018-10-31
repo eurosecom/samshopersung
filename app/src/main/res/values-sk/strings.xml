@@ -5,7 +5,7 @@
     <string name="helloworld">Hello World!</string>
     <string name="app_desc">SamShopper nákupný systém v.4.10</string>
     <string name="privacy_policy">Ochrana osobných údajov</string>
-    <string name="privacy_policy_file">privacy_policy_samfantozzi_sk</string>
+    <string name="privacy_policy_file">privacy_policy_samshopper_sk</string>
     <string name="action_settings">Nastavenia</string>
     <string name="action_setdomain">Vybrať Server</string>
     <string name="action_loginout">Login / Logout</string>

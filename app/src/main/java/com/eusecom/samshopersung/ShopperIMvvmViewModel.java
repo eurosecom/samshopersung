@@ -101,6 +101,9 @@ public interface ShopperIMvvmViewModel {
     public void emitGetPdfOrder(Invoice order);
 
     @NonNull
+    public void emitGetPdfPrivacyPolicy(Invoice order);
+
+    @NonNull
     public void emitGetPdfInvoice(Invoice order);
 
     @NonNull

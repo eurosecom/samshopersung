@@ -31,10 +31,17 @@ import android.transition.TransitionInflater
 import com.eusecom.samshopersung.launcherhelper.QuizActivity
 import android.content.Intent
 import android.app.ActivityOptions
+import android.net.Uri
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.util.Pair
 import com.eusecom.samshopersung.helper.ActivityLaunchHelper
 import com.eusecom.samshopersung.helper.TransitionHelper
+import com.eusecom.samshopersung.models.IShopperModelsFactory
+import com.eusecom.samshopersung.models.ShopperModelsFactory
+import org.jetbrains.anko.support.v4.toast
+import rx.Observable
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
 
 
 /**
@@ -57,6 +64,8 @@ class MainShopperActivity : AppCompatActivity() {
     @ShopperScope
     @Inject
     lateinit var mViewModel: ShopperIMvvmViewModel
+
+    var mSubscription: CompositeSubscription? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this);
@@ -263,6 +272,14 @@ class MainShopperActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mViewModel.clearObservableDocPDF()
+        mSubscription?.unsubscribe()
+        mSubscription?.clear()
+
+    }
+
     public override fun onResume() {
         super.onResume()
         updateUI()
@@ -297,12 +314,38 @@ class MainShopperActivity : AppCompatActivity() {
         R.id.action_settings -> consume { navigateToSettings() }
         R.id.action_setdomain -> consume { navigateToSetDomain() }
         R.id.action_setmfir -> consume { navigateToSetMyFir() }
+        R.id.privacy_policy -> consume { navigateToPrivacyPolicy() }
 
         else -> super.onOptionsItemSelected(item)
     }
 
     fun navigateToPrivacyPolicy() {
 
+        mSubscription = CompositeSubscription()
+        mSubscription?.add(mViewModel.getObservableDocPdf()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                .doOnError { throwable ->
+                    Log.e("MainShopper", "Error Throwable " + throwable.message)
+                    toast("Server not connected")
+                }
+                .onErrorResumeNext { throwable -> Observable.empty() }
+                .subscribe { it -> setUriPdf(it) })
+
+        var models: IShopperModelsFactory = ShopperModelsFactory()
+        var order: Invoice = models.invoice
+        order.dok = getString(R.string.privacy_policy_file)
+        mViewModel.emitGetPdfPrivacyPolicy(order)
+
+    }
+
+    private fun setUriPdf(uri: Uri) {
+
+        mViewModel.clearObservableDocPDF()
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        //activity.finish()
 
     }
 

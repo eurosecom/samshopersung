@@ -9,6 +9,7 @@ import com.eusecom.samshopersung.models.Album;
 import com.eusecom.samshopersung.models.EkassaRequestBackup;
 import com.eusecom.samshopersung.models.EkassaSettings;
 import com.eusecom.samshopersung.models.Employee;
+import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.models.Product;
 import com.eusecom.samshopersung.mvvmdatamodel.ShopperIDataModel;
@@ -998,6 +999,21 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
         }
 
     }
+
+    //get PDF PrivacyPolicy
+    public void emitGetPdfPrivacyPolicy(Invoice order) {
+
+        if (callCommandExecutorProxy(CommandExecutorProxyImpl.PermType.LGN, CommandExecutorProxyImpl.ReportTypes.PDF
+                , CommandExecutorProxyImpl.ReportName.ORDER)) {
+            System.out.println("command approved.");
+
+            order.setDrh("91");
+
+            emitDocumentPdfUri(order);
+        }
+
+    }
+    //end get PDF PrivacyPolicy
 
     //get PDF order
     public void emitGetPdfOrder(Invoice order) {

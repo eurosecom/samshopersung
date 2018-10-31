@@ -565,6 +565,13 @@ public class ShopperDataModel implements ShopperIDataModel {
 
         }
 
+        if (invx.getDrh().equals("91")) {
+
+            uri = Uri.parse("http://www.edcom.sk/ram1/" + invx.getDok() + ".pdf");
+
+        }
+
+
         return Observable.just(uri);
 
     }
