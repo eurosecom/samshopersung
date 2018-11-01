@@ -20,8 +20,11 @@ import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.InvoiceList;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.jakewharton.rxbinding.view.RxView;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -295,8 +298,12 @@ public class OrderDetailActivity extends BaseActivity {
 
     private DatePickerDialog getDatePicker(String datumx) {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        String currentDateandTime = sdf.format(new Date());
+
         String datumx2=datumx;
-        if(datumx2.equals("")){ datumx2 = "01.08.2018";}
+        if(datumx2.trim().equals("00.00.0000")){ datumx2 = currentDateandTime;}
+        if(datumx2.trim().equals("")){ datumx2 = currentDateandTime;}
         final Calendar calendar = Calendar.getInstance();
         int yy = calendar.get(Calendar.YEAR);
         int mm = calendar.get(Calendar.MONTH);
