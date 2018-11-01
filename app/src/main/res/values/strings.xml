@@ -3,7 +3,7 @@
     //mainshopperactivity
     <string name="app_name">Shopper</string>
     <string name="helloworld">Hello World!</string>
-    <string name="app_desc">Samshopper shopping system v.4.10</string>
+    <string name="app_desc">Samshopper shopping system v.4.11</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="privacy_policy_file">privacy_policy_samshopper</string>
     <string name="action_settings">Settings</string>

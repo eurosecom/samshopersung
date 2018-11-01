@@ -230,7 +230,7 @@
     <EditTextPreference
         android:key="orp"
         android:defaultValue="0"
-        android:enabled="true"
+        android:enabled="false"
         android:summary="@string/orp_summary"
         android:title="@string/orp_title" />
 
