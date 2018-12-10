@@ -12,6 +12,7 @@ import com.eusecom.samshopersung.SamshopperApp;
 import com.eusecom.samshopersung.models.IShopperModelsFactory;
 import com.eusecom.samshopersung.models.ShopperModelsFactory;
 import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
+import com.eusecom.samshopersung.mvvmschedulers.SchedulerProvider;
 import com.eusecom.samshopersung.realm.IRealmController;
 import com.eusecom.samshopersung.realm.RealmController;
 import com.eusecom.samshopersung.retrofit.ExampleInterceptor;
@@ -116,7 +117,7 @@ public class AppModule {
     @Provides
     @Singleton
     ExampleInterceptor provideInterceptor() { // This is where the Interceptor object is constructed
-        return ExampleInterceptor.get();
+        return new ExampleInterceptor();
     }
 
     @Provides
@@ -214,9 +215,9 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public ISchedulerProvider providesISchedulerProvider(Application application) {
+    public ISchedulerProvider providesISchedulerProvider() {
 
-        return ((SamshopperApp) application).getSchedulerProvider();
+        return new SchedulerProvider();
     }
 
 

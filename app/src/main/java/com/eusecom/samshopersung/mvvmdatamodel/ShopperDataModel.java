@@ -340,6 +340,8 @@ public class ShopperDataModel implements ShopperIDataModel {
         Log.d("GenDoc dokx", dokx);
         Log.d("GenDoc drh", drh);
         Log.d("GenDoc ucex", ucex);
+        Log.d("GenDoc userhash", userhash);
+        Log.d("GenDoc userid", userid);
 
         setRetrofit(servername);
         return mShopperRetrofitService.getProductsFromSqlServer(userhash, userid, fromfir, vyb_rok, drh, ucex, umex, dokx);

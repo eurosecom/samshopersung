@@ -7,8 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import com.eusecom.samshopersung.di.DaggerAppComponent;
-import com.eusecom.samshopersung.mvvmschedulers.ISchedulerProvider;
-import com.eusecom.samshopersung.mvvmschedulers.SchedulerProvider;
 import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.rxbus.RxBus;
 import com.google.firebase.database.DatabaseReference;
@@ -92,10 +90,6 @@ public class SamshopperApp extends MultiDexApplication implements HasActivityInj
         return Realm.getDefaultInstance();
     }
 
-    @NonNull
-    public ISchedulerProvider getSchedulerProvider() {
-        return SchedulerProvider.getInstance();
-    }
 
     @NonNull
     public DatabaseReference getDatabaseFirebaseReference() {
