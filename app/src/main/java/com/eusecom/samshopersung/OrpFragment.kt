@@ -333,7 +333,8 @@ class OrpFragment : BaseKtFragment() {
                 val processdate = responseEnvelop.body.getRegisterReceiptResponse.getHeader.getProcessDate.toString()
                 val dokid = responseEnvelop.body.getRegisterReceiptResponse.getReceiptData.getId.toString()
                 Log.d("Reg. receipt result", processdate + " " + dokid)
-                mViewModel.emitEkasaDocPaid(paydocx);
+                //mark as paid doc
+                //mViewModel.emitEkasaDocPaid(paydocx);
                 Toast.makeText(activity, processdate + " " + dokid, Toast.LENGTH_LONG).show()
             }else{
                 val errcode = responseEnvelop.body.getRegisterReceiptFault.getEkasaErrorCode

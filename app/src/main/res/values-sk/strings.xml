@@ -3,7 +3,7 @@
     //mainshopperactivity
     <string name="app_name">Šoper</string>
     <string name="helloworld">Hello World!</string>
-    <string name="app_desc">SamShopper nákupný systém v.4.11</string>
+    <string name="app_desc">SamShopper nákupný systém v.4.14</string>
     <string name="privacy_policy">Ochrana osobných údajov</string>
     <string name="privacy_policy_file">privacy_policy_samshopper_sk</string>
     <string name="action_settings">Nastavenia</string>
