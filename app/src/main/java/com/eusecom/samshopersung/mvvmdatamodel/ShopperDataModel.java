@@ -159,8 +159,8 @@ import com.eusecom.samshopersung.roomdatabase.MyDatabase;
 import com.eusecom.samshopersung.soap.EkasaPdfDoc;
 import com.eusecom.samshopersung.soap.IEkasaPdfDoc;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
-import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
+import com.eusecom.samshopersung.soap.soapenvEnvelop.SoapenvEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.google.firebase.database.DatabaseReference;
@@ -686,14 +686,14 @@ public class ShopperDataModel implements ShopperIDataModel {
     }
 
     @NonNull
-    public Observable<EkassaResponseEnvelope> getEkassaRegisterReceiptXmlResponse(EkassaRequestEnvelope requestEnvelope){
+    public Observable<EkassaResponseEnvelope> getEkassaRegisterReceiptXmlResponse(SoapenvEnvelope requestEnvelope){
 
         setRetrofit("www.eshoptest.sk/");
         return mShopperXmlRetrofitService.getRegisterReceiptEkassa(requestEnvelope);
     }
 
     @NonNull
-    public Observable<EkassaRegisterReceiptResponseEnvelope> getEkassaRegisterReceiptResponse(EkassaRequestEnvelope requestEnvelope){
+    public Observable<EkassaRegisterReceiptResponseEnvelope> getEkassaRegisterReceiptResponse(SoapenvEnvelope requestEnvelope){
 
         setRetrofit("www.eshoptest.sk/");
         return mShopperXmlRetrofitService.getRegisterReceiptEkassaFromSoap(requestEnvelope);

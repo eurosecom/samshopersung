@@ -20,8 +20,8 @@ import com.eusecom.samshopersung.realm.RealmDomain;
 import com.eusecom.samshopersung.realm.RealmInvoice;
 import com.eusecom.samshopersung.soap.EncodeSignatureTools;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaRegisterReceiptResponseEnvelope;
-import com.eusecom.samshopersung.soap.soapekassa.EkassaRequestEnvelope;
 import com.eusecom.samshopersung.soap.soapekassa.EkassaResponseEnvelope;
+import com.eusecom.samshopersung.soap.soapenvEnvelop.SoapenvEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloRequestEnvelope;
 import com.eusecom.samshopersung.soap.soaphello.HelloResponseEnvelope;
 import com.eusecom.samshopersung.soap.soappayment.EkassaStrategy;
@@ -1462,14 +1462,14 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
             mEkassaStrategy.setIcdph("SK2004567892");
             mEkassaStrategy.setOrpid("99920045678900002");
 
-            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(mEkassaStrategy);
+            SoapenvEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(mEkassaStrategy);
             updateEkassaReqById(uuid, daterequest, "1", order.getDok(), pkpstring);
             mObservableRegisterReceiptEkassaResponseXml.onNext(requestEnvelop);
         }
     }
 
     @NonNull
-    private BehaviorSubject<EkassaRequestEnvelope> mObservableRegisterReceiptEkassaResponseXml = BehaviorSubject.create();
+    private BehaviorSubject<SoapenvEnvelope> mObservableRegisterReceiptEkassaResponseXml = BehaviorSubject.create();
 
     @NonNull
     public Observable<EkassaResponseEnvelope> getObservableRegisterReceiptEkassaResponseXml() {
@@ -1498,13 +1498,13 @@ public class ShopperMvvmViewModel implements ShopperIMvvmViewModel {
             System.out.println("command approved.");
 
             mPaymentTerminal.setOrder(order);
-            EkassaRequestEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("", "", "", "", "", "", ""));
+            SoapenvEnvelope requestEnvelop = mPaymentTerminal.registerReceipt(new EkassaStrategy("", "", "", "", "", "", ""));
             mObservableRegisterReceiptEkassaResponse.onNext(requestEnvelop);
         }
     }
 
     @NonNull
-    private BehaviorSubject<EkassaRequestEnvelope> mObservableRegisterReceiptEkassaResponse = BehaviorSubject.create();
+    private BehaviorSubject<SoapenvEnvelope> mObservableRegisterReceiptEkassaResponse = BehaviorSubject.create();
 
     @NonNull
     public Observable<EkassaRegisterReceiptResponseEnvelope> getObservableRegisterReceiptEkassaResponse() {
